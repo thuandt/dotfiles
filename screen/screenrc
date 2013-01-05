@@ -1,0 +1,40 @@
+# ~/.screenrc
+# Last Modified: Thu 18 Nov 2010 08:43:18 AM ICT
+
+# screen -t irc irssi
+# screen -t bash1
+# screen -t bash2
+# screen -t bash3
+# screen -t bash4
+# screen -t bash5
+# screen -t bash6
+# screen -t bash7
+# screen -t bash8
+# screen -t music ncmpcpp
+
+autodetach      on              # autodetach on disconnect/close
+startup_message off             # disable intro msg
+defscrollback   10000           # default scrollback buffer
+vbell		    off             # toggle visual bell
+vbell_msg	    "[[[ ding ]]]"
+bell		    "bell: %n (%t) [%w:%s]^G"
+activity	    "active: %n (%t) [%w:%s]"
+defbce		    on
+defutf8		    on              # UTF-8 char encoding
+defflow		    off             # disable flow control
+altscreen	    on              # restore window contents after a vi session
+attrcolor	    b ".I"
+shelltitle	    tux
+encoding	    UTF-8
+
+termcapinfo	    xterm|rxvt-* ti@:te@
+termcapinfo	    xterm-256color	'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+termcapinfo	    rxvt-*        		'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+termcapinfo     rxvt-unicode 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+terminfo        rxvt-unicode 'hs@'
+
+hardstatus      off
+hardstatus      alwayslastline
+hardstatus      string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+
+# End of ~/.screenrc
