@@ -58,24 +58,11 @@ YELLOW='\e[1;33m'
 WHITE='\e[1;37m'
 NC='\e[0m'
 
-# bash history tweaks ----------------------------------------------------------
-HISTFILE=$HOME/.bash_history        # bash history filename
-HISTSIZE=100000                     # bash history will save N commands
-HISTFILESIZE=${HISTSIZE}            # bash will remember N commands
-HISTCONTROL=ignoreboth:erasedups    # ingore duplicates and spaces (ignoreboth,
-                                    # ignoredups, ignorespace)
-HISTTIMEFORMAT='%F %T '
-
-# don't append the following to history: consecutive duplicate
-# commands, ls, bg and fg, and exit
-HISTIGNORE='&:[bf]g:jobs:%1:%2:ls:pwd:c:clear:exit'
-
 # when connecting to SSH, start or reattach screen session ---------------------
 # if [ -n "$SSH_CONNECTION" ] && [ -z "$SCREEN_EXIST" ]; then
 #   export SCREEN_EXIST=1
 #  screen -DR
 # fi
-
 
 # Change the window title of X terminals ---------------------------------------
 case ${TERM} in

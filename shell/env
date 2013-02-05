@@ -2,6 +2,17 @@
 # ~/.shell_env
 # Last Modified: 12/04/2012 05:42:32 AM
 
+# shell history tweaks
+HISTFILE=$HOME/.shell_history_`hostname`  # bash history filename
+HISTSIZE=100000                           # bash history will save N commands
+HISTFILESIZE=${HISTSIZE}                  # bash will remember N commands
+HISTCONTROL=ignoreboth:erasedups          # ingore duplicates and spaces
+HISTTIMEFORMAT='%F %T '
+
+# don't append the following to history: consecutive duplicate
+# commands, ls, bg and fg, and exit
+HISTIGNORE='&:[bf]g:jobs:%1:%2:ls:pwd:c:clear:exit'
+
 # Add $HOME/.bin to PATH
 export PATH=$HOME/.bin:$PATH
 
