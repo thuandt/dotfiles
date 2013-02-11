@@ -2,4 +2,7 @@
 # ~/.shell_functions
 # Last Modified: Sun 06 Jan 2013 02:46:44 AM ICT
 
+# fix slow gvim start
+function gvim () { (/usr/bin/gvim -f "$@" &) }
+
 # End of file
