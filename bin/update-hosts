@@ -16,3 +16,5 @@ else
         echo "/etc/hosts not updated"
         exit 1
 fi
+
+## End of file #####
