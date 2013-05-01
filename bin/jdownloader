@@ -1,0 +1,6 @@
+#!/bin/sh
+# Filename: jdownloader
+# Description: jDownloader Download Manager
+
+JD_HOME="/media/DATA/JDownloader/JDownloader.jar"
+java -jar $JD_HOME

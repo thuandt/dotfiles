@@ -19,3 +19,4 @@ else
     echo "blocklist not updated"
 fi
 
+## End of file #####
