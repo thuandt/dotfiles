@@ -29,7 +29,7 @@ ZSH_THEME="bira"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(bundler compleat battery cp command-not-found debian extract encode64 gem git git-extras git-flow git-hubflow git-remote-branch gitfast github gnu-utils gpg-agent heroku history history-substring-search lol mercurial pip python rails3 rake rsync ruby rvm screen ssh-agent sublime svn themes urltools wakeonlan)
+plugins=(bundler compleat battery cp command-not-found debian extract encode64 gem git git-extras git-flow git-hubflow git-remote-branch gitfast github gnu-utils go golang gpg-agent heroku history history-substring-search lol mercurial perl pip python rake rsync ruby rvm sbt scala screen ssh-agent sublime svn themes urltools vundle wakeonlan)
 
 ##### Ruby RVM #####
 # Load RVM into a shell session *as a function*
@@ -93,5 +93,8 @@ function chpwd() {
     emulate -L zsh
     ls -a
 }
+
+# automatically source zshrc in all open terminals
+trap "source ~/.zshrc && rehash" USR1
 
 # End of ~/.zshrc
