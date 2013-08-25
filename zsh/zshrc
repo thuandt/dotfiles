@@ -29,7 +29,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(bundler compleat battery cp command-not-found debian extract encode64 gem git git-extras git-flow git-hubflow git-remote-branch gitfast github gnu-utils go golang gpg-agent heroku history history-substring-search lol mercurial perl pip python rake rsync ruby rvm sbt scala screen ssh-agent sublime svn themes urltools vundle wakeonlan)
++plugins=(bundler colorize command-not-found cp debian emoji-clock encode64 extract gem git git-extras git-flow git-hubflow git-remote-branch gitfast github go golang gpg-agent heroku history history-substring-search mercurial nanoc perl pip python rake rsync ruby rvm safe-paste sbt scala screen ssh-agent sublime svn tmux tmuxinator torrent urltools virtualenv virtualenvwrapper vundle wakeonlan websearch)
 
 ##### Ruby RVM #####
 # Load RVM into a shell session *as a function*
