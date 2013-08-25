@@ -132,14 +132,14 @@ unset use_color safe_term match_lhs
 # Load RVM into a shell session *as a function*
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
-##### Pythonbrew #####
-[[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"
-
 # source some bash files -------------------------------------------------------
 if [ -f $HOME/.shell_env ]; then source $HOME/.shell_env; fi
 if [ -f $HOME/.shell_functions ]; then source $HOME/.shell_functions; fi
 if [ -f $HOME/.shell_aliases ]; then source $HOME/.shell_aliases; fi
 if [ -f /etc/bash_completion ]; then source /etc/bash_completion; fi
+
+# virtualenvwrapper
+[[ -s /usr/local/bin/virtualenvwrapper.sh ]] && source /usr/local/bin/virtualenvwrapper.sh
 
 # Realtime ~/.bash_history
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
