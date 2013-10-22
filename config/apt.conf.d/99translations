@@ -1,0 +1,3 @@
+// /etc/apt/apt.conf.d/99translations
+// Stop download the extra translations
+Acquire::Languages "none";
