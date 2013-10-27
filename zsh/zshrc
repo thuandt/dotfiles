@@ -35,6 +35,28 @@ plugins=(bundler colorize command-not-found cp debian emoji-clock encode64 extra
 # Load RVM into a shell session *as a function*
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
+##### virtualenvwrapper #####
+[[ -s /usr/local/bin/virtualenvwrapper.sh ]] && source /usr/local/bin/virtualenvwrapper.sh
+
+##### tmux #####
+# Automatically start tmux
+ZSH_TMUX_AUTOSTART=false
+# Only autostart once. If set to false, tmux will attempt to
+# autostart every time your zsh configs are reloaded.
+ZSH_TMUX_AUTOSTART_ONCE=true
+# Automatically connect to a previous session if it exists
+ZSH_TMUX_AUTOCONNECT=true
+# Set term to screen or screen-256color based on current terminal support
+ZSH_TMUX_FIXTERM=true
+# The TERM to use for non-256 color terminals.
+# Tmux states this should be screen, but you may need to change it on
+# systems without the proper terminfo
+ZSH_TMUX_FIXTERM_WITHOUT_256COLOR="screen"
+# The TERM to use for 256 color terminals.
+# Tmux states this should be screen-256color, but you may need to change it on
+# systems without the proper terminfo
+ZSH_TMUX_FIXTERM_WITH_256COLOR="screen-256color"
+
 # source oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
@@ -84,9 +106,6 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 [[ -s "$HOME/.shell_env" ]] && source "$HOME/.shell_env"
 [[ -s "$HOME/.shell_aliases" ]] && source "$HOME/.shell_aliases"
 [[ -s "$HOME/.shell_functions" ]] && source "$HOME/.shell_functions"
-
-# virtualenvwrapper
-[[ -s /usr/local/bin/virtualenvwrapper.sh ]] && source /usr/local/bin/virtualenvwrapper.sh
 
 # Automatically run ls after every cd
 function chpwd() {
