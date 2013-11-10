@@ -25,9 +25,9 @@ if [[ ":$PATH:" != *":${MY_PATH}:"* ]]; then PATH=${MY_PATH}:$PATH; fi
 export WORKON_HOME=$HOME/.virtualenvs
 
 # Setup Input Method (Ibus)
-export XMODIFIERS=@im=ibus
-export GTK_IM_MODULE=ibus
-export QT_IM_MODULE=ibus
+export XMODIFIERS=@im=scim
+export GTK_IM_MODULE=scim
+export QT_IM_MODULE=scim
 
 # Setting locales
 export LC_ALL=en_US.UTF-8
