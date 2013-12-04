@@ -1,6 +1,6 @@
 #!/bin/bash
 # ~/.bashrc
-# Last Modified: 12/04/2012 05:43:32 AM
+# Last Modified: 05/12/2013 01:43 AM
 
 # Some settings ----------------------------------------------------------------
 ulimit -S -c 0                # Don't want any coredumps.
@@ -128,15 +128,15 @@ fi
 # Try to keep environment pollution down, EPA loves us.
 unset use_color safe_term match_lhs
 
-##### Ruby RVM #####
-# Load RVM into a shell session *as a function*
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
 # source some bash files -------------------------------------------------------
 if [ -f $HOME/.shell_env ]; then source $HOME/.shell_env; fi
 if [ -f $HOME/.shell_functions ]; then source $HOME/.shell_functions; fi
 if [ -f $HOME/.shell_aliases ]; then source $HOME/.shell_aliases; fi
 if [ -f /etc/bash_completion ]; then source /etc/bash_completion; fi
+
+##### Ruby RVM #####
+# Load RVM into a shell session *as a function*
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 # virtualenvwrapper
 [[ -s /usr/local/bin/virtualenvwrapper.sh ]] && source /usr/local/bin/virtualenvwrapper.sh
