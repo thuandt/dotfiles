@@ -1,10 +1,6 @@
 #!/bin/bash
 # ~/.bash_profile
-# Last Modified: Tue 08 Jan 2013 01:32:13 AM ICT
-
-if [ -f ~/.bashrc ]; then
-       source ~/.bashrc
-fi
+# Last Modified: 05/12/2013 01:40 AM
 
 ### START-Keychain ###
 # Let re-use ssh-agent and/or gpg-agent between logins
