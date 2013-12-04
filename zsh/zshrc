@@ -1,6 +1,6 @@
 #!/bin/zsh
 # ~/.zshrc
-# Last Modified: 12/04/2012 05:43:56 AM
+# Last Modified: 05/12/2013 01:37 AM
 
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
@@ -29,7 +29,13 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(bundler colorize command-not-found cp debian emoji-clock encode64 extract gem git git-extras go golang gpg-agent heroku history history-substring-search mercurial mosh nanoc pip python rails4 rand-quote redis-cli rake rsync ruby rvm safe-paste sbt scala screen ssh-agent svn tmux tmuxinator torrent urltools virtualenv virtualenvwrapper vundle wakeonlan websearch)
+plugins=( battery bundler colorize command-not-found common-aliases cp debian
+          emoji-clock encode64 extract gem git git-extras git-flow git-prompt
+          git-remote-branch git-ignore gpg-agent heroku history
+          history-substring-search mercurial mosh pip python rails rake rsync
+          ruby rvm safe-paste screen ssh-agent sublime sudo svn systemadmin
+          tmux tmuxinator urltools virtualenv virtualenvwrapper vundle
+          wakeonlan websearch )
 
 ##### tmux #####
 # Automatically start tmux
