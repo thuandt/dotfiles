@@ -1,6 +1,6 @@
 #!/bin/sh
 # ~/.shell_env
-# Last Modified: 12/04/2012 05:42:32 AM
+# Last Modified: 05/12/2013 01:42 AM
 
 # shell history tweaks
 HISTFILE=$HOME/.shell_history_`hostname`  # shell history filename
@@ -28,6 +28,7 @@ export WORKON_HOME=$HOME/.virtualenvs
 export XMODIFIERS=@im=scim
 export GTK_IM_MODULE=scim
 export QT_IM_MODULE=scim
+export QT4_IM_MODULE=scim
 
 # Setting locales
 export LC_ALL=en_US.UTF-8
