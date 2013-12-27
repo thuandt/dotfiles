@@ -21,8 +21,8 @@ export GOOGLE_CLOUD_SDK=$HOME/app/google-cloud-sdk
 
 # My custom path
 export MY_PATH=${RVM_BIN_PATH}:${USER_BIN}:${GOOGLE_CLOUD_SDK}/bin
-export MY_PATH=MY_PATH:${PLAY_HOME}:${SCALA_HOME}/bin:${SBT_HOME}
-export MY_PATH=MY_PATH:${GOROOT}/bin:${HEROKU_TOOLBELT}
+export MY_PATH=${MY_PATH}:${PLAY_HOME}:${SCALA_HOME}/bin:${SBT_HOME}
+export MY_PATH=${MY_PATH}:${GOROOT}/bin:${HEROKU_TOOLBELT}
 
 # Add directory to $PATH if it's not already there
 if [[ ":$PATH:" != *":${MY_PATH}:"* ]]; then PATH=${MY_PATH}:$PATH; fi
