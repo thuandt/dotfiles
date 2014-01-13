@@ -31,11 +31,11 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=( battery bundler colorize command-not-found common-aliases cp debian
           emoji-clock encode64 extract gem git git-extras git-flow
-          git-remote-branch gitignore gpg-agent heroku history
+          git-remote-branch github gitignore go gpg-agent heroku history
           history-substring-search mercurial mosh pip python rails rake rsync
-          ruby rvm safe-paste screen ssh-agent sublime sudo svn systemadmin
+          ruby rvm sbt scala screen ssh-agent sudo svn systemadmin
           tmux tmuxinator urltools virtualenv virtualenvwrapper vundle
-          wakeonlan websearch )
+          wakeonlan web-search )
 
 ##### tmux #####
 # Automatically start tmux
