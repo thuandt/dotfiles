@@ -3,12 +3,17 @@
 local return_code="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
 local user_host='%{$terminfo[bold]$fg[green]%}%n@%m%{$reset_color%}'
 local current_dir='%{$terminfo[bold]$fg[blue]%} %~%{$reset_color%}'
-local rvm_ruby='%{$fg[red]%}$(~/.rvm/bin/rvm-prompt)%{$reset_color%}'
 
 # local time, color coded by last return code
-time_enabled="%(?.%{$fg[green]%}.%{$fg[red]%})%*%{$reset_color%}"
-time_disabled="%{$fg[green]%}%*%{$reset_color%}"
-time=$time_enabled
+local time_enabled="%(?.%{$fg[green]%}.%{$fg[red]%})%*%{$reset_color%}"
+local time_disabled="%{$fg[green]%}%*%{$reset_color%}"
+local current_time=$time_enabled
+
+# rvm_ruby
+local rvm_ruby=''
+if [ -f ~/.rvm/bin/rvm-prompt ]; then
+    rvm_ruby='%{$fg[red]%}$(~/.rvm/bin/rvm-prompt)%{$reset_color%}'
+fi
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" ☁  %{$fg[red]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
@@ -94,4 +99,4 @@ PROMPT="╭─$(ssh_connection)${user_host} ${current_dir} ${rvm_ruby}
 ╰─%B➤%b "
 
 # The right-hand prompt
-RPROMPT='${return_code} ${time} %{$fg[magenta]%}$(git_prompt_info)%{$reset_color%}$(git_prompt_status)%{$reset_color%}$(git_prompt_ahead)%{$reset_color%}'
+RPROMPT='${return_code} ${current_time} %{$fg[magenta]%}$(git_prompt_info)%{$reset_color%}$(git_prompt_status)%{$reset_color%}$(git_prompt_ahead)%{$reset_color%}'
