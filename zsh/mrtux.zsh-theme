@@ -11,8 +11,12 @@ local current_time=$time_enabled
 
 # rvm_ruby
 local rvm_ruby=''
-if [ -f ~/.rvm/bin/rvm-prompt ]; then
-    rvm_ruby='%{$fg[red]%}$(~/.rvm/bin/rvm-prompt)%{$reset_color%}'
+if which rvm-prompt &> /dev/null; then
+  rvm_ruby='%{$fg[red]%}‹$(rvm-prompt i v g)›%{$reset_color%}'
+else
+  if which rbenv &> /dev/null; then
+    rvm_ruby='%{$fg[red]%}‹$(rbenv version | sed -e "s/ (set.*$//")›%{$reset_color%}'
+  fi
 fi
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" ☁  %{$fg[red]%}"
