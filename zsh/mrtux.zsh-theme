@@ -40,7 +40,7 @@ ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg[blue]%} 𝝙"
 # Determine if we are remote using ssh
 function ssh_connection() {
   if [[ -n $SSH_CONNECTION ]]; then
-    echo "%{$fg_bold[red]%}(ssh) "
+    echo "%{$fg_bold[red]%}(ssh)%{$reset_color%} "
   fi
 }
 
