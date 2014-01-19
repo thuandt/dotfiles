@@ -37,30 +37,6 @@ plugins=( battery bundler colorize command-not-found common-aliases cp debian
           tmux tmuxinator urltools virtualenv virtualenvwrapper vundle
           wakeonlan web-search )
 
-##### tmux #####
-# Automatically start tmux
-ZSH_TMUX_AUTOSTART=false
-# Only autostart once. If set to false, tmux will attempt to
-# autostart every time your zsh configs are reloaded.
-ZSH_TMUX_AUTOSTART_ONCE=true
-# Automatically connect to a previous session if it exists
-ZSH_TMUX_AUTOCONNECT=true
-# Set term to screen or screen-256color based on current terminal support
-ZSH_TMUX_FIXTERM=true
-# The TERM to use for non-256 color terminals.
-# Tmux states this should be screen, but you may need to change it on
-# systems without the proper terminfo
-ZSH_TMUX_FIXTERM_WITHOUT_256COLOR="screen"
-# The TERM to use for 256 color terminals.
-# Tmux states this should be screen-256color, but you may need to change it on
-# systems without the proper terminfo
-ZSH_TMUX_FIXTERM_WITH_256COLOR="screen-256color"
-
-# source oh-my-zsh
-source $ZSH/oh-my-zsh.sh
-
-# Customize to your needs...
-
 ##### ZSH OPTIONS #####
 # Changing Directories
 setopt AUTO_CD           # why would you type 'cd dir' if you could just type 'dir'?
@@ -96,6 +72,25 @@ setopt INC_APPEND_HISTORY       # write after each command
 setopt SHARE_HISTORY            # share history between sessions
 setopt HIST_VERIFY              # When using a hist thing, make a newline show the change before executing it.
 
+##### tmux #####
+# Automatically start tmux
+ZSH_TMUX_AUTOSTART=false
+# Only autostart once. If set to false, tmux will attempt to
+# autostart every time your zsh configs are reloaded.
+ZSH_TMUX_AUTOSTART_ONCE=true
+# Automatically connect to a previous session if it exists
+ZSH_TMUX_AUTOCONNECT=true
+# Set term to screen or screen-256color based on current terminal support
+ZSH_TMUX_FIXTERM=true
+# The TERM to use for non-256 color terminals.
+# Tmux states this should be screen, but you may need to change it on
+# systems without the proper terminfo
+ZSH_TMUX_FIXTERM_WITHOUT_256COLOR="screen"
+# The TERM to use for 256 color terminals.
+# Tmux states this should be screen-256color, but you may need to change it on
+# systems without the proper terminfo
+ZSH_TMUX_FIXTERM_WITH_256COLOR="screen-256color"
+
 # Color listing
 eval $(dircolors ~/.dir_colors)
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
@@ -117,11 +112,16 @@ autoload bashcompinit
 bashcompinit
 source /home/mrtux/app/google-cloud-sdk/arg_rc
 
+# source oh-my-zsh
+source $ZSH/oh-my-zsh.sh
+
+# Customize to your needs...
+
 # Automatically run ls after every cd
-function chpwd() {
-    emulate -L zsh
-    ls -a
-}
+# function chpwd() {
+#     emulate -L zsh
+#     ls -a
+# }
 
 # automatically source zshrc in all open terminals
 trap "source ~/.zshrc && rehash" USR1
