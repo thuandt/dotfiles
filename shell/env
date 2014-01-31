@@ -29,6 +29,8 @@ if [[ ":$PATH:" != *":${MY_PATH}:"* ]]; then PATH=${MY_PATH}:$PATH; fi
 ### virtualenv ###
 export WORKON_HOME=$HOME/.virtualenvs
 
+export HOSTNAME=`hostname`
+
 # Setup Input Method
 export XMODIFIERS=@im=scim
 export GTK_IM_MODULE=scim

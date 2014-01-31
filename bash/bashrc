@@ -147,4 +147,13 @@ source /home/mrtux/app/google-cloud-sdk/arg_rc
 # Realtime ~/.bash_history
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
+### Keychain ###
+# Let re-use ssh-agent and/or gpg-agent between logins
+eval $(keychain --eval -Q --quiet $HOME/.ssh/id_rsa)
+source $HOME/.keychain/$HOSTNAME-sh
+source $HOME/.keychain/$HOSTNAME-sh-gpg
+
+# Clear screen
+clear
+
 # End of ~/.bashrc
