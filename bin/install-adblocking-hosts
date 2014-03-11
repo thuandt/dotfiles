@@ -10,12 +10,8 @@ systemhosts="/etc/hosts"
 echo "Downloading ad-blocking hosts files..."
 wget -q -O - "http://adaway.org/hosts.txt" >> $temphosts
 wget -q -O - "http://winhelp2002.mvps.org/hosts.txt" >> $temphosts
-wget -q -O - "http://hosts-file.net/ad_servers.asp" >> $temphosts
 wget -q -O - "http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext" >> $temphosts
-wget -q -O - "http://sysctl.org/cameleon/hosts" >> $temphosts
-wget -q -O - "http://someonewhocares.org/hosts/hosts" >> $temphosts
 wget -q -O - "http://www.malwaredomainlist.com/hostslist/hosts.txt" >> $temphosts
-wget -q -O - "http://www.hostsfile.org/Downloads/hosts.txt" >> $temphosts
 
 # Processing hosts file:
 # 1. Remove MS-DOS carriage returns
