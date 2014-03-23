@@ -148,6 +148,11 @@ source $HOME/.keychain/$HOSTNAME-sh-gpg
 # automatically source zshrc in all open terminals
 trap "source ~/.zshrc && rehash" USR1
 
+# Fix: history-substring-search plugin broken after merge #1355
+zmodload zsh/terminfo
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
+
 # Clear screen
 clear
 # End of ~/.zshrc
