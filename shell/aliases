@@ -117,4 +117,9 @@ alias secure-delete='shred -n 200 -z -u'
 ## Purging configuration files on Debian-based system
 alias purge-package-config="sudo aptitude purge '~c'"
 
+## Set default system java
+alias java6-set-default='sudo update-java-alternatives -s java-6-oracle'
+alias java7-set-default='sudo update-java-alternatives -s java-7-oracle'
+alias java8-set-default='sudo update-java-alternatives -s java-8-oracle'
+
 # End of ~/.shell_aliases
