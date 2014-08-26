@@ -5,6 +5,7 @@
 # Perform work in temporary files
 temphosts=$(mktemp)
 systemhosts="/etc/hosts"
+lastupdate=$(date)
 
 # Obtain various hosts files and merge into one
 echo "Downloading ad-blocking hosts files..."
@@ -32,6 +33,7 @@ echo "Merging with original system hosts..."
 sed -i '/There is no place like 127.0.0.1/,$d' $systemhosts
 # Add new line for next update
 echo "# There is no place like 127.0.0.1" >> $systemhosts
+echo "# Last update at $lastupdate" >> $systemhosts
 
 # Remove duplicate using sort and add them to system hosts file
 sort -u $temphosts >> $systemhosts
