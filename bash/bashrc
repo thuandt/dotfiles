@@ -144,10 +144,10 @@ if [ -f /etc/bash_completion ]; then source /etc/bash_completion; fi
 
 ##### Google Cloud SDK #####
 # The next line updates PATH for the Google Cloud SDK.
-source '/home/mrtux/app/google-cloud-sdk/path.bash.inc'
+source '/home/mrtux/apps/google-cloud-sdk/path.bash.inc'
 
 # The next line enables bash completion for gcloud.
-source '/home/mrtux/app/google-cloud-sdk/completion.bash.inc'
+source '/home/mrtux/apps/google-cloud-sdk/completion.bash.inc'
 
 # Realtime ~/.bash_history
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
