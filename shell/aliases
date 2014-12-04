@@ -120,7 +120,7 @@ alias java6-set-default='sudo update-java-alternatives -s java-6-oracle'
 alias java7-set-default='sudo update-java-alternatives -s java-7-oracle'
 alias java8-set-default='sudo update-java-alternatives -s java-8-oracle'
 
-## Alias for auto Clash of Clans python script
-alias auto_keepalive='/home/mrtux/Development/MyProjects/coc-auto/autoclick_keepalive.py'
-alias auto_search='/home/mrtux/Development/MyProjects/coc-auto/autoclick_search.py'
+## Alias for Auto Clash of Clans Tools
+alias start-keepalive='curl -s -u "mrtux:coc-auto@2014" --data "action=start" http://coc.ngrok.com'
+alias stop-keepalive='curl -s -u "mrtux:coc-auto@2014" --data "action=stop" http://coc.ngrok.com'
 # End of ~/.shell_aliases
