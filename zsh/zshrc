@@ -146,7 +146,7 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 ### Keychain ###
 # Let re-use ssh-agent and/or gpg-agent between logins
-eval $(keychain --eval -Q --quiet $HOME/.ssh/id_rsa)
+eval $(keychain --eval -Q --quiet --attempts 5 id_rsa)
 source $HOME/.keychain/$HOSTNAME-sh
 source $HOME/.keychain/$HOSTNAME-sh-gpg
 
