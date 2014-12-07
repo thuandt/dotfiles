@@ -1,0 +1,3 @@
+[submodule "shell/dircolors"]
+	path = shell/dircolors
+	url = https://github.com/seebi/dircolors-solarized.git
