@@ -1,20 +1,20 @@
 #!/bin/sh
 # ~/.shell_env
-# Last Modified: 26/12/2013 07:41 PM
+# Last Modified: 09/03/2015 04:11 AM
 
 # shell history tweaks
-SAVEHIST=100000 # Remember about a years worth of history (AWESOME)
-HISTSIZE=100000                           # shell history will save N commands
-HISTFILESIZE=${HISTSIZE}                  # shell will remember N commands
+SAVEHIST=10000                           # Remember about a years worth of history (AWESOME)
+HISTSIZE=10000                           # shell history will save N commands
+HISTFILESIZE=${HISTSIZE}                 # shell will remember N commands
 
 ### Setup PATH ###
 export RVM_BIN_PATH=$HOME/.rvm/bin             # Add RVM to PATH for scripting
 export USER_BIN=$HOME/apps/bin                 # User's binaries path
-export GOROOT=$HOME/apps/go                    # golang
+export GOROOT=/usr/local/go                    # golang
 export GOPATH=$HOME/dev/gocode                 # gocode
 
 # My custom path
-export MY_PATH=${RVM_BIN_PATH}:${USER_BIN}:${GOROOT}/bin
+export MY_PATH=${RVM_BIN_PATH}:${USER_BIN}:${GOPATH}/bin
 
 # Add directory to $PATH if it's not already there
 if [[ ":$PATH:" != *":${MY_PATH}:"* ]]; then PATH=${MY_PATH}:$PATH; fi
@@ -23,6 +23,9 @@ if [[ ":$PATH:" != *":${MY_PATH}:"* ]]; then PATH=${MY_PATH}:$PATH; fi
 export WORKON_HOME=$HOME/.virtualenvs
 
 export HOSTNAME=`hostname`
+
+# minicom
+export MINICOM="-m -c on"
 
 # Setup Input Method
 export XMODIFIERS=@im=ibus
