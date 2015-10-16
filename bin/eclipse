@@ -1,2 +1,0 @@
-#!/bin/bash
-export LIBOVERLAY_SCROLLBAR=0 $HOME/Softwares/eclipse/eclipse
