@@ -101,7 +101,7 @@ alias wget='wget -c'
 alias simple-server='python -m SimpleHTTPServer 8000'
 
 ## dmesg with colored human-readable dates
-alias dmesg="dmesg -T|sed -e 's|\(^.*'`date +%Y`']\)\(.*\)|\x1b[0;34m\1\x1b[0m - \2|g' | less"
+alias dmesg="dmesg -T|sed -e 's|\(^.*'`date +%Y`']\)\(.*\)|\x1b[0;34m\1\x1b[0m - \2|g'"
 
 ## What's my public ip address?
 alias whatismyip="curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
@@ -113,8 +113,10 @@ alias random_mac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
 ## Secure delete file
 alias secure-delete='shred -n 200 -z -u'
 
+alias mtr='mtr --no-dns'
+
 ## Purging configuration files on Debian-based system
-alias purge-package-config="sudo aptitude purge '~c'"
+alias agpc="sudo aptitude purge '~c'"
 
 ## Set default system java
 alias java6-set-default='sudo update-java-alternatives -s java-6-oracle'
