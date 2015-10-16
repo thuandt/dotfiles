@@ -49,13 +49,16 @@ HIST_STAMPS="dd.mm.yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=( adb battery bundler colorize command-not-found common-aliases cp debian
-          emoji-clock encode64 extract gem git git-extras git-flow
-          git-remote-branch github gitignore go heroku history iwhois
-          history-substring-search jsontools mercurial mosh nmap pip python rails rake rsync
-          ruby rvm sbt scala screen sublime sudo svn systemadmin vagrant
-          tmux urltools virtualenv virtualenvwrapper vundle
-          wakeonlan web-search zsh_reload)
+
+plugins=( adb aws autopep8 battery bower bundler capistrano command-not-found
+          common-aliases copydir copyfile cp docker docker-compose fancy-ctrl-z
+          emoji emoji-clock emotty encode64 extract frontend-search git
+          git-extras git-remote-branch gpg-agent pj nix gitignore golang heroku
+          history history-substring-search httpie iwhois jsontools mercurial
+          mosh nmap perl pew pip python pylint rails rake rvm ruby redis-cli
+          rsync sbt scala sublime screen sudo supervisor systemadmin systemd
+          terraform tmux ubuntu urltools vagrant virtualenv
+          virtualenvwrapper vundle web-search zsh_reload )
 
 # User configuration
 
@@ -146,6 +149,21 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 ##### virtualenvwrapper #####
 [[ -s /usr/local/bin/virtualenvwrapper.sh ]] && source /usr/local/bin/virtualenvwrapper.sh
 
+##### Nix Package Manager #####
+[[ -s ~/.nix-profile/etc/profile.d/nix.sh ]] && source ~/.nix-profile/etc/profile.d/nix.sh
+
+# Populate hostname completion.
+zstyle -e ':completion:*:hosts' hosts 'reply=(${=${${${${(@M)${(f)"$(cat ~/.ssh/config 2>/dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}})'
+
+# SSH/SCP/RSYNC
+zstyle ':completion:*:(scp|rsync):*' tag-order 'hosts:-host:host hosts:-domain:domain hosts:-ipaddr:ip\ address *'
+zstyle ':completion:*:(scp|rsync):*' group-order users files all-files hosts-domain hosts-host hosts-ipaddr
+zstyle ':completion:*:ssh:*' tag-order 'hosts:-host:host hosts:-domain:domain hosts:-ipaddr:ip\ address *'
+zstyle ':completion:*:ssh:*' group-order users hosts-domain hosts-host users hosts-ipaddr
+zstyle ':completion:*:(ssh|scp|rsync):*:hosts-host' ignored-patterns '*(.|:)*' loopback ip6-loopback localhost ip6-localhost broadcasthost
+zstyle ':completion:*:(ssh|scp|rsync):*:hosts-domain' ignored-patterns '<->.<->.<->.<->' '^[-[:alnum:]]##(.[-[:alnum:]]##)##' '*@*'
+zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<->.<->.<->|(|::)([[:xdigit:].]##:(#c,2))##(|%*))' '127.0.0.<->' '0.0.0.0' '255.255.255.255' '::1' 'fe80::*'
+
 # Automatically run ls after every cd
 # function chpwd() {
 #     emulate -L zsh
@@ -154,14 +172,12 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 ### Keychain ###
 # Let re-use ssh-agent and/or gpg-agent between logins
-eval $(keychain --eval -Q --quiet --attempts 5 id_rsa)
+eval $(keychain --eval -Q --quiet --attempts 5 id_rsa id_ed25519 id_rsa_2048)
 source $HOME/.keychain/$HOSTNAME-sh
 source $HOME/.keychain/$HOSTNAME-sh-gpg
 
 # automatically source zshrc in all open terminals
 trap "source ~/.zshrc && rehash" USR1
-
-cd $HOME
 
 # Clear screen
 clear
