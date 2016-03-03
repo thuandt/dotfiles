@@ -1,13 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 # ~/.shell_aliases
 # Last Modified: 05/12/2013 01:41 AM
 
 # quick up to parent directory
 alias ..="cd .."
 alias ...="cd ../.."
+alias ....="cd ../../.."
+
+# use aliases with sudo
+alias sudo='sudo '
 
 ## Colorize the grep command output for ease of use (good for log files)##
-export GREP_OPTIONS='--color=auto' GREP_COLOR='1;31'
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -59,6 +62,7 @@ alias fastping='ping -c 100 -s.2'
 
 # Show open ports #
 alias open-ports='netstat -tulanp'
+alias listen-ports='netstat -tulpne'
 
 # do not delete / or prompt if deleting more than 3 files at a time #
 alias rm='rm -vI --preserve-root'
@@ -88,9 +92,6 @@ alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
 ## Get server cpu info ##
 alias cpuinfo='lscpu'
 
-## older system use /proc/cpuinfo ##
-##alias cpuinfo='less /proc/cpuinfo' ##
-
 ## get GPU ram on desktop / laptop##
 alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
 
@@ -101,7 +102,7 @@ alias wget='wget -c'
 alias simple-server='python -m SimpleHTTPServer 8000'
 
 ## dmesg with colored human-readable dates
-alias dmesg="dmesg -T|sed -e 's|\(^.*'`date +%Y`']\)\(.*\)|\x1b[0;34m\1\x1b[0m - \2|g'"
+alias dmesg="dmesg -T|sed -e 's|\(^.*'$(date +%Y)']\)\(.*\)|\x1b[0;34m\1\x1b[0m - \2|g'"
 
 ## What's my public ip address?
 #alias whatismyip="curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
@@ -123,5 +124,18 @@ alias agpc="sudo aptitude purge '~c'"
 alias java6-set-default='sudo update-java-alternatives -s java-6-oracle'
 alias java7-set-default='sudo update-java-alternatives -s java-7-oracle'
 alias java8-set-default='sudo update-java-alternatives -s java-8-oracle'
+
+# Using pew instead virtualenvwrapper
+alias workon='pew workon'
+
+# dstat alias
+alias dstat-full='dstat -Tclmdrn'
+alias dstat-mem='dstat -Tclm'
+alias dstat-cpu='dstat -Tclr'
+alias dstat-net='dstat -Tclnd'
+alias dstat-disk='dstat -Tcldr'
+
+# The sliver searcher (ag)
+alias Ag='/usr/bin/ag'
 
 # End of ~/.shell_aliases
