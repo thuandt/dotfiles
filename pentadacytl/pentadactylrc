@@ -12,7 +12,7 @@ set incfind
 " Highlight previous search pattern matches
 set hlfind
 
-" Ignore case in search unless pattern has uppercase chars,
+" Ignore case in search unless pattern has uppercase chars
 set findcase=smart
 
 " a toggle for search highlight
@@ -60,21 +60,27 @@ nmap -builtin f <nop>
 " Go into pass through mode when invoking group tabs
 nmap -builtin <M-S-E> <C-z><M-S-E>
 
+" Support for nextpatten
+set nextpattern=\s*下一页|下一张|下页\s*,\bnext|Older|older\b,^$,^>$,^(→|>>|»)$,^(→|>|»),(→|>|»)$
+set previouspattern=\s*上一页|上一张|上页\s*,\bprev|previous|newer|Newer\b,^<$,^(←|<|«)$,^(←|<|«),(←|<|«)$
+
 " [Firefox] Incompatibility between uBlock and Pentadactyl
 " https://github.com/chrisaljoudi/uBlock/issues/549
 style -name ublick * #nav-bar * { visibility: visible; }
 
 colorscheme solarized-dark
 
-"Focus settings, (Let gmail mess with DOM)
-set strictfocus=google.com:laissez-faire,'chrome:*':laissez-faire,*:despotic
+set titlestring="Firefox ❤ Vim"
 
 " Loading custom css
 so ~/.pentadactyl/user.css
 
 " Ignore in Google Docs and Drive
 autocmd LocationChange https://docs.google.com  :normal! <C-z>
-autocmd LocationChange https://drive.google.com  :normal! <C-z>
+autocmd LocationChange https://drive.google.com :normal! <C-z>
+
+"Focus settings, (Let gmail mess with DOM)
+set strictfocus=google.com:laissez-faire,'chrome:*':laissez-faire,*:despotic
 
 " Allow GMail shortcuts
 set passkeys+=mail.google.com:jksacrqG#<CR>,gi,gl,gp
@@ -87,12 +93,16 @@ autocmd LocationChange mail.google.com set ht+=td.gF
 " Let Hint Expand Delete All Spam Messages
 autocmd LocationChange mail.google.com set ht+=span.x2
 
-" Auto pin mail.google.com
+" Auto pin Gmail
 autocmd PageLoad mail.google.com js if(!getBrowser().mCurrentTab.pinned) getBrowser().pinTab(getBrowser().mCurrentTab);
 autocmd PageLoad gmail.com js if(!getBrowser().mCurrentTab.pinned) getBrowser().pinTab(getBrowser().mCurrentTab);
 
-" Trello
+" Auto pin Trello
 autocmd PageLoad trello.com js if(!getBrowser().mCurrentTab.pinned) getBrowser().pinTab(getBrowser().mCurrentTab);
+
+" Auto pin Trobz's TMS + GitLab
+autocmd PageLoad tms.trobz.com js if(!getBrowser().mCurrentTab.pinned) getBrowser().pinTab(getBrowser().mCurrentTab);
+autocmd PageLoad gitlab.trobz.com js if(!getBrowser().mCurrentTab.pinned) getBrowser().pinTab(getBrowser().mCurrentTab);
 
 " Hint Instagram Load More
 autocmd LocationChange instagram.com set ht+=a.button.button-grey.button-large
