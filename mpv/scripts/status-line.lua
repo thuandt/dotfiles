@@ -1,0 +1,1 @@
+/usr/share/doc/mpv/tools/lua/status-line.lua
