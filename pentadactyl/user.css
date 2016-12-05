@@ -75,7 +75,7 @@
         display: none !important;
     }
 }
-@-moz-document domain("facebook.com") {
+@-moz-document domain("www.facebook.com") {
     #rightCol {
         display: none !important;
     }
@@ -88,6 +88,8 @@
     .fbChatSidebar, #fbDockChatBuddylistNub {
         display: none !important;
     }
+}
+@-moz-document domain("facebook.com") {
     /** Set Background color for page **/
     .fbIndex {
         background-color: #3B5998 !important
