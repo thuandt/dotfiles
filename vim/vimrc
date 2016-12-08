@@ -56,34 +56,11 @@ Plug 'vim-airline/vim-airline-themes'
   nmap <leader>9 <Plug>AirlineSelectTab9
 " }}}
 
-" The fancy start screen for Vim.
-Plug 'mhinz/vim-startify'
-" {{{
-  let g:startify_session_dir = '~/.vim/session'
-  let g:startify_list_order = ['sessions']
-  let g:startify_session_persistence = 1
-  let g:startify_session_delete_buffers = 1
-  let g:startify_change_to_dir = 1
-  let g:startify_change_to_vcs_root = 1
-  nnoremap <F12> :Startify<CR>
-  autocmd! User Startified setlocal colorcolumn=0
-" }}}
-
-Plug 't9md/vim-choosewin'
-" {{{
-  nmap - <Plug>(choosewin)
-  let g:choosewin_blink_on_land = 0
-  let g:choosewin_tabline_replace = 0
-  let g:choosewin_overlay_enable = 1
-" }}}
-
 " The NERD Tree:  A tree explorer plugin for vim
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
 " Open NERDTree with Ctrl+n
 map <C-n> :NERDTreeToggle<CR>
-
-Plug 'ryanoasis/vim-devicons'
 
 " =============================================================================
 " Completion
@@ -233,6 +210,10 @@ au FileType go nmap <Leader>e <Plug>(go-rename)
 " vim systemd service syntax
 Plug 'Matt-Deacalion/vim-systemd-syntax'
 
+" vim flatbuffers syntax
+Plug 'dcharbon/vim-flatbuffers'
+
+
 " Markdown Vim Mode
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
@@ -301,8 +282,10 @@ Plug 'airblade/vim-gitgutter'
 " Misc
 " =============================================================================
 
-Plug 'rking/ag.vim'
-let g:ag_working_path_mode="r"
+Plug 'mileszs/ack.vim'
+if executable('/usr/bin/ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
 
 " Make commenting easier
 Plug 'tpope/vim-commentary'
@@ -555,7 +538,10 @@ endif
 
 " ========================== Auto Command ===================================
 " Automatically reload vimrc when it's saved
-au BufWritePost .vimrc so ~/.vimrc
+augroup reload_vimrc
+    autocmd!
+    autocmd BufWritePost $MYVIMRC nested source $MYVIMRC
+augroup END
 
 " PEP8 indentation for Python
 au BufNewFile,BufRead *.py set tabstop=4
