@@ -1,2 +1,2 @@
 # pew zsh completions
-source "$(pew shell_config)"
+source /usr/local/lib/python2.7/dist-packages/pew/shell_config/init.zsh
