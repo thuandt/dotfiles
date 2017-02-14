@@ -100,7 +100,7 @@ bashlogger () {
 }
 
 # install latest docker compose via GitHub API and curl
-install-docker-compose () {
+install-dcp () {
     fname="docker-compose-$(uname -s)-$(uname -m)"
     fbin="/home/mrtux/.local/bin/docker-compose"
     repos_dl="https://github.com/docker/compose/releases/download"
@@ -110,8 +110,8 @@ install-docker-compose () {
     curl -sSL $repos_dl/"$version"/"$fname" -o "$fbin"
     chmod +x $fbin
     # install lastest zsh completion
-    /bin/rm -f /home/mrtux/.oh-my-zsh/custom/plugins/docker-compose/_docker-compose
-    curl -sSL https://raw.githubusercontent.com/docker/compose/"$(docker-compose version --short)"/contrib/completion/zsh/_docker-compose -o ~/.oh-my-zsh/custom/plugins/docker-compose/_docker-compose
+    /bin/rm -f "${ZSH_CUSTOM}/plugins/docker-compose/_docker-compose"
+    curl -sSL https://raw.githubusercontent.com/docker/compose/"$(docker-compose version --short)"/contrib/completion/zsh/_docker-compose -o "${ZSH_CUSTOM}/plugins/docker-compose/_docker-compose"
 }
 
 # install latest cli53 (go version) via GitHub API and curl
