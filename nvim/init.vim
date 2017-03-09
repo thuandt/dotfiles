@@ -243,7 +243,7 @@ let g:ycm_complete_in_strings = 1
 let g:ycm_server_python_interpreter = '/usr/bin/python3'
 
 " Rust source tree
-let g:ycm_rust_src_path = '/home/mrtux/DevProjects/opensource/rustsrc'
+let g:ycm_rust_src_path = '/home/mrtux/Projects/opensource/rustsrc'
 
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
@@ -380,7 +380,6 @@ Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 let g:vim_markdown_folding_disabled=1  " Disable Folding
 let g:vim_markdown_math=1  " LaTeX math
 let g:vim_markdown_frontmatter=1 " YAML
-
 
 " =============================================================================
 " Git
