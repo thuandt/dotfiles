@@ -18,7 +18,7 @@ fi
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
 POWERLEVEL9K_MODE='awesome-fontconfig'
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon time load status root_indicator background_jobs dir vcs aws virtualenv rbenv)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon time load battery status root_indicator background_jobs dir vcs virtualenv rbenv)
 POWERLEVEL9K_TIME_FOREGROUND='011'
 POWERLEVEL9K_TIME_BACKGROUND='$DEFAULT_COLOR'
 POWERLEVEL9K_TIME_FORMAT="%D{%H:%M:%S}"
@@ -30,9 +30,6 @@ POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="╭─"
 POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="╰─%B➤%b "
 POWERLEVEL9K_DISABLE_RPROMPT=true
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
-
-POWERLEVEL9K_SHOW_CHANGESET=false
-POWERLEVEL9K_CHANGESET_HASH_LENGTH=6
 
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_right"
@@ -84,7 +81,7 @@ HIST_STAMPS="dd.mm.yyyy"
 # Add wisely, as too many plugins slow down shell startup.
 
 plugins=(ag anhoi emoi remoteoi adb cabal command-not-found docker-compose
-         encode64 extract fancy-ctrl-z fzf gcloud
+         docker-machine encode64 extract fancy-ctrl-z gcloud
          git git-extras git-flow-avh git-hubflow git-remote-branch gitignore
          golang kubectl heroku history history-substring-search
          httpie iwhois mercurial mosh mpv node npm
@@ -242,6 +239,9 @@ zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
 
 # direnv
 eval "$(direnv hook zsh)"
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 ### Keychain ###
 # Let re-use ssh-agent and/or gpg-agent between logins
