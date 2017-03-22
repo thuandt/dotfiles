@@ -61,8 +61,8 @@ nmap -builtin f <nop>
 nmap -builtin <M-S-E> <C-z><M-S-E>
 
 " Support for nextpatten
-set nextpattern=\s*下一页|下一张|下页\s*,\bnext|Older|older\b,^$,^>$,^(→|>>|»)$,^(→|>|»),(→|>|»)$
-set previouspattern=\s*上一页|上一张|上页\s*,\bprev|previous|newer|Newer\b,^<$,^(←|<|«)$,^(←|<|«),(←|<|«)$
+set nextpattern=\bnext|Older|older\b,^>$,^(→|>>|»)$,^(→|>|»),(→|>|»)$
+set previouspattern=\bprev|previous|newer|Newer\b,^<$,^(←|<|«)$,^(←|<|«),(←|<|«)$
 
 " [Firefox] Incompatibility between uBlock and Pentadactyl
 " https://github.com/chrisaljoudi/uBlock/issues/549
