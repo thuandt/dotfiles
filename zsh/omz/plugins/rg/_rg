@@ -1,15 +1,17 @@
 #compdef rg
 
 _rg() {
-	typeset -A opt_args
-	local ret=1
+    typeset -A opt_args
+    local ret=1
 
-	local context curcontext="$curcontext" state line
+    local context curcontext="$curcontext" state line
     _arguments -s -S -C \
 "*-e+[A regular expression used for searching.]" \
 "*--regexp+[A regular expression used for searching.]" \
 "--color+[When to use color. \[default: auto\]]: :(never auto always ansi)" \
 "*--colors+[Configure color settings and styles.]" \
+"-E+[Specify the text encoding of files to search.]" \
+"--encoding+[Specify the text encoding of files to search.]" \
 "*-g+[Include or exclude files/directories.]" \
 "*--glob+[Include or exclude files/directories.]" \
 "*-t+[Only search files matching TYPE.]" \
@@ -28,12 +30,15 @@ _rg() {
 "*--ignore-file+[Specify additional ignore files.]" \
 "-m+[Limit the number of matches.]" \
 "--max-count+[Limit the number of matches.]" \
+"--max-filesize+[Ignore files larger than NUM in size.]" \
 "--maxdepth+[Descend at most NUM directories.]" \
 "--path-separator+[Path separator to use when printing file paths.]" \
 "-r+[Replace matches with string given.]" \
 "--replace+[Replace matches with string given.]" \
 "-j+[The approximate number of threads to use.]" \
 "--threads+[The approximate number of threads to use.]" \
+"-M+[Don't print lines longer than this limit in bytes.]" \
+"--max-columns+[Don't print lines longer than this limit in bytes.]" \
 "*--type-add+[Add a new glob for a file type.]" \
 "*--type-clear+[Clear globs for given file type.]" \
 "-h[Show short help output.]" \
@@ -64,9 +69,9 @@ _rg() {
 "--word-regexp[Only show matches surrounded by word boundaries.]" \
 "--column[Show column numbers]" \
 "--debug[Show debug messages.]" \
-"-l[Only show the path of each file with at least one match.]" \
-"--files-with-matches[Only show the path of each file with at least one match.]" \
-"--files-without-match[Only show the path of each file that contains zero matches.]" \
+"-l[Only show the paths with at least one match.]" \
+"--files-with-matches[Only show the paths with at least one match.]" \
+"--files-without-match[Only show the paths that contains zero matches.]" \
 "-H[Show file name for each match.]" \
 "--with-filename[Show file name for each match.]" \
 "--no-filename[Never show the file name for a match.]" \
