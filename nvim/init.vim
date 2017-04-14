@@ -521,7 +521,6 @@ else
   " Hack to get Ctrl+H working in NeoVim
   nmap <BS> <C-W>h
 end
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 0
 let g:solarized_termcolors=256
 let g:solarized_termtrans=1
 colorscheme solarized
