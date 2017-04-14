@@ -41,10 +41,6 @@ _rg() {
 "--max-columns+[Don't print lines longer than this limit in bytes.]" \
 "*--type-add+[Add a new glob for a file type.]" \
 "*--type-clear+[Clear globs for given file type.]" \
-"-h[Show short help output.]" \
-"--help[Show verbose help output.]" \
-"-V[Prints version information.]" \
-"--version[Prints version information.]" \
 "(-f --file -e --regexp --type-list)--files[Print each file that would be searched.]" \
 "(-f --file --files -e --regexp)--type-list[Show all supported file types.]" \
 "-a[Search binary files as if they were text.]" \
@@ -86,7 +82,10 @@ _rg() {
 "--no-ignore[Don't respect ignore files.]" \
 "--no-ignore-parent[Don't respect ignore files in parent directories.]" \
 "--no-ignore-vcs[Don't respect VCS ignore files]" \
+"-0[Print NUL byte after file names]" \
 "--null[Print NUL byte after file names]" \
+"(-r --replace)-o[Print only matched parts of a line.]" \
+"(-r --replace)--only-matching[Print only matched parts of a line.]" \
 "-p[Alias for --color always --heading -n.]" \
 "--pretty[Alias for --color always --heading -n.]" \
 "-s[Search case sensitively.]" \
@@ -95,6 +94,10 @@ _rg() {
 "--smart-case[Smart case search.]" \
 "--sort-files[Sort results by file path. Implies --threads=1.]" \
 "--vimgrep[Show results in vim compatible format.]" \
+"-h[Prints help information. Use --help for more details.]" \
+"--help[Prints help information. Use --help for more details.]" \
+"-V[Prints version information]" \
+"--version[Prints version information]" \
 "1:: :_rg_commands" \
 && ret=0
     
