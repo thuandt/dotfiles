@@ -19,7 +19,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 
 POWERLEVEL9K_MODE='awesome-fontconfig'
 DEFAULT_USER=$USER
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context time load battery status root_indicator background_jobs disk_usage dir dir_writable vcs virtualenv rbenv)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon root_indicator context time load battery status background_jobs disk_usage dir dir_writable vcs virtualenv rbenv)
 POWERLEVEL9K_TIME_FOREGROUND='011'
 POWERLEVEL9K_TIME_BACKGROUND='$DEFAULT_COLOR'
 POWERLEVEL9K_TIME_FORMAT="%D{%H:%M:%S}"
