@@ -103,15 +103,40 @@ bashlogger () {
 install-dcp () {
     fname="docker-compose-$(uname -s)-$(uname -m)"
     fbin="/home/mrtux/.local/bin/docker-compose"
+    fcomp="$HOME/.local/share/zsh/site-functions/_docker-compose"
+
     repos_dl="https://github.com/docker/compose/releases/download"
     repos_api="https://api.github.com/repos/docker/compose/releases/latest"
-    version=$(curl -sSL $repos_api | jq -r '. | .tag_name')
+    version=$(curl -sSL ${repos_api} | jq -r '. | .tag_name')
+
+    # download and install binary
     /bin/rm -f "$fbin"
-    curl -sSL $repos_dl/"$version"/"$fname" -o "$fbin"
+    curl -sSL "${repos_dl}/${version}/${fname}" -o "${fbin}"
     chmod +x $fbin
-    # install lastest zsh completion
-    /bin/rm -f "${ZSH_CUSTOM}/plugins/docker-compose/_docker-compose"
-    curl -sSL https://raw.githubusercontent.com/docker/compose/"$(docker-compose version --short)"/contrib/completion/zsh/_docker-compose -o "${ZSH_CUSTOM}/plugins/docker-compose/_docker-compose"
+
+    # download and install zsh completion
+    /bin/rm -f "${fcomp}"
+    curl -sSL https://raw.githubusercontent.com/docker/compose/"${version}"/contrib/completion/zsh/_docker-compose -o "${fcomp}"
+}
+
+# Install docker-machine latest version
+install-dcm () {
+    fname="docker-machine-$(uname -s)-$(uname -m)"
+    fbin="/home/mrtux/.local/bin/docker-machine"
+    fcomp="$HOME/.local/share/zsh/site-functions/_docker-machine"
+
+    repos_dl="https://github.com/docker/machine/releases/download"
+    repos_api="https://api.github.com/repos/docker/machine/releases/latest"
+    version=$(curl -sSL ${repos_api} | jq -r '. | .tag_name')
+
+    # download and install binary
+    /bin/rm -f "$fbin"
+    curl -sSL "${repos_dl}/${version}/${fname}" -o "${fbin}"
+    chmod +x $fbin
+
+    # download and install zsh completion
+    /bin/rm -f "${fcomp}"
+    curl -sSL https://raw.githubusercontent.com/docker/machine/"${version}"/contrib/completion/zsh/_docker-machine -o "${fcomp}"
 }
 
 # Install Terraform latest version
