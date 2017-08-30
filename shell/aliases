@@ -248,6 +248,7 @@ alias kr="kubectl get rs"
 alias krc="kubectl get rc"
 alias kd="kubectl get deployment"
 alias kp="kubectl get pods"
+alias kpa="kubectl get pods --all-namespaces"
 alias kk="kubectl get svc,deployment,rs,pods"
 
 alias dsn="kubectl describe node"
