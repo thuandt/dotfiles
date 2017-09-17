@@ -204,6 +204,12 @@ alias ag='command ag'
 # SSH without HostKeyChecking and KnownHosts
 alias tssh="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 
+
+### BENCHMARK DISK IO ###
+alias fio-r='fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=fio --filename=fio --bs=4k --iodepth=64 --size=4G --readwrite=randread'
+alias fio-w='fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=fio --filename=fio --bs=4k --iodepth=64 --size=4G --readwrite=randwrite'
+alias fio-rw='fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=fio --filename=fio --bs=4k --iodepth=64 --size=4G --readwrite=randrw --rwmixread=75'
+
 ### Docker aliases ###
 # Stop all running containers
 alias dsa='docker stop $(docker ps -a -q)'
@@ -232,8 +238,7 @@ alias gflrf='git flow release finish'
 
 
 ### Kubernetes aliases ###
-alias kpfz="kubectl config use-context gke_gke-infrastructure_asia-east1-a_integration"
-alias kss="kubectl config use-context gke_docomodigital-146813_asia-east1-c_keymono-staging"
+alias kgg="gcloud config configurations activate default && kubectl config use-context thuandt_gke-labs"
 
 alias k="kubectl"
 alias kg="kubectl get"
@@ -271,12 +276,6 @@ alias dds="kubectl delete svc"
 alias ddp="kubectl delete pod"
 alias kcm="kubectl create configmap"
 alias kdm="kubectl delete configmap"
-alias kscl="kubectl get hpa"
-
-# scale
-scl() {
-    kubectl scale deployment "$1" --replicas="$2"
-}
-alias sclr="kubectl scale rc"
+alias khpa="kubectl get hpa"
 
 # End of ~/.shell_aliases
