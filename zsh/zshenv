@@ -1,2 +1,4 @@
-# https://github.com/robbyrussell/oh-my-zsh/issues/1433
-DEBIAN_PREVENT_KEYBOARD_CHANGES=yes
+if [[ "$OSTYPE" = linux* ]] ; then
+    # https://github.com/robbyrussell/oh-my-zsh/issues/1433
+    DEBIAN_PREVENT_KEYBOARD_CHANGES=yes
+fi
