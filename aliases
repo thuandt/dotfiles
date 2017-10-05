@@ -1,6 +1,5 @@
 #!/bin/bash
-# ~/.shell_aliases
-# Last Modified: 05/12/2013 01:41 AM
+# ~/.aliases
 
 # quick up to parent directory
 alias ..="cd .."
