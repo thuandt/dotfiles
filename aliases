@@ -157,7 +157,8 @@ alias drmi='docker image prune --all'
 alias dvc="docker volume ls -qf dangling=true | xargs -r docker volume rm"
 
 ### Kubernetes aliases ###
-alias kgg="gcloud config configurations activate default && kubectl config use-context thuandt_gke-labs"
+alias kgg="gcloud config configurations activate default && kubectl config use-context gke-labs"
+alias kmini="kubectl config use-context minikube"
 
 alias tf="terraform"
 
