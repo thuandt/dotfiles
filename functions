@@ -186,7 +186,7 @@ if [[ "$OSTYPE" = linux* ]] ; then
     }
 
 
-    # Install cli53 (golang) latest version
+    # install cli53
     install-cli53 () {
         fname="cli53-linux-amd64"
         fbin="${MYBIN}/cli53"
@@ -198,6 +198,12 @@ if [[ "$OSTYPE" = linux* ]] ; then
         chmod +x "$fbin"
     }
 
+
+    # Install hugo
+    install-hugo () {
+        readonly version=$(curl -sSL https://api.github.com/repos/gohugoio/hugo/releases/latest | jq -r '. | .tag_name')
+        curl -sSL "https://github.com/gohugoio/hugo/releases/download/${version}/hugo_${version#?}_Linux-64bit.tar.gz" | tar -C "${MYBIN}" -xzf - hugo
+    }
 
     # Usage: install-kubectl v1.8.1
     install-kubectl() {
