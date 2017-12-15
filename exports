@@ -10,14 +10,13 @@ export HISTFILESIZE=${HISTSIZE}                 # shell will remember N commands
 if [[ "$OSTYPE" = linux* ]] ; then
     ### Setup PATH ###
     export MYBIN=$HOME/.local/bin                  # user binaries
-    export CABALBIN=$HOME/.cabal/bin               # Haskell cabal
     export CARGOBIN=$HOME/.cargo/bin               # Rust cargo
     export GOPATH=$HOME/.go                        # gocode
     export GOROOT=/usr/local/go                    # golang
     export TFENV=$HOME/.tfenv/bin                  # tfenv
 
     # My custom path
-    export MYPATH=${MYBIN}:${TFENV}:${CABALBIN}:${CARGOBIN}:${GOPATH}/bin
+    export MYPATH=${MYBIN}:${TFENV}:${CARGOBIN}:${GOPATH}/bin
 
     # Add directory to $PATH if it's not already there
     if [[ ":$PATH:" != *":${MYPATH}:"* ]]; then PATH=${MYPATH}:$PATH; fi
