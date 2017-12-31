@@ -211,6 +211,9 @@ Plug 'mhinz/vim-startify'
   autocmd! User Startified setlocal colorcolumn=0
 " }}}
 
+" Editorconfig
+Plug 'editorconfig/editorconfig-vim'
+
 " The NERD Tree:  A tree explorer plugin for vim
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
