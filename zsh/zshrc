@@ -105,22 +105,24 @@ if [[ "$OSTYPE" = darwin* ]] ; then
     # docker and docker-compose plugin will use vendor completion
     plugins=(zsh-completions go-zsh-completions
 
+             docker docker-compose docker-machine
              encode64 extract
              git git-extras git-remote-branch gitignore
-             github git-flow-avh git-hubflow
+             github git-flow-avh git-hubflow gnu-utils golang
              history history-substring-search
 
              httpie mosh vi-mode
              pew pyenv pip python pylint redis-cli rg rsync
              screen tmux sudo terraform osx vagrant zsh_reload z
 
-             gcloud kubectl helm kops awscli
+             gcloud kubectl helm kubernetes awscli
              zsh-autosuggestions zsh-syntax-highlighting)
 else
     # docker and docker-compose plugin will use vendor completion
     plugins=(zsh-completions go-zsh-completions
 
              adb bundler cabal command-not-found encode64 extract fancy-ctrl-z
+             docker docker-compose docker-machine
              git git-extras git-remote-branch gitignore
              github git-flow-avh git-hubflow
              golang heroku history history-substring-search
@@ -130,7 +132,7 @@ else
              rake rbenv sbt scala stack screen sudo supervisor systemadmin
              systemd tmux terraform ubuntu vagrant virtualenv zsh_reload z
 
-             gcloud kubectl helm kops awscli
+             gcloud kubectl helm kubernetes awscli
              zsh-autosuggestions zsh-syntax-highlighting)
 fi
 
@@ -306,11 +308,11 @@ eval "$(direnv hook zsh)"
 ### Keychain ###
 # Let re-use ssh-agent and/or gpg-agent between logins
 if [[ "$OSTYPE" = darwin* ]] ; then
-    eval $(keychain --eval -Q --quiet --attempts 5 id_ed25519 id_rsa id_rsa_2048)
+    eval $(keychain --eval -Q --quiet --agents ssh --inherit any --attempts 5 id_ed25519 id_rsa id_rsa_2048)
     source $HOME/.keychain/$(hostname)-sh
     # source $HOME/.keychain/$(hostname)-sh-gpg
 else
-    eval $(keychain --eval -Q --quiet --attempts 5 --systemd id_ed25519 id_rsa id_rsa_2048)
+    eval $(keychain --eval -Q --quiet --agents ssh --attempts 5 --systemd id_ed25519 id_rsa id_rsa_2048)
     source $HOME/.keychain/$(hostname)-sh
     # source $HOME/.keychain/$(hostname)-sh-gpg
 fi
