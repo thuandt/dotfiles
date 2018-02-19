@@ -66,7 +66,7 @@ CASE_SENSITIVE="false"
 HYPHEN_INSENSITIVE="true"
 
 # Automatically upgrade itself without prompting
-DISABLE_UPDATE_PROMPT=true
+DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
 DISABLE_AUTO_UPDATE="false"
@@ -308,7 +308,7 @@ eval "$(direnv hook zsh)"
 ### Keychain ###
 # Let re-use ssh-agent and/or gpg-agent between logins
 if [[ "$OSTYPE" = darwin* ]] ; then
-    eval $(keychain --eval -Q --quiet --agents ssh --inherit any --attempts 5 id_ed25519 id_rsa id_rsa_2048)
+    eval $(keychain --eval -Q --quiet --agents ssh --inherit any --attempts 5 id_ed25519 id_rsa id_rsa_2048 aws.pem)
     source $HOME/.keychain/$(hostname)-sh
     # source $HOME/.keychain/$(hostname)-sh-gpg
 else
