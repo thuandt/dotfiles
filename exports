@@ -47,7 +47,7 @@ if [[ "$OSTYPE" = linux* ]] ; then
     export LANG=en_US.UTF-8
 
     export BROWSER="firefox -new-tab %s"
-    export EDITOR="vim"
+    export EDITOR="nvim"
     export USE_EDITOR=$EDITOR
     export VISUAL=$EDITOR
 fi

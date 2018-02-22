@@ -1,6 +1,10 @@
 #!/bin/bash
 # ~/.aliases
 
+# use neovim instead vim
+alias vim="nvim"
+alias vi="nvim"
+
 # quick up to parent directory
 alias ..="cd .."
 alias ...="cd ../.."
