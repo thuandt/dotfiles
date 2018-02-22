@@ -104,7 +104,7 @@ if [[ "$OSTYPE" = linux* ]] ; then
     #   39   Power Supply
 
     ## Generate a Random MAC address
-    alias random_mac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
+    alias random_mac="openssl rand -hex 6 | sed 's/\\(..\\)/\\1:/g; s/.$//'"
 
     ## Secure delete file
     alias secure-delete='shred -n 200 -z -u'
@@ -156,10 +156,10 @@ alias drmi='docker image prune --all'
 # Volume cleanup
 alias dvc="docker volume ls -qf dangling=true | xargs -r docker volume rm"
 
+alias tf="terraform"
+
 ### Kubernetes aliases ###
 alias kgg="gcloud config configurations activate default && kubectl config use-context gke-labs"
 alias kmini="kubectl config use-context minikube"
-
-alias tf="terraform"
 
 # End of file
