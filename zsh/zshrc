@@ -308,11 +308,11 @@ eval "$(direnv hook zsh)"
 ### Keychain ###
 # Let re-use ssh-agent and/or gpg-agent between logins
 if [[ "$OSTYPE" = darwin* ]] ; then
-    eval $(keychain --eval -Q --quiet --agents ssh --inherit any --attempts 5 id_ed25519 id_rsa id_rsa_2048 aws.pem)
+    eval $(keychain --eval -Q --quiet --agents ssh --inherit any --attempts 5 id_ed25519 aws id_rsa myaws legacy)
     source $HOME/.keychain/$(hostname)-sh
     # source $HOME/.keychain/$(hostname)-sh-gpg
 else
-    eval $(keychain --eval -Q --quiet --agents ssh --attempts 5 --systemd id_ed25519 id_rsa id_rsa_2048)
+    eval $(keychain --eval -Q --quiet --agents ssh --inherit any --attempts 5 --systemd id_ed25519 aws id_rsa myaws legacy)
     source $HOME/.keychain/$(hostname)-sh
     # source $HOME/.keychain/$(hostname)-sh-gpg
 fi
