@@ -19,7 +19,7 @@ if [[ "$OSTYPE" = linux* ]] ; then
     # My custom path
     export MYPATH=${MYBIN}:${TFENV}:${CARGOBIN}:${GOPATH}/bin:${YARNBIN}
 
-    # Add directory to $PATH if it's not already there
+    # Add directory to $PATH if its not already there
     if [[ ":$PATH:" != *":${MYPATH}:"* ]]; then PATH=${MYPATH}:$PATH; fi
 
     ### virtualenv ###
@@ -47,10 +47,12 @@ if [[ "$OSTYPE" = linux* ]] ; then
     export LANG=en_US.UTF-8
 
     export BROWSER="firefox -new-tab %s"
-    export EDITOR="nvim"
-    export USE_EDITOR=$EDITOR
-    export VISUAL=$EDITOR
 fi
+
+# Use nvim instead vi(m)
+export EDITOR="nvim"
+export USE_EDITOR=$EDITOR
+export VISUAL=$EDITOR
 
 # Color man pages
 export PAGER='less'
