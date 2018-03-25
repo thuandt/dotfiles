@@ -226,6 +226,23 @@ if [[ "$OSTYPE" = linux* ]] ; then
              -o "$MYBIN/kops"
     }
 
+    # Usage: pia sgn up/down
+    pia() {
+        location=${1:sgn}
+        action=${2:-up}
+        case ${location} in
+            hk )
+                nmcli con "${action}" id 'PIA - Hong Kong'
+                ;;
+            us )
+                nmcli con "${action}" id 'PIA - US West'
+                ;;
+            * )
+                nmcli con "${action}" id 'PIA - Singapore'
+                ;;
+        esac
+    }
+
 fi
 
 transfer() {
