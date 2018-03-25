@@ -1,21 +1,21 @@
 [submodule "dircolors"]
 	path = dircolors
-	url = git@github.com:seebi/dircolors-solarized.git
+	url = https://github.com/seebi/dircolors-solarized.git
 [submodule "tmux/colors"]
 	path = tmux/colors
-	url = git@github.com:seebi/tmux-colors-solarized.git
+	url = https://github.com/seebi/tmux-colors-solarized.git
 [submodule "zsh/omz/plugins/zsh-autosuggestions"]
 	path = zsh/omz/plugins/zsh-autosuggestions
-	url = git@github.com:zsh-users/zsh-autosuggestions.git
+	url = https://github.com/zsh-users/zsh-autosuggestions.git
 [submodule "zsh/omz/plugins/zsh-syntax-highlighting"]
 	path = zsh/omz/plugins/zsh-syntax-highlighting
-	url = git@github.com:zsh-users/zsh-syntax-highlighting.git
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "zsh/omz/themes/powerlevel9k"]
 	path = zsh/omz/themes/powerlevel9k
-	url = git@github.com:bhilburn/powerlevel9k.git
+	url = https://github.com/bhilburn/powerlevel9k.git
 [submodule "zsh/omz/plugins/zsh-completions"]
 	path = zsh/omz/plugins/zsh-completions
-	url = git@github.com:zsh-users/zsh-completions.git
+	url = https://github.com/zsh-users/zsh-completions.git
 [submodule "zsh/omz/plugins/go-zsh-completions"]
 	path = zsh/omz/plugins/go-zsh-completions
-	url = git@github.com:zchee/go-zsh-completions.git
+	url = https://github.com/zchee/go-zsh-completions.git
