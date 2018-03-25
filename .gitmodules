@@ -19,3 +19,6 @@
 [submodule "zsh/omz/plugins/go-zsh-completions"]
 	path = zsh/omz/plugins/go-zsh-completions
 	url = https://github.com/zchee/go-zsh-completions.git
+[submodule "awesome/copycats"]
+	path = awesome/copycats
+	url = https://github.com/lcpz/awesome-copycats.git
