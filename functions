@@ -228,7 +228,7 @@ if [[ "$OSTYPE" = linux* ]] ; then
 
     # Usage: pia sgn up/down
     pia() {
-        location=${1:sgn}
+        location=${1:-sgn}
         action=${2:-up}
         case ${location} in
             hk )
@@ -249,7 +249,7 @@ transfer() {
     # check arguments
     if [ $# -eq 0 ];
     then
-        printf "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"
+        printf "No arguments specified. Usage:\\necho transfer /tmp/test.md\\ncat /tmp/test.md | transfer test.md"
         return 1
     fi
 
