@@ -263,6 +263,7 @@ fi
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 ### Customize ENV, aliases and functions ###
+[[ -s "${HOME}/.logger" ]] && source "${HOME}/.logger"
 [[ -s "${HOME}/.exports" ]] && source "${HOME}/.exports"
 [[ -s "${HOME}/.aliases" ]] && source "${HOME}/.aliases"
 [[ -s "${HOME}/.functions" ]] && source "${HOME}/.functions"
