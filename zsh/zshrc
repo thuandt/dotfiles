@@ -29,8 +29,9 @@ if [[ "$OSTYPE" = darwin* ]] ; then
     # Fira Code everywhere
     POWERLEVEL9K_MODE='nerdfont-complete'
 else
-    # Operator Mono
-    POWERLEVEL9K_MODE='awesome-fontconfig'
+    # # Operator Mono
+    # POWERLEVEL9K_MODE='awesome-fontconfig'
+    POWERLEVEL9K_MODE='nerdfont-complete'
 fi
 
 DEFAULT_USER=$USER
@@ -312,7 +313,7 @@ if [[ "$OSTYPE" = darwin* ]] ; then
     source $HOME/.keychain/$(hostname)-sh
     # source $HOME/.keychain/$(hostname)-sh-gpg
 else
-    eval $(keychain --eval -Q --quiet --agents ssh --inherit any --attempts 5 --systemd id_ed25519 aws id_rsa myaws legacy)
+    eval $(keychain --eval -Q --quiet --agents ssh --attempts 5 --systemd id_ed25519 aws id_rsa myaws legacy)
     source $HOME/.keychain/$(hostname)-sh
     # source $HOME/.keychain/$(hostname)-sh-gpg
 fi
