@@ -6,15 +6,16 @@ export SAVEHIST=10000                           # Remember about a years worth o
 export HISTSIZE=10000                           # shell history will save N commands
 export HISTFILESIZE=${HISTSIZE}                 # shell will remember N commands
 
-
-if [[ "$OSTYPE" = linux* ]] ; then
+if [[ "$OSTYPE" = darwin* ]] ; then
+    export PATH=$HOME/.local/bin:$PATH          # user binaries
+else
     ### Setup PATH ###
-    export MYBIN=$HOME/.local/bin                  # user binaries
-    export CARGOBIN=$HOME/.cargo/bin               # Rust cargo
-    export GOPATH=$HOME/.go                        # gocode
-    export GOROOT=/usr/local/go                    # golang
-    export TFENV=$HOME/.tfenv/bin                  # tfenv
-    export YARNBIN=$(yarn global bin)              # yarn
+    export MYBIN=$HOME/.local/bin               # user binaries
+    export CARGOBIN=$HOME/.cargo/bin            # Rust cargo
+    export GOPATH=$HOME/.go                     # gocode
+    export GOROOT=/usr/local/go                 # golang
+    export TFENV=$HOME/.tfenv/bin               # tfenv
+    export YARNBIN=$(yarn global bin)           # yarn
 
     # My custom path
     export MYPATH=${MYBIN}:${TFENV}:${CARGOBIN}:${GOPATH}/bin:${YARNBIN}
