@@ -303,4 +303,10 @@ fast-sync () {
           -e "ssh -T -c arcfour -o Compression=no -x" "$@"
 }
 
+# htpasswd
+htpasswd () {
+    printf "Username: "
+    read -r LOGIN_USER
+    printf "%s:$(openssl passwd -apr1)\\n" "${LOGIN_USER}"
+}
 # End of file
