@@ -302,7 +302,6 @@ values."
                                                 :weight medium
                                                 :width normal
                                                 :powerline-scale 1.1)))
-
   (if (eq system-type 'gnu)
       (setq-default dotspacemacs-default-font '("FuraCode Nerd Font"
                                                 :size 18
@@ -337,6 +336,7 @@ you should place your code here."
   (editorconfig-mode 1)
 
   (spacemacs/toggle-truncate-lines-on)
+  (spacemacs/toggle-visual-line-navigation-on)
   ;; Visual line navigation for textual modes
   (add-hook 'text-mode-hook 'spacemacs/toggle-visual-line-navigation-on)
 
