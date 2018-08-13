@@ -145,3 +145,4 @@ tags
 ### dotfiles ###
 pentadactyl/info/*
 emacs.d/elpa/
+emacs.d/.cache/
