@@ -68,7 +68,7 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(solarized-theme)
+   dotspacemacs-excluded-packages '()
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -322,6 +322,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; https://github.com/syl20bnr/spacemacs/issues/3920
   (setq exec-path-from-shell-arguments '("-i"))
   (setq exec-path-from-shell-check-startup-files nil)
+
+  (set-frame-parameter nil 'background-mode 'dark)
+  (set-terminal-parameter nil 'background-mode 'dark)
   )
 
 (defun dotspacemacs/user-config ()
@@ -345,42 +348,13 @@ you should place your code here."
       (mac-auto-operator-composition-mode))
 
   ;; Solarized Dark
-  ;; https://github.com/syl20bnr/spacemacs/issues/1269#issuecomment-297104349
-  (defun enable-solarized-in-terminal (frame)
-    ;; http://philipdaniels.com/blog/2017/02/spacemacs---configuring-the-solarized-theme/
-    (unless (display-graphic-p frame)
-      (set-frame-parameter frame 'background-mode 'dark)
-      (set-terminal-parameter frame 'background-mode 'dark)
-      (spacemacs/load-theme 'solarized)
-      ))
-
-  (defun enable-solarized-in-gui ()
-    (mapc 'disable-theme custom-enabled-themes)
-    (setup-solarized-theme)
-    (spacemacs/load-theme 'solarized)
-    )
-
-  (defun setup-solarized-theme ()
-    ;; I like a transparent background in the terminal
-    (custom-set-faces
-      '(default (
-                (((type tty) (background dark)) (:background "nil"))
-                )))
-    ;; The frame number indicator has some problems with inverse video
-    (set-face-inverse-video 'spacemacs-motion-face nil)
-    (set-face-inverse-video 'spacemacs-insert-face nil)
-    (set-face-inverse-video 'spacemacs-normal-face nil)
-    (set-face-inverse-video 'spacemacs-visual-face nil)
-    (set-face-inverse-video 'spacemacs-replace-face nil)
-    )
-
-  ;; For GUI clients, after-make-frame-functions is messed up (probably it is
-  ;; called too early), and some colors are messed up. For terminal clients on
-  ;; the other hand, it works perfectly. The background-mode is necessary for
-  ;; terminal clients, but (apparently) not for GUI clients, and has to be set
-  ;; for each frame individually.
-  (spacemacs|do-after-display-system-init (enable-solarized-in-gui))
-  (add-hook 'after-make-frame-functions 'enable-solarized-in-terminal)
+  (mapc 'disable-theme custom-enabled-themes)
+  (set-face-inverse-video 'spacemacs-motion-face nil)
+  (set-face-inverse-video 'spacemacs-insert-face nil)
+  (set-face-inverse-video 'spacemacs-normal-face nil)
+  (set-face-inverse-video 'spacemacs-visual-face nil)
+  (set-face-inverse-video 'spacemacs-replace-face nil)
+  (spacemacs/load-theme 'solarized)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
