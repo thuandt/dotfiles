@@ -28,3 +28,6 @@
 [submodule "emacs.d/spacemacs"]
 	path = emacs.d/spacemacs
 	url = https://github.com/syl20bnr/spacemacs
+[submodule "zsh/omz/plugins/alias-tips"]
+	path = zsh/omz/plugins/alias-tips
+	url = https://github.com/djui/alias-tips
