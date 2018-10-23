@@ -62,7 +62,7 @@ export KUBE_EDITOR="subl --wait"
 # Color man pages
 export PAGER='less'
 unset LESSCHARSET # Fix manpages looking funky
-export LESS='-i -n -w  -z-4 -g -M -X -F -R'
+export LESS='-i -n -w -z4 -g -M -S -R -X -F'
 
 # Less Colors for Man Pages: Solarized Dark
 export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
