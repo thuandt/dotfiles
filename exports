@@ -6,12 +6,12 @@ export SAVEHIST=10000                           # Remember about a years worth o
 export HISTSIZE=10000                           # shell history will save N commands
 export HISTFILESIZE=${HISTSIZE}                 # shell will remember N commands
 
+export BIN_DIR=$HOME/.local/bin                 # user binaries
+
 if [[ "$OSTYPE" = darwin* ]] ; then
-    export MYBIN=$HOME/.local/bin               # user binaries
-    export PATH=$MYBIN:$PATH
+    export PATH=$BIN_DIR:$PATH
 else
     ### Setup PATH ###
-    export MYBIN=$HOME/.local/bin               # user binaries
     export CARGO=$HOME/.cargo/bin               # Rust cargo
     export GOPATH=$HOME/.go                     # gocode
     export GOROOT=/usr/local/go                 # golang
@@ -21,7 +21,7 @@ else
     export YARNBIN=$(yarn global bin)           # yarn
 
     # My custom path
-    MYPATH=("${MYBIN}"
+    MYPATH=("${BIN_DIR}"
             "${POETRY}"
             "${TFENV}"
             "${CARGO}"
@@ -70,6 +70,8 @@ export EDITOR="nvim"
 export USE_EDITOR=$EDITOR
 export VISUAL=$EDITOR
 export KUBE_EDITOR="subl --wait"
+
+export BAT_THEME="TwoDark"
 
 # Color man pages
 export PAGER='less'
