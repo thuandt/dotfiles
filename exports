@@ -11,36 +11,6 @@ export BIN_DIR=$HOME/.local/bin                 # user binaries
 if [[ "$OSTYPE" = darwin* ]] ; then
     export PATH=$BIN_DIR:$PATH
 else
-    ### Setup PATH ###
-    export CARGO=$HOME/.cargo/bin               # Rust cargo
-    export GOPATH=$HOME/.go                     # gocode
-    export GOROOT=/usr/local/go                 # golang
-    export TFENV=$HOME/.tfenv/bin               # tfenv
-    export POETRY=$HOME/.poetry/bin             # poetry
-    # shellcheck disable=SC2155
-    export YARNBIN=$(yarn global bin)           # yarn
-
-    # My custom path
-    MYPATH=("${BIN_DIR}"
-            "${POETRY}"
-            "${TFENV}"
-            "${CARGO}"
-            "${GOPATH}/bin"
-            "${YARNBIN}")
-
-    # Add directory to $PATH if its not already there
-    for p in "${MYPATH[@]}"; do
-      case ":$PATH:" in
-        *":$p:"*) :;;
-        *) PATH="$p:$PATH";;
-      esac
-    done
-
-    ### virtualenv ###
-    export WORKON_HOME=$HOME/.local/share/virtualenvs
-    # nmap
-    export NMAP_PRIVILEGED=""
-
     # minicom
     export MINICOM="-m -c on"
 

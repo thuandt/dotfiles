@@ -199,19 +199,6 @@ Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 
 " }}}
 
-" The fancy start screen for Vim.
-Plug 'mhinz/vim-startify'
-" {{{
-  let g:startify_session_dir = '~/.vim/session'
-  let g:startify_list_order = ['sessions']
-  let g:startify_session_persistence = 1
-  let g:startify_session_delete_buffers = 1
-  let g:startify_change_to_dir = 1
-  let g:startify_change_to_vcs_root = 1
-  nnoremap <F12> :Startify<CR>
-  autocmd! User Startified setlocal colorcolumn=0
-" }}}
-
 " Editorconfig
 Plug 'editorconfig/editorconfig-vim'
 
@@ -225,90 +212,8 @@ map <C-n> :NERDTreeToggle<CR>
 " Completion
 " =============================================================================
 
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"let g:deoplete#enable_at_startup = 1
-
-" YouCompleteMe: a code-completion engine for Vim
-function! BuildYCM(info)
-  " info is a dictionary with 3 fields
-  " - name:   name of the plugin
-  " - status: 'installed', 'updated', or 'unchanged'
-  " - force:  set on PlugInstall! or PlugUpdate!
-  if a:info.status == 'installed' || a:info.force
-    !python3 ./install.py --clang-completer --go-completer --rust-completer --js-completer --tern-completer
-  endif
-endfunction
-
-Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM'), 'for': ['cpp', 'python', 'javascript', 'go', 'rust'] }
-let g:ycm_server_python_interpreter = 'python3'
-
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_complete_in_strings = 1
-
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-autocmd! User YouCompleteMe if !has('vim_starting') | call youcompleteme#Enable() | endif
-
-" UltiSnips - The ultimate snippet solution for Vim
-Plug 'SirVer/ultisnips'
-
-" Trigger configuration.
-" Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsListSnippets = '<nop>'
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:ulti_expand_or_jump_res = 0
-let g:UltiSnipsEditSplit = 'horizontal'
-
-" Snippets are separated from the engine. Add this if you want them:
-Plug 'honza/vim-snippets'
-
-
-" =============================================================================
-" File Navigation
-" =============================================================================
-
-" fzf: command-line fuzzy finder written in Go
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-" {{{
-  let g:fzf_nvim_statusline = 0 " disable statusline overwriting
-
-  nnoremap <silent> <leader><space> :Files<CR>
-  nnoremap <silent> <leader>a :Buffers<CR>
-  nnoremap <silent> <leader>; :BLines<CR>
-  nnoremap <silent> <leader>. :Lines<CR>
-  nnoremap <silent> <leader>o :BTags<CR>
-  nnoremap <silent> <leader>O :Tags<CR>
-  nnoremap <silent> <leader>? :History<CR>
-  nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
-  nnoremap <silent> K :call SearchWordWithAg()<CR>
-  vnoremap <silent> K :call SearchVisualSelectionWithAg()<CR>
-  nnoremap <silent> <leader>gl :Commits<CR>
-  nnoremap <silent> <leader>ga :BCommits<CR>
-
-  imap <C-x><C-f> <plug>(fzf-complete-file-ag)
-  imap <C-x><C-l> <plug>(fzf-complete-line)
-
-  function! SearchWordWithAg()
-    execute 'Ag' expand('<cword>')
-  endfunction
-
-  function! SearchVisualSelectionWithAg() range
-    let old_reg = getreg('"')
-    let old_regtype = getregtype('"')
-    let old_clipboard = &clipboard
-    set clipboard&
-    normal! ""gvy
-    let selection = getreg('"')
-    call setreg('"', old_reg, old_regtype)
-    let &clipboard = old_clipboard
-    execute 'Ag' selection
-  endfunction
-" }}}
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let g:deoplete#enable_at_startup = 1
 
 " =============================================================================
 " Languages
@@ -319,56 +224,8 @@ Plug 'w0rp/ale'
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
-" Vim configuration for Rust
-Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-let g:rustfmt_autosave = 1
-let g:rust_clip_command = 'xclip -selection clipboard'
-
-" Go development plugin for Vim
-Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
-
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-
-let g:go_fmt_command = "goimports"
-
-let g:go_bin_path = expand("~/.local/bin")
-
-au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <leader>c <Plug>(go-coverage)
-au FileType go nmap <Leader>ds <Plug>(go-def-split)
-au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
-au FileType go nmap <Leader>dt <Plug>(go-def-tab)
-au FileType go nmap <Leader>gd <Plug>(go-doc)
-au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
-au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
-au FileType go nmap <Leader>s <Plug>(go-implements)
-au FileType go nmap <Leader>i <Plug>(go-info)
-au FileType go nmap <Leader>e <Plug>(go-rename)
-
 " systemd service syntax
 Plug 'Matt-Deacalion/vim-systemd-syntax'
-
-" flatbuffers syntax
-Plug 'dcharbon/vim-flatbuffers'
-
-" fish shell syntax
-Plug 'dag/vim-fish'
-
-" Markdown Vim Mode
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-let g:vim_markdown_folding_disabled=1  " Disable Folding
-let g:vim_markdown_math=1  " LaTeX math
-let g:vim_markdown_frontmatter=1 " YAML
 
 " =============================================================================
 " Git
@@ -439,35 +296,8 @@ endif
 " Make commenting easier
 Plug 'tpope/vim-commentary'
 
-" Split navigation that works with tmux
-Plug 'christoomey/vim-tmux-navigator'
-
-" virtualenv support for vim
-Plug 'jmcantrell/vim-virtualenv'
-
 " SimpylFold
 Plug 'tmhedberg/SimpylFold'
-
-" Zeal docs viewer
-Plug 'KabbAmine/zeavim.vim', {'on': [
-            \   'Zeavim',
-            \   '<Plug>Zeavim',
-            \   '<Plug>ZVVisSelection',
-            \   '<Plug>ZVKeyDocset',
-            \   '<Plug>ZVMotion'
-            \ ]}
-
-nmap <leader>z <Plug>Zeavim
-
-let g:zv_file_types = {
-            \   'help'               : 'vim',
-            \   '.htaccess'          : 'apache http server',
-            \   'javascript'         : 'javascript,nodejs',
-            \   'python'             : 'python',
-            \   'Dockerfile'         : 'docker',
-            \   'docker-compose.yml' : 'docker',
-            \   '\v^(yaml|yml)$'     : 'ansible'
-            \ }
 
 " Other plugins require curl
 if executable("curl")
@@ -480,17 +310,6 @@ if executable("curl")
     let g:gist_post_private = 1
     let g:gist_get_multiplefile = 1
 endif
-
-" This script implements transparent editing of gpg encrypted files: ".gpg",
-" ".pgp" or ".asc". When opening such a file the content is decrypted, when
-" opening a new file the script will ask for the recipients of the encrypted
-" file. The file content will be encrypted to all recipients before it is
-" written.
-Plug 'jamessan/vim-gnupg'
-" {{{
-  " prefer symmetric encryption
-  let g:GPGPreferSymmetric = 1
-" }}}
 
 " Base16 colorscheme
 Plug 'chriskempson/base16-vim'
@@ -585,21 +404,6 @@ augroup reload_vimrc
     autocmd BufWritePost $MYVIMRC nested source $MYVIMRC
 augroup END
 
-" PEP8 indentation for Python
-au BufNewFile,BufRead *.py set tabstop=4
-au BufNewFile,BufRead *.py set softtabstop=4
-au BufNewFile,BufRead *.py set shiftwidth=4
-au BufNewFile,BufRead *.py set textwidth=79
-au BufNewFile,BufRead *.py set expandtab
-au BufNewFile,BufRead *.py set autoindent
-au BufNewFile,BufRead *.py set fileformat=unix
-
-" Fullstack development
-au BufNewFile,BufRead *.js, *.html, *.css set tabstop=2
-au BufNewFile,BufRead *.js, *.html, *.css set softtabstop=2
-au BufNewFile,BufRead *.js, *.html, *.css set shiftwidth=2
-
-
 " Show Git diff in window split when commiting
 "autocmd FileType gitcommit DiffGitCached | wincmd p
 
@@ -608,10 +412,6 @@ if exists("&colorcolumn")
      autocmd InsertEnter * set colorcolumn=79
      autocmd InsertLeave * set colorcolumn=""
 endif
-
-" ruby standard 2 spaces, always
-au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2
-au BufRead,BufNewFile *.rb,*.rhtml set softtabstop=2
 
 " ======================== Vim Mapping Keystroke ============================
 
@@ -674,8 +474,6 @@ nmap gp "+gP
 " Enter visual line mode with <Space><Space>:
 nmap <Leader><Leader> V
 
-
-
 " Select all
 map <Leader>a ggVG
 
@@ -737,8 +535,6 @@ map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
 " and reload the buffer upon detecting change
 set autoread
 au CursorHold * checktime
-
-
 
 " https://github.com/neovim/neovim/issues/7002
 set guicursor=
