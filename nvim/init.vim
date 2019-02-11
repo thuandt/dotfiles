@@ -150,10 +150,6 @@ set cursorcolumn    " highlight the current column
 
 call plug#begin('~/.config/nvim/plugged')
 
-let g:python_host_prog  = 'python2'
-let g:python3_host_prog = 'python3'
-
-
 " =============================================================================
 " Appearance
 " =============================================================================
@@ -212,9 +208,6 @@ map <C-n> :NERDTreeToggle<CR>
 " Completion
 " =============================================================================
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-let g:deoplete#enable_at_startup = 1
-
 " =============================================================================
 " Languages
 " =============================================================================
@@ -262,25 +255,6 @@ Plug 'tpope/vim-fugitive'
     autocmd FileType gitcommit setlocal nolist
     autocmd BufReadPost fugitive://* setlocal bufhidden=delete
   augroup END
-" }}}
-
-" GitGutter
-Plug 'airblade/vim-gitgutter'
-" {{{
-  let g:gitgutter_sign_added = '✚'
-  let g:gitgutter_sign_modified = '⚡'
-  let g:gitgutter_sign_removed = '✖'
-  let g:gitgutter_map_keys = 0
-  let g:gitgutter_max_signs = 200
-  let g:gitgutter_realtime = 0
-  let g:gitgutter_eager = 0
-  let g:gitgutter_diff_args = '--ignore-space-at-eol'
-  nmap <silent> ]h :GitGutterNextHunk<CR>
-  nmap <silent> [h :GitGutterPrevHunk<CR>
-  nnoremap <silent> <Leader>gu :GitGutterRevertHunk<CR>
-  nnoremap <silent> <Leader>gp :GitGutterPreviewHunk<CR><c-w>j
-  nnoremap cog :GitGutterToggle<CR>
-  nnoremap <Leader>gt :GitGutterAll<CR>
 " }}}
 
 " =============================================================================
