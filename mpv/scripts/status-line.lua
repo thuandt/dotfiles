@@ -51,7 +51,7 @@ function update_status_line()
         atsl(string.format(" ct:%7.3f", r))
     end
 
-    r = mp.get_property_number("drop-frame-count", -1)
+    r = mp.get_property_number("decoder-frame-drop-count", -1)
     if r > 0 then
         atsl(" Late: ")
         atsl(r)
