@@ -7,11 +7,15 @@ DOTDIR="$(pwd)"
 # install oh-my-zsh
 git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 
+# init submodule
+git submodule update --init --recursive
+
 # Common
 ln -sf "${DOTDIR}/dircolors/dircolors.256dark" ~/.dircolors
 ln -sf "${DOTDIR}/exports" ~/.exports
 ln -sf "${DOTDIR}/aliases" ~/.aliases
 ln -sf "${DOTDIR}/functions" ~/.functions
+ln -sf "${DOTDIR}/logger" ~/.logger
 
 # bash
 ln -sf "${DOTDIR}/bash/bashrc" ~/.bashrc
