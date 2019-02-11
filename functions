@@ -38,7 +38,7 @@ ssh-socks () {
 
 # Get information about IP address
 ipinfo () {
-    curl -s "ipinfo.io/$*?token=${IPINFO_TOKEN}"
+    curl -s -H "Authorization: Bearer ${IPINFO_TOKEN}" "ipinfo.io/$*"
 }
 
 # Lookup MAC vendor
