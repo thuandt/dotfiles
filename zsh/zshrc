@@ -109,7 +109,7 @@ if [[ "$OSTYPE" = darwin* ]] ; then
              alias-tips docker docker-compose docker-machine
              encode64 extract
              git git-extras git-remote-branch gitignore
-             github git-flow-avh git-hubflow gnu-utils golang
+             github git-flow-avh git-hubflow gnu-utils golang gpg-agent
              history history-substring-search
 
              httpie mosh vi-mode fzf nvm
@@ -126,7 +126,7 @@ else
              fancy-ctrl-z docker docker-compose docker-machine
              git git-extras git-remote-branch gitignore
              github git-flow-avh git-hubflow
-             golang heroku history history-substring-search
+             gpg-agent golang heroku history history-substring-search
 
              httpie iwhois mercurial mosh mpv node nvm npm vi-mode fzf
              nmap perl pew pip pipenv poetry pyenv python pylint redis-cli
@@ -308,18 +308,6 @@ eval "$(direnv hook zsh)"
 # sdkman
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
-
-# Keychain
-# Let re-use ssh-agent and/or gpg-agent between logins
-if [[ "$OSTYPE" = darwin* ]] ; then
-    eval $(keychain --eval -Q --quiet --agents ssh --inherit any --attempts 5 id_ed25519 aws id_rsa myaws legacy)
-    source $HOME/.keychain/$(hostname)-sh
-    # source $HOME/.keychain/$(hostname)-sh-gpg
-else
-    eval $(keychain --eval -Q --quiet --agents ssh --attempts 5 --systemd id_ed25519 aws id_rsa myaws legacy)
-    source $HOME/.keychain/$(hostname)-sh
-    # source $HOME/.keychain/$(hostname)-sh-gpg
-fi
 
 # Prettify path
 if [ -n "$($SHELL -c "echo $ZSH_VERSION")" ]; then
