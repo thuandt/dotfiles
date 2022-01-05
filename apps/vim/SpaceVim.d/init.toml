@@ -66,9 +66,6 @@
     name = "lang#dockerfile"
 
 [[layers]]
-    name = "lang#markdown"
-
-[[layers]]
     name = "lang#sh"
 
 [[layers]]
@@ -77,6 +74,3 @@
 [[layers]]
     name = "lang#groovy"
 
-[[custom_plugins]]
-    name = "zinit-zsh/zinit-vim-syntax"
-    merged = false
