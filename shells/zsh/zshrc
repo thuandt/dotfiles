@@ -128,7 +128,6 @@ zinit wait light-mode lucid depth=1 for \
   thuandt/zsh-terraform \
   thuandt/zsh-vault \
   thuandt/zsh-pipx \
-  thuandt/zsh-aliyun \
   thuandt/zsh-config
 
 zinit wait light-mode lucid atinit='zicompinit; zicdreplay' for \
