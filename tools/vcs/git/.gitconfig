@@ -21,7 +21,7 @@
 
 [push]
     default = current
-    followTags = true
+    followTags = false
 
 [blame]
     date = relative
