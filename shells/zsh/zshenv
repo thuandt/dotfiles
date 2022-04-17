@@ -77,16 +77,16 @@ export POETRY_INSTALL_DEPENDENCIES=1
 
 if [[ "$OSTYPE" == linux* ]]; then
   ### Setup PATH ###
-  export POETRY=$HOME/.poetry/bin # poetry
-  export PULUMI=$HOME/.pulumi/bin # pulumi
-  export KREW_ROOT=$HOME/.krew    # krew
-  export CARGO=$HOME/.cargo/bin   # Rust cargo
-  export CABAL=$HOME/.cabal/bin   # Haskell cabal
-  # shellcheck disable=SC2155
-  export YARNBIN=$(yarn global bin) # yarn
+  export POETRY=$HOME/.poetry/bin                               # poetry
+  export PULUMI=$HOME/.pulumi/bin                               # pulumi
+  export KREW_ROOT=$HOME/.krew                                  # krew
+  export CARGO=$HOME/.cargo/bin                                 # Rust cargo
+  export CABAL=$HOME/.cabal/bin                                 # Haskell cabal
+  export YARNBIN=$HOME/.yarn/bin                                # yarn
+  export YARNGLOBAL=$HOME/.config/yarn/global/node_modules/.bin # yarn global
 
   # My custom path
-  MYPATH=("${POETRY}" "${PULUMI}" "${KREW_ROOT}/bin" "${CARGO}" "${CABAL}" "${YARNBIN}")
+  MYPATH=("${POETRY}" "${PULUMI}" "${KREW_ROOT}/bin" "${CARGO}" "${CABAL}" "${YARNBIN}" "${YARNGLOBAL}")
 
   # Add directory to $PATH if its not already there
   for p in "${MYPATH[@]}"; do
