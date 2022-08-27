@@ -46,11 +46,14 @@
 
 [merge]
     ff = only
-    tool = meld
+    tool = code
     conflictstyle = diff3
 
 [mergetool]
     prompt = false
+
+[mergetool "code"]
+    cmd = code --merge --wait $REMOTE $LOCAL $BASE $MERGED
 
 [mergetool "meld"]
     cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
@@ -59,7 +62,7 @@
     cmd = idea merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
 
 [mergetool "charm"]
-    cmd = charm merge merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
+    cmd = charm merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
 
 [mergetool "vimdiff"]
     cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
@@ -95,7 +98,7 @@
     newHighlight = green bold 22
 
 [credential]
-    helper = cache --timeout=3600
+	  helper = /usr/lib/git-core/git-credential-libsecret
 
 [pager]
     diff = diff-so-fancy | less -x2 -RFXSi
