@@ -2,10 +2,10 @@
 # ~/.zshenv
 
 # Skip the not really helping Ubuntu global compinit
-skip_global_compinit=1
+export skip_global_compinit=1
 
 # https://github.com/robbyrussell/oh-my-zsh/issues/1433
-DEBIAN_PREVENT_KEYBOARD_CHANGES=yes
+export DEBIAN_PREVENT_KEYBOARD_CHANGES=yes
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=772919
 # https://eklitzke.org/down-the-ssh-auth-sock-rabbit-hole-a-gnome-adventure
