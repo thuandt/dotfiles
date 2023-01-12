@@ -63,6 +63,7 @@ export ASDF_RUBY_BUILD_VERSION=master
 
 # gcloud
 export CLOUDSDK_PYTHON=python3
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 export CLOUDSDK_HOME="${HOME}/Applications/google-cloud-sdk"
 
 # enhancd
