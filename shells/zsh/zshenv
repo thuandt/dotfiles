@@ -16,7 +16,7 @@ export GSM_SKIP_SSH_AGENT_WORKAROUND=1
 export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 
 # User binaries
-export BIN_DIR=$HOME/.local/bin
+export BIN_DIR=${HOME}/.local/bin
 export PATH=$BIN_DIR:$PATH
 
 # Editor
@@ -80,13 +80,15 @@ export POETRY_INSTALL_DEPENDENCIES=1
 
 if [[ "$OSTYPE" == linux* ]]; then
   ### Setup PATH ###
-  export PULUMI=$HOME/.pulumi/bin                               # pulumi
-  export KREW_ROOT=$HOME/.krew                                  # krew
-  export CARGO=$HOME/.cargo/bin                                 # Rust cargo
-  export CABAL=$HOME/.cabal/bin                                 # Haskell cabal
-  export YARNBIN=$HOME/.yarn/bin                                # yarn
-  export YARNGLOBAL=$HOME/.config/yarn/global/node_modules/.bin # yarn global
-  export FLYCTL_INSTALL="$HOME/.fly"
+  export PULUMI=${HOME}/.pulumi/bin                               # pulumi
+  export KREW_ROOT=${HOME}/.krew                                  # krew
+  export CARGO=${HOME}/.cargo/bin                                 # Rust cargo
+  export CABAL=${HOME}/.cabal/bin                                 # Haskell cabal
+  export YARNBIN=${HOME}/.yarn/bin                                # yarn
+  export YARNGLOBAL=${HOME}/.config/yarn/global/node_modules/.bin # yarn global
+  export FLYCTL_INSTALL="${HOME}/.fly"                            # fly.io
+
+  export ANDROID_PLATFORM_TOOLS="${HOME}/Applications/android-platform-tools"
 
   # My custom path
   MYPATH=(
@@ -97,6 +99,7 @@ if [[ "$OSTYPE" == linux* ]]; then
     "${YARNBIN}"
     "${YARNGLOBAL}"
     "${FLYCTL_INSTALL}/bin"
+    "${ANDROID_PLATFORM_TOOLS}"
   )
 
   # Add directory to $PATH if its not already there
@@ -108,7 +111,7 @@ if [[ "$OSTYPE" == linux* ]]; then
   done
 
   ### virtualenv ###
-  export WORKON_HOME=$HOME/.local/share/virtualenvs
+  export WORKON_HOME=${HOME}/.local/share/virtualenvs
   # nmap
   export NMAP_PRIVILEGED=""
 

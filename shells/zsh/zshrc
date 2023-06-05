@@ -24,7 +24,7 @@ mkdir -p "$ZSH_CACHE_DIR/completions"
 # (this is currently required for annexes)
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 zinit light zdharma-continuum/zinit-annex-meta-plugins
-zinit light-mode lucid for annexes zsh-users+fast console-tools fuzzy zsh-users/zsh-history-substring-search
+zinit light-mode lucid skip"fzf dircolors-material" for annexes zsh-users+fast console-tools fuzzy
 
 # direnv workaround for instant-prompt
 # https://github.com/romkatv/powerlevel10k/blob/master/README.md#how-do-i-initialize-direnv-when-using-instant-prompt
@@ -111,6 +111,8 @@ zinit light-mode lucid atinit'ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay' f
   id-as'_docker' https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker \
   id-as'_docker-compose' https://github.com/docker/compose/blob/master/contrib/completion/zsh/_docker-compose \
   id-as'_docker-machine' https://github.com/docker/machine/blob/master/contrib/completion/zsh/_docker-machine
+
+zinit pack"bgn-binary+keys" for fzf
 
 # the_silver_searcher: ag
 zinit light-mode lucid depth='1' \
@@ -218,7 +220,7 @@ zinit snippet https://storage.googleapis.com/container-diff/latest/container-dif
 zinit ice wait lucid id-as'GoogleCloudPlatform/cloud_sql_proxy' \
   sbin'cloud_sql_proxy' \
   pick'/dev/null'
-zinit snippet https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64
+zinit snippet https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.3.0/cloud-sql-proxy.linux.amd64
 
 # telepresence
 zinit ice wait lucid id-as'telepresenceio/telepresence' \
@@ -232,7 +234,7 @@ zinit ice wait lucid id-as'smartversion/smartvs' \
   atpull'%atclone' \
   sbin'smv' \
   pick'/dev/null'
-zinit snippet http://www.smartversion.com/smartvs382_linux_x64.zip
+zinit snippet https://www.smartversion.com/smartvs400_linux_x64.zip
 
 zinit wait='!0c' light-mode lucid atinit'ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay' for \
   blockf zchee/zsh-completions \
@@ -251,17 +253,17 @@ zinit light-mode lucid as'null' from'gh-r' for \
   sbin instrumenta/kubeval \
   sbin PostgREST/postgrest \
   sbin terraform-linters/tflint \
-  sbin kubernetes-sigs/kustomize \
   sbin juliosueiras/terraform-lsp \
   sbin open-policy-agent/conftest \
   sbin bitnami-labs/sealed-secrets \
   sbin sbin'age-keygen' FiloSottile/age \
   sbin bpick'*ext*64bit*' gohugoio/hugo \
-  sbin ver'v1.11.0' cert-manager/cert-manager \
+  sbin'ksops' viaduct-ai/kustomize-sops \
   sbin bpick'*64' mv'jq* -> jq' stedolan/jq \
   sbin bpick'*amd64.tar.gz' aquasecurity/tfsec \
   sbin bpick'*amd64' mv'sops* -> sops' mozilla/sops \
-  sbin'istioctl' bpick'istioctl-*' ver'1.17.0' istio/istio \
+  sbin'cmctl' ver'v1.12.1' cert-manager/cert-manager \
+  sbin'istioctl' bpick'istioctl-*' ver'1.17.2' istio/istio \
   mv'*q* -> q' sbin harelba/q \
   sbin'flatc' google/flatbuffers \
   mv'gdu* -> gdu' sbin dundee/gdu \
@@ -282,8 +284,8 @@ zinit light-mode lucid as'null' from'gh-r' for \
   mv'hlint* -> hlint' sbin'hlint/hlint' ndmitchell/hlint \
   mv'trdsql* -> trdsql' sbin'trdsql/trdsql' noborus/trdsql \
   mv'terragrunt* -> terragrunt' sbin gruntwork-io/terragrunt \
-  mv'skaffold* -> skaffold' sbin GoogleContainerTools/skaffold \
   mv'dua* -> dua' bpick'*x86_64*linux*' sbin'dua/dua' Byron/dua-cli \
+  mv'skaffold* -> skaffold' sbin'skaffold' GoogleContainerTools/skaffold \
   mv'terraform-docs* -> terraform-docs' sbin terraform-docs/terraform-docs \
   mv'miller* -> miller' sbin'miller/mlr' bpick'*amd64.tar.gz' johnkerl/miller \
   mv'stack* -> stack' sbin'stack/stack' bpick'*.tar.gz' commercialhaskell/stack \
@@ -291,7 +293,7 @@ zinit light-mode lucid as'null' from'gh-r' for \
   mv'argocd-image-updater* -> argocd-image-updater' sbin argoproj-labs/argocd-image-updater \
   mv'ripgrep* -> rga' bpick'*x86_64*linux*' sbin'rga/rga' sbin'rga/rga-preproc' phiresky/ripgrep-all \
   mv'stylish-haskell* -> stylish-haskell' sbin'stylish-haskell/stylish-haskell' @haskell/stylish-haskell \
-  mv'argocd* -> argocd' ver'v2.6.2' sbin atclone'./argocd completion zsh > _argocd' atpull'%atclone' argoproj/argo-cd \
+  mv'argocd* -> argocd' ver'v2.7.3' sbin atclone'./argocd completion zsh > _argocd' atpull'%atclone' argoproj/argo-cd \
   mv'golangci-lint* -> golangci-lint' sbin'golangci-lint/golangci-lint' atload'source <(golangci-lint completion zsh)' golangci/golangci-lint
 
 # zsh-diff-so-fancy
@@ -301,9 +303,6 @@ zplugin light-mode lucid \
   sbin'bin/diff-so-fancy' \
   as"program" for zdharma-continuum/zsh-diff-so-fancy
 
-# gradle and calc
-zinit light-mode lucid for gradle/gradle-completion arzzen/calc.plugin.zsh
-
 # github cli
 zinit light-mode lucid from'gh-r' \
   bpick'*amd64.tar.gz' \
@@ -312,6 +311,11 @@ zinit light-mode lucid from'gh-r' \
   pick'/dev/null' \
   atclone'/bin/rm -f _gh; gh completion -s zsh > _gh; chmod +x _gh' \
   atpull'%atclone' for cli/cli
+
+zinit light-mode lucid for \
+  gradle/gradle-completion \
+  arzzen/calc.plugin.zsh \
+  zsh-users/zsh-history-substring-search
 
 ### THEME ###
 zinit light-mode lucid nocd depth='1' atload'!source ~/.p10k.zsh; _p9k_precmd' for romkatv/powerlevel10k
