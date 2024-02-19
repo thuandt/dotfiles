@@ -281,7 +281,7 @@ zinit light-mode lucid as'null' from'gh-r' for \
   mv'argocd-image-updater* -> argocd-image-updater' sbin argoproj-labs/argocd-image-updater \
   mv'ripgrep* -> rga' bpick'*x86_64*linux*' sbin'rga/rga' sbin'rga/rga-preproc' phiresky/ripgrep-all \
   mv'stylish-haskell* -> stylish-haskell' sbin'stylish-haskell/stylish-haskell' @haskell/stylish-haskell \
-  mv'argocd* -> argocd' ver'v2.10.0' sbin atclone'./argocd completion zsh > _argocd' atpull'%atclone' argoproj/argo-cd \
+  mv'argocd* -> argocd' ver'v2.10.1' sbin atclone'./argocd completion zsh > _argocd' atpull'%atclone' argoproj/argo-cd \
   mv'golangci-lint* -> golangci-lint' sbin'golangci-lint/golangci-lint' atload'source <(golangci-lint completion zsh)' golangci/golangci-lint
 
 # zsh-diff-so-fancy
