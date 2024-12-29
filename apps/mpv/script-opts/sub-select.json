@@ -1,6 +1,8 @@
 [
   {
-    "alang": "*",
+    "condition": "sub.external"
+  },
+  {
     "slang": ["vie?", "eng?"]
   }
 ]
