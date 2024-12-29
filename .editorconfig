@@ -26,7 +26,7 @@ space_redirects = true    # like -sr
 keep_padding = true       # like -kp
 
 [*.json]
-insert_final_newline = ignore
+insert_final_newline = false
 
 [*.conf]
 indent_size = 4
