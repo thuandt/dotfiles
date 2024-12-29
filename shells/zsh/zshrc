@@ -24,7 +24,7 @@ mkdir -p "$ZSH_CACHE_DIR/completions"
 # (this is currently required for annexes)
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 zinit light zdharma-continuum/zinit-annex-meta-plugins
-zinit light-mode lucid skip"fzf dircolors-material" for annexes zsh-users+fast console-tools fuzzy
+zinit light-mode lucid skip"dircolors-material" for annexes zsh-users+fast console-tools
 
 # direnv workaround for instant-prompt
 # https://github.com/romkatv/powerlevel10k/blob/master/README.md#how-do-i-initialize-direnv-when-using-instant-prompt
@@ -71,6 +71,7 @@ zinit light-mode lucid reset \
 
 zinit light-mode lucid depth=1 for \
   OMZP::gpg-agent \
+  OMZP::ansible \
   OMZP::azure \
   OMZP::aws \
   OMZP::extract \
@@ -79,12 +80,11 @@ zinit light-mode lucid depth=1 for \
   OMZP::nmap \
   OMZP::kubectl \
   OMZP::helm \
-  OMZP::kops \
   OMZP::minikube \
   OMZP::rsync \
   OMZP::sudo \
   OMZP::systemd \
-  OMZP::ubuntu \
+  OMZP::suse \
   OMZP::npm \
   OMZP::yarn \
   OMZP::gitignore \
@@ -96,22 +96,12 @@ zinit light-mode lucid depth=1 for \
   darvid/zsh-poetry \
   micha/resty \
   changyuheng/fz \
-  make'PREFIX=$ZPFX install' mptre/yank \
-  make'PREFIX=$ZPFX install' AltraMayor/f3 \
-  make'install prefix=$ZPFX' axboe/fio \
   thuandt/zsh-config \
   thuandt/zsh-terraform \
   thuandt/zsh-vault \
   thuandt/zsh-pipx
 
 zinit pack"bgn-binary+keys" for fzf
-
-# the_silver_searcher: ag
-zinit light-mode lucid depth='1' \
-  atclone'./build.sh --prefix=$ZPFX' \
-  atpull'%atclone' \
-  make'install' \
-  pick'/dev/null' for ggreer/the_silver_searcher
 
 # z
 zinit light-mode lucid cp='z.sh -> z' pick'z' src'z.sh' for rupa/z
@@ -141,6 +131,7 @@ zinit light-mode lucid as'null' from'gh-r' \
 # kubectx
 zinit light-mode lucid pick'/dev/null' \
   sbin'kubectx' sbin'kubens' \
+  atclone'mv -f completion/_kubectx.zsh _kubectx; mv -f completion/_kubens.zsh _kubens' \
   atpull'%atclone' for ahmetb/kubectx
 
 # ansiweather
@@ -154,13 +145,13 @@ zinit light-mode lucid has'poetry' as'completion' id-as'poetry/completion' \
   atclone'poetry completions zsh > _poetry' \
   atpull'%atclone' for zdharma-continuum/null
 
-# eksctl
-zinit ice wait lucid id-as'weaveworks/eksctl-bin' \
-  atclone'tar xzf eksctl-bin; rm -f eksctl-bin; ./eksctl completion zsh > _eksctl' \
-  atpull'%atclone' \
-  sbin'eksctl' \
-  pick'/dev/null'
-zinit snippet https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz
+# # eksctl
+# zinit ice wait lucid id-as'weaveworks/eksctl-bin' \
+#   atclone'tar xzf eksctl-bin; rm -f eksctl-bin; ./eksctl completion zsh > _eksctl' \
+#   atpull'%atclone' \
+#   sbin'eksctl' \
+#   pick'/dev/null'
+# zinit snippet https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz
 
 # rust
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
@@ -182,22 +173,6 @@ zinit light-mode lucid from'gh-r' \
   sbin'exercism' \
   pick'/dev/null' for exercism/cli
 
-# shellcheck
-zinit ice wait lucid id-as'koalaman/shellcheck-stable' \
-  atclone'tar xJf shellcheck-stable --strip-components=1 shellcheck-stable/shellcheck; rm -f shellcheck-stable' \
-  atpull'%atclone' \
-  sbin'shellcheck' \
-  pick'/dev/null'
-zinit snippet https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.x86_64.tar.xz
-
-# ffmpeg
-zinit ice wait lucid id-as'FFmpeg/FFmpeg-static' \
-  atclone'tar --strip-components=1 -xJf FFmpeg-static; rm -f FFmpeg-static' \
-  atpull'%atclone' \
-  sbin'ffmpeg' sbin'ffprobe' sbin'qt-faststart' \
-  pick'/dev/null'
-zinit snippet https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz
-
 # container-diff
 zinit ice wait lucid id-as'GoogleContainerTools/container-diff' \
   sbin'container-diff' \
@@ -208,7 +183,7 @@ zinit snippet https://storage.googleapis.com/container-diff/latest/container-dif
 zinit ice wait lucid id-as'GoogleCloudPlatform/cloud_sql_proxy' \
   sbin'cloud_sql_proxy' \
   pick'/dev/null'
-zinit snippet https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.10.1/cloud-sql-proxy.linux.amd64
+zinit snippet https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.14.2/cloud-sql-proxy.linux.amd64
 
 # telepresence
 zinit ice wait lucid id-as'telepresenceio/telepresence' \
@@ -216,17 +191,9 @@ zinit ice wait lucid id-as'telepresenceio/telepresence' \
   pick'/dev/null'
 zinit snippet https://app.getambassador.io/download/tel2/linux/amd64/latest/telepresence
 
-# smv
-zinit ice wait lucid id-as'smartversion/smartvs' \
-  atclone'unzip -o smartvs; rm -f smartvs' \
-  atpull'%atclone' \
-  sbin'smv' \
-  pick'/dev/null'
-zinit snippet https://www.smartversion.com/smartvs400_linux_x64.zip
-
-zinit wait='!0c' light-mode lucid atinit'ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay' for \
-  blockf zchee/zsh-completions \
-  pick'manydots-magic' knu/zsh-manydots-magic
+zinit wait light-mode lucid for \
+  pick'manydots-magic' knu/zsh-manydots-magic \
+  zchee/zsh-completions
 
 zinit light-mode lucid as'null' from'gh-r' for \
   sbin'stern' stern/stern \
@@ -234,9 +201,10 @@ zinit light-mode lucid as'null' from'gh-r' for \
   sbin'k9s' derailed/k9s \
   sbin'procs' dalance/procs \
   sbin'noti' variadico/noti \
-  sbin'ktlin' pinterest/ktlint \
+  sbin'ktlint' pinterest/ktlint \
   sbin'pg_flame' mgartner/pg_flame \
   sbin'doctl' digitalocean/doctl \
+  mv'yq* -> yq' sbin mikefarah/yq \
   sbin'postgrest' PostgREST/postgrest \
   sbin'tflint' terraform-linters/tflint \
   sbin'terraform-lsp' juliosueiras/terraform-lsp \
@@ -247,40 +215,32 @@ zinit light-mode lucid as'null' from'gh-r' for \
   mv'jq* -> jq' sbin'jq' jqlang/jq \
   mv'jaq* -> jaq' sbin'jaq' 01mf02/jaq \
   sbin'tfsec' bpick'*amd64.tar.gz' aquasecurity/tfsec \
-  mv'sops* -> sops' sbin'sops' getsops/sops \
-  sbin'cmctl' ver'v1.14.4' cert-manager/cert-manager \
-  sbin'istioctl' bpick'istioctl-*' ver'1.20.3' istio/istio \
   mv'*q* -> q' sbin'q' harelba/q \
   sbin'flatc' google/flatbuffers \
   mv'gdu* -> gdu' sbin dundee/gdu \
   mv'yq* -> yq' sbin mikefarah/yq \
   sbin'zed' sbin'zq' brimdata/zed \
+  sbin'steampipe' turbot/steampipe \
+  sbin'powerpipe' turbot/powerpipe \
   mv'grv* -> grv' sbin @rgburke/grv \
   mv'shfmt* -> shfmt' sbin @mvdan/sh \
   mv'upx* -> upx' sbin'upx/upx' upx/upx \
   mv'exa* -> exa' sbin'bin/exa' ogham/exa \
   mv'opa* -> opa' sbin open-policy-agent/opa \
+  mv'helm_ls* -> helm-ls' sbin mrjosh/helm-ls \
   mv'guetzli* -> guetzli' sbin google/guetzli \
   mv'mkcert* -> mkcert' sbin FiloSottile/mkcert \
-  mv'helmfile* -> helmfile' sbin roboll/helmfile \
-  sbin'bin/linux_amd64/kubelogin' Azure/kubelogin \
-  mv'hadolint* -> hadolint' sbin hadolint/hadolint \
   mv'fluxctl* -> fluxctl' sbin'fluxctl' fluxcd/flux \
+  sbin'terraform-docs' terraform-docs/terraform-docs \
   mv'infracost* -> infracost' sbin infracost/infracost \
   mv'hlint* -> hlint' sbin'hlint/hlint' ndmitchell/hlint \
   mv'trdsql* -> trdsql' sbin'trdsql/trdsql' noborus/trdsql \
-  mv'terragrunt* -> terragrunt' sbin gruntwork-io/terragrunt \
-  mv'dua* -> dua' bpick'*x86_64*linux*' sbin'dua/dua' Byron/dua-cli \
-  mv'skaffold* -> skaffold' sbin'skaffold' GoogleContainerTools/skaffold \
-  mv'terraform-docs* -> terraform-docs' sbin terraform-docs/terraform-docs \
   mv'miller* -> miller' sbin'miller/mlr' bpick'*amd64.tar.gz' johnkerl/miller \
   mv'stack* -> stack' sbin'stack/stack' bpick'*.tar.gz' commercialhaskell/stack \
   sbin atclone'./flyctl completion zsh > _flyctl' atpull'%atclone' superfly/flyctl \
   mv'argocd-image-updater* -> argocd-image-updater' sbin argoproj-labs/argocd-image-updater \
-  mv'ripgrep* -> rga' bpick'*x86_64*linux*' sbin'rga/rga' sbin'rga/rga-preproc' phiresky/ripgrep-all \
-  mv'stylish-haskell* -> stylish-haskell' sbin'stylish-haskell/stylish-haskell' @haskell/stylish-haskell \
-  mv'argocd* -> argocd' ver'v2.10.4' sbin atclone'./argocd completion zsh > _argocd' atpull'%atclone' argoproj/argo-cd \
-  mv'golangci-lint* -> golangci-lint' sbin'golangci-lint/golangci-lint' atload'source <(golangci-lint completion zsh)' golangci/golangci-lint
+  mv'stylish-haskell* -> stylish-haskell' sbin'stylish-haskell/stylish-haskell' @haskell/stylish-haskell
+
 
 # zsh-diff-so-fancy
 zplugin light-mode lucid \
@@ -289,19 +249,12 @@ zplugin light-mode lucid \
   sbin'bin/diff-so-fancy' \
   as"program" for zdharma-continuum/zsh-diff-so-fancy
 
-# github cli
-zinit light-mode lucid from'gh-r' \
-  bpick'*amd64.tar.gz' \
-  mv'gh* -> gh' \
-  sbin'gh/bin/gh' \
-  pick'/dev/null' \
-  atclone'/bin/rm -f _gh; gh completion -s zsh > _gh; chmod +x _gh' \
-  atpull'%atclone' for cli/cli
-
 zinit light-mode lucid for \
   gradle/gradle-completion \
-  arzzen/calc.plugin.zsh \
-  zsh-users/zsh-history-substring-search
+  arzzen/calc.plugin.zsh
+
+zinit load zsh-users/zsh-history-substring-search
+zinit ice wait atload'_history_substring_search_config'
 
 ### THEME ###
 zinit light-mode lucid nocd depth='1' atload'!source ~/.p10k.zsh; _p9k_precmd' for romkatv/powerlevel10k
@@ -310,7 +263,7 @@ zinit light-mode lucid nocd depth='1' atload'!source ~/.p10k.zsh; _p9k_precmd' f
 # Delete old definitions
 zstyle -d users
 # For SSH and related stuff, use remote users set in SSH configuration, plus root
-zstyle ':completion:*:*:(ssh|scp|rsync|mosh|slogin):*' users root $(awk '$1 == "User" { print $2 }' ~/.ssh/config ~/.ssh/conf.d/* | sort -u)
+zstyle ':completion:*:*:(ssh|scp|rsync|mosh|slogin):*' users root $(awk '$1 == "User" { print $2 }' ~/.ssh/config ~/.ssh/config.d/* | sort -u)
 # For everything else, use non-system users from /etc/passwd, plus root
 zstyle ':completion:*:*:*:*' users root $(awk -F: '$3 >= 1000 && $3 < 65000 { print $1 }' /etc/passwd)
 
@@ -318,7 +271,7 @@ zstyle ':completion:*:*:*:*' users root $(awk -F: '$3 >= 1000 && $3 < 65000 { pr
 # https://serverfault.com/a/170481
 h=()
 if [[ -r ~/.ssh/config ]]; then
-  h=($h ${${${(@M)${(f)"$(cat ~/.ssh/config ~/.ssh/conf.d/* 2>/dev/null)"}:#Host *}#Host }:#*[*?]*})
+  h=($h ${${${(@M)${(f)"$(cat ~/.ssh/config ~/.ssh/config.d/* 2>/dev/null)"}:#Host *}#Host }:#*[*?]*})
 fi
 # HashKnownHosts must be disabled
 # if [[ -r ~/.ssh/known_hosts ]]; then
@@ -365,6 +318,16 @@ zshaddhistory() {
 # WSL2
 # gpg-agent with YubiKey
 # https://github.com/rupor-github/win-gpg-agent
+
+autoload -Uz compinit
+compinit
+
+# -q is for quiet; actually run all the `compdef's saved before `compinit` call
+# (`compinit' declares the `compdef' function, so it cannot be used until
+# `compinit' is ran; Zinit solves this via intercepting the `compdef'-calls and
+# storing them for later use with `zinit cdreplay')
+
+zinit cdreplay -q
 
 # p10k instant prompt
 (( ! ${+functions[p10k]} )) || p10k finalize
