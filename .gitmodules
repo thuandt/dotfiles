@@ -13,3 +13,6 @@
 [submodule "terminals/tmux/colors"]
 	path = terminals/tmux/colors
 	url = https://github.com/seebi/tmux-colors-solarized.git
+[submodule "apps/nvim"]
+	path = apps/nvim
+	url = git@github.com:thuandt/NvChad-starter.git
