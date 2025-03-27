@@ -57,7 +57,7 @@ zinit light-mode lucid for \
   OMZL::misc.zsh \
   OMZL::termsupport.zsh \
   OMZL::theme-and-appearance.zsh \
-  OMZP::asdf \
+  OMZP::mise \
   OMZP::gcloud \
   atload"unalias grv" OMZP::git
 
@@ -183,7 +183,7 @@ zinit snippet https://storage.googleapis.com/container-diff/latest/container-dif
 zinit ice wait lucid id-as'GoogleCloudPlatform/cloud_sql_proxy' \
   sbin'cloud_sql_proxy' \
   pick'/dev/null'
-zinit snippet https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.15.0/cloud-sql-proxy.linux.amd64
+zinit snippet https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.15.2/cloud-sql-proxy.linux.amd64
 
 # telepresence
 zinit ice wait lucid id-as'telepresenceio/telepresence' \
@@ -239,7 +239,6 @@ zinit light-mode lucid as'null' from'gh-r' for \
   sbin'flyctl' atclone'./flyctl completion zsh > _flyctl' atpull'%atclone' superfly/flyctl \
   mv'argocd-image-updater* -> argocd-image-updater' sbin'argocd-image-updater' argoproj-labs/argocd-image-updater \
   mv'stylish-haskell* -> stylish-haskell' sbin'stylish-haskell/stylish-haskell' @haskell/stylish-haskell
-
 
 # zsh-diff-so-fancy
 zplugin light-mode lucid \
