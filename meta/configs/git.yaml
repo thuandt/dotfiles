@@ -2,4 +2,3 @@
     ~/.tigrc: tools/vcs/git/.tigrc
     ~/.gitconfig: tools/vcs/git/.gitconfig
     ~/.gitignore_global: tools/vcs/git/.gitignore_global
-    ~/.git-templates: tools/vcs/git/git-templates

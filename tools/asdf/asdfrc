@@ -1,6 +1,0 @@
-concurrency = auto
-legacy_version_file = yes
-always_keep_download = no
-use_release_candidates = no
-disable_plugin_short_name_repository = no
-plugin_repository_last_check_duration = 60
