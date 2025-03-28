@@ -17,10 +17,6 @@ export DOTNET_NOLOGO=true
 export DOTNET_CLI_TELEMETRY_OPTOUT=true
 export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
-# User binaries
-export BIN_DIR=${HOME}/.local/bin
-export PATH=$BIN_DIR:$PATH
-
 # Editor
 export EDITOR="code --wait"
 export VISUAL="${EDITOR}"
@@ -77,16 +73,18 @@ export POETRY_VIRTUALENVS_CREATE=1
 export POETRY_VIRTUALENVS_IN_PROJECT=1
 export POETRY_INSTALL_DEPENDENCIES=1
 
+# PATH setup
+export USER_BIN="${HOME}/.local/bin"
+export PATH="${USER_BIN}:${PATH}"
+
 if [[ "$OSTYPE" == linux* ]]; then
   ### Setup PATH ###
-  export PULUMI=${HOME}/.pulumi/bin                               # pulumi
-  export KREW_ROOT=${HOME}/.krew                                  # krew
-  export CARGO=${HOME}/.cargo/bin                                 # Rust cargo
-  export CABAL=${HOME}/.cabal/bin                                 # Haskell cabal
-  export YARNBIN=${HOME}/.yarn/bin                                # yarn
-  export YARNGLOBAL=${HOME}/.config/yarn/global/node_modules/.bin # yarn global
-  export FLYCTL_INSTALL="${HOME}/.fly"                            # fly.io
-  export DOTNET_TOOLS="${HOME}/.dotnet/tools"                     # dotnet tools (powershell)
+  export PULUMI=${HOME}/.pulumi/bin           # pulumi
+  export KREW_ROOT=${HOME}/.krew              # krew
+  export CARGO=${HOME}/.cargo/bin             # Rust cargo
+  export CABAL=${HOME}/.cabal/bin             # Haskell cabal
+  export FLYCTL_INSTALL="${HOME}/.fly"        # fly.io
+  export DOTNET_TOOLS="${HOME}/.dotnet/tools" # dotnet tools (powershell)
 
   export ANDROID_PLATFORM_TOOLS="${HOME}/Applications/android-platform-tools"
 
@@ -96,8 +94,6 @@ if [[ "$OSTYPE" == linux* ]]; then
     "${KREW_ROOT}/bin"
     "${CARGO}"
     "${CABAL}"
-    "${YARNBIN}"
-    "${YARNGLOBAL}"
     "${FLYCTL_INSTALL}/bin"
     "${ANDROID_PLATFORM_TOOLS}"
     "${DOTNET_TOOLS}"

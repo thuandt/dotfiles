@@ -213,7 +213,6 @@ zinit light-mode lucid as'null' from'gh-r' for \
   sbin'hugo' bpick'*ext*64bit*' gohugoio/hugo \
   sbin'ksops' viaduct-ai/kustomize-sops \
   mv'jq* -> jq' sbin'jq' jqlang/jq \
-  mv'mise* -> mise' sbin'mise' jdx/mise \
   mv'jaq* -> jaq' sbin'jaq' 01mf02/jaq \
   sbin'tfsec' bpick'*amd64.tar.gz' aquasecurity/tfsec \
   mv'*q* -> q' sbin'q' harelba/q \
