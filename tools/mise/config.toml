@@ -1,11 +1,10 @@
-
 [tools]
 age = "latest"
 age-plugin-yubikey = "latest"
 amazon-ecr-credential-helper = "latest"
 argocd = "latest"
 "aqua:argoproj-labs/argocd-image-updater" = "latest"
-awscli = "latest"
+aws-cli = { version = "latest", symlink_bins = "true" }
 azure = "latest"
 caddy = "latest"
 cfssl = "latest"
@@ -22,7 +21,6 @@ flyctl = "latest"
 gallery-dl = "latest"
 gdu = "latest"
 github-cli = "latest"
-glab = "v1.55.0"
 go = "latest"
 golangci-lint = "latest"
 hadolint = "latest"
@@ -88,3 +86,9 @@ yq = "latest"
 "ubi:str4d/rage" = "latest"
 "ubi:exercism/cli" = { version = "latest", exe = "exercism" }
 "ubi:variadico/noti" = "latest"
+"ubi:PostgREST/postgrest" = "latest"
+"ubi:gitlab-org/cli" = { version = "latest", exe = "glab", provider = "gitlab" }
+ast-grep = "latest"
+minisign = "latest"
+node = "lts"
+usql = "latest"
