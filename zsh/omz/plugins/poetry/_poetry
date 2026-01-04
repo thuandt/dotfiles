@@ -1,6 +1,6 @@
 #compdef poetry
 
-_poetry_fba08e63e8e33757_complete()
+_poetry_d6cdfa477f6beaa9_complete()
 {
     local state com cur
 
@@ -139,5 +139,5 @@ _poetry_fba08e63e8e33757_complete()
     esac
 }
 
-_poetry_fba08e63e8e33757_complete "$@"
-compdef _poetry_fba08e63e8e33757_complete /usr/local/bin/poetry
+_poetry_d6cdfa477f6beaa9_complete "$@"
+compdef _poetry_d6cdfa477f6beaa9_complete /home/mrtux/.poetry/bin/poetry
