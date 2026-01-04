@@ -64,7 +64,7 @@ stty stop undef
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 zinit light zdharma-continuum/zinit-annex-meta-plugins
-zinit light-mode lucid for annexes zsh-users+fast zdharma console-tools fuzzy prezto
+zinit light-mode lucid for annexes zsh-users+fast zdharma console-tools fuzzy
 
 # OMZ libs and plugins
 zinit light-mode lucid for \
