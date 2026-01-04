@@ -9,4 +9,5 @@ export HOSTNAME=`hostname`
 eval keychain -Q --quiet $HOME/.ssh/id_rsa
 source $HOME/.keychain/$HOSTNAME-sh
 source $HOME/.keychain/$HOSTNAME-sh-gpg
+clear
 ### END-Keychain ###
