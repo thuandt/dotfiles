@@ -14,7 +14,7 @@
     # Disable guicolors in basic mode, many terminal do not support 24bit
     # true colors
     enable_guicolors = true
-    guifont = "CascadiaCode Nerd Font:h11"
+    guifont = "Delugia Nerd Font:h11"
     # Disable statusline separator, if you want to use other value, please
     # install nerd fonts
     statusline_separator = "arrow"
@@ -70,3 +70,7 @@
 
 [[layers]]
     name = "lang#sh"
+
+[[custom_plugins]]
+    name = "zplugin/zplugin-vim-syntax"
+    merged = false
