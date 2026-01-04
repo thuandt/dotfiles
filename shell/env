@@ -30,7 +30,7 @@ if [[ ":$PATH:" != *":${MY_PATH}:"* ]]; then PATH=${MY_PATH}:$PATH; fi
 ### virtualenv ###
 export WORKON_HOME=$HOME/.virtualenvs
 
-# Setup Input Method (Ibus)
+# Setup Input Method
 export XMODIFIERS=@im=scim
 export GTK_IM_MODULE=scim
 export QT_IM_MODULE=scim
