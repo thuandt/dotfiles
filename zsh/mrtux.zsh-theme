@@ -23,7 +23,7 @@ ZSH_THEME_VIRTUALENV_PREFIX="venv:%{$fg[red]%}‹"
 ZSH_THEME_VIRTUALENV_SUFFIX="›%{$reset_color%}"
 
 # virtualenv
-local virtualenv_python='$(virtualenv_prompt_info)'
+local venv='$(virtualenv_prompt_info)'
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" ☁  %{$fg[red]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
@@ -104,9 +104,12 @@ function git_time_since_commit() {
     fi
 }
 
+
+local git_prompt='%{$fg[magenta]%}$(git_prompt_info)%{$reset_color%}$(git_prompt_status)%{$reset_color%}$(git_prompt_ahead)%{$reset_color%}'
+
 # The prompt
-PROMPT="╭─$(ssh_connection)${user_host} ${current_dir} ${rvm_ruby} ${virtualenv_python}
+PROMPT="╭─$(ssh_connection) ${current_time} ${user_host} ${current_dir} ${git_prompt} ${venv} ${rvm_ruby} ${return_code}
 ╰─%B➤%b "
 
 # The right-hand prompt
-RPROMPT='${return_code} ${current_time} %{$fg[magenta]%}$(git_prompt_info)%{$reset_color%}$(git_prompt_status)%{$reset_color%}$(git_prompt_ahead)%{$reset_color%}'
+RPROMPT='%{$reset_color%}'
