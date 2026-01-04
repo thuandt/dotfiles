@@ -1,4 +1,3 @@
----
 - pip:
     file: python/requirements-system.txt
     binary: /usr/local/bin/pip3
