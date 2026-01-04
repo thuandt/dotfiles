@@ -226,6 +226,11 @@ if [[ "$OSTYPE" = linux* ]] ; then
              -o "$MYBIN/kops"
     }
 
+    # Usage: install-shellcheck
+    install-shellcheck() {
+        curl -sSL https://storage.googleapis.com/shellcheck/shellcheck-stable.linux.x86_64.tar.xz | tar -C "${MYBIN}" -Jxf - --strip-components=1 shellcheck-stable/shellcheck
+    }
+
     # Usage: pia sgn up/down
     pia() {
         location=${1:-sgn}
