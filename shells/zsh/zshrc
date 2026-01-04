@@ -150,7 +150,6 @@ zinit ice wait"2" lucid depth=1 \
   atclone"./autogen.sh; ./configure --prefix=$ZPFX" \
   atpull"/bin/cp -f contrib/vim.tigrc ~/.tigrc.vim; /bin/cp -f contrib/git-flow.tigrc ~/.tigrc.git-flow; ./autogen.sh; ./configure --prefix=$ZPFX" \
   make"prefix=$ZPFX install" \
-  src"contrib/tig-completion.zsh" \
   pick"/dev/null"
 zinit light jonas/tig
 
