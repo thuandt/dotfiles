@@ -142,9 +142,11 @@ alias whatismyip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias workon='pew workon'
 
 # Use ptpython inside virtualenv
-alias ptpython="python -m ptpython"
-alias ptpy2="python2 -m ptpython"
-alias ptpy3="python3 -m ptpython"
+alias pt2="python2 -m ptpython"
+alias pt3="python3 -m ptpython"
+
+# ripgrep search hidden files by default
+alias rg='rg --hidden'
 
 # SSH without HostKeyChecking and KnownHosts
 alias tssh="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
