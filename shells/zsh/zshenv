@@ -60,6 +60,7 @@ export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 
 # asdf
 export ASDF_RUBY_BUILD_VERSION=master
+export ASDF_GOLANG_MOD_VERSION_ENABLED=false
 
 # gcloud
 export CLOUDSDK_PYTHON=python3
@@ -134,8 +135,6 @@ if [[ "$OSTYPE" == linux* ]]; then
   export LANG="${LANGUAGE}"
   export LC_ALL="${LANGUAGE}"
   export LC_CTYPE="${LANGUAGE}"
-
-  export BROWSER="firefox"
 
   # systemd import environment
   # https://wiki.archlinux.org/index.php/systemd/User#Environment_variables
