@@ -1,1 +1,9 @@
+#!/usr/bin/zsh
+# ~/.zprofile
+# Last Modified: 12/04/2012 05:43:56 AM
+
+if [ -f ~/.zshrc ]; then
+       source ~/.zshrc
+fi
+
 TERM=screen-256color _byobu_sourced=1 . /usr/bin/byobu-launch
