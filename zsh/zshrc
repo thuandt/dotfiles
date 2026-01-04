@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 # ~/.zshrc
 
+# Tilix fix
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
     source /etc/profile.d/vte.sh
 fi
@@ -14,19 +15,19 @@ export ZSH=$HOME/.oh-my-zsh
 # Use customize path for plugins/themes
 ZSH_CUSTOM=$HOME/.dotfiles/zsh/omz
 
-if [[ "$COLORTERM" == "gnome-terminal" ]]; then
-    export TERM=xterm-256color
-fi
-
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
+### POWERLEVEL9K THEME ###
 POWERLEVEL9K_MODE='awesome-fontconfig'
 DEFAULT_USER=$USER
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon root_indicator context time load battery status background_jobs disk_usage dir dir_writable vcs kubecontext virtualenv rbenv)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon root_indicator context time
+                                   load battery status background_jobs
+                                   disk_usage dir dir_writable vcs
+                                   kubecontext virtualenv rbenv vi_mode)
 POWERLEVEL9K_TIME_FOREGROUND='011'
 POWERLEVEL9K_TIME_BACKGROUND='$DEFAULT_COLOR'
 POWERLEVEL9K_TIME_FORMAT="%D{%H:%M:%S}"
@@ -46,6 +47,12 @@ POWERLEVEL9K_SHORTEN_STRATEGY="truncate_right"
 POWERLEVEL9K_NODE_VERSION_BACKGROUND='022'
 POWERLEVEL9K_VIRTUALENV_BACKGROUND='blue'
 POWERLEVEL9K_KUBECONTEXT_BACKGROUND='027'
+
+
+### BUNDLER PLUGIN ###
+#BUNDLED_COMMANDS=()
+#UNBUNDLED_COMMANDS=()
+
 
 # Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="false"
@@ -90,14 +97,18 @@ HIST_STAMPS="dd.mm.yyyy"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
-plugins=(zsh-completions go-zsh-completions helm adb cabal command-not-found docker-compose
-         docker-machine encode64 extract fancy-ctrl-z gcloud
+# docker and docker-compose plugin will use vendor completion
+plugins=(zsh-completions go-zsh-completions
+         adb bundler cabal command-not-found encode64 extract fancy-ctrl-z
          git git-extras git-flow-avh git-hubflow git-remote-branch gitignore
-         golang kubectl heroku history history-substring-search
-         httpie iwhois mercurial mosh mpv node npm
+         golang heroku history history-substring-search
+
+         httpie iwhois mercurial mosh mpv node npm vi-mode
          nmap perl pew pyenv pip python pylint redis-cli rg rustup rsync ruby gem
          rake rbenv sbt scala stack screen sudo supervisor systemadmin
          systemd tmux terraform ubuntu vagrant virtualenv zsh_reload z
+
+         gcloud kubectl helm kops
          zsh-autosuggestions zsh-syntax-highlighting)
 
 # User configuration
@@ -241,6 +252,18 @@ zstyle -e ':completion:*:hosts' hosts 'reply=(${=${${${${(@M)${(f)"$(cat ~/.ssh/
 # Using Ctrl-Space for quick execute suggest command
 bindkey '^ ' autosuggest-execute
 
+### VI-MODE ###
+export KEYTIMEOUT=1
+
+# history-substring-search
+# bind P and N for EMACS mode
+bindkey -M emacs '^P' history-substring-search-up
+bindkey -M emacs '^N' history-substring-search-down
+
+# bind k and j for VI mode
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
 # Don't store failed command to history
 zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
 
@@ -257,5 +280,5 @@ source $HOME/.keychain/$(hostname)-sh
 # source $HOME/.keychain/$(hostname)-sh-gpg
 
 # Clear screen
-clear
+#clear
 # End of ~/.zshrc
