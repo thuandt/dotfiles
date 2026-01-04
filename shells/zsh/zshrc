@@ -90,7 +90,7 @@ zinit ice wait='0c' lucid reset \
   atload='zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
 zinit light seebi/dircolors-solarized
 
-zinit wait light-mode lucid blockf atclone='zinit creinstall -q .' atpull='%atclone' pick='/dev/null' for \
+zinit wait light-mode lucid blockf atload='zicompinit; zicdreplay' blockf for \
   zsh-users/zsh-completions \
   zchee/zsh-completions
 
