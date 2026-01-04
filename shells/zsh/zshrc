@@ -16,40 +16,6 @@ source "${ZINIT_HOME}/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-### Bindkeys ###
-autoload history-substring-search-up history-substring-search-down
-autoload autosuggest-execute
-
-zle -N history-substring-search-up
-zle -N history-substring-search-down
-zle -N autosuggest-execute
-
-# bind Alt+. to insert last argument of last command
-bindkey -M viins '\e.' insert-last-word
-
-# Ctrl+Space Accepts and executes the current suggestion
-bindkey '^ ' autosuggest-execute
-
-# Bind terminal-specific up and down keys
-# Bind in both emacs and vi modes so it works in both, and is not
-# sensitive to whether this is loaded before or after the vi-mode plugin
-if [[ -n "$terminfo[kcuu1]" ]]; then
-  bindkey -M emacs "$terminfo[kcuu1]" history-substring-search-up
-  bindkey -M viins "$terminfo[kcuu1]" history-substring-search-up
-fi
-if [[ -n "$terminfo[kcud1]" ]]; then
-  bindkey -M emacs "$terminfo[kcud1]" history-substring-search-down
-  bindkey -M viins "$terminfo[kcud1]" history-substring-search-down
-fi
-
-# bind P and N for EMACS mode
-bindkey -M emacs '^P' history-substring-search-up
-bindkey -M emacs '^N' history-substring-search-down
-
-# bind k and j for VI mode
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
-
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
@@ -286,7 +252,7 @@ zinit light-mode lucid as'null' from'gh-r' for \
   sbin bpick'*64' mv'jq* -> jq' stedolan/jq \
   sbin bpick'*amd64.tar.gz' aquasecurity/tfsec \
   sbin bpick'*amd64' mv'sops* -> sops' mozilla/sops \
-  sbin'istioctl' bpick'istioctl-*' ver='1.15.0' istio/istio \
+  sbin'istioctl' bpick'istioctl-*' ver='1.15.2' istio/istio \
   mv'*q* -> q' sbin harelba/q \
   sbin'flatc' google/flatbuffers \
   mv'gdu* -> gdu' sbin dundee/gdu \
@@ -314,7 +280,7 @@ zinit light-mode lucid as'null' from'gh-r' for \
   sbin atclone'./flyctl completion zsh > _flyctl' atpull'%atclone' superfly/flyctl \
   mv'argocd-image-updater* -> argocd-image-updater' sbin argoproj-labs/argocd-image-updater \
   mv'stylish-haskell* -> stylish-haskell' sbin'stylish-haskell/stylish-haskell' @haskell/stylish-haskell \
-  mv'argocd* -> argocd' ver='v2.4.12' sbin atclone'./argocd completion zsh > _argocd' atpull'%atclone' argoproj/argo-cd \
+  mv'argocd* -> argocd' ver='v2.4.14' sbin atclone'./argocd completion zsh > _argocd' atpull'%atclone' argoproj/argo-cd \
   mv'golangci-lint* -> golangci-lint' sbin'golangci-lint/golangci-lint' atload'source <(golangci-lint completion zsh)' golangci/golangci-lint
 
 # zsh-diff-so-fancy
