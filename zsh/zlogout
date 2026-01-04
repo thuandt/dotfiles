@@ -1,6 +1,5 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 # ~/.zprofile
-# Last Modified: 12/04/2012 05:43:56 AM
 
 # This file is sourced when a login shell terminates.
 
