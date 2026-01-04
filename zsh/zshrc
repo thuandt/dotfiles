@@ -38,7 +38,7 @@ DEFAULT_USER=$USER
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon root_indicator context time
                                    load battery status background_jobs
                                    disk_usage dir dir_writable vcs
-                                   kubecontext virtualenv rbenv vi_mode)
+                                   aws kubecontext virtualenv rbenv vi_mode)
 POWERLEVEL9K_TIME_FOREGROUND='011'
 POWERLEVEL9K_TIME_BACKGROUND='$DEFAULT_COLOR'
 POWERLEVEL9K_TIME_FORMAT="%D{%H:%M:%S}"
@@ -73,7 +73,7 @@ DISABLE_UPDATE_PROMPT="true"
 DISABLE_AUTO_UPDATE="false"
 
 # Uncomment the following line to change how often to auto-update (in days).
-export UPDATE_ZSH_DAYS=1
+export UPDATE_ZSH_DAYS=7
 
 # Uncomment the following line to disable colors in ls.
 DISABLE_LS_COLORS="false"
@@ -103,41 +103,66 @@ HIST_STAMPS="dd.mm.yyyy"
 # Add wisely, as too many plugins slow down shell startup.
 
 if [[ "$OSTYPE" = darwin* ]] ; then
-    # docker and docker-compose plugin will use vendor completion
     plugins=(zsh-completions go-zsh-completions
-
-             alias-tips docker docker-compose docker-machine
-             encode64 extract
-             git git-extras git-remote-branch gitignore
-             github git-flow-avh git-hubflow gnu-utils golang gpg-agent
-             history history-substring-search
-
-             httpie mosh vi-mode fzf nvm
-             pew pip pipenv poetry pyenv python pylint redis-cli rg rsync
-             screen tmux sudo terraform osx vagrant zsh_reload z
-
-             kubectl helm kubernetes awscli
-             zsh-autosuggestions zsh-syntax-highlighting)
+             adb alias-tips command-not-found common-aliases emacs
+             encode64 extract fancy-ctrl-z keychain gnu-utils gpg-agent
+             history history-substring-search httpie lol mosh vi-mode fzf
+             nmap perl redis-cli ripgrep rsync screen sublime
+             sudo taskwarrior tmux tig transfer osx xcode urltools z zsh_reload)
 else
-    # docker and docker-compose plugin will use vendor completion
     plugins=(zsh-completions go-zsh-completions
-
-             adb alias-tips bundler cabal command-not-found encode64 extract
-             fancy-ctrl-z docker docker-compose docker-machine
-             git git-extras git-remote-branch gitignore
-             github git-flow-avh git-hubflow
-             gpg-agent golang heroku history history-substring-search
-
-             httpie iwhois mercurial mosh mpv node nvm npm vi-mode fzf
-             nmap perl pew pip pipenv poetry pyenv python pylint redis-cli
-             rg rustup rsync ruby gem
-             rake rbenv sbt scala stack screen sudo supervisor systemadmin
-             systemd tmux terraform ubuntu vagrant virtualenv zsh_reload z
-
-             gcloud kubectl helm kubernetes awscli
-             zsh-autosuggestions zsh-syntax-highlighting)
+             adb alias-tips command-not-found common-aliases emacs
+             encode64 extract fancy-ctrl-z keychain gpg-agent
+             history history-substring-search httpie lol mosh vi-mode fzf
+             nmap perl redis-cli ripgrep rsync screen sublime
+             sudo systemadmin systemd taskwarrior tmux tig transfer
+             ubuntu ufw urltools z zsh_reload)
 fi
 
+# Version Control
+plugins+=(git git-auto-fetch git-extras git-flow-avh git-hubflow git-remote-branch github gitignore mercurial magic-enter)
+
+# Docker
+plugins+=(docker docker-compose docker-machine)
+
+# Cloud
+plugins+=(awscli gcloud heroku)
+
+# Kubernetes
+plugins+=(helm kubectl kops kubernetes minikube)
+
+# Ruby and RoR
+plugins+=(bundler capistrano gem rake rails rbenv ruby)
+
+# Python
+plugins+=(celery django pew pip pipenv poetry pyenv python supervisor virtualenv virtualenvwrapper)
+
+# Golang
+plugins+=(golang)
+
+# Java & Scala
+plugins+=(gradle mvn scala sbt spring)
+
+# Rust
+plugins+=(cargo rust)
+
+# Haskell
+plugins+=(cabal stack)
+
+# Erlang and Elixir
+plugins+=(mix)
+
+# PHP
+plugins+=(composer laravel5 wp-cli yii2)
+
+# Javascript
+plugins+=(ng node npm nvm react-native yarn)
+
+# HashiCorp
+plugins+=(nomad packer terraform vagrant vault)
+
+# plugins should be load at last
+plugins+=(zsh-autosuggestions zsh-syntax-highlighting)
 
 # User configuration
 
@@ -159,6 +184,12 @@ ZSH_TMUX_FIXTERM_WITHOUT_256COLOR="screen"
 # Tmux states this should be screen-256color, but you may need to change it on
 # systems without the proper terminfo
 ZSH_TMUX_FIXTERM_WITH_256COLOR="screen-256color"
+
+
+# keychain
+zstyle :omz:plugins:keychain agents gpg
+zstyle :omz:plugins:keychain identities 0x0A1E3BB48B35A2F3 0x859F3935B8571C8D
+zstyle :omz:plugins:keychain options --eval -Q --quiet --attempts 5 --systemd
 
 # source oh-my-zsh
 source $ZSH/oh-my-zsh.sh
@@ -320,8 +351,12 @@ else
     PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))')"
 fi
 
+# spacevim/neovim
+# shellcheck disable=SC2155
+export PYTHON_HOST_PROG="$(pyenv root)/shims/python"
+# shellcheck disable=SC2155
+export PYTHON3_HOST_PROG="$(pyenv root)/shims/python3"
+
 # Clear screen
 clear
 # End of ~/.zshrc
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
