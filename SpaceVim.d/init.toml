@@ -71,6 +71,9 @@
 [[layers]]
     name = "lang#sh"
 
+[[layers]]
+    name = "lang#go"
+
 [[custom_plugins]]
     name = "zplugin/zplugin-vim-syntax"
     merged = false
