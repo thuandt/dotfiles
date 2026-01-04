@@ -10,6 +10,7 @@ hydra-core
 click
 
 sh
+httpx
 requests[security]
 pygments
 gitpython
