@@ -41,8 +41,7 @@
     azure                   # azure account name
     gcloud                  # google cloud cli account and project
     kubecontext             # current kubernetes context
-    asdf                    # tool versions from asdf
-    virtualenv              # python environment
+    mise                    # mise version manager (https://github.com/jdx/mise)
     direnv                  # direnv status
     vi_mode                 # vi mode
     command_execution_time 	# duration (wall time) of the last command
@@ -1472,7 +1471,7 @@
   #[ aws: aws profile (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) ]#
   # Show aws only when the command you are typing invokes one of these tools.
   # Tip: Remove the next line to always show aws.
-  typeset -g POWERLEVEL9K_AWS_SHOW_ON_COMMAND='aws|asp|awless|cdk|terraform|pulumi|terragrunt'
+  typeset -g POWERLEVEL9K_AWS_SHOW_ON_COMMAND='aws|asp|awless|cdk|terraform|pulumi|terragrunt|sops'
 
   # POWERLEVEL9K_AWS_CLASSES is an array with even number of elements. The first element
   # in each pair defines a pattern against which the current AWS profile gets matched.

@@ -85,7 +85,7 @@ if [[ "$OSTYPE" == linux* ]]; then
   export CABAL=${HOME}/.cabal/bin             # Haskell cabal
   export FLYCTL_INSTALL="${HOME}/.fly"        # fly.io
   export DOTNET_TOOLS="${HOME}/.dotnet/tools" # dotnet tools (powershell)
-
+  export NPM_PREFIX="${HOME}/.npm-packages"   # npm global packages
   export ANDROID_PLATFORM_TOOLS="${HOME}/Applications/android-platform-tools"
 
   # My custom path
@@ -97,6 +97,7 @@ if [[ "$OSTYPE" == linux* ]]; then
     "${FLYCTL_INSTALL}/bin"
     "${ANDROID_PLATFORM_TOOLS}"
     "${DOTNET_TOOLS}"
+    "${NPM_PREFIX}/bin"
   )
 
   # Add directory to $PATH if its not already there
@@ -139,6 +140,10 @@ fi
 
 ### API keys ###
 # Query GNOME Keyring for secrets
+
+# Google AI Studio
+# Gemini API key
+export GEMINI_API_KEY="$(secret-tool lookup api-key gemini)"
 
 # [TinyPNG](tinypng.org) Smart PNG and JPEG compression
 # Optimize your images with a perfect balance in quality and file size.
