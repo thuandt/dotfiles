@@ -79,6 +79,7 @@ set titlestring="Firefox ❤ Vim"
 " Ignore in Google Docs and Drive
 autocmd LocationChange https://docs.google.com  :normal! <C-z>
 autocmd LocationChange https://drive.google.com :normal! <C-z>
+autocmd LocationChange https://console.cloud.google.com :normal! <C-z>
 
 "Focus settings, (Let gmail mess with DOM)
 set strictfocus=google.com:laissez-faire,'chrome:*':laissez-faire,*:despotic
@@ -98,15 +99,11 @@ autocmd LocationChange mail.google.com set ht+=span.x2
 autocmd PageLoad mail.google.com js if(!getBrowser().mCurrentTab.pinned) getBrowser().pinTab(getBrowser().mCurrentTab);
 autocmd PageLoad gmail.com js if(!getBrowser().mCurrentTab.pinned) getBrowser().pinTab(getBrowser().mCurrentTab);
 
+" Auto pin GCP Console
+autocmd PageLoad console.cloud.google.com js if(!getBrowser().mCurrentTab.pinned) getBrowser().pinTab(getBrowser().mCurrentTab);
+
 " Auto pin Trello
 autocmd PageLoad trello.com js if(!getBrowser().mCurrentTab.pinned) getBrowser().pinTab(getBrowser().mCurrentTab);
-
-" Auto pin Trobz's TMS + GitLab
-autocmd PageLoad tms.trobz.com js if(!getBrowser().mCurrentTab.pinned) getBrowser().pinTab(getBrowser().mCurrentTab);
-autocmd PageLoad gitlab.trobz.com js if(!getBrowser().mCurrentTab.pinned) getBrowser().pinTab(getBrowser().mCurrentTab);
-
-" Hint Instagram Load More
-autocmd LocationChange instagram.com set ht+=a.button.button-grey.button-large
 
 set passkeys+='duckduckgo.com':jkhvrsm!/<C-Enter>
 set passkeys+='facebook.com':<CR>
