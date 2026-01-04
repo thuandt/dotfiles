@@ -122,14 +122,15 @@ else
     # docker and docker-compose plugin will use vendor completion
     plugins=(zsh-completions go-zsh-completions
 
-             adb alias-tips bundler cabal command-not-found encode64 extract fancy-ctrl-z
-             docker docker-compose docker-machine
+             adb alias-tips bundler cabal command-not-found encode64 extract
+             fancy-ctrl-z docker docker-compose docker-machine
              git git-extras git-remote-branch gitignore
              github git-flow-avh git-hubflow
              golang heroku history history-substring-search
 
              httpie iwhois mercurial mosh mpv node nvm npm vi-mode fzf
-             nmap perl pew pip pipenv poetry pyenv python pylint redis-cli rg rustup rsync ruby gem
+             nmap perl pew pip pipenv poetry pyenv python pylint redis-cli
+             rg rustup rsync ruby gem
              rake rbenv sbt scala stack screen sudo supervisor systemadmin
              systemd tmux terraform ubuntu vagrant virtualenv zsh_reload z
 
