@@ -1,1 +1,0 @@
-/usr/share/doc/mpv/tools/lua/autocrop.lua
