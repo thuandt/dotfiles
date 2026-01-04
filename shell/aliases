@@ -208,13 +208,11 @@ alias tssh="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 # Stop all running containers
 alias dsa='docker stop $(docker ps -a -q)'
 # remove all containers, even stopped ones
-alias drm='docker rm $(docker ps -aq)'
+alias drmc='docker rm $(docker ps -aq)'
 # Delete all existing images
-alias docker-container-cleanup='docker images -q -a | xargs -r docker rmi'
-docker-images-cleanup () {
-    docker images | grep '^<none>' | awk '{ print $3 }' | xargs -r docker rmi
-}
-alias docker-volume-cleanup="docker volume ls -qf dangling=true | xargs -r docker volume rm"
+alias drmi='docker image prune --all'
+# Volume cleanup
+alias dvc="docker volume ls -qf dangling=true | xargs -r docker volume rm"
 
 ### Git flow aliaes ###
 alias gfl='git flow'
