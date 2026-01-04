@@ -1,6 +1,6 @@
 #!/bin/bash
-# install.sh
-# Last Modified: Sun 06 Jan 2013 02:45:16 AM ICT
+# Filename: install.sh
+# Last Modified: Sun 06 Jan 2013 03:23:24 AM ICT
 
 cp bash/bashrc ~/.bashrc
 mkdir -p ~/.bin && cp bin/* ~/.bin
