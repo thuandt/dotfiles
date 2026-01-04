@@ -2,35 +2,33 @@
 # Filename: install.sh
 # Last Modified: Mon 07 Jan 2013 01:07:00 AM ICT
 
-DOTFILES=`pwd`
+DOTDIR="$(pwd)"
 
 # install oh-my-zsh
 git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 
-# common shell
-cp "$DOTFILES/shell/aliases" ~/.shell_aliases
-cp "$DOTFILES/shell/dircolors/dircolors.256dark" ~/.dircolors.256dark
-cp "$DOTFILES/shell/env" ~/.shell_env
-cp "$DOTFILES/shell/functions" ~/.shell_functions
+# Common
+ln -sf "${DOTDIR}/dircolors/dircolors.256dark" ~/.dircolors
+ln -sf "${DOTDIR}/exports" ~/.exports
+ln -sf "${DOTDIR}/aliases" ~/.aliases
+ln -sf "${DOTDIR}/functions" ~/.functions
 
 # bash
-cp "$DOTFILES/bash/bashrc" ~/.bashrc
-cp "$DOTFILES/bash/bash_logout" ~/.bash_logout
-cp "$DOTFILES/bash/bash_profile" ~/.bash_profile
+ln -sf "${DOTDIR}/bash/bashrc" ~/.bashrc
+ln -sf "${DOTDIR}/bash/bash_logout" ~/.bash_logout
+ln -sf "${DOTDIR}/bash/bash_profile" ~/.bash_profile
 
 # zsh
-cp "$DOTFILES/zsh/zlogout" ~/.zlogout
-cp "$DOTFILES/zsh/zprofile" ~/.zprofile
-cp "$DOTFILES/zsh/zshrc" ~/.zshrc
-cp "$DOTFILES/zsh/zshenv" ~/.zshenv
-mkdir -p ~/.oh-my-zsh/custom/themes
-cp "$DOTFILES/zsh/mrtux.zsh-theme" ~/.oh-my-zsh/custom/themes
+ln -sf "${DOTDIR}/zsh/zlogout" ~/.zlogout
+ln -sf "${DOTDIR}/zsh/zprofile" ~/.zprofile
+ln -sf "${DOTDIR}/zsh/zshrc" ~/.zshrc
+ln -sf "${DOTDIR}/zsh/zshenv" ~/.zshenv
 
-# vim
-cp -R $DOTFILES/vim ~/.vim
-ln -s ~/.vim/vimrc ~/.vimrc
+# nvim
+ln -sf "${DOTDIR}/nvim" ~/.config/nvim
 
-# install some config file
-cp "$DOTFILES/screen/screenrc" ~/.screenrc
-cp "$DOTFILES/tmux/tmux.conf" ~/.tmux.conf
+# tmux/screen
+ln -sf "${DOTDIR}/screen/screenrc" ~/.screenrc
+ln -sf "${DOTDIR}/tmux/tmux.conf" ~/.tmux.conf
+ln -sf "${DOTDIR}/tmux/colors/tmuxcolors-dark.conf" ~/.tmux.conf
 
