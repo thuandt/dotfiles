@@ -10,200 +10,137 @@ alias ....="cd ../../.."
 # use aliases with sudo
 alias sudo='sudo '
 
-## Colorize the grep command output for ease of use (good for log files)##
-alias grep='grep --color=auto'
-alias egrep='egrep --color=auto'
-alias fgrep='fgrep --color=auto'
-
-# The 'ls' family (this assumes you use a recent GNU ls)
-alias ls='ls -CF --color=auto' # colorize ls output
-alias la='ls -Al'   # show hidden files
-alias lx='ls -lXB'  # sort by extension
-alias lk='ls -lSr'  # sort by size, biggest last
-alias lc='ls -ltcr' # sort by and show change time, most recent last
-alias lu='ls -ltur' # sort by and show access time, most recent last
-alias lt='ls -ltr'  # sort by date, most recent last
-alias lr='ls -lR'   # recursive ls
-alias la="ls -a"    # list all files & directory
-alias lla="ls -al"  # list all files long
-alias lal="ls -al"  # list all files long
-alias lai="ls -lai" # list all with info
-alias tree='tree -Csu' # nice alternative to 'recursive ls'
-alias lm='ls -al | less' # pipe through 'more'
-alias lsd='ls -dAFh .[^.]*' # list alll dot files
-alias lf='ls -lhA | grep ^-' # list all files
-alias ldir='ls -lhA |grep ^d' # list directory
-alias ll='ls -lhX --time-style="+%d-%m-%Y %H:%M"' # formats size and time display
-alias lst='ls -hFtl --time-style="+%d-%m-%Y %H:%M" | grep $(date +%d-%m-%Y)'
-
 ## colorize diff output
 alias diff='colordiff'
 
-# handy short cuts #
-alias f='find | grep'             # quick search
-alias c=' clear'                  # clear screen
-alias h=' history'                # show history
-alias j='jobs -l'                 # list jobs
-alias py='python'                 # quick python commmand
-alias vi="vim"                    # use vim by default
-alias df="df -kTh"                # human-readable sizes
-alias dir='ls -1'                 # windows-style list
-alias wtf='dmesg | less'          # debug
-alias free='free -m'              # show sizes in MB
-alias less='less -r'
-alias more='less -r'              # more is less
-alias path='echo -e ${PATH//:/\\n}'
 alias mkdir='mkdir -p'
+alias path='echo -e ${PATH//:/\\n}'
 
-# Stop after sending count ECHO_REQUEST packets #
-alias ping='ping -c 5'
-# Do not wait interval 1 second, go fast #
-alias fastping='ping -c 100 -s.2'
+if [[ "$OSTYPE" = linux* ]] ; then
+    # do not delete / or prompt if deleting more than 3 files at a time
+    alias rm='rm -vI --preserve-root'
 
-# Show open ports #
-alias open-ports='netstat -tulanp'
-alias listen-ports='netstat -tulpne'
+    alias df="df -kTh" # human-readable sizes
+    alias wtf='dmesg | less' # debug
+    alias free='free -m' # show sizes in MB
+    alias less='less -r'
+    alias more='less -r' # more is less
 
-# do not delete / or prompt if deleting more than 3 files at a time #
-alias rm='rm -vI --preserve-root'
+    # Get system memory, cpu usage, and gpu memory info quickly
+    ## pass options to free
+    alias meminfo='free -m -l -t'
+
+    ## get top process eating memory
+    alias psmem='ps auxf | sort -nr -k 4'
+    alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+
+    ## get top process eating cpu
+    alias pscpu='ps auxf | sort -nr -k 3'
+    alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+
+    ## Get server cpu info
+    alias cpuinfo='lscpu'
+
+    ## get GPU ram on desktop / laptop##
+    alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
+
+    ## hardware info
+    # lshw
+    # dmidecode --type <keyword>
+    #
+    # Keyword     Types
+    # ------------------------------
+    # bios        0, 13
+    # system      1, 12, 15, 23, 32
+    # baseboard   2, 10
+    # chassis     3
+    # processor   4
+    # memory      5, 6, 16, 17
+    # cache       7
+    # connector   8
+    # slot        9
+
+
+    # Type   Information
+    # ----------------------------------------
+    #    0   BIOS
+    #    1   System
+    #    2   Base Board
+    #    3   Chassis
+    #    4   Processor
+    #    5   Memory Controller
+    #    6   Memory Module
+    #    7   Cache
+    #    8   Port Connector
+    #    9   System Slots
+    #   10   On Board Devices
+    #   11   OEM Strings
+    #   12   System Configuration Options
+    #   13   BIOS Language
+    #   14   Group Associations
+    #   15   System Event Log
+    #   16   Physical Memory Array
+    #   17   Memory Device
+    #   18   32-bit Memory Error
+    #   19   Memory Array Mapped Address
+    #   20   Memory Device Mapped Address
+    #   21   Built-in Pointing Device
+    #   22   Portable Battery
+    #   23   System Reset
+    #   24   Hardware Security
+    #   25   System Power Controls
+    #   26   Voltage Probe
+    #   27   Cooling Device
+    #   28   Temperature Probe
+    #   29   Electrical Current Probe
+    #   30   Out-of-band Remote Access
+    #   31   Boot Integrity Services
+    #   32   System Boot
+    #   33   64-bit Memory Error
+    #   34   Management Device
+    #   35   Management Device Component
+    #   36   Management Device Threshold Data
+    #   37   Memory Channel
+    #   38   IPMI Device
+    #   39   Power Supply
+
+    ## Generate a Random MAC address
+    alias random_mac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
+
+    ## Secure delete file
+    alias secure-delete='shred -n 200 -z -u'
+
+    ## Purging configuration files on Debian-based system
+    alias agpc="sudo aptitude purge '~c'"
+
+    # The Sliver Searcher (ag)
+    # conflict with ubuntu plugin
+    alias ag='command ag'
+fi
 
 # confirmation #
 alias mv='mv -vi'
 alias cp='cp -vi'
 alias ln='ln -vi'
 
-# Parenting changing perms on / #
-alias chown='chown --preserve-root'
-alias chmod='chmod --preserve-root'
-alias chgrp='chgrp --preserve-root'
-
-#25: Get system memory, cpu usage, and gpu memory info quickly
-## pass options to free ##
-alias meminfo='free -m -l -t'
-
-## get top process eating memory
-alias psmem='ps auxf | sort -nr -k 4'
-alias psmem10='ps auxf | sort -nr -k 4 | head -10'
-
-## get top process eating cpu ##
-alias pscpu='ps auxf | sort -nr -k 3'
-alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
-
-## Get server cpu info ##
-alias cpuinfo='lscpu'
-
-## get GPU ram on desktop / laptop##
-alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
-
-## hardware info
-# lshw
-# dmidecode --type <keyword>
-#
-# Keyword     Types
-# ------------------------------
-# bios        0, 13
-# system      1, 12, 15, 23, 32
-# baseboard   2, 10
-# chassis     3
-# processor   4
-# memory      5, 6, 16, 17
-# cache       7
-# connector   8
-# slot        9
-
-
-# Type   Information
-# ----------------------------------------
-#    0   BIOS
-#    1   System
-#    2   Base Board
-#    3   Chassis
-#    4   Processor
-#    5   Memory Controller
-#    6   Memory Module
-#    7   Cache
-#    8   Port Connector
-#    9   System Slots
-#   10   On Board Devices
-#   11   OEM Strings
-#   12   System Configuration Options
-#   13   BIOS Language
-#   14   Group Associations
-#   15   System Event Log
-#   16   Physical Memory Array
-#   17   Memory Device
-#   18   32-bit Memory Error
-#   19   Memory Array Mapped Address
-#   20   Memory Device Mapped Address
-#   21   Built-in Pointing Device
-#   22   Portable Battery
-#   23   System Reset
-#   24   Hardware Security
-#   25   System Power Controls
-#   26   Voltage Probe
-#   27   Cooling Device
-#   28   Temperature Probe
-#   29   Electrical Current Probe
-#   30   Out-of-band Remote Access
-#   31   Boot Integrity Services
-#   32   System Boot
-#   33   64-bit Memory Error
-#   34   Management Device
-#   35   Management Device Component
-#   36   Management Device Threshold Data
-#   37   Memory Channel
-#   38   IPMI Device
-#   39   Power Supply
-
-
 ## this one saved by butt so many times ##
 alias wget='wget -c'
-
-## start simple server with python SimpleHTTPServer at port 8000
-alias simple-server='python -m SimpleHTTPServer 8000'
 
 ## What's my public ip address?
 #alias whatismyip="curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
 #alias whatismyip='wget ipinfo.io/ip -qO -'
 alias whatismyip='curl ipinfo.io/ip'
 
-## Generate a Random MAC address
-alias random_mac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
-
-## Secure delete file
-alias secure-delete='shred -n 200 -z -u'
-
-## Purging configuration files on Debian-based system
-alias agpc="sudo aptitude purge '~c'"
-
-## Set default system java
-alias java6-set-default='sudo update-java-alternatives -s java-6-oracle'
-alias java7-set-default='sudo update-java-alternatives -s java-7-oracle'
-alias java8-set-default='sudo update-java-alternatives -s java-8-oracle'
-
 # Using pew instead virtualenvwrapper
 alias workon='pew workon'
 
 # Use ptpython inside virtualenv
 alias ptpython="python -m ptpython"
-
-# dstat alias
-alias dstat-full='dstat -Tclmdrn'
-alias dstat-mem='dstat -Tclm'
-alias dstat-cpu='dstat -Tclr'
-alias dstat-net='dstat -Tclnd'
-alias dstat-disk='dstat -Tcldr'
-
-# Golang aliases
-alias alpine-go="CGO_ENABLED=0 go build -a -installsuffix cgo -ldflags '-s -w -X main.Version=dev'"
-
-# The Sliver Searcher (ag)
-# conflict with ubuntu plugin
-alias ag='command ag'
+alias ptpy2="python2 -m ptpython"
+alias ptpy3="python3 -m ptpython"
 
 # SSH without HostKeyChecking and KnownHosts
 alias tssh="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
-
 
 ### BENCHMARK DISK IO ###
 alias fio-r='fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=fio --filename=fio --bs=4k --iodepth=64 --size=4G --readwrite=randread'
@@ -220,62 +157,7 @@ alias drmi='docker image prune --all'
 # Volume cleanup
 alias dvc="docker volume ls -qf dangling=true | xargs -r docker volume rm"
 
-### Git flow aliaes ###
-alias gfl='git flow'
-alias gfli='git flow init'
-alias gcd='git checkout develop'
-alias gch='git checkout hotfix'
-alias gcr='git checkout release'
-alias gflf='git flow feature'
-alias gflh='git flow hotfix'
-alias gflr='git flow release'
-alias gflfs='git flow feature start'
-alias gflhs='git flow hotfix start'
-alias gflrs='git flow release start'
-alias gflff='git flow feature finish'
-alias gflhf='git flow hotfix finish'
-alias gflrf='git flow release finish'
-
-
 ### Kubernetes aliases ###
 alias kgg="gcloud config configurations activate default && kubectl config use-context thuandt_gke-labs"
 
-alias k="kubectl"
-alias kg="kubectl get"
-alias ke="kubectl edit"
-alias ked="kubectl edit deployment"
-alias kecm="kubectl edit configmap"
-alias kes="kubectl edit svc"
-
-alias kn="kubectl get nodes"
-alias ks="kubectl get svc"
-alias kr="kubectl get rs"
-alias krc="kubectl get rc"
-alias kd="kubectl get deployment"
-alias kp="kubectl get pods"
-alias kpa="kubectl get pods --all-namespaces"
-alias kk="kubectl get svc,deployment,rs,pods"
-
-alias dsn="kubectl describe node"
-alias dss="kubectl describe svc"
-alias dsr="kubectl describe rs"
-alias dsrc="kubectl describe rc"
-alias dsd="kubectl describe deployment"
-alias dsp="kubectl describe pod"
-
-# alias kl="kubectl logs"
-alias kl="kubectl logs --follow"
-alias kx="kubectl exec"
-alias xx="kubectl exec -ti"
-alias kcf="kubectl create -f"
-alias kdf="kubectl delete -f"
-alias ddr="kubectl delete rs"
-alias ddd="kubectl delete deployment"
-alias ddrc="kubectl delete rc"
-alias dds="kubectl delete svc"
-alias ddp="kubectl delete pod"
-alias kcm="kubectl create configmap"
-alias kdm="kubectl delete configmap"
-alias khpa="kubectl get hpa"
-
-# End of ~/.shell_aliases
+# End of file
