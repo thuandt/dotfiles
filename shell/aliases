@@ -97,8 +97,6 @@ alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
 ## this one saved by butt so many times ##
 alias wget='wget -c'
 
-alias whois='whois -H'
-
 ## start simple server with python SimpleHTTPServer at port 8000
 alias simple-server='python -m SimpleHTTPServer 8000'
 
@@ -122,4 +120,7 @@ alias java6-set-default='sudo update-java-alternatives -s java-6-oracle'
 alias java7-set-default='sudo update-java-alternatives -s java-7-oracle'
 alias java8-set-default='sudo update-java-alternatives -s java-8-oracle'
 
+## Alias for auto Clash of Clans python script
+alias auto_keepalive='/home/mrtux/Development/MyProjects/coc-auto/autoclick_keepalive.py'
+alias auto_search='/home/mrtux/Development/MyProjects/coc-auto/autoclick_search.py'
 # End of ~/.shell_aliases
