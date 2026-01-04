@@ -113,7 +113,7 @@ if [[ "$OSTYPE" = darwin* ]] ; then
              history history-substring-search
 
              httpie mosh vi-mode nvm
-             pew pip pipenv python pylint redis-cli rg rsync
+             pew pip pipenv pyenv python pylint redis-cli rg rsync
              screen tmux sudo terraform osx vagrant zsh_reload z
 
              kubectl helm kubernetes awscli
@@ -129,7 +129,7 @@ else
              golang heroku history history-substring-search
 
              httpie iwhois mercurial mosh mpv node nvm npm vi-mode
-             nmap perl pew pip pipenv python pylint redis-cli rg rustup rsync ruby gem
+             nmap perl pew pip pipenv pyenv python pylint redis-cli rg rustup rsync ruby gem
              rake rbenv sbt scala stack screen sudo supervisor systemadmin
              systemd tmux terraform ubuntu vagrant virtualenv zsh_reload z
 
