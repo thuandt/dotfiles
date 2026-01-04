@@ -18,6 +18,7 @@ export LANG=en_US.UTF-8
 export BROWSER="firefox -new-tab %s"
 export EDITOR="vim"
 export VISUAL="vim"
+export HOSTNAME=`hostname`
 
 # Color man pages
 export PAGER='less'
