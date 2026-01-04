@@ -92,8 +92,6 @@ zinit light-mode lucid depth=1 for \
   djui/alias-tips \
   jreese/zsh-titles \
   amstrad/oh-my-matrix \
-  iboyperson/pipenv-zsh \
-  darvid/zsh-poetry \
   micha/resty \
   changyuheng/fz \
   thuandt/zsh-config \
