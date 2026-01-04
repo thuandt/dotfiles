@@ -1,0 +1,373 @@
+" File: ~/.vimrc
+" Last Modified: 14/01/2014 12:21 AM
+
+" =========================== Basic configuration ===========================
+
+filetype off
+set nocompatible " explicitly get out of vi-compatible mode
+set modelines=0
+set background=dark " we plan to use a dark background
+set noexrc " don't use local version of .(g)vimrc, .exrc
+set cpoptions=aABceFsmq
+"             |||||||||
+"             ||||||||+-- When joining lines, leave the cursor
+"             |||||||      between joined lines
+"             |||||||+-- When a new match is created (showmatch)
+"             ||||||      pause for .5
+"             ||||||+-- Set buffer options when entering the
+"             |||||      buffer
+"             |||||+-- :write command updates current file name
+"             ||||+-- Automatically add <CR> to the last line
+"             ||||     when using :@r
+"             |||+-- Searching continues at the end of the match
+"             ||      at the cursor position
+"             ||+-- A backslash has no special meaning in mappings
+"             |+-- :write updates alternative file name
+"             +-- :read updates alternative file name
+syntax on " syntax highlighting on
+set autoread " auto reload file when file being change
+let mapleader="," " Leader
+
+" ========================== General configuration ==========================
+
+" Set file encoding
+set encoding=utf-8
+set fileencoding=utf-8
+" Load filetype plugins/indent settings
+filetype on
+filetype plugin on
+filetype plugin indent on
+
+set autochdir " always switch to the current file directory
+set backspace=indent,eol,start " make backspace a more flexible
+set ttyfast
+
+set title                " change the terminal's title
+
+" set backup (and swap) files into sperate directory
+" set backup " make backup files
+" set backupdir=~/.vim/backup " where to put backup files
+" set directory=~/.vim/tmp " directory to place swap files in
+set nobackup
+set noswapfile
+set clipboard+=unnamed " share windows clipboard
+set fileformats=unix,dos,mac " support all three, in this order
+set hidden " you can change buffers without saving
+" (XXX: #VIM/tpope warns the line below could break things)
+set iskeyword+=_,$,@,%,# " none of these are word dividers
+
+" Add mouse support - cursor position, selection tabs.
+" (Use shift to select text.)
+" n = normal mode, i = insert, c = command (do i use), a = all
+" set mouse=ni
+set mouse=a
+" Mouse popup menu
+set mousemodel=popup
+" Toggle mouse
+map   <F7> <Esc>:set mouse=<CR>
+map <S-F7> <Esc>:set mouse=nic<CR>
+
+set noerrorbells " don't make noise
+set whichwrap=b,s,h,l,<,>,~,[,] " everything wraps
+"             | | | | | | | | |
+"             | | | | | | | | +-- "]" Insert and Replace
+"             | | | | | | | +-- "[" Insert and Replace
+"             | | | | | | +-- "~" Normal
+"             | | | | | +-- <Right> Normal and Visual
+"             | | | | +-- <Left> Normal and Visual
+"             | | | +-- "l" Normal and Visual (not recommended)
+"             | | +-- "h" Normal and Visual (not recommended)
+"             | +-- <Space> Normal and Visual
+"             +-- <BS> Normal and Visual
+" ignore these list file extensions
+" Tab Complete Menu
+set wildmenu " turn on command line completion wild style
+set wildignore+=*.o,*~,.lo,*.dll,*.obj,*.swp,*.class,*.bak,*.exe,*.pyc,*.jpg,*.gif,*.png
+set suffixes+=.in,.a
+
+set history=1000         " remember more commands and search history
+set undolevels=1000      " use many muchos levels of undo
+
+set timeoutlen=350 " timeout when mapping keystrokes
+set showfulltag " show full tag insert mode
+
+" ================================ GVim =====================================
+
+" Tab Bar Always On - so I know what I'm writing to.
+" set showtabline=2
+set laststatus=2 " always show the status line
+set lazyredraw " do not redraw while running macros
+set linespace=0 " don't insert any extra pixel lines
+                 " betweens rows
+set list " we do what to show tabs, to ensure we get them
+         " out of my files
+set listchars=trail:⋅,nbsp:⋅,tab:▸\ ,extends:# " show tabs and trailing
+set matchtime=5 " how many tenths of a second to blink
+                " matching brackets for
+set nostartofline " leave my cursor where it was
+set novisualbell " don't blink
+set number " turn on line numbers
+set numberwidth=5 " We are good up to 99999 lines
+set report=0 " tell us when anything is changed via :...
+set ruler " Always show current positions along the bottom
+set scrolloff=10 " Keep 10 lines (top/bottom) for scope
+set shortmess=aOstT " shortens messages to avoid 'press a key' prompt
+set showcmd " show the command being typed
+set showmatch " show matching brackets
+set sidescrolloff=10 " Keep 5 lines at the size
+set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
+"              | | | | |  |   |      |  |     |    |
+"              | | | | |  |   |      |  |     |    + current
+"              | | | | |  |   |      |  |     |       column
+"              | | | | |  |   |      |  |     +-- current line
+"              | | | | |  |   |      |  +-- current % into file
+"              | | | | |  |   |      +-- current syntax in
+"              | | | | |  |   |          square brackets
+"              | | | | |  |   +-- current fileformat
+"              | | | | |  +-- number of lines
+"              | | | | +-- preview flag in square brackets
+"              | | | +-- help flag in square brackets
+"              | | +-- readonly flag in square brackets
+"              | +-- rodified flag in square brackets
+"              +-- full path to file in the buffer
+
+" set different color schemes for gvim & vim
+if has("gui_running")
+    set guioptions=mce
+    set t_Co=256
+    set cursorline      " highlight current line
+    set cursorcolumn    " highlight the current column
+    set guifont=Consolas\ 10
+    set mousehide " hide the mouse cursor when typing
+    colorscheme molokai
+
+else
+    colorscheme desert
+endif
+
+" ========================== Text/Formatting Layout =========================
+"
+" Smart autoindenting when starting a new line
+set autoindent
+set smartindent
+
+" Search
+" Incremental Search - Searches begin immediately
+set incsearch " BUT do highlight as you type you search phrase
+set hlsearch "highlight search
+set ignorecase
+set shiftround " when at 3 spaces, and I hit > ... go to 4, not 5
+set smartcase " if there are caps, go case-sensitive
+set gdefault
+set showmatch
+set matchtime=1
+
+" Use sane regexes
+nnoremap / /\v
+vnoremap / /\v
+
+" Toggle the highlight search
+map <leader><space> :set hlsearch!<cr>
+nmap <tab> %
+vmap <tab> %
+
+" set completeopt= " don't use a pop up menu for completions
+set nowrap              " do not wrap line
+set noswapfile
+set linebreak
+set formatoptions=croqnl1  " Automatically insert comment leader on return,
+                           " and let gq format comments
+set ignorecase  " case insensitive by default
+set infercase   " case inferred by default
+
+" Set defaults for tabs
+set smarttab
+set expandtab       " Tabs as space
+set tabstop=4       " Tab character amount. Real tabs should be 4, and they will
+                    " show with set list on
+" Number of spaces characters per tab
+set shiftwidth=4
+set softtabstop=4   " when hitting tab or backspace, how many spaces
+                    " should a tab be (see expandtab)
+set shiftwidth=4    " auto-indent amount when using cindent,
+                    " >>, << and stuff like that
+set textwidth=80
+
+" hi LongLineWarning guifg=white guibg=#ffb6b0 gui=underline
+" match LongLineWarning '\%100v.*' " Error format when a line is longer than 100
+hi link ClassMethod Keyword
+hi link CustomDocTags Keyword
+
+" Wrap whole words - but forces line break
+" set wm=2
+set matchpairs+=<:>
+set vb t_vb= " Turn off the bell
+
+" Show line number when print
+set printoptions+=number:y
+
+" Folding
+set foldenable          " Turn on folding
+set foldmarker={,}      " Fold C style code (only use this as default if you
+                        " use a high foldlevel)
+set foldmethod=marker   " Fold on the marker
+set foldlevel=100       " Don't autofold anything (but I can still fold manually)
+set foldopen=block,hor,mark,percent,quickfix,tag " what movements open folds
+function! SimpleFoldText()
+    return getline(v:foldstart).' '
+endfunction
+set foldtext=SimpleFoldText() " Custom fold text function (cleaner than default)
+
+
+" ========================== Auto Command ===================================
+" Automatically reload vimrc when it's saved
+au BufWritePost .vimrc so ~/.vimrc
+
+" Show Git diff in window split when commiting
+autocmd FileType gitcommit DiffGitCached | wincmd p
+
+" Color Column (only on insert)
+if exists("&colorcolumn")
+     autocmd InsertEnter * set colorcolumn=80
+     autocmd InsertLeave * set colorcolumn=""
+endif
+
+" Ruby
+" ruby standard 2 spaces, always
+au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2
+au BufRead,BufNewFile *.rb,*.rhtml set softtabstop=2
+
+" ============================ Vim Function =================================
+
+" Paste from X
+" Mapping vim to standard copy and paste keys
+function! Paste(mode)
+    if a:mode == "v"
+        normal gv
+        normal "+P
+        normal l
+        elseif a:mode == "i"
+        set virtualedit=all
+        normal `^"+gP
+        let &virtualedit = ""
+    endif
+endfunction
+vnoremap <C-X> "+d
+vnoremap <C-C> "+y
+nnoremap <C-V> "+gPl
+vnoremap <C-V> :<C-U>call Paste("v")<CR>
+inoremap <C-V> <C-O>:call Paste("i")<CR>
+
+" Clipboard for Linux
+nnoremap yy yy"+yy
+vnoremap y ygv"+y
+nmap gp "+gP
+
+set pastetoggle=<F2>
+
+" Toggle Mouse
+fun! s:ToggleMouse()
+    if !exists("s:old_mouse")
+        let s:old_mouse = "a"
+    endif
+
+    if &mouse == ""
+        let &mouse = s:old_mouse
+        echo "Mouse is for Vim (" . &mouse . ")"
+    else
+        let s:old_mouse = &mouse
+        let &mouse=""
+        echo "Mouse is for terminal"
+    endif
+endfunction
+
+
+" ======================== Vim Mapping Keystroke ============================
+
+" sudo write
+cmap ww w !sudo tee % > /dev/null
+
+" Select all
+map <Leader>a ggVG
+
+" Reselect visual block after indent/outdent
+" vnoremap < <gv
+" vnoremap > >gv
+
+" Mapping ; to : to quickly type command
+nnoremap ; :
+
+" Use Q for formatting the current paragraph (or selection)
+vmap Q gq
+nmap Q gqap
+
+" map Esc to another key to quickly
+" mapping Esc to jj
+ino jj <esc>
+cno jj <C-c>
+vno v <esc>
+
+" Use jk as <Esc>
+inoremap jk <Esc>
+inoremap kj <Esc>
+
+" Press i to enter insert mode, and ii to exit.
+imap ii <Esc>
+
+" Two semicolons are easy to type.
+imap ;; <Esc>
+
+" On gvim and Linux console Vim, you can use Alt-Space.
+imap <M-Space> <Esc>
+
+" using C-S to save
+" imap <C-s> <esc>:w<cr>a
+" map  <C-s> :w<cr>
+
+" Automatic retab and write
+map <F12> :retab <CR> :w! <CR>
+
+" Keep search pattern at the center of the screen.
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <silent> g* g*zz
+nnoremap <silent> g# g#zz
+
+" Easy split navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Don't using to arrow to moving
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+
+" Make Y behave like other capitals
+map Y y$
+
+" build tags of your own project with Ctrl-F12
+map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+
+" <Ctrl-l> redraws the screen and removes any search highlighting.
+nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
+
+" Spelling Toggle
+map <F8> <Esc>:setlocal spell spelllang=en_us<CR>
+map <S-F8> <Esc>:setlocal nospell<CR>
+
+" Inser New Line
+map <s-enter> O<esc>
+map <enter> o<esc>
+
+" I can type :help on my own, thanks.
+noremap <F1> <Esc>
+
+" Open last/alternate buffer
+noremap <Leave><Leader> <C-^>
+
+" End of ~/.vimrc
