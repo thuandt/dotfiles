@@ -103,8 +103,11 @@ HIST_STAMPS="dd.mm.yyyy"
 
 if [[ "$OSTYPE" = darwin* ]] ; then
     # docker and docker-compose plugin will use vendor completion
-    plugins=(encode64 extract
-             git git-extras git-flow-avh git-hubflow git-remote-branch gitignore
+    plugins=(zsh-completions go-zsh-completions
+
+             encode64 extract
+             git git-extras git-remote-branch gitignore
+             github git-flow-avh git-hubflow
              history history-substring-search
 
              httpie mosh vi-mode
@@ -116,8 +119,10 @@ if [[ "$OSTYPE" = darwin* ]] ; then
 else
     # docker and docker-compose plugin will use vendor completion
     plugins=(zsh-completions go-zsh-completions
+
              adb bundler cabal command-not-found encode64 extract fancy-ctrl-z
-             git git-extras git-flow-avh git-hubflow git-remote-branch gitignore
+             git git-extras git-remote-branch gitignore
+             github git-flow-avh git-hubflow
              golang heroku history history-substring-search
 
              httpie iwhois mercurial mosh mpv node npm vi-mode
