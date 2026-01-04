@@ -1,6 +1,5 @@
-#!/bin/bash
-# ~/.shell_env
-# Last Modified: 09/03/2015 04:11 AM
+#!/usr/bin/env bash
+# ~/.exports
 
 # shell history tweaks
 export SAVEHIST=10000                           # Remember about a years worth of history (AWESOME)
@@ -8,53 +7,49 @@ export HISTSIZE=10000                           # shell history will save N comm
 export HISTFILESIZE=${HISTSIZE}                 # shell will remember N commands
 
 
-### Setup PATH ###
-export MYBIN=$HOME/.local/bin                  # user binaries
-export CABALBIN=$HOME/.cabal/bin               # Haskell cabal
-export CARGOBIN=$HOME/.cargo/bin               # Rust cargo
-export GOPATH=$HOME/.go                        # gocode
-export GOROOT=/usr/local/go                    # golang
+if [[ "$OSTYPE" = linux* ]] ; then
+    ### Setup PATH ###
+    export MYBIN=$HOME/.local/bin                  # user binaries
+    export CABALBIN=$HOME/.cabal/bin               # Haskell cabal
+    export CARGOBIN=$HOME/.cargo/bin               # Rust cargo
+    export GOPATH=$HOME/.go                        # gocode
+    export GOROOT=/usr/local/go                    # golang
 
-# My custom path
-export MYPATH=${MYBIN}:${CABALBIN}:${CARGOBIN}:${GOPATH}/bin
+    # My custom path
+    export MYPATH=${MYBIN}:${CABALBIN}:${CARGOBIN}:${GOPATH}/bin
 
-# Add directory to $PATH if it's not already there
-if [[ ":$PATH:" != *":${MYPATH}:"* ]]; then PATH=${MYPATH}:$PATH; fi
+    # Add directory to $PATH if it's not already there
+    if [[ ":$PATH:" != *":${MYPATH}:"* ]]; then PATH=${MYPATH}:$PATH; fi
 
-### virtualenv ###
-export WORKON_HOME=$HOME/.local/share/virtualenvs
+    ### virtualenv ###
+    export WORKON_HOME=$HOME/.local/share/virtualenvs
+    # nmap
+    export NMAP_PRIVILEGED=""
 
-### Trobz internal tools ###
-export REQUESTS_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
-export SSL_CERT_FILE="/etc/ssl/certs/ca-certificates.crt"
+    # minicom
+    export MINICOM="-m -c on"
 
-# nmap
-export NMAP_PRIVILEGED=""
+    # fix broken theme of LibreOffice in GTK+ 3.0
+    export SAL_USE_VCLPLUGIN=gtk
+    # mtr options
+    export MTR_OPTIONS="-4 --no-dns --udp"
 
-# minicom
-export MINICOM="-m -c on"
+    # Setup Input Method
+    export XMODIFIERS="@im=fcitx"
+    export GTK_IM_MODULE=fcitx
+    export QT_IM_MODULE=fcitx
+    export QT4_IM_MODULE=fcitx
 
-# fix broken theme of LibreOffice in GTK+ 3.0
-export SAL_USE_VCLPLUGIN=gtk
+    # Setting locales
+    export LC_ALL=en_US.UTF-8
+    export LANGUAGE=en_US.UTF-8
+    export LANG=en_US.UTF-8
 
-# mtr options
-export MTR_OPTIONS="-4 --no-dns --udp"
-
-# Setup Input Method
-export XMODIFIERS="@im=fcitx"
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export QT4_IM_MODULE=fcitx
-
-# Setting locales
-export LC_ALL=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
-export LANG=en_US.UTF-8
-
-export BROWSER="firefox -new-tab %s"
-export EDITOR="vim"
-export USE_EDITOR=$EDITOR
-export VISUAL=$EDITOR
+    export BROWSER="firefox -new-tab %s"
+    export EDITOR="vim"
+    export USE_EDITOR=$EDITOR
+    export VISUAL=$EDITOR
+fi
 
 # Color man pages
 export PAGER='less'
@@ -78,4 +73,4 @@ export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 # export LESS_TERMCAP_ue=$'\E[0m'           # end underline
 # export LESS_TERMCAP_us=$'\E[04;32m'       # begin underline
 
-# End of ~/.shell_env
+# End of file
