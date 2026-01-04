@@ -3,3 +3,4 @@
     ~/.zshenv: shells/zsh/zshenv
     ~/.zlogout: shells/zsh/zlogout
     ~/.zprofile: shells/zsh/zprofile
+    ~/.p10k.zsh: shells/zsh/p10k.zsh
