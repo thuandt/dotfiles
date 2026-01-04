@@ -160,7 +160,7 @@ zplugin ice wait lucid cp"z.sh -> z" pick"z" src"z.sh"
 zplugin light rupa/z
 
 # fzf completion
-zplugin ice wait lucid multisrc"shell/*.zsh"
+zplugin ice wait lucid depth=1 multisrc"shell/*.zsh"
 zplugin light junegunn/fzf
 
 # enhancd with fzf
