@@ -82,15 +82,15 @@ HIST_STAMPS="dd.mm.yyyy"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
-plugins=( anhoi emoi remoteoi resty adb aws autopep8 battery bower bundler capistrano
-          command-not-found copydir copyfile cp docker docker-compose fancy-ctrl-z
-          emoji emoji-clock emotty encode64 extract frontend-search git
-          git-extras git-remote-branch gitignore golang heroku history
-          history-substring-search httpie iwhois jsontools mercurial mosh nmap
-          perl pew pip python pylint rails rake redis-cli ruby rbenv redis-cli
-          rsync sbt scala sublime screen sudo supervisor systemadmin systemd
-          tmux ubuntu urltools vagrant virtualenv vundle web-search zsh_reload
-          z zsh-syntax-highlighting )
+plugins=(anhoi emoi remoteoi resty adb aws autopep8 battery bower bundler capistrano
+         command-not-found copydir copyfile cp docker docker-compose fancy-ctrl-z
+         emoji emoji-clock emotty encode64 extract frontend-search git
+         git-flow git-hubflow git-extras git-remote-branch gitignore
+         golang heroku history history-substring-search httpie iwhois
+         jsontools mercurial mosh nmap perl pew pip python pylint rails rake
+         redis-cli ruby rbenv rsync sbt scala sublime screen sudo supervisor
+         systemadmin systemd tmux ubuntu urltools vagrant virtualenv
+         web-search zsh_reload z zsh-autosuggestions zsh-syntax-highlighting)
 
 # User configuration
 
@@ -113,12 +113,12 @@ ZSH_TMUX_FIXTERM_WITHOUT_256COLOR="screen"
 # systems without the proper terminfo
 ZSH_TMUX_FIXTERM_WITH_256COLOR="screen-256color"
 
-# # Google Cloud SDK
-# # The next line updates PATH for the Google Cloud SDK.
-# source '/home/mrtux/Applications/google-cloud-sdk/path.zsh.inc'
+# Google Cloud SDK
+# The next line updates PATH for the Google Cloud SDK.
+source '/home/mrtux/Applications/google-cloud-sdk/path.zsh.inc'
 
-# # The next line enables bash completion for gcloud.
-# source '/home/mrtux/Applications/google-cloud-sdk/completion.zsh.inc'
+# The next line enables bash completion for gcloud.
+source '/home/mrtux/Applications/google-cloud-sdk/completion.zsh.inc'
 
 # source oh-my-zsh
 source $ZSH/oh-my-zsh.sh
@@ -238,16 +238,19 @@ zstyle -e ':completion:*:hosts' hosts 'reply=(${=${${${${(@M)${(f)"$(cat ~/.ssh/
 # Loading fzf plugin
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# zsh-autosuggestions
+# Using Ctrl-Space for quick execute suggest command
+bindkey '^ ' autosuggest-execute
+
+# Thefuck
+# Magnificent app which corrects your previous console command.
+eval "$(thefuck --alias)"
+
 ### Keychain ###
 # Let re-use ssh-agent and/or gpg-agent between logins
 eval $(keychain --eval -Q --quiet --attempts 5 id_rsa id_ed25519 id_rsa_2048)
 source $HOME/.keychain/$(hostname)-sh
 # source $HOME/.keychain/$(hostname)-sh-gpg
-
-
-plugins+=(zsh-completions)
-autoload -U compinit && compinit
-
 
 # Clear screen
 clear
