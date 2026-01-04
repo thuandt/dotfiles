@@ -1,6 +1,95 @@
 #!/usr/bin/env zsh
 # ~/.zshrc
 
+### ZSHOPTIONS ###
+
+# Basic
+# beeps are annoying
+setopt no_beep
+# Allow comments even in interactive shells (especially for Muness)
+setopt interactive_comments
+# don't warm me about incomming mail
+unsetopt mail_warning
+
+# Changing Directories
+# why would you type 'cd dir' if you could just type 'dir'?
+setopt auto_cd
+setopt cdablevars
+# this will ignore multiple directories for the stack
+setopt pushd_ignored_ups
+setopt pushdminus
+
+# Completion
+# When completing from the middle of a word, move the cursor to the end of the word
+setopt always_to_end
+# This will use named dirs when possible
+setopt auto_name_dirs
+unsetopt listambiguous
+# If unset, the cursor is set to the end of the word if completion is started.
+# Otherwise it stays there and completion is done from both ends.
+setopt complete_in_word
+# show completion menu on successive tab press. needs unsetop menu_complete to work
+setopt auto_menu
+# do not autoselect the first completion entry
+unsetopt menu_complete
+
+
+# History
+# Allow multiple terminal sessions to all append to one zsh command history
+setopt append_history
+# save timestamp of command and duration
+setopt extended_history
+# Add comamnds as they are typed, don't wait until shell exit
+setopt inc_append_history
+# when trimming history, lose oldest duplicates first
+setopt hist_expire_dups_first
+# Do not write events to history that are duplicates of previous events
+setopt hist_ignore_dups
+setopt hist_ignore_all_dups
+# remove command line from history list when first character on the line is a space
+setopt hist_ignore_space
+# When searching history don't display results already cycled through twice
+setopt hist_find_no_dups
+# Don't write duplicate entries in the history file.
+setopt hist_save_no_dups
+# Remove extra blanks from each command line being added to history
+setopt hist_reduce_blanks
+# don't execute, just expand history
+setopt hist_verify
+# imports new commands and appends typed commands to history
+setopt share_history
+setopt hist_no_store
+
+# Prompt
+# Enable parameter expansion, command substitution, and arithmetic expansion in the prompt
+setopt prompt_subst
+# only show the rprompt on the current prompt
+#setopt transient_rprompt
+
+
+# Scripts and Functions
+# perform implicit tees or cats when multiple redirections are attempted
+setopt multios
+
+
+# Expansion and Globbing
+# treat #, ~, and ^ as part of patterns for filename generation
+# I don't know why I never set this before.
+setopt extended_glob
+# Case insensitive globbing
+setopt nocaseglob
+# Keep echo "station" > station from clobbering station
+setopt noclobber
+# If I could disable Ctrl-s completely I would!
+setopt noflowcontrol
+setopt nohup
+# Be Reasonable!
+setopt numericglobsort
+# 10 second wait if you do something that will delete everything
+setopt rmstarwait
+# use magic (this is default, but it can't hurt!)
+setopt zle
+
 ### Zplugin Module ###
 module_path+=("$HOME/.zplugin/bin/zmodules/Src")
 zmodload zdharma/zplugin
@@ -9,14 +98,6 @@ zmodload zdharma/zplugin
 source "$HOME/.zplugin/bin/zplugin.zsh"
 autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
-
-# Tilix
-# https://github.com/gnunn1/tilix/wiki/VTE-Configuration-Issue
-if [[ "$OSTYPE" == linux* ]]; then
-  if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-    source /etc/profile.d/vte.sh
-  fi
-fi
 
 # 256color ZSH Plugin
 zplugin ice wait lucid
@@ -34,16 +115,16 @@ zplugin light zchee/zsh-completions
 zplugin ice wait'!1' lucid atinit"zpcompinit; zpcdreplay"
 zplugin light zsh-users/zsh-syntax-highlighting
 
-zplugin ice wait'!1' lucid atinit"zpcompinit; zpcdreplay"
+zplugin ice wait'1b' lucid atinit"ZPLGM[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay"
 zplugin light zdharma/fast-syntax-highlighting
 
 # autosuggestions
 # Using Ctrl-Space for quick execute suggest command
-zplugin ice wait'!2' lucid atload"_zsh_autosuggest_start; bindkey '^ ' autosuggest-execute"
+zplugin ice wait'!1' lucid atload"!_zsh_autosuggest_start; bindkey '^ ' autosuggest-execute"
 zplugin light zsh-users/zsh-autosuggestions
 
 # zsh-autopair
-zplugin ice wait'!2' lucid atinit"zpcompinit; zpcdreplay"
+zplugin ice wait'!1' lucid atinit"zpcompinit; zpcdreplay"
 zplugin light hlissner/zsh-autopair
 
 ### OMZ ###
@@ -57,25 +138,6 @@ zplugin snippet OMZ::plugins/asdf
 # history-substring-search
 zplugin ice wait lucid
 zplugin light zsh-users/zsh-history-substring-search
-# Bind terminal-specific up and down keys
-# Bind in both emacs and vi modes so it works in both, and is not
-# sensitive to whether this is loaded before or after the vi-mode plugin
-if [[ -n "$terminfo[kcuu1]" ]]; then
-  bindkey -M emacs "$terminfo[kcuu1]" history-substring-search-up
-  bindkey -M viins "$terminfo[kcuu1]" history-substring-search-up
-fi
-if [[ -n "$terminfo[kcud1]" ]]; then
-  bindkey -M emacs "$terminfo[kcud1]" history-substring-search-down
-  bindkey -M viins "$terminfo[kcud1]" history-substring-search-down
-fi
-
-# bind P and N for EMACS mode
-bindkey -M emacs '^P' history-substring-search-up
-bindkey -M emacs '^N' history-substring-search-down
-
-# bind k and j for VI mode
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
 
 # history-search-multi-word
 zplugin ice wait lucid
@@ -94,8 +156,12 @@ zplugin ice wait lucid
 zplugin light voronkovich/gitignore.plugin.zsh
 
 # grv
-zplugin ice wait lucid from"gh-r" as"program" mv"grv* -> grv"
+zplugin ice wait lucid from"gh-r" as"program" mv"grv* -> $ZPFX/bin/grv" pick"$ZPFX/bin/grv"
 zplugin light rgburke/grv
+
+# aws
+zplugin ice svn wait lucid
+zplugin snippet OMZ::plugins/aws
 
 # extract
 zplugin ice svn wait lucid
@@ -131,6 +197,51 @@ zplugin snippet OMZ::plugins/gcloud
 # kubectl
 zplugin ice svn wait lucid
 zplugin snippet OMZ::plugins/kubectl
+### Kubernetes aliases ###
+if [ $commands[kubectl] ]; then
+  alias k="kubectl"
+  alias kg="kubectl get"
+  alias ke="kubectl edit"
+
+  # get
+  alias kn="kubectl get nodes"
+  alias ks="kubectl get svc"
+  alias kd="kubectl get deployment"
+  alias kp="kubectl get pods"
+  alias kpl="kubectl get pods -l"
+  alias kpa="kubectl get pods --all-namespaces"
+
+  # describe
+  alias dsn="kubectl describe node"
+  alias dss="kubectl describe svc"
+  alias dsd="kubectl describe deployment"
+  alias dsp="kubectl describe pod"
+
+  # delete
+  alias ddd="kubectl delete deployment"
+  alias dds="kubectl delete svc"
+  alias ddp="kubectl delete pod"
+
+  alias kl="kubectl logs --tail=50 --follow"
+  alias kx="kubectl exec"
+  alias xx="kubectl exec -ti"
+
+  alias kcf="kubectl create -f"
+  alias kaf="kubectl apply -f"
+  alias kdf="kubectl delete -f"
+
+  alias kmini="kubectl config use-context minikube"
+  alias kdevops="kubectl config use-context devops"
+  alias kstg="kubectl config use-context staging"
+  alias kprod="kubectl config use-context production"
+
+  if [ $commands[gcloud] ]; then
+    alias klabs="gcloud config configurations activate default && kubectl config use-context gke-labs"
+    alias gke-stg="gcloud config configurations activate ins-stg && kubectl config use-context gke-stg"
+    alias gke-prd="gcloud config configurations activate ins-prd && kubectl config use-context gke-prd"
+  fi
+
+fi
 
 # helm
 zplugin ice svn wait lucid
@@ -144,9 +255,9 @@ zplugin snippet OMZ::plugins/kops
 zplugin ice svn wait lucid
 zplugin snippet OMZ::plugins/minikube
 
-# ripgrep
-zplugin ice svn wait as"completion" lucid
-zplugin snippet OMZ::plugins/ripgrep
+# # ripgrep
+# zplugin ice svn wait as"completion" lucid
+# zplugin snippet OMZ::plugins/ripgrep
 
 # rsync
 zplugin ice svn wait lucid
@@ -168,58 +279,110 @@ zplugin snippet OMZ::plugins/systemd
 zplugin ice svn wait lucid
 zplugin snippet OMZ::plugins/ubuntu
 
-# poetry
-zplugin ice wait as"completion" id-as"poetry" lucid \
-  atclone"poetry completions zsh > _poetry" atpull"%atclone" nocompile"!"
-zplugin light zdharma/null
+# npm
+zplugin ice svn wait lucid
+zplugin snippet OMZ::plugins/npm
 
-# rclone
-zplugin ice wait as"completion" id-as"rclone" lucid \
-  atclone"rclone genautocomplete zsh _rclone" atpull"%atclone" nocompile"!"
-zplugin light zdharma/null
+# yarn
+zplugin ice svn wait lucid
+zplugin snippet OMZ::plugins/yarn
 
-# Confluent CLI & Confluent Cloud CLI
-zplugin ice wait as"completion" id-as"confluent-platform" lucid \
-  atclone"ccloud completion zsh > _ccloud; confluent completion zsh > _confluent" atpull"%atclone" nocompile"!"
-zplugin light zdharma/null
-
-# kubectx
-zplugin ice wait lucid as"program" pick"kube{ctx,ns}" \
-  atclone"cp completion/kubectx.zsh _kubectx; cp completion/kubens.zsh _kubens" \
-  atpull'!git reset --hard' nocompile"!"
-zplugin light ahmetb/kubectx
-
-# diff-so-fancy
+# zsh-diff-so-fancy
 zplugin ice wait lucid as"program" pick"bin/git-dsf"
 zplugin light zdharma/zsh-diff-so-fancy
 
-# fzf binary
-zplugin ice wait lucid from"gh-r" as"program"
-zplugin light junegunn/fzf-bin
+# fzf
+zplugin ice depth=1 wait lucid \
+  atclone"./install --no-update-rc --key-bindings --completion" \
+  atpull"%atclone" src"$HOME/.fzf.zsh" pick"/dev/null"
+zplugin light junegunn/fzf
+
+# z
+zplugin ice wait lucid cp"z.sh -> $ZPFX/bin/z" pick"$ZPFX/bin/z" src"z.sh"
+zplugin light rupa/z
 
 # fz
 zplugin ice load'![[ -x z && -x fzf ]]'
-zplugin ice wait lucid as"program" cp"fz.sh -> fz" pick"fz" \
-  atpull'!git reset --hard'
+zplugin ice wait lucid
 zplugin light changyuheng/fz
 
-# z
-zplugin ice wait lucid as"program" cp"z.sh -> z" pick"z" src"z.sh" \
-  atpull'!git reset --hard'
-zplugin light rupa/z
+# enhancd with fzf
+export ENHANCD_FILTER=fzf
+export ENHANCD_DISABLE_DOT=1
+export ENHANCD_DISABLE_HYPHEN=1
+export ENHANCD_DISABLE_HOME=1
+zplugin ice wait lucid pick"init.sh"
+zplugin light b4b4r07/enhancd
 
 # direnv
-zplugin ice wait from"gh-r" as"program" lucid mv"direnv* -> direnv" \
-  atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' \
-  pick"direnv" src"zhook.zsh"
+zplugin ice wait from"gh-r" as"program" lucid mv"direnv* -> $ZPFX/bin/direnv" \
+  atclone"$ZPFX/bin/direnv hook zsh > zhook.zsh" atpull"%atclone" \
+  pick"$ZPFX/bin/direnv" src"zhook.zsh"
 zplugin light direnv/direnv
 
+# poetry
+zplugin ice has"poetry" wait as"completion" id-as"poetry" lucid \
+  atclone"git reset --hard; poetry completions zsh > _poetry" \
+  atpull"%atclone"
+zplugin light zdharma/null
+
+# rclone
+zplugin ice has"rclone" wait as"completion" id-as"rclone" lucid \
+  atclone"git reset --hard; rclone genautocomplete zsh _rclone" \
+  atpull"%atclone"
+zplugin light zdharma/null
+
+# Confluent Platform: ccloud / confluent
+zplugin ice has"ccloud" wait as"completion" id-as"confluent-platform" lucid \
+  atclone"git reset --hard; ccloud completion zsh > _ccloud; confluent completion zsh > _confluent" \
+  atpull"%atclone"
+zplugin light zdharma/null
+
+# kubectx
+zplugin ice wait lucid pick"$ZPFX/bin/kube{ctx,ns}" \
+  atclone"git reset --hard; /bin/cp -f kube{ctx,ns} $ZPFX/bin/; cp completion/kubectx.zsh _kubectx; cp completion/kubens.zsh _kubens" \
+  atpull"%atclone"
+zplugin light ahmetb/kubectx
+
+# rust
+zplugin ice has"rustup" wait as"completion" id-as"rust-completion" lucid \
+  atclone"git reset --hard; rustup completions zsh > _rustup; rustup completions zsh cargo > _cargo" \
+  atpull"%atclone"
+zplugin light zdharma/null
+
 # miller
-zplugin ice wait lucid from"gh-r" as"program" mv"mlr* -> mlr"
+zplugin ice wait lucid from"gh-r" as"program" mv"mlr* -> $ZPFX/bin/mlr" pick"$ZPFX/bin/mlr"
 zplugin light johnkerl/miller
 
+# ogham/exa, replacement for ls
+zplugin ice wait lucid from"gh-r" as"program" mv"exa* -> $ZPFX/bin/exa" pick"$ZPFX/bin/exa"
+zplugin light ogham/exa
+zplugin ice svn wait lucid id-as"exa-completion" as"completion" cp"completions.zsh -> _exa"
+zplugin snippet https://github.com/ogham/exa/trunk/contrib/
+
+# sharkdp/fd
+zplugin ice wait lucid from"gh-r" as"command" \
+  cp"fd*/fd -> $ZPFX/bin/fd" \
+  mv"fd* -> fd" \
+  pick"$ZPFX/bin/fd"
+zplugin light sharkdp/fd
+
+# sharkdp/bat
+zplugin ice wait lucid from"gh-r" as"command" \
+  cp"bat*/bat -> $ZPFX/bin/bat" \
+  mv"bat* -> bat" \
+  pick"$ZPFX/bin/bat"
+zplugin light sharkdp/bat
+
+# ripgrep
+zplugin ice wait lucid from"gh-r" as"command" \
+  cp"ripgrep*/rg -> $ZPFX/bin/rg" \
+  mv"ripgrep* -> rg" \
+  pick"$ZPFX/bin/rg"
+zplugin light BurntSushi/ripgrep
+
 # yank
-zplugin ice wait lucid as"program" pick"yank" make
+zplugin ice wait lucid as"program" pick"$ZPFX/bin/yank" make"PREFIX=$ZPFX install"
 zplugin light mptre/yank
 
 # docker
@@ -250,18 +413,12 @@ zplugin light jreese/zsh-titles
 zplugin ice wait lucid
 zplugin light SukkaW/zsh-proxy
 
-# terraform
+# resty
 zplugin ice wait lucid
-zplugin light _local/terraform
-
-# rust
-zplugin ice wait as"completion" id-as"rust-completion" lucid \
-  atclone"rustup completions zsh > _rustup; rustup completions zsh cargo > _cargo" \
-  atpull"%atclone" nocompile"!"
-zplugin light zdharma/null
+zplugin light micha/resty
 
 # color logger
-zplugin ice wait as"program" lucid src"color-logger.bash" pick"/dev/null"
+zplugin ice wait lucid src"color-logger.bash" pick"/dev/null"
 zplugin light swyckoff/color-logger-bash
 
 # For GNU ls (the binaries can be gls, gdircolors, e.g. on OS X when installing the
@@ -278,7 +435,7 @@ zplugin light seebi/dircolors-solarized
 
 ### THEME ###
 DEFAULT_USER=$USER
-POWERLEVEL9K_MODE='nerdfont-complete'
+POWERLEVEL9K_MODE="nerdfont-complete"
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon root_indicator context time
   load battery status background_jobs
   disk_usage dir dir_writable vcs
@@ -306,16 +463,17 @@ POWERLEVEL9K_KUBECONTEXT_BACKGROUND='027'
 zplugin ice depth=1
 zplugin light romkatv/powerlevel10k
 
-# # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# TODO: switch to powerlevel10k 100%
+# zplugin ice atload'!source ~/.p10k.zsh; _p9k_precmd' lucid
+# zplugin load romkatv/powerlevel10k
 
-# bind Alt+. to insert last argument of last command
-bindkey -M viins '\e.' insert-last-word
+# terraform
+zplugin ice wait lucid
+zplugin light thuandt/zsh-terraform
 
-### Customize ENV, aliases and functions ###
-[[ -s "${HOME}/.aliases" ]] && source "${HOME}/.aliases"
-[[ -s "${HOME}/.functions" ]] && source "${HOME}/.functions"
-[[ -s "${HOME}/.secrets" ]] && source "${HOME}/.secrets"
+# my zsh customize config
+zplugin ice wait lucid
+zplugin light thuandt/zsh-config
 
 # ssh hostname completion
 # only completion hostname in ~/.ssh/config
@@ -337,6 +495,54 @@ fi
 export PYTHON_HOST_PROG="$(asdf which python)"
 # shellcheck disable=SC2155
 export PYTHON3_HOST_PROG="$(asdf which python3)"
+
+# Key bindings
+# bind Alt+. to insert last argument of last command
+bindkey -M viins '\e.' insert-last-word
+
+# Bind terminal-specific up and down keys
+# Bind in both emacs and vi modes so it works in both, and is not
+# sensitive to whether this is loaded before or after the vi-mode plugin
+if [[ -n "$terminfo[kcuu1]" ]]; then
+  bindkey -M emacs "$terminfo[kcuu1]" history-substring-search-up
+  bindkey -M viins "$terminfo[kcuu1]" history-substring-search-up
+fi
+if [[ -n "$terminfo[kcud1]" ]]; then
+  bindkey -M emacs "$terminfo[kcud1]" history-substring-search-down
+  bindkey -M viins "$terminfo[kcud1]" history-substring-search-down
+fi
+
+# bind P and N for EMACS mode
+bindkey -M emacs '^P' history-substring-search-up
+bindkey -M emacs '^N' history-substring-search-down
+
+# bind k and j for VI mode
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
+# disable C-s stopping receiving keyboard signals.
+stty start undef
+stty stop undef
+
+# Tilix
+# https://github.com/gnunn1/tilix/wiki/VTE-Configuration-Issue
+if [[ "$OSTYPE" == linux* ]]; then
+  if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+    source /etc/profile.d/vte.sh
+  fi
+fi
+
+# Don't store failed command to history
+# http://scarff.id.au/blog/2019/zsh-history-conditional-on-command-success/
+function zshaddhistory() {
+  whence ${${(z)1}[1]} >| /dev/null || return 1
+  local line cmd
+  line=${1%%$'\n'}
+  cmd=${line%% *}
+  [[ ${#line} -ge 5 \
+    && ${cmd} != (apm|base64|bzip2|cal|calc|cat|cd|chmod|cp|curl|cvs|date|df|diff|dig|disklabel|dmesg|doas|du|e|egrep|enc|ent|exiftool|f|fdisk|feh|file|find|gimp|git|gpg|grep|hdiutil|head|hostname|ifconfig|kill|less|ls|mail|make|man|mkdir|mount|mpv|mv|nc|openssl|patch|pdf|pdfinfo|pgrep|ping|pkg_info|pkill|ps|rcctl|rm|rsync|scp|scrot|set|sha256|sort|srm|ssh|stat|strip|sudo|sysctl|tar|tmux|top|umount|uname|unzip|uptime|useradd|vlc|vi|vim|wc|wget|which|whoami|whois|wireshark|xclip|xxd|youtube-dl)
+  ]]
+}
 
 # Clear screen
 # clear

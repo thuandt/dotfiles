@@ -106,3 +106,36 @@ else
   # https://wiki.archlinux.org/index.php/systemd/User#Environment_variables
   systemctl --user import-environment PATH EDITOR KUBE_EDITOR
 fi
+
+### API keys ###
+# Query GNOME Keyring for secrets
+
+# [TinyPNG](tinypng.org) Smart PNG and JPEG compression
+# Optimize your images with a perfect balance in quality and file size.
+TINYPNG_API_KEY="$(secret-tool lookup api-key tinypng)"
+export TINYPNG_API_KEY
+
+# Twilio SID vs Token for call/SMS
+TWILIO_ACCOUNT_SID="$(secret-tool lookup account-sid twilio)"
+TWILIO_AUTH_TOKEN="$(secret-tool lookup auth-token twilio)"
+export TWILIO_ACCOUNT_SID
+export TWILIO_AUTH_TOKEN
+
+# Gitlab.com API token
+GITLAB_TOKEN="$(secret-tool lookup token gitlab.com)"
+export GITLAB_TOKEN
+
+# Inspectorio GitLab
+GITLAB_INS_TOKEN="$(secret-tool lookup token ins-gitlab)"
+
+export GITLAB_INS_TOKEN
+
+# ipinfo.io api token
+IPINFO_TOKEN="$(secret-tool lookup token ipinfo.io)"
+export IPINFO_TOKEN
+
+# macvendors.com api token
+MACVENDORS_TOKEN="$(secret-tool lookup token macvendors)"
+export MACVENDORS_TOKEN
+
+# End of ~/.zshenv
