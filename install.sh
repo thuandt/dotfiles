@@ -15,3 +15,4 @@ cp tmux/tmux.conf ~/.tmux.conf
 cp zsh/zlogout ~/.zlogout
 cp zsh/zprofile ~/.zprofile
 cp zsh/zshrc ~/.zshrc
+cp zsh/zshenv ~/.zshenv
