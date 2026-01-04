@@ -222,6 +222,14 @@ zplugin ice wait"2" lucid from"gh-r" pick"/dev/null" \
   atpull"%atclone"
 zplugin light rclone/rclone
 
+# exercism
+zplugin ice wait"2" lucid from"gh-r" \
+  atclone"ln -sf shell/exercism_completion.zsh _exercism" \
+  atpull"%atclone" \
+  sbin"exercism" \
+  pick"/dev/null"
+zplugin light exercism/cli
+
 # Confluent CLI
 zplugin ice wait"2" lucid id-as"confluent/confluent-cli" \
   atclone"tar xzf confluent-cli --strip-components=1 confluent/confluent; rm confluent-cli; ./confluent completion zsh > _confluent" \
