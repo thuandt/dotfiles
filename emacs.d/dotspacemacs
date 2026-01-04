@@ -302,7 +302,7 @@ values."
                                                 :weight medium
                                                 :width normal
                                                 :powerline-scale 1.1)))
-  (if (eq system-type 'gnu)
+  (if (eq system-type 'gnu/linux)
       (setq-default dotspacemacs-default-font '("FuraCode Nerd Font"
                                                 :size 18
                                                 :weight medium
