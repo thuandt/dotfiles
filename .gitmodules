@@ -25,3 +25,6 @@
 [submodule "zsh/omz/plugins/resty"]
 	path = zsh/omz/plugins/resty
 	url = https://github.com/micha/resty.git
+[submodule "emacs.d/spacemacs"]
+	path = emacs.d/spacemacs
+	url = https://github.com/syl20bnr/spacemacs
