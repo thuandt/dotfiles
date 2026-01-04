@@ -83,7 +83,7 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " Open NERDTree with Ctrl+n
 map <C-n> :NERDTreeToggle<CR>
 
-
+Plug 'ryanoasis/vim-devicons'
 
 " =============================================================================
 " Completion
@@ -105,6 +105,7 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_complete_in_strings = 1
+let g:ycm_server_python_interpreter = '/usr/bin/python'
 
 " Rust source tree
 let g:ycm_rust_src_path = '/home/mrtux/DevProjects/opensource/rustsrc'
