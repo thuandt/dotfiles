@@ -1,0 +1,12 @@
+#!/bin/sh
+# ~/.profile
+# Last Modified: 24/01/2014 02:11 AM
+
+export HOSTNAME=`hostname`
+
+### START-Keychain ###
+# Let re-use ssh-agent and/or gpg-agent between logins
+eval keychain -Q --quiet $HOME/.ssh/id_rsa
+source $HOME/.keychain/$HOSTNAME-sh
+source $HOME/.keychain/$HOSTNAME-sh-gpg
+### END-Keychain ###
