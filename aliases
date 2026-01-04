@@ -166,6 +166,9 @@ alias drmi='docker image prune --all'
 # Volume cleanup
 alias dvc="docker volume ls -qf dangling=true | xargs -r docker volume rm"
 
+# mvn package with jdk8
+alias dmvn8='docker run -it --rm -u 1000 -e MAVEN_CONFIG="/app/.m2" -e MAVEN_OPTS="-Duser.home=/app" -v "$PWD":/app -v "$HOME/.m2":/app/.m2 -w /app maven:3-jdk-8 mvn clean package -DskipTests'
+
 alias tf="terraform"
 
 ### Kubernetes aliases ###
