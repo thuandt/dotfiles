@@ -105,10 +105,10 @@ fi
 unset use_color safe_term match_lhs
 
 # source some bash files
-if [ -f ~/.shell_env ]; then source ~/.shell_env; fi
-if [ -f ~/.shell_functions ]; then source ~/.shell_functions; fi
-if [ -f ~/.shell_aliases ]; then source ~/.shell_aliases; fi
-if [ -f ~/.shell_secret ]; then source ~/.shell_secret; fi
+if [ -f ~/.exports ]; then source ~/.exports; fi
+if [ -f ~/.functions ]; then source ~/.functions; fi
+if [ -f ~/.aliases ]; then source ~/.aliases; fi
+if [ -f ~/.secrets ]; then source ~/.secrets; fi
 if [ -f /etc/bash_completion ]; then source /etc/bash_completion; fi
 
 # virtualenvwrapper
