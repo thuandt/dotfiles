@@ -1,9 +1,9 @@
 [submodule "shell/dircolors"]
 	path = shell/dircolors
-	url = https://github.com/seebi/dircolors-solarized.git
+	url = git@github.com:seebi/dircolors-solarized.git
 [submodule "tmux/colors"]
 	path = tmux/colors
-	url = https://github.com/seebi/tmux-colors-solarized.git
+	url = git@github.com:seebi/tmux-colors-solarized.git
 [submodule "zsh/omz/plugins/zsh-autosuggestions"]
 	path = zsh/omz/plugins/zsh-autosuggestions
 	url = git@github.com:zsh-users/zsh-autosuggestions.git
@@ -16,3 +16,6 @@
 [submodule "zsh/omz/plugins/zsh-completions"]
 	path = zsh/omz/plugins/zsh-completions
 	url = git@github.com:zsh-users/zsh-completions.git
+[submodule "zsh/omz/plugins/go-zsh-completions"]
+	path = zsh/omz/plugins/go-zsh-completions
+	url = git@github.com:zchee/go-zsh-completions.git
