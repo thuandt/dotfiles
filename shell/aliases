@@ -105,6 +105,7 @@ alias dmesg="dmesg -T|sed -e 's|\(^.*'`date +%Y`']\)\(.*\)|\x1b[0;34m\1\x1b[0m -
 
 ## What's my public ip address?
 alias whatismyip="curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
+alias wanip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 ## Generate a Random MAC address
 alias random_mac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
@@ -120,7 +121,4 @@ alias java6-set-default='sudo update-java-alternatives -s java-6-oracle'
 alias java7-set-default='sudo update-java-alternatives -s java-7-oracle'
 alias java8-set-default='sudo update-java-alternatives -s java-8-oracle'
 
-## Alias for Auto Clash of Clans Tools
-alias start-keepalive='curl -s -u "mrtux:coc-auto@2014" --data "action=start" http://coc.ngrok.com'
-alias stop-keepalive='curl -s -u "mrtux:coc-auto@2014" --data "action=stop" http://coc.ngrok.com'
 # End of ~/.shell_aliases
