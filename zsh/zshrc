@@ -138,6 +138,7 @@ zplugin wait light-mode lucid depth=1 for \
   make"PREFIX=$ZPFX install" AltraMayor/f3 \
   make"install prefix=$ZPFX" axboe/fio \
   thuandt/zsh-terraform \
+  thuandt/zsh-pipx \
   thuandt/zsh-config
 
 zplugin wait light-mode lucid atinit"zpcompinit; zpcdreplay" for \
@@ -286,6 +287,7 @@ zplugin as"null" wait"2" light-mode lucid from"gh-r" for \
                               sbin""              PostgREST/postgrest \
                               sbin""              variadico/noti \
                               sbin""              mgartner/pg_flame \
+    mv"guetzli* -> guetzli"   sbin""              google/guetzli \
     mv"yq* -> yq"             sbin""              mikefarah/yq \
     mv"cli53* -> cli53"       sbin""              barnybug/cli53 \
     mv"exa* -> exa"           sbin""              ogham/exa \
