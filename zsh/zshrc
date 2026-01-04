@@ -30,7 +30,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=( battery bundler colorize command-not-found common-aliases cp debian
-          emoji-clock encode64 extract gem git git-extras git-flow git-prompt
+          emoji-clock encode64 extract gem git git-extras git-flow
           git-remote-branch git-ignore gpg-agent heroku history
           history-substring-search mercurial mosh pip python rails rake rsync
           ruby rvm safe-paste screen ssh-agent sublime sudo svn systemadmin
