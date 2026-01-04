@@ -1,21 +1,24 @@
-[submodule "tmux/colors"]
-	path = tmux/colors
-	url = https://github.com/seebi/tmux-colors-solarized.git
-[submodule "awesome/copycats"]
-	path = awesome/copycats
-	url = https://github.com/lcpz/awesome-copycats.git
 [submodule "emacs.d/spacemacs"]
 	path = emacs.d/spacemacs
 	url = https://github.com/syl20bnr/spacemacs
-[submodule "dotbot/dotbot"]
-	path = dotbot/dotbot
+[submodule "apps/vim/SpaceVim"]
+	path = apps/vim/SpaceVim
+	url = https://github.com/SpaceVim/SpaceVim.git
+[submodule "meta/dotbot"]
+	path = meta/dotbot
 	url = https://github.com/anishathalye/dotbot
-[submodule "dotbot/plugins/asdf"]
-	path = dotbot/plugins/asdf
+[submodule "meta/plugins/asdf"]
+	path = meta/plugins/asdf
 	url = https://github.com/sobolevn/dotbot-asdf.git
-[submodule "dotbot/plugins/pip"]
-	path = dotbot/plugins/pip
+[submodule "meta/plugins/pip"]
+	path = meta/plugins/pip
 	url = https://github.com/sobolevn/dotbot-pip.git
-[submodule "dotbot/plugins/apt-get"]
-	path = dotbot/plugins/apt-get
+[submodule "meta/plugins/apt"]
+	path = meta/plugins/apt
 	url = https://github.com/dein0s/dotbot_plugin_aptget.git
+[submodule "terminals/tmux/colors"]
+	path = terminals/tmux/colors
+	url = https://github.com/seebi/tmux-colors-solarized.git
+[submodule "gui/awesome/copycats"]
+	path = gui/awesome/copycats
+	url = https://github.com/lcpz/awesome-copycats.git
