@@ -4,6 +4,7 @@
 
 # quick up to parent directory
 alias ..="cd .."
+alias ...="cd ../.."
 
 ## Colorize the grep command output for ease of use (good for log files)##
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;31'
@@ -115,7 +116,7 @@ alias IP="curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<
 alias random_mac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
 
 ## Secure delete file
-alias secure-delete='shred'
+alias secure-delete='shred -n 200 -z -u'
 
 ## Purging configuration files on Debian-based system
 alias purge-package-config="sudo aptitude purge '~c'"
