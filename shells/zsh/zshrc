@@ -121,7 +121,6 @@ zinit wait light-mode lucid depth=1 for \
   chrissicool/zsh-256color \
   djui/alias-tips \
   jreese/zsh-titles \
-  SukkaW/zsh-proxy \
   amstrad/oh-my-matrix \
   iboyperson/pipenv-zsh \
   darvid/zsh-poetry \
@@ -130,6 +129,7 @@ zinit wait light-mode lucid depth=1 for \
   make"PREFIX=$ZPFX install" mptre/yank \
   make"PREFIX=$ZPFX install" AltraMayor/f3 \
   make"install prefix=$ZPFX" axboe/fio \
+  thuandt/zsh-proxy \
   thuandt/zsh-terraform \
   thuandt/zsh-pipx \
   thuandt/zsh-aliyun \
