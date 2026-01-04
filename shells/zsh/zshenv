@@ -23,8 +23,8 @@ export EDITOR="nvim"
 export CVSEDITOR="${EDITOR}"
 export SVN_EDITOR="${EDITOR}"
 export GIT_EDITOR="${EDITOR}"
-export VISUAL=$EDITOR
-export USE_EDITOR=$EDITOR
+export VISUAL="$EDITOR"
+export USE_EDITOR="$EDITOR"
 export KUBE_EDITOR="code --wait"
 
 export BAT_THEME="TwoDark"
