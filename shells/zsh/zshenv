@@ -20,11 +20,11 @@ export BIN_DIR=$HOME/.local/bin
 
 # Editor
 export EDITOR="nvim"
+export VISUAL="${EDITOR}"
 export CVSEDITOR="${EDITOR}"
+export USE_EDITOR="${EDITOR}"
 export SVN_EDITOR="${EDITOR}"
 export GIT_EDITOR="${EDITOR}"
-export VISUAL="$EDITOR"
-export USE_EDITOR="$EDITOR"
 export KUBE_EDITOR="code --wait"
 
 export BAT_THEME="TwoDark"
@@ -115,7 +115,7 @@ else
   export LC_ALL="${LANGUAGE}"
   export LC_CTYPE="${LANGUAGE}"
 
-  export BROWSER="firefox -new-tab %s"
+  export BROWSER="firefox"
 
   # systemd import environment
   # https://wiki.archlinux.org/index.php/systemd/User#Environment_variables
@@ -139,11 +139,6 @@ export TWILIO_AUTH_TOKEN
 # Gitlab.com API token
 GITLAB_TOKEN="$(secret-tool lookup token gitlab.com)"
 export GITLAB_TOKEN
-
-# Inspectorio GitLab
-GITLAB_INS_TOKEN="$(secret-tool lookup token ins-gitlab)"
-
-export GITLAB_INS_TOKEN
 
 # ipinfo.io api token
 IPINFO_TOKEN="$(secret-tool lookup token ipinfo.io)"
