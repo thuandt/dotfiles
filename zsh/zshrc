@@ -323,3 +323,5 @@ fi
 # Clear screen
 clear
 # End of ~/.zshrc
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
