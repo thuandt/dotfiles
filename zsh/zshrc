@@ -158,6 +158,8 @@ zplugin light jonas/tig
 # z
 zplugin ice wait lucid cp"z.sh -> z" pick"z" src"z.sh"
 zplugin light rupa/z
+# zplugin ice wait lucid
+# zplugin light eendroroy/zed-zsh
 
 # fzf completion
 zplugin ice wait lucid depth=1 multisrc"shell/*.zsh"
@@ -194,24 +196,46 @@ zplugin ice has"poetry" wait as"completion" id-as"poetry/completion" lucid \
   atpull"%atclone"
 zplugin light zdharma/null
 
-# rclone
-zplugin ice has"rclone" wait as"completion" id-as"rclone/completion" lucid \
-  atclone"rclone genautocomplete zsh _rclone" \
-  atpull"%atclone"
-zplugin light zdharma/null
-
-# Confluent Platform: ccloud / confluent
-zplugin ice has"ccloud" wait as"completion" id-as"confluent-platform/completion" lucid \
-  atclone"ccloud completion zsh > _ccloud; confluent completion zsh > _confluent" \
-  atpull"%atclone"
-zplugin light zdharma/null
-
 # rust
 zplugin ice has"rustup" wait as"completion" id-as"rust/completion" lucid \
   atclone"rustup completions zsh > _rustup; rustup completions zsh cargo > _cargo" \
   atpull"%atclone"
 zplugin light zdharma/null
 
+# rclone
+zplugin ice wait lucid from"gh-r" pick"/dev/null" \
+  bpick"*-linux-amd64.zip" \
+  mv"rclone* -> rclone" \
+  sbin"rclone/rclone" \
+  atclone"./rclone/rclone genautocomplete zsh _rclone" \
+  atpull"%atclone"
+zplugin light rclone/rclone
+
+# Confluent CLI
+zplugin ice wait lucid id-as"confluent/confluent" \
+  atclone"tar xzf confluent; ./confluent/confluent completion zsh > _confluent" \
+  atpull"%atclone" \
+  sbin"confluent/confluent" \
+  pick"/dev/null"
+zplugin snippet https://s3-us-west-2.amazonaws.com/confluent.cloud/confluent-cli/archives/latest/confluent_latest_linux_amd64.tar.gz
+
+# Confluent Cloud CLI
+zplugin ice wait lucid id-as"confluent/ccloud" \
+  atclone"tar xzf ccloud; ./ccloud/ccloud completion zsh > _ccloud" \
+  atpull"%atclone" \
+  sbin"ccloud/ccloud" \
+  pick"/dev/null"
+zplugin snippet https://s3-us-west-2.amazonaws.com/confluent.cloud/ccloud-cli/archives/latest/ccloud_latest_linux_amd64.tar.gz
+
+# shellcheck
+zplugin ice wait lucid id-as"koalaman/shellcheck" \
+  atclone"tar xJf shellcheck; rm shellcheck" \
+  atpull"%atclone" \
+  sbin"shellcheck-stable/shellcheck" \
+  pick"/dev/null"
+zplugin snippet https://storage.googleapis.com/shellcheck/shellcheck-stable.linux.x86_64.tar.xz
+
+### syntax highlighting and suggestions ###
 zplugin wait"!1b" light-mode lucid for \
   atinit"zpcompinit; zpcdreplay" zsh-users/zsh-syntax-highlighting \
   atinit"zpcompinit; zpcdreplay" zdharma/fast-syntax-highlighting \
@@ -220,15 +244,18 @@ zplugin wait"!1b" light-mode lucid for \
 
 zplugin as"null" wait"2" light-mode lucid from"gh-r" for \
                               sbin""              isacikgoz/tldr \
+                              sbin""              caddyserver/caddy \
     mv"exa* -> exa"           sbin""              ogham/exa \
     mv"mlr* -> mlr"           sbin"mlr"           johnkerl/miller \
     mv"hadolint* -> hadolint" sbin""              hadolint/hadolint \
     mv"shfmt* -> shfmt"       sbin""              @mvdan/sh \
     mv"grv* -> grv"           sbin""              @rgburke/grv \
     mv"fd* -> fd"             sbin"fd/fd"         @sharkdp/fd \
+    mv"trdsql* -> trdsql"     sbin"trdsql/trdsql" noborus/trdsql \
     mv"ripgrep* -> rg"        sbin"rg/rg"         BurntSushi/ripgrep \
     mv"bat* -> bat"           sbin"bat/bat"       @sharkdp/bat \
-    mv"jq* -> jq" bpick"*linux64"  sbin""         stedolan/jq \
+    mv"jq* -> jq"     bpick"*linux64"  sbin""     stedolan/jq \
+    mv"sops* -> sops" bpick"*linux"    sbin""     mozilla/sops \
                               sbin"fzf" fbin"fzf" junegunn/fzf-bin
 
 # fz and calc
