@@ -1,17 +1,16 @@
 #!/usr/bin/env zsh
 # ~/.zshrc
 
-# install zinit
-[[ ! -f ~/.zinit/bin/zinit.zsh ]] && {
-  command mkdir -p ~/.zinit
-  command git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
-}
+# set -x
+### Added by Zinit's installer
+if [[ ! -f ~/.zinit/bin/zinit.zsh ]]; then
+  command mkdir -p ~/.zinit/completions && command chmod g-rwX ~/.zinit
+  command git clone https://github.com/zdharma/zinit ~/.zinit/bin
+fi
 
-### zinit ###
 source ~/.zinit/bin/zinit.zsh
-
-# compinit speed up loading
-ZINIT[COMPINIT_OPTS]=-C
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
 #
 # Bindkeys
@@ -59,9 +58,13 @@ bindkey -M vicmd 'j' history-substring-search-down
 stty start undef
 stty stop undef
 
-zinit light-mode lucid for \
-  zinit-zsh/z-a-bin-gem-node \
-  zinit-zsh/z-a-as-monitor
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+  zinit-zsh/z-a-rust \
+  zinit-zsh/z-a-as-monitor \
+  zinit-zsh/z-a-patch-dl \
+  zinit-zsh/z-a-bin-gem-node
 
 # OMZ libs and plugins
 zinit light-mode lucid for \
@@ -185,6 +188,13 @@ zinit ice as='null' wait lucid from='gh-r' \
   atpull='%atclone'
 zinit light ogham/dog
 
+# doggo: Command-line DNS client for humans
+zinit ice as='null' wait lucid from='gh-r' \
+  sbin='doggo' \
+  atclone='ln -sf completions/doggo.zsh _doggo' \
+  atpull='%atclone'
+zinit light mr-karan/doggo
+
 # kubectx
 zinit ice wait='2' lucid pick='/dev/null' sbin='kubectx' sbin='kubens' \
   atclone='ln -sf completion/kubectx.zsh _kubectx; ln -sf completion/kubens.zsh _kubens' \
@@ -241,7 +251,7 @@ zinit ice wait='2' lucid id-as='koalaman/shellcheck-stable' \
   atpull='%atclone' \
   sbin='shellcheck' \
   pick='/dev/null'
-zinit snippet https://storage.googleapis.com/shellcheck/shellcheck-stable.linux.x86_64.tar.xz
+zinit snippet https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.x86_64.tar.xz
 
 # ffmpeg
 zinit ice wait='2' lucid id-as='FFmpeg/FFmpeg-static' \
@@ -269,13 +279,13 @@ zinit ice wait='2' lucid id-as='smartversion/smartvs' \
   atpull='%atclone' \
   sbin='smv' \
   pick='/dev/null'
-zinit snippet http://www.smartversion.com/smartvs37_linux_x64.zip
+zinit snippet http://www.smartversion.com/smartvs382_linux_x64.zip
 
 # hey
 zinit ice wait='2' lucid id-as='rakyll/hey' \
   sbin='hey' \
   pick='/dev/null'
-zinit snippet https://storage.googleapis.com/hey-release/hey_linux_amd64
+zinit snippet https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
 
 ### syntax highlighting and suggestions ###
 zinit wait='!1b' light-mode lucid for \
@@ -303,7 +313,7 @@ zinit as='null' wait='2' light-mode lucid from='gh-r' for \
   mv='guetzli* -> guetzli' sbin google/guetzli \
   mv='yq* -> yq' sbin mikefarah/yq \
   mv='cli53* -> cli53' sbin barnybug/cli53 \
-  mv='exa* -> exa' sbin ogham/exa \
+  mv='exa* -> exa' sbin='bin/exa' ogham/exa \
   mv='q* -> q' sbin harelba/q \
   mv='hadolint* -> hadolint' sbin hadolint/hadolint \
   mv='shfmt* -> shfmt' sbin @mvdan/sh \
@@ -335,9 +345,8 @@ zinit as='null' wait='2' light-mode lucid from='gh-r' for \
   mv='ripgrep* -> rga' sbin='rga/rga' sbin='rga/rga-preproc' phiresky/ripgrep-all \
   mv='rakkess* -> rakkess' bpick='rakkess-amd64-linux*' sbin corneliusweig/rakkess \
   mv='aws-iam-authenticator* -> aws-iam-authenticator' sbin kubernetes-sigs/aws-iam-authenticator \
-  mv='stylish-haskell* -> stylish-haskell' sbin='stylish-haskell/stylish-haskell' jaspervdj/stylish-haskell \
-  bpick='*linux.tar.gz' sbin='dist_linux/docker-slim' sbin='dist_linux/docker-slim-sensor' docker-slim/docker-slim \
-  bpick='*.tar.gz' mv='golangci-lint* -> golangci-lint' sbin'golangci-lint/golangci-lint' atload='source <(golangci-lint completion zsh)' golangci/golangci-lint \
+  mv="stylish-haskell* -> stylish-haskell" sbin="stylish-haskell/stylish-haskell" @haskell/stylish-haskell \
+  bpick='*.tar.gz' mv='golangci-lint* -> golangci-lint' sbin='golangci-lint/golangci-lint' atload='source <(golangci-lint completion zsh)' golangci/golangci-lint
 
 # fz and calc
 zinit wait='2' light-mode lucid for \
