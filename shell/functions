@@ -176,9 +176,18 @@ install-cli53 () {
 }
 
 
-# Usage: install-kubectl 1.2.4
+# Usage: install-kubectl v1.2.4
 install-kubectl() {
-    [[ -n $1 ]] && curl -sSL https://storage.googleapis.com/kubernetes-release/release/v"${1}"/bin/linux/amd64/kubectl -o ~/Applications/google-cloud-sdk/bin/kubectl
+    version=${1:-latest}
+    curl -sSL "https://storage.googleapis.com/kubernetes-release/release/${version}/bin/linux/amd64/kubectl" \
+         -o ~/Applications/google-cloud-sdk/bin/kubectl
+}
+
+# Usage: install-minikube v0.22.0
+install-minikube() {
+    version=${1:-latest}
+    curl -sSL "https://storage.googleapis.com/minikube/releases/${version}/minikube-linux-amd64" \
+         -o "$MYBIN/minikube"
 }
 
 transfer() {
