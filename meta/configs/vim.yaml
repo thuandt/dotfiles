@@ -1,10 +1,10 @@
 - shell:
     - [
-        git clone https://github.com/SpaceVim/SpaceVim.git ~/.SpaceVim,
+        git clone https://gitlab.com/SpaceVim/SpaceVim.git ~/.config/SpaceVim,
         Installing SpaceVim,
       ]
 
 - link:
-    ~/.vim: ~/.SpaceVim
-    ~/.config/nvim: ~/.SpaceVim
+    ~/.vim: ~/.config/SpaceVim
+    ~/.config/nvim: ~/.config/SpaceVim
     ~/.SpaceVim.d: apps/vim/SpaceVim.d
