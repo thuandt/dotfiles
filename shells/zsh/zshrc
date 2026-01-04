@@ -288,6 +288,7 @@ zinit as"null" wait"2" light-mode lucid from"gh-r" for \
   sbin"" PostgREST/postgrest \
   sbin"" variadico/noti \
   sbin"" mgartner/pg_flame \
+  sbin"" juliosueiras/terraform-lsp \
   mv"guetzli* -> guetzli" sbin"" google/guetzli \
   mv"yq* -> yq" sbin"" mikefarah/yq \
   mv"cli53* -> cli53" sbin"" barnybug/cli53 \
