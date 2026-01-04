@@ -130,19 +130,21 @@ set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
 "              | | +-- readonly flag in square brackets
 "              | +-- rodified flag in square brackets
 "              +-- full path to file in the buffer
+set cursorline      " highlight current line
+set cursorcolumn    " highlight the current column
 
-" set different color schemes for gvim & vim
+" Solarized everywhere
+set t_Co=256
+set term=xterm-256color
+let g:solarized_termcolors=256
+let g:solarized_termtrans=1
+colorscheme solarized
+
+" set different options for gvim & vim
 if has("gui_running")
     set guioptions=mce
-    set t_Co=256
-    set cursorline      " highlight current line
-    set cursorcolumn    " highlight the current column
     set guifont=Consolas\ 10
     set mousehide " hide the mouse cursor when typing
-    colorscheme molokai
-
-else
-    colorscheme desert
 endif
 
 " ========================== Text/Formatting Layout =========================
