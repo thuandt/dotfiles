@@ -75,5 +75,5 @@
     name = "lang#go"
 
 [[custom_plugins]]
-    name = "zinit-zsh/zplugin-vim-syntax"
+    name = "zinit-zsh/zinit-vim-syntax"
     merged = false

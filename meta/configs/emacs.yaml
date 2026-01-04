@@ -1,7 +1,12 @@
 - create:
-    - ~/.local/emacs.d/
+    - ~/.emacs.d/
+
+- shell:
+    - [
+        git clone https://github.com/syl20bnr/spacemacs.git ~/.emacs.d/spacemacs,
+        Installing spacemacs,
+      ]
 
 - link:
     ~/.spacemacs: apps/emacs/dotspacemacs
     ~/.emacs.d/init.el: apps/emacs/init.el
-    ~/.emacs.d/spacemacs: apps/emacs/spacemacs
