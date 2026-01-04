@@ -1,8 +1,10 @@
 #!/bin/bash
 # Filename: install.sh
-# Last Modified: Sun 06 Jan 2013 03:23:24 AM ICT
+# Last Modified: Mon 07 Jan 2013 01:07:00 AM ICT
 
 cp bash/bashrc ~/.bashrc
+cp bash/bash_logout ~/.bash_logout
+cp bash/bash_profile ~/.bash_profile
 mkdir -p ~/.bin && cp bin/* ~/.bin
 cp screen/screenrc ~/.screenrc
 cp shell/aliases ~/.shell_aliases
