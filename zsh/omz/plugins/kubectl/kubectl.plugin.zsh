@@ -22,7 +22,7 @@ if [ $commands[kubectl] ]; then
   alias dsd="kubectl describe deployment"
   alias dsp="kubectl describe pod"
 
-  alias kl="kubectl logs --follow"
+  alias kl="kubectl logs --tail=50 --follow"
   alias kx="kubectl exec"
   alias xx="kubectl exec -ti"
   alias kcf="kubectl create -f"
