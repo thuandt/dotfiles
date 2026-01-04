@@ -59,65 +59,59 @@ bindkey -M vicmd 'j' history-substring-search-down
 stty start undef
 stty stop undef
 
-zinit light zinit-zsh/z-a-bin-gem-node
-zinit light zinit-zsh/z-a-as-monitor
+zinit light-mode lucid for \
+  zinit-zsh/z-a-bin-gem-node \
+  zinit-zsh/z-a-as-monitor
 
 # OMZ libs and plugins
 zinit light-mode lucid for \
-  OMZ::lib/clipboard.zsh \
-  OMZ::lib/completion.zsh \
-  OMZ::lib/directories.zsh \
-  OMZ::lib/functions.zsh \
-  OMZ::lib/git.zsh \
-  OMZ::lib/grep.zsh \
-  OMZ::lib/history.zsh \
-  OMZ::lib/key-bindings.zsh \
-  OMZ::lib/misc.zsh \
-  OMZ::lib/termsupport.zsh \
-  OMZ::lib/theme-and-appearance.zsh \
-  OMZ::plugins/asdf/asdf.plugin.zsh \
-  OMZ::plugins/gcloud/gcloud.plugin.zsh \
-  atload"unalias grv" OMZ::plugins/git/git.plugin.zsh
+  OMZL::clipboard.zsh \
+  OMZL::completion.zsh \
+  OMZL::directories.zsh \
+  OMZL::functions.zsh \
+  OMZL::git.zsh \
+  OMZL::grep.zsh \
+  OMZL::history.zsh \
+  OMZL::key-bindings.zsh \
+  OMZL::misc.zsh \
+  OMZL::termsupport.zsh \
+  OMZL::theme-and-appearance.zsh \
+  OMZP::asdf \
+  OMZP::gcloud \
+  atload"unalias grv" OMZP::git
 
 # For GNU ls (the binaries can be gls, gdircolors, e.g. on OS X when installing the
 # coreutils package from Homebrew or using https://github.com/ogham/exa)
-zinit ice wait"0c" lucid reset \
-  atclone"dircolors -b dircolors.ansi-dark > clrs.zsh" \
-  atpull"%atclone" pick"clrs.zsh" nocompile'!' \
-  atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
+zinit ice wait='0c' lucid reset \
+  atclone='dircolors -b dircolors.ansi-dark > clrs.zsh' \
+  atpull='%atclone' pick='clrs.zsh' nocompile='!' \
+  atload='zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
 zinit light seebi/dircolors-solarized
 
-# zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
-#     atpull'%atclone' pick"clrs.zsh" nocompile'!' \
-#     atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
-# zinit light trapd00r/LS_COLORS
-
-zinit wait light-mode lucid blockf atclone"zinit creinstall -q ." atpull"%atclone" pick"/dev/null" for \
+zinit wait light-mode lucid blockf atclone='zinit creinstall -q .' atpull='%atclone' pick='/dev/null' for \
   zsh-users/zsh-completions \
   zchee/zsh-completions
 
 zinit wait light-mode lucid depth=1 for \
-  OMZ::plugins/gpg-agent/gpg-agent.plugin.zsh \
-  OMZ::plugins/aws/aws.plugin.zsh \
-  OMZ::plugins/extract/extract.plugin.zsh \
-  OMZ::plugins/encode64/encode64.plugin.zsh \
-  OMZ::plugins/vi-mode/vi-mode.plugin.zsh \
-  OMZ::plugins/nmap/nmap.plugin.zsh \
-  OMZ::plugins/kubectl/kubectl.plugin.zsh \
-  OMZ::plugins/helm/helm.plugin.zsh \
-  OMZ::plugins/kops/kops.plugin.zsh \
-  OMZ::plugins/minikube/minikube.plugin.zsh \
-  OMZ::plugins/rsync/rsync.plugin.zsh \
-  OMZ::plugins/sudo/sudo.plugin.zsh \
-  OMZ::plugins/systemd/systemd.plugin.zsh \
-  OMZ::plugins/ubuntu/ubuntu.plugin.zsh \
-  OMZ::plugins/npm/npm.plugin.zsh \
-  OMZ::plugins/yarn/yarn.plugin.zsh \
-  OMZ::plugins/gitignore/gitignore.plugin.zsh \
-  OMZ::plugins/docker-compose/docker-compose.plugin.zsh \
-  OMZ::plugins/docker-machine/docker-machine.plugin.zsh
-
-zinit wait light-mode lucid depth=1 for \
+  OMZP::gpg-agent \
+  OMZP::aws \
+  OMZP::extract \
+  OMZP::encode64 \
+  OMZP::vi-mode \
+  OMZP::nmap \
+  OMZP::kubectl \
+  OMZP::helm \
+  OMZP::kops \
+  OMZP::minikube \
+  OMZP::rsync \
+  OMZP::sudo \
+  OMZP::systemd \
+  OMZP::ubuntu \
+  OMZP::npm \
+  OMZP::yarn \
+  OMZP::gitignore \
+  OMZP::docker-compose \
+  OMZP::docker-machine \
   zsh-users/zsh-history-substring-search \
   zdharma/history-search-multi-word \
   chrissicool/zsh-256color \
@@ -128,231 +122,237 @@ zinit wait light-mode lucid depth=1 for \
   darvid/zsh-poetry \
   micha/resty \
   changyuheng/fz \
-  make"PREFIX=$ZPFX install" mptre/yank \
-  make"PREFIX=$ZPFX install" AltraMayor/f3 \
-  make"install prefix=$ZPFX" axboe/fio \
+  make='PREFIX=$ZPFX install' mptre/yank \
+  make='PREFIX=$ZPFX install' AltraMayor/f3 \
+  make='install prefix=$ZPFX' axboe/fio \
   thuandt/zsh-proxy \
   thuandt/zsh-terraform \
   thuandt/zsh-pipx \
   thuandt/zsh-aliyun \
   thuandt/zsh-config
 
-zinit wait light-mode lucid atinit"zicompinit; zicdreplay" for \
-  is-snippet id-as"docker/_docker" https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker \
-  is-snippet id-as"docker/_docker-compose" https://github.com/docker/compose/blob/master/contrib/completion/zsh/_docker-compose \
-  is-snippet id-as"docker/_docker-machine" https://github.com/docker/machine/blob/master/contrib/completion/zsh/_docker-machine
+zinit wait light-mode lucid atinit='zicompinit; zicdreplay' for \
+  id-as='_docker' https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker \
+  id-as='_docker-compose' https://github.com/docker/compose/blob/master/contrib/completion/zsh/_docker-compose \
+  id-as='_docker-machine' https://github.com/docker/machine/blob/master/contrib/completion/zsh/_docker-machine
 
 # tig
-zinit ice wait"2" lucid depth=1 \
-  atclone"./autogen.sh; ./configure --prefix=$ZPFX" \
-  atpull"/bin/cp -f contrib/vim.tigrc ~/.tigrc.vim; /bin/cp -f contrib/git-flow.tigrc ~/.tigrc.git-flow; ./autogen.sh; ./configure --prefix=$ZPFX" \
-  make"prefix=$ZPFX install" \
-  pick"/dev/null"
+zinit ice wait='2' lucid depth='1' \
+  atclone='./autogen.sh; ./configure --prefix=$ZPFX' \
+  atpull='/bin/cp -f contrib/vim.tigrc ~/.tigrc.vim; /bin/cp -f contrib/git-flow.tigrc ~/.tigrc.git-flow; ./autogen.sh; ./configure --prefix=$ZPFX' \
+  make='prefix=$ZPFX install' \
+  pick='/dev/null'
 zinit light jonas/tig
 
 # the_silver_searcher: ag
-zinit ice wait"2" lucid depth=1 \
-  atclone"./build.sh --prefix=$ZPFX" \
-  atpull"%atclone" \
-  make"install" \
-  pick"/dev/null"
+zinit ice wait='2' lucid depth='1' \
+  atclone='./build.sh --prefix=$ZPFX' \
+  atpull='%atclone' \
+  make='install' \
+  pick='/dev/null'
 zinit light ggreer/the_silver_searcher
 
 # z
-zinit ice wait lucid cp"z.sh -> z" pick"z" src"z.sh"
+zinit ice wait lucid cp='z.sh -> z' pick='z' src='z.sh'
 zinit light rupa/z
 # zinit ice wait lucid
 # zinit light eendroroy/zed-zsh
 
 # fzf completion
-zinit ice wait lucid depth=1 multisrc"shell/*.zsh"
+zinit ice wait lucid depth='1' multisrc='shell/*.zsh'
 zinit light junegunn/fzf
 
 # enhancd with fzf
-zinit ice wait lucid pick"init.sh"
+zinit ice wait lucid pick='init.sh'
 zinit light b4b4r07/enhancd
 
 # direnv
-zinit ice as"null" wait lucid from"gh-r" \
-  mv"direnv* -> direnv" \
-  sbin"" src"zhook.zsh" \
-  atclone"./direnv hook zsh > zhook.zsh" atpull"%atclone"
+zinit ice as='null' wait lucid from='gh-r' \
+  mv='direnv* -> direnv' \
+  sbin src='zhook.zsh' \
+  atclone='./direnv hook zsh > zhook.zsh' \
+  atpull='%atclone'
 zinit light direnv/direnv
 
 # kubectx
-zinit ice wait"2" lucid pick"/dev/null" sbin"kubectx" sbin"kubens" \
-  atclone"ln -sf completion/kubectx.zsh _kubectx; ln -sf completion/kubens.zsh _kubens" \
-  atpull"%atclone"
+zinit ice wait='2' lucid pick='/dev/null' sbin='kubectx' sbin='kubens' \
+  atclone='ln -sf completion/kubectx.zsh _kubectx; ln -sf completion/kubens.zsh _kubens' \
+  atpull='%atclone'
 zinit light ahmetb/kubectx
 
 # ansiweather
-zinit ice wait"2" lucid pick"/dev/null" sbin"ansiweather"
+zinit ice wait='2' lucid pick='/dev/null' sbin
 zinit light fcambus/ansiweather
 
 # color logger
-zinit ice wait lucid src"color-logger.bash" pick"/dev/null"
+zinit ice wait lucid src='color-logger.bash' pick='/dev/null'
 zinit light swyckoff/color-logger-bash
 
 # poetry
-zinit ice has"poetry" wait"2" as"completion" id-as"poetry/completion" lucid \
-  atclone"poetry completions zsh > _poetry" \
-  atpull"%atclone"
+zinit ice has='poetry' wait='2' as='completion' id-as'poetry/completion' lucid \
+  atclone='poetry completions zsh > _poetry' \
+  atpull='%atclone'
 zinit light zdharma/null
 
 # eksctl
-zinit ice wait"2" lucid from"gh-r" pick"/dev/null" sbin"" \
-  atclone"./eksctl completion zsh > _eksctl" \
-  atpull"%atclone"
+zinit ice wait='2' lucid from"gh-r" pick='/dev/null' sbin \
+  atclone='./eksctl completion zsh > _eksctl' \
+  atpull='%atclone'
 zinit light weaveworks/eksctl
 
 # rust
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
-zinit ice has"rustup" wait"2" as"completion" id-as"rust/completion" lucid \
-  atclone"rustup completions zsh > _rustup; rustup completions zsh cargo > _cargo" \
-  atpull"%atclone"
+zinit ice has='rustup' wait='2' as='completion' id-as='rust/completion' lucid \
+  atclone'rustup completions zsh > _rustup; rustup completions zsh cargo > _cargo' \
+  atpull='%atclone'
 zinit light zdharma/null
 
 # rclone
-zinit ice wait"2" lucid from"gh-r" pick"/dev/null" \
-  bpick"*-linux-amd64.zip" \
-  mv"rclone* -> rclone" \
-  sbin"rclone/rclone" \
-  atclone"./rclone/rclone genautocomplete zsh _rclone" \
-  atpull"%atclone"
+zinit ice wait='2' lucid from='gh-r' pick='/dev/null' \
+  bpick='*-linux-amd64.zip' \
+  mv='rclone* -> rclone' \
+  sbin='rclone/rclone' \
+  atclone='./rclone/rclone genautocomplete zsh _rclone'\
+  atpull='%atclone'
 zinit light rclone/rclone
 
 # exercism
-zinit ice wait"2" lucid from"gh-r" \
-  atclone"ln -sf shell/exercism_completion.zsh _exercism" \
-  atpull"%atclone" \
-  sbin"exercism" \
-  pick"/dev/null"
+zinit ice wait='2' lucid from='gh-r' \
+  atclone='ln -sf shell/exercism_completion.zsh _exercism' \
+  atpull='%atclone' \
+  sbin='exercism' \
+  pick='/dev/null'
 zinit light exercism/cli
 
 # shellcheck
-zinit ice wait"2" lucid id-as"koalaman/shellcheck-stable" \
-  atclone"tar xJf shellcheck-stable --strip-components=1 shellcheck-stable/shellcheck; rm shellcheck-stable" \
-  atpull"%atclone" \
-  sbin"shellcheck" \
-  pick"/dev/null"
+zinit ice wait='2' lucid id-as='koalaman/shellcheck-stable' \
+  atclone='tar xJf shellcheck-stable --strip-components=1 shellcheck-stable/shellcheck; rm shellcheck-stable' \
+  atpull='%atclone' \
+  sbin='shellcheck' \
+  pick='/dev/null'
 zinit snippet https://storage.googleapis.com/shellcheck/shellcheck-stable.linux.x86_64.tar.xz
 
 # ffmpeg
-zinit ice wait"2" lucid id-as"FFmpeg/FFmpeg-static" \
-  atclone"tar --strip-components=1 -xJf FFmpeg-static; rm FFmpeg-static" \
-  atpull"%atclone" \
-  sbin"ffmpeg" sbin"ffprobe" sbin"qt-faststart" \
-  pick"/dev/null"
+zinit ice wait='2' lucid id-as='FFmpeg/FFmpeg-static' \
+  atclone='tar --strip-components=1 -xJf FFmpeg-static; rm FFmpeg-static' \
+  atpull='%atclone' \
+  sbin='ffmpeg' sbin='ffprobe' sbin='qt-faststart' \
+  pick='/dev/null'
 zinit snippet https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz
 
 # container-diff
-zinit ice wait"2" lucid id-as"GoogleContainerTools/container-diff" \
-  sbin"container-diff" \
-  pick"/dev/null"
+zinit ice wait='2' lucid id-as='GoogleContainerTools/container-diff' \
+  sbin='container-diff' \
+  pick='/dev/null'
 zinit snippet https://storage.googleapis.com/container-diff/latest/container-diff-linux-amd64
 
 # cloud_sql_proxy
-zinit ice wait"2" lucid id-as"GoogleCloudPlatform/cloud_sql_proxy" \
-  sbin"cloud_sql_proxy" \
-  pick"/dev/null"
+zinit ice wait='2' lucid id-as='GoogleCloudPlatform/cloud_sql_proxy' \
+  sbin='cloud_sql_proxy' \
+  pick='/dev/null'
 zinit snippet https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64
 
 # smv
-zinit ice wait"2" lucid id-as"smartversion/smartvs" \
-  atclone"unzip -o smartvs; rm -f smartvs" \
-  atpull"%atclone" \
-  sbin"smv" \
-  pick"/dev/null"
+zinit ice wait='2' lucid id-as='smartversion/smartvs' \
+  atclone='unzip -o smartvs; rm -f smartvs' \
+  atpull='%atclone' \
+  sbin='smv' \
+  pick='/dev/null'
 zinit snippet http://www.smartversion.com/smartvs37_linux_x64.zip
 
 # hey
-zinit ice wait"2" lucid id-as"rakyll/hey" \
-  sbin"hey" \
-  pick"/dev/null"
+zinit ice wait='2' lucid id-as='rakyll/hey' \
+  sbin='hey' \
+  pick='/dev/null'
 zinit snippet https://storage.googleapis.com/hey-release/hey_linux_amd64
 
 ### syntax highlighting and suggestions ###
-zinit wait"!1b" light-mode lucid for \
-  atinit"zicompinit; zicdreplay" zsh-users/zsh-syntax-highlighting \
-  atinit"zicompinit; zicdreplay" zdharma/fast-syntax-highlighting \
-  atload"_zsh_autosuggest_start" zsh-users/zsh-autosuggestions \
-  atinit"zicompinit; zicdreplay" hlissner/zsh-autopair
+zinit wait='!1b' light-mode lucid for \
+  atinit='zicompinit; zicdreplay' zsh-users/zsh-syntax-highlighting \
+  atinit='zicompinit; zicdreplay' zdharma/fast-syntax-highlighting \
+  atload='_zsh_autosuggest_start' zsh-users/zsh-autosuggestions \
+  atinit='zicompinit; zicdreplay' hlissner/zsh-autopair
 
-zinit as"null" wait"2" light-mode lucid from"gh-r" for \
-  sbin"" isacikgoz/tldr \
-  sbin"" aliyun/aliyun-cli \
-  sbin"" derailed/k9s \
-  sbin"" terraform-linters/tflint \
-  sbin"" digitalocean/doctl \
-  sbin"" simeji/jid \
-  sbin"" gravitational/teleconsole \
-  sbin"" PostgREST/postgrest \
-  sbin"" variadico/noti \
-  sbin"" mgartner/pg_flame \
-  sbin"" juliosueiras/terraform-lsp \
-  sbin"" pinterest/ktlint \
-  mv"guetzli* -> guetzli" sbin"" google/guetzli \
-  mv"yq* -> yq" sbin"" mikefarah/yq \
-  mv"cli53* -> cli53" sbin"" barnybug/cli53 \
-  mv"exa* -> exa" sbin"" ogham/exa \
-  mv"q* -> q" sbin"" harelba/q \
-  mv"hadolint* -> hadolint" sbin"" hadolint/hadolint \
-  mv"shfmt* -> shfmt" sbin"" @mvdan/sh \
-  mv"grv* -> grv" sbin"" @rgburke/grv \
-  mv"mkcert* -> mkcert" sbin"" FiloSottile/mkcert \
-  mv"skaffold* -> skaffold" sbin"" GoogleContainerTools/skaffold \
-  mv"minikube* -> minikube" sbin"" kubernetes/minikube \
-  mv"helmfile* -> helmfile" sbin"" roboll/helmfile \
-  mv"stern* -> stern" sbin"" wercker/stern \
-  mv"fluxctl* -> fluxctl" sbin"fluxctl" fluxcd/flux \
-  mv"mlr* -> mlr" sbin"mlr" johnkerl/miller \
-  mv"fd* -> fd" sbin"fd/fd" @sharkdp/fd \
-  mv"hlint* -> hlint" sbin"hlint/hlint" ndmitchell/hlint \
-  mv"trdsql* -> trdsql" sbin"trdsql/trdsql" noborus/trdsql \
-  mv"ripgrep* -> rg" sbin"rg/rg" BurntSushi/ripgrep \
-  mv"bat* -> bat" sbin"bat/bat" @sharkdp/bat \
-  fbin"fzf" sbin"fzf" junegunn/fzf-bin \
-  bpick"istioctl-*" sbin"istioctl" istio/istio \
-  mv"jq* -> jq" bpick"*linux64" sbin"" stedolan/jq \
-  mv"sops* -> sops" bpick"*linux" sbin"" mozilla/sops \
-  bpick"*linux_amd64.tar.gz" sbin"" wagoodman/dive \
-  bpick"*ext*Linux-64bit.tar.gz" sbin"" gohugoio/hugo \
-  mv"terragrunt* -> terragrunt" sbin"" gruntwork-io/terragrunt \
-  bpick"*linux_amd64.tar.gz" mv"gh* -> gh" sbin"gh/bin/gh" cli/cli \
-  mv"terraform-docs* -> terraform-docs" sbin"" segmentio/terraform-docs \
-  mv"ripgrep* -> rga" sbin"rga/rga" sbin"rga/rga-preproc" phiresky/ripgrep-all \
-  mv"rakkess* -> rakkess" bpick"rakkess-amd64-linux*" sbin"" corneliusweig/rakkess \
-  mv"aws-iam-authenticator* -> aws-iam-authenticator" sbin"" kubernetes-sigs/aws-iam-authenticator \
-  mv"stylish-haskell* -> stylish-haskell" sbin"stylish-haskell/stylish-haskell" jaspervdj/stylish-haskell \
-  bpick"*linux.tar.gz" sbin"dist_linux/docker-slim" sbin"dist_linux/docker-slim-sensor" docker-slim/docker-slim
+zinit as='null' wait='2' light-mode lucid from='gh-r' for \
+  sbin isacikgoz/tldr \
+  sbin aliyun/aliyun-cli \
+  sbin derailed/k9s \
+  sbin terraform-linters/tflint \
+  sbin digitalocean/doctl \
+  sbin simeji/jid \
+  sbin gravitational/teleconsole \
+  sbin PostgREST/postgrest \
+  sbin variadico/noti \
+  sbin mgartner/pg_flame \
+  sbin juliosueiras/terraform-lsp \
+  sbin pinterest/ktlint \
+  sbin open-policy-agent/conftest \
+  sbin instrumenta/kubeval \
+  mv='kubeseal* -> kubeseal' sbin bitnami-labs/sealed-secrets \
+  mv='opa* -> opa' sbin open-policy-agent/opa \
+  mv='guetzli* -> guetzli' sbin google/guetzli \
+  mv='yq* -> yq' sbin mikefarah/yq \
+  mv='cli53* -> cli53' sbin barnybug/cli53 \
+  mv='exa* -> exa' sbin ogham/exa \
+  mv='q* -> q' sbin harelba/q \
+  mv='hadolint* -> hadolint' sbin hadolint/hadolint \
+  mv='shfmt* -> shfmt' sbin @mvdan/sh \
+  mv='grv* -> grv' sbin @rgburke/grv \
+  mv='mkcert* -> mkcert' sbin FiloSottile/mkcert \
+  mv='skaffold* -> skaffold' sbin GoogleContainerTools/skaffold \
+  mv='minikube* -> minikube' sbin kubernetes/minikube \
+  mv='helmfile* -> helmfile' sbin roboll/helmfile \
+  mv='stern* -> stern' sbin wercker/stern \
+  mv='fluxctl* -> fluxctl' sbin='fluxctl' fluxcd/flux \
+  mv='mlr* -> mlr' sbin='mlr' johnkerl/miller \
+  mv='fd* -> fd' sbin='fd/fd' @sharkdp/fd \
+  mv='hlint* -> hlint' sbin='hlint/hlint' ndmitchell/hlint \
+  mv='trdsql* -> trdsql' sbin='trdsql/trdsql' noborus/trdsql \
+  mv='ripgrep* -> rg' sbin='rg/rg' BurntSushi/ripgrep \
+  mv='bat* -> bat' sbin='bat/bat' @sharkdp/bat \
+  fbin='fzf' sbin='fzf' junegunn/fzf-bin \
+  bpick='istioctl-*' sbin='istioctl' istio/istio \
+  mv='jq* -> jq' bpick='*linux64' sbin stedolan/jq \
+  mv='sops* -> sops' bpick='*linux' sbin mozilla/sops \
+  bpick='*linux_amd64.tar.gz' sbin wagoodman/dive \
+  bpick='*ext*Linux-64bit.tar.gz' sbin gohugoio/hugo \
+  mv='tfsec* -> tfsec' sbin liamg/tfsec \
+  mv='terragrunt* -> terragrunt' sbin gruntwork-io/terragrunt \
+  bpick='*linux_amd64.tar.gz' mv='gh* -> gh' sbin='gh/bin/gh' cli/cli \
+  mv='terraform-docs* -> terraform-docs' sbin segmentio/terraform-docs \
+  mv='ripgrep* -> rga' sbin='rga/rga' sbin='rga/rga-preproc' phiresky/ripgrep-all \
+  mv='rakkess* -> rakkess' bpick='rakkess-amd64-linux*' sbin corneliusweig/rakkess \
+  mv='aws-iam-authenticator* -> aws-iam-authenticator' sbin kubernetes-sigs/aws-iam-authenticator \
+  mv='stylish-haskell* -> stylish-haskell' sbin='stylish-haskell/stylish-haskell' jaspervdj/stylish-haskell \
+  bpick='*linux.tar.gz' sbin='dist_linux/docker-slim' sbin='dist_linux/docker-slim-sensor' docker-slim/docker-slim
 
 # fz and calc
-zinit wait"2" light-mode lucid for \
-  fbin"bin/git-dsf" sbin"bin/diff-so-fancy" fbin"bin/diff-so-fancy" pick"/dev/null" zdharma/zsh-diff-so-fancy \
+zinit wait='2' light-mode lucid for \
+  fbin='bin/git-dsf' sbin='bin/diff-so-fancy' fbin='bin/diff-so-fancy' pick='/dev/null' zdharma/zsh-diff-so-fancy \
   changyuheng/fz \
   gradle/gradle-completion \
   arzzen/calc.plugin.zsh
 
 # hub
-zinit ice wait"2" lucid from"gh-r" \
-  mv"hub* -> hub" \
-  sbin"hub/bin/hub" \
-  pick"/dev/null" \
-  atclone"ln -sf hub/etc/hub.zsh_completion _hub" \
-  atpull"%atclone"
+zinit ice wait='2' lucid from'gh-r' \
+  mv='hub* -> hub' \
+  sbin='hub/bin/hub' \
+  pick='/dev/null' \
+  atclone='ln -sf hub/etc/hub.zsh_completion _hub' \
+  atpull='%atclone'
 zinit light github/hub
 
 # golangci-lint
-zinit ice wait"2" lucid from"gh-r" \
-  mv"golangci-lint* -> golangci-lint" \
-  sbin"golangci-lint/golangci-lint" \
-  pick"/dev/null" \
-  atload"source <(golangci-lint completion zsh)"
+zinit ice wait='2' lucid from'gh-r' \
+  mv='golangci-lint* -> golangci-lint' \
+  sbin='golangci-lint/golangci-lint' \
+  pick='/dev/null' \
+  atload='source <(golangci-lint completion zsh)'
 zinit light golangci/golangci-lint
 
 # manydots-magic
-zinit ice wait'!2' lucid atinit"zicompinit; zicdreplay" pick"manydots-magic"
-zinit light "knu/zsh-manydots-magic"
+zinit ice wait='!2' lucid atinit='zicompinit; zicdreplay' pick='manydots-magic'
+zinit light knu/zsh-manydots-magic
 
 ### THEME ###
 POWERLEVEL9K_MODE="nerdfont-complete"
