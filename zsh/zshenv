@@ -1,6 +1,10 @@
 if [[ "$OSTYPE" = linux* ]] ; then
     # https://github.com/robbyrussell/oh-my-zsh/issues/1433
     DEBIAN_PREVENT_KEYBOARD_CHANGES=yes
+
+    # Skip the not really helping Ubuntu global compinit
+    skip_global_compinit=1
+
     systemctl --user import-environment PATH
 fi
 
