@@ -195,7 +195,6 @@ setopt interactive_comments
 # don't warm me about incomming mail
 unsetopt mail_warning
 
-
 # Changing Directories
 # why would you type 'cd dir' if you could just type 'dir'?
 setopt auto_cd
@@ -325,10 +324,6 @@ zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
 
 # direnv
 eval "$(direnv hook zsh)"
-
-# sdkman
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
 # Prettify path
 if [ -n "$($SHELL -c "echo $ZSH_VERSION")" ]; then
