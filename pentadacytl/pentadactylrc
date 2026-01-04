@@ -1,0 +1,103 @@
+" Minimal UI
+set guioptions=Cs
+
+" http://nakkaya.com/2014/01/26/pentadactyl-configuration/
+" Disable smooth scroll
+set scrollsteps=1
+set scrolltime=0
+
+" Show pattern matches as you type,
+set incfind
+
+" Highlight previous search pattern matches
+set hlfind
+
+" Ignore case in search unless pattern has uppercase chars,
+set findcase=smart
+
+" a toggle for search highlight
+map <silent> <C-l> :set hlfind!<CR>
+
+" Faster Scrolling
+map -b j 8j
+map -b k 8k
+map -b h 8h
+map -b l 8l
+
+" Use Full Zoom
+map -b zi ZI
+map -b zo ZO
+
+" Copy to system clipboard
+js editor.defaultRegister="+"
+
+" Fix common keys
+map -modes=i,n,v -silent -builtin <C-c> <C-v><C-c>
+map -modes=i,n -silent -builtin <C-v> <C-v><C-v>
+map -modes=i,n -silent -builtin <C-x> <C-v><C-x>
+map -modes=i,n -silent -builtin <C-a> <C-v><C-a>
+nmap -silent -builtin -builtin <C-f> /
+nmap -silent -builtin -builtin <C-w> :tabclose<CR>
+
+" tell the bell to go beep itself!
+set visualbell
+
+" turn off the freakin' bell
+hi Bell display: none;
+
+" go forward and back
+map -builtin J <C-f>
+map -builtin K <C-b>
+
+" Move the current tab
+map -builtin H <Esc>:tabmove! -1<CR>
+map -builtin L <Esc>:tabmove! +1<CR>
+
+" Never wanted to go back when I hit delete, now it won't
+nmap -builtin <bs> <nop>
+nmap -builtin f <nop>
+
+" Go into pass through mode when invoking group tabs
+nmap -builtin <M-S-E> <C-z><M-S-E>
+
+" [Firefox] Incompatibility between uBlock and Pentadactyl
+" https://github.com/chrisaljoudi/uBlock/issues/549
+style -name ublick * #nav-bar * { visibility: visible; }
+
+colorscheme solarized-dark
+
+"Focus settings, (Let gmail mess with DOM)
+set strictfocus=google.com:laissez-faire,'chrome:*':laissez-faire,*:despotic
+
+" Loading custom css
+so ~/.pentadactyl/user.css
+
+" Ignore in Google Docs and Drive
+autocmd LocationChange https://docs.google.com  :normal! <C-z>
+autocmd LocationChange https://drive.google.com  :normal! <C-z>
+
+" Allow GMail shortcuts
+set passkeys+=mail.google.com:jksacrqG#<CR>,gi,gl,gp
+" Let Hint Message from X Links
+autocmd LocationChange mail.google.com set ht+=span.ata-asJ
+" Let Hint Expand Collapsed Conversations
+autocmd LocationChange mail.google.com set ht+=span.adx
+" Let Hint Expand Message
+autocmd LocationChange mail.google.com set ht+=td.gF
+" Let Hint Expand Delete All Spam Messages
+autocmd LocationChange mail.google.com set ht+=span.x2
+
+" Auto pin mail.google.com
+autocmd PageLoad mail.google.com js if(!getBrowser().mCurrentTab.pinned) getBrowser().pinTab(getBrowser().mCurrentTab);
+autocmd PageLoad gmail.com js if(!getBrowser().mCurrentTab.pinned) getBrowser().pinTab(getBrowser().mCurrentTab);
+
+" Trello
+autocmd PageLoad trello.com js if(!getBrowser().mCurrentTab.pinned) getBrowser().pinTab(getBrowser().mCurrentTab);
+
+" Hint Instagram Load More
+autocmd LocationChange instagram.com set ht+=a.button.button-grey.button-large
+
+set passkeys+='duckduckgo.com':jkhvrsm!/<C-Enter>
+set passkeys+='facebook.com':<CR>
+set passkeys+='calendar.google.com':dwmxajkcnqep?<Del>s12345<Return>
+set passkeys+='encrypted.google.com':jk
