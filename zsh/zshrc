@@ -288,7 +288,7 @@ zplugin as"null" wait"2" light-mode lucid from"gh-r" for \
 
 # fz and calc
 zplugin wait"2" light-mode lucid for \
-  fbin"bin/git-dsf" sbin"bin/diff-so-fancy" fbin"bin/diff-so-fancy" zdharma/zsh-diff-so-fancy \
+  fbin"bin/git-dsf" sbin"bin/diff-so-fancy" fbin"bin/diff-so-fancy" pick"/dev/null" zdharma/zsh-diff-so-fancy \
   changyuheng/fz \
   arzzen/calc.plugin.zsh
 
