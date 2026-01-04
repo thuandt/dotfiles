@@ -1,5 +1,5 @@
-[submodule "shell/dircolors"]
-	path = shell/dircolors
+[submodule "dircolors"]
+	path = dircolors
 	url = git@github.com:seebi/dircolors-solarized.git
 [submodule "tmux/colors"]
 	path = tmux/colors
