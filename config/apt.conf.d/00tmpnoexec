@@ -1,0 +1,4 @@
+// /etc/apt/apt.conf.d/00tmpnoexec
+// Secure /tmp
+DPkg::Pre-Invoke{"mount -o remount,exec /tmp";};
+DPkg::Post-Invoke {"mount -o remount,rw,noexec,nosuid,nodev /tmp";};
