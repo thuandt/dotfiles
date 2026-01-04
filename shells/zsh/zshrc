@@ -198,6 +198,12 @@ zinit ice has"poetry" wait"2" as"completion" id-as"poetry/completion" lucid \
   atpull"%atclone"
 zinit light zdharma/null
 
+# eksctl
+zinit ice wait"2" lucid from"gh-r" pick"/dev/null" sbin"" \
+  atclone"./eksctl completion zsh > _eksctl" \
+  atpull"%atclone"
+zinit light weaveworks/eksctl
+
 # rust
 zinit ice has"rustup" wait"2" as"completion" id-as"rust/completion" lucid \
   atclone"rustup completions zsh > _rustup; rustup completions zsh cargo > _cargo" \
@@ -271,50 +277,50 @@ zinit wait"!1b" light-mode lucid for \
   atinit"zicompinit; zicdreplay" hlissner/zsh-autopair
 
 zinit as"null" wait"2" light-mode lucid from"gh-r" for \
-                              sbin""              isacikgoz/tldr \
-                              sbin""              caddyserver/caddy \
-                              sbin""              aliyun/aliyun-cli \
-                              sbin""              derailed/k9s \
-                              sbin""              terraform-linters/tflint \
-                              sbin""              digitalocean/doctl \
-                              sbin""              simeji/jid \
-                              sbin""              gravitational/teleconsole \
-                              sbin""              PostgREST/postgrest \
-                              sbin""              variadico/noti \
-                              sbin""              mgartner/pg_flame \
-                              sbin""              weaveworks/eksctl \
-    mv"guetzli* -> guetzli"   sbin""              google/guetzli \
-    mv"yq* -> yq"             sbin""              mikefarah/yq \
-    mv"cli53* -> cli53"       sbin""              barnybug/cli53 \
-    mv"exa* -> exa"           sbin""              ogham/exa \
-    mv"q* -> q"               sbin""              harelba/q \
-    mv"hadolint* -> hadolint" sbin""              hadolint/hadolint \
-    mv"shfmt* -> shfmt"       sbin""              @mvdan/sh \
-    mv"grv* -> grv"           sbin""              @rgburke/grv \
-    mv"mkcert* -> mkcert"     sbin""              FiloSottile/mkcert \
-    mv"skaffold* -> skaffold" sbin""              GoogleContainerTools/skaffold \
-    mv"minikube* -> minikube" sbin""              kubernetes/minikube \
-    mv"helmfile* -> helmfile" sbin""              roboll/helmfile \
-    mv"stern* -> stern"       sbin""              wercker/stern \
-    mv"fluxctl* -> fluxctl"   sbin"fluxctl"       fluxcd/flux \
-    mv"mlr* -> mlr"           sbin"mlr"           johnkerl/miller \
-    mv"fd* -> fd"             sbin"fd/fd"         @sharkdp/fd \
-    mv"trdsql* -> trdsql"     sbin"trdsql/trdsql" noborus/trdsql \
-    mv"ripgrep* -> rg"        sbin"rg/rg"         BurntSushi/ripgrep \
-    mv"bat* -> bat"           sbin"bat/bat"       @sharkdp/bat \
-    fbin"fzf"                 sbin"fzf"           junegunn/fzf-bin \
-    bpick"istioctl*"  sbin"istioctl"              istio/istio \
-    mv"jq* -> jq"     bpick"*linux64"     sbin""  stedolan/jq \
-    mv"sops* -> sops" bpick"*linux"       sbin""  mozilla/sops \
-    bpick"*linux_amd64.tar.gz"            sbin""  wagoodman/dive \
-    bpick"*ext*Linux-64bit.tar.gz"        sbin""  gohugoio/hugo \
-    mv"terragrunt* -> terragrunt"         sbin""  gruntwork-io/terragrunt \
-    mv"terraform-docs* -> terraform-docs" sbin""  segmentio/terraform-docs \
-    mv"ripgrep* -> rga"  sbin"rga/rga" sbin"rga/rga-preproc" phiresky/ripgrep-all \
-    mv"rakkess* -> rakkess" bpick"rakkess-amd64-linux*" sbin"" corneliusweig/rakkess \
-    mv"aws-iam-authenticator* -> aws-iam-authenticator" sbin"" kubernetes-sigs/aws-iam-authenticator \
-    mv"stylish-haskell* -> stylish-haskell" sbin"stylish-haskell/stylish-haskell" jaspervdj/stylish-haskell \
-    bpick"*linux.tar.gz" sbin"dist_linux/docker-slim" sbin"dist_linux/docker-slim-sensor" docker-slim/docker-slim
+  sbin"" isacikgoz/tldr \
+  sbin"" caddyserver/caddy \
+  sbin"" aliyun/aliyun-cli \
+  sbin"" derailed/k9s \
+  sbin"" terraform-linters/tflint \
+  sbin"" digitalocean/doctl \
+  sbin"" simeji/jid \
+  sbin"" gravitational/teleconsole \
+  sbin"" PostgREST/postgrest \
+  sbin"" variadico/noti \
+  sbin"" mgartner/pg_flame \
+  mv"guetzli* -> guetzli" sbin"" google/guetzli \
+  mv"yq* -> yq" sbin"" mikefarah/yq \
+  mv"cli53* -> cli53" sbin"" barnybug/cli53 \
+  mv"exa* -> exa" sbin"" ogham/exa \
+  mv"q* -> q" sbin"" harelba/q \
+  mv"hadolint* -> hadolint" sbin"" hadolint/hadolint \
+  mv"shfmt* -> shfmt" sbin"" @mvdan/sh \
+  mv"grv* -> grv" sbin"" @rgburke/grv \
+  mv"mkcert* -> mkcert" sbin"" FiloSottile/mkcert \
+  mv"skaffold* -> skaffold" sbin"" GoogleContainerTools/skaffold \
+  mv"minikube* -> minikube" sbin"" kubernetes/minikube \
+  mv"helmfile* -> helmfile" sbin"" roboll/helmfile \
+  mv"stern* -> stern" sbin"" wercker/stern \
+  mv"fluxctl* -> fluxctl" sbin"fluxctl" fluxcd/flux \
+  mv"mlr* -> mlr" sbin"mlr" johnkerl/miller \
+  mv"fd* -> fd" sbin"fd/fd" @sharkdp/fd \
+  mv"trdsql* -> trdsql" sbin"trdsql/trdsql" noborus/trdsql \
+  mv"ripgrep* -> rg" sbin"rg/rg" BurntSushi/ripgrep \
+  mv"bat* -> bat" sbin"bat/bat" @sharkdp/bat \
+  fbin"fzf" sbin"fzf" junegunn/fzf-bin \
+  bpick"istioctl*" sbin"istioctl" istio/istio \
+  mv"jq* -> jq" bpick"*linux64" sbin"" stedolan/jq \
+  mv"sops* -> sops" bpick"*linux" sbin"" mozilla/sops \
+  bpick"*linux_amd64.tar.gz" sbin"" wagoodman/dive \
+  bpick"*ext*Linux-64bit.tar.gz" sbin"" gohugoio/hugo \
+  mv"terragrunt* -> terragrunt" sbin"" gruntwork-io/terragrunt \
+  bpick"*linux_amd64.tar.gz" mv"gh* -> gh" sbin"gh/bin/gh" cli/cli \
+  mv"terraform-docs* -> terraform-docs" sbin"" segmentio/terraform-docs \
+  mv"ripgrep* -> rga" sbin"rga/rga" sbin"rga/rga-preproc" phiresky/ripgrep-all \
+  mv"rakkess* -> rakkess" bpick"rakkess-amd64-linux*" sbin"" corneliusweig/rakkess \
+  mv"aws-iam-authenticator* -> aws-iam-authenticator" sbin"" kubernetes-sigs/aws-iam-authenticator \
+  mv"stylish-haskell* -> stylish-haskell" sbin"stylish-haskell/stylish-haskell" jaspervdj/stylish-haskell \
+  bpick"*linux.tar.gz" sbin"dist_linux/docker-slim" sbin"dist_linux/docker-slim-sensor" docker-slim/docker-slim
 
 # fz and calc
 zinit wait"2" light-mode lucid for \
@@ -345,7 +351,7 @@ zinit light "knu/zsh-manydots-magic"
 
 ### THEME ###
 POWERLEVEL9K_MODE="nerdfont-complete"
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon load battery status disk_usage dir vcs aws kubecontext virtualenv vi_mode command_execution_time)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon load battery status disk_usage dir vcs aws kubecontext asdf virtualenv direnv vi_mode command_execution_time)
 POWERLEVEL9K_TIME_FOREGROUND="011"
 POWERLEVEL9K_TIME_BACKGROUND="$DEFAULT_COLOR"
 POWERLEVEL9K_TIME_FORMAT="%D{%H:%M:%S}"
@@ -367,12 +373,14 @@ POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND="011"
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND="$DEFAULT_COLOR"
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD="5"
 
-zinit ice depth=1
-zinit light romkatv/powerlevel10k
+# Show prompt segment "kubecontext" only when the command you are typing
+# invokes kubectl, helm, kubens, kubectx or oc.
+typeset -g POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc'
 
 # TODO: switch to powerlevel10k 100%
-# zinit ice atload'!source ~/.p10k.zsh; _p9k_precmd' lucid
-# zinit load romkatv/powerlevel10k
+# zinit ice atload'!source ~/.p10k.zsh; _p9k_precmd' lucid nocd
+zinit ice lucid nocd
+zinit light romkatv/powerlevel10k
 
 # Username completion.
 # Delete old definitions
