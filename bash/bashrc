@@ -1,6 +1,6 @@
 #!/bin/bash
 # ~/.bashrc
-# Last Modified: 05/12/2013 01:43 AM
+# Last Modified: 26/12/2013 07:40 PM
 
 # Some settings ----------------------------------------------------------------
 ulimit -S -c 0                # Don't want any coredumps.
@@ -134,8 +134,15 @@ if [ -f $HOME/.shell_functions ]; then source $HOME/.shell_functions; fi
 if [ -f $HOME/.shell_aliases ]; then source $HOME/.shell_aliases; fi
 if [ -f /etc/bash_completion ]; then source /etc/bash_completion; fi
 
+##### Ruby RVM #####
+# Load RVM into a shell session *as a function*
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
 # virtualenvwrapper
 [[ -s /usr/local/bin/virtualenvwrapper.sh ]] && source /usr/local/bin/virtualenvwrapper.sh
+
+# Google Cloud SDK bash completion
+source /home/mrtux/app/google-cloud-sdk/arg_rc
 
 # Realtime ~/.bash_history
 export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
