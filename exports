@@ -19,11 +19,13 @@ else
     export POETRY=$HOME/.poetry/bin             # poetry
     # shellcheck disable=SC2155
     export YARNBIN=$(yarn global bin)           # yarn
+    export KREW_ROOT=$HOME/.krew                # krew
 
     # My custom path
     MYPATH=("${BIN_DIR}"
             "${POETRY}"
             "${TFENV}"
+            "${KREW_ROOT}/bin"
             "${CARGO}"
             "${GOPATH}/bin"
             "${YARNBIN}")
