@@ -85,6 +85,13 @@ openssl-decrypt () {
     openssl aes-256-cbc -d -in "${1}" -out "${2}"
 }
 
+# Public Diffie-Hellman Parameter Service/Tool
+# https://2ton.com.au/dhtool/
+dhparam () {
+    size=${1:-4096}
+    curl -sSL https://2ton.com.au/dhparam/$size -o dhparam.pem
+}
+
 weather () {
     curl -4 http://wttr.in/sgn #HCM
     #curl -4 http://wttr.in/han #HN
@@ -95,7 +102,8 @@ bashlogger () {
     script /tmp/log.txt
 }
 
-install-docker-compose () {
+# install latest docker compose via GitHub API and curl
+install-latest-docker-compose () {
     fname="docker-compose-$(uname -s)-$(uname -m)"
     fbin="/home/mrtux/.local/bin/docker-compose"
     repos_dl="https://github.com/docker/compose/releases/download"
@@ -104,6 +112,66 @@ install-docker-compose () {
     /bin/rm -f "$fbin"
     curl -sSL $repos_dl/"$version"/"$fname" -o "$fbin"
     chmod +x $fbin
+}
+
+# install latest cli53 (go version) via GitHub API and curl
+install-latest-cli53 () {
+    fname="cli53-linux-amd64"
+    fbin="/home/mrtux/.local/bin/cli53"
+    repos_dl="https://github.com/barnybug/cli53/releases/download"
+    repos_api="https://api.github.com/repos/barnybug/cli53/releases/latest"
+    version=$(curl -sSL $repos_api | jq -r '. | .tag_name')
+    /bin/rm -f "$fbin"
+    curl -sSL $repos_dl/"$version"/"$fname" -o "$fbin"
+    chmod +x $fbin
+}
+
+
+transfer() {
+    # check arguments
+    if [ $# -eq 0 ];
+    then
+        printf "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"
+        return 1
+    fi
+
+    # get temporarily filename, output is written to this file show progress can be showed
+    tmpfile=$( mktemp -t transferXXX )
+
+    # upload stdin or file
+    file=$1
+
+    if tty -s;
+    then
+        basefile=$(basename "$file" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
+
+        if [ ! -e "$file" ];
+        then
+            echo "File $file doesn't exists."
+            return 1
+        fi
+
+        if [ -d "$file" ];
+        then
+            # zip directory and transfer
+            zipfile=$( mktemp -t transferXXX.zip )
+            cd "$(dirname "$file")" && zip -r -q - "$(basename "$file")" >> "$zipfile"
+            curl --progress-bar --upload-file "$zipfile" "https://transfer.sh/$basefile.zip" >> "$tmpfile"
+            rm -f "$zipfile"
+        else
+            # transfer file
+            curl --progress-bar --upload-file "$file" "https://transfer.sh/$basefile" >> "$tmpfile"
+        fi
+    else
+        # transfer pipe
+        curl --progress-bar --upload-file "-" "https://transfer.sh/$file" >> "$tmpfile"
+    fi
+
+    # cat output link
+    cat "$tmpfile"
+
+    # cleanup
+    rm -f "$tmpfile"
 }
 
 
