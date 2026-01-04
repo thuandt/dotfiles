@@ -32,6 +32,14 @@ stty -ixoff -ixon             # Fix C-S to freeze in vim
 shopt -u mailwarn
 unset MAILCHECK               # Don't want my shell to warn me of incoming mail.
 
+# bash history tweak
+HISTCONTROL=ignoreboth:erasedups # ingore duplicates and spaces
+HISTTIMEFORMAT='%F %T '
+
+# don't append the following to history: consecutive duplicate
+# commands, ls, bg and fg, and exit
+HISTIGNORE='&:[bf]g:jobs:%1:%2:ls:cd:pwd:c:clear:exit'
+
 # ------------------------------------------------------------------------------
 # Test for an interactive shell.
 if [[ $- != *i* ]] ; then
