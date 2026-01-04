@@ -158,10 +158,6 @@ zinit light rupa/z
 # zinit ice wait lucid
 # zinit light eendroroy/zed-zsh
 
-# fzf completion
-zinit ice wait lucid depth='1' multisrc='shell/*.zsh'
-zinit light junegunn/fzf
-
 # enhancd with fzf
 zinit ice wait lucid pick='init.sh'
 zinit light b4b4r07/enhancd
@@ -173,6 +169,13 @@ zinit ice as='null' wait lucid from='gh-r' \
   atclone='./direnv hook zsh > zhook.zsh' \
   atpull='%atclone'
 zinit light direnv/direnv
+
+# dog: replacement for dig
+zinit ice as='null' wait lucid from='gh-r' \
+  sbin='bin/dog' \
+  atclone='ln -sf completions/dog.zsh _dog' \
+  atpull='%atclone'
+zinit light ogham/dog
 
 # kubectx
 zinit ice wait='2' lucid pick='/dev/null' sbin='kubectx' sbin='kubens' \
@@ -309,17 +312,19 @@ zinit as='null' wait='2' light-mode lucid from='gh-r' for \
   mv='trdsql* -> trdsql' sbin='trdsql/trdsql' noborus/trdsql \
   mv='ripgrep* -> rg' sbin='rg/rg' BurntSushi/ripgrep \
   mv='bat* -> bat' sbin='bat/bat' @sharkdp/bat \
-  fbin='fzf' sbin='fzf' junegunn/fzf-bin \
+  mv='gdu* -> gdu' sbin dundee/gdu \
+  mv='dua* -> dua' sbin='dua/dua' Byron/dua-cli \
+  fbin='fzf' sbin='fzf' junegunn/fzf \
   bpick='istioctl-*' sbin='istioctl' istio/istio \
   mv='jq* -> jq' bpick='*linux64' sbin stedolan/jq \
   mv='sops* -> sops' bpick='*linux' sbin mozilla/sops \
   bpick='*linux_amd64.tar.gz' sbin wagoodman/dive \
   bpick='*ext*Linux-64bit.tar.gz' sbin gohugoio/hugo \
   bpick='*.tar.gz' sbin open-policy-agent/conftest \
-  mv='tfsec* -> tfsec' sbin liamg/tfsec \
+  bpick='tfsec-linux-amd64' mv='tfsec* -> tfsec' sbin tfsec/tfsec \
   mv='terragrunt* -> terragrunt' sbin gruntwork-io/terragrunt \
   bpick='*linux_amd64.tar.gz' mv='gh* -> gh' sbin='gh/bin/gh' cli/cli \
-  mv='terraform-docs* -> terraform-docs' sbin segmentio/terraform-docs \
+  mv='terraform-docs* -> terraform-docs' sbin terraform-docs/terraform-docs \
   mv='ripgrep* -> rga' sbin='rga/rga' sbin='rga/rga-preproc' phiresky/ripgrep-all \
   mv='rakkess* -> rakkess' bpick='rakkess-amd64-linux*' sbin corneliusweig/rakkess \
   mv='aws-iam-authenticator* -> aws-iam-authenticator' sbin kubernetes-sigs/aws-iam-authenticator \
