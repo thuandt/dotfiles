@@ -1,12 +1,8 @@
-- create:
-    - ~/.emacs.d/
-
 - shell:
     - [
-        git clone https://github.com/syl20bnr/spacemacs.git ~/.emacs.d/spacemacs,
-        Installing spacemacs,
+        git clone https://github.com/hlissner/doom-emacs ~/.emacs.d,
+        Installing doom-emacs,
       ]
 
 - link:
-    ~/.spacemacs: apps/emacs/dotspacemacs
-    ~/.emacs.d/init.el: apps/emacs/init.el
+    ~/.doom.d: apps/emacs/doom.d
