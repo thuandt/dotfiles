@@ -22,3 +22,6 @@
 [submodule "awesome/copycats"]
 	path = awesome/copycats
 	url = https://github.com/lcpz/awesome-copycats.git
+[submodule "zsh/omz/plugins/resty"]
+	path = zsh/omz/plugins/resty
+	url = https://github.com/micha/resty.git
