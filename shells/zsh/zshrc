@@ -127,8 +127,8 @@ zinit wait light-mode lucid depth=1 for \
   make='PREFIX=$ZPFX install' mptre/yank \
   make='PREFIX=$ZPFX install' AltraMayor/f3 \
   make='install prefix=$ZPFX' axboe/fio \
-  thuandt/zsh-proxy \
   thuandt/zsh-terraform \
+  thuandt/zsh-vault \
   thuandt/zsh-pipx \
   thuandt/zsh-aliyun \
   thuandt/zsh-config
@@ -334,6 +334,7 @@ zinit as='null' wait='2' light-mode lucid from='gh-r' for \
   bpick='istioctl-*' sbin='istioctl' istio/istio \
   mv='jq* -> jq' bpick='*linux64' sbin stedolan/jq \
   mv='sops* -> sops' bpick='*linux' sbin mozilla/sops \
+  bpick='*-lnx.zip' sbin dalance/procs \
   bpick='rav1e-linux.tar.gz' sbin xiph/rav1e \
   bpick='*linux_amd64.tar.gz' sbin wagoodman/dive \
   bpick='*ext*Linux-64bit.tar.gz' sbin gohugoio/hugo \
