@@ -260,6 +260,12 @@ zplugin ice wait"2" lucid id-as"GoogleContainerTools/container-diff" \
   pick"/dev/null"
 zplugin snippet https://storage.googleapis.com/container-diff/latest/container-diff-linux-amd64
 
+# cloud_sql_proxy
+zplugin ice wait"2" lucid id-as"GoogleCloudPlatform/cloud_sql_proxy" \
+  sbin"cloud_sql_proxy" \
+  pick"/dev/null"
+zplugin snippet https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64
+
 # smv
 zplugin ice wait"2" lucid id-as"smartversion/smartvs" \
   atclone"unzip smartvs; rm -f smartvs" \
