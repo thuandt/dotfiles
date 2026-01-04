@@ -19,8 +19,11 @@ else
   fi
 fi
 
-# virtualenv_python
-local virtualenv_python='venv:%{$fg[red]%}‹$(virtualenv_prompt_info)›%{$reset_color%}'
+ZSH_THEME_VIRTUALENV_PREFIX="venv:%{$fg[red]%}‹"
+ZSH_THEME_VIRTUALENV_SUFFIX="›%{$reset_color%}"
+
+# virtualenv
+local virtualenv_python='$(virtualenv_prompt_info)'
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" ☁  %{$fg[red]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
