@@ -70,7 +70,7 @@ for CODE in "${SERVER_CODES[@]}"; do
   umask 077
   mkdir -p /etc/wireguard/
   rm -f "$CONFIGURATION_FILE.tmp"
-  cat >"$CONFIGURATION_FILE.tmp" <<-_EOF
+  cat >"$CONFIGURATION_FILE.tmp" <<-EOF
 		[Interface]
 		PrivateKey = $PRIVATE_KEY
 		Address = $ADDRESS
@@ -80,7 +80,7 @@ for CODE in "${SERVER_CODES[@]}"; do
 		PublicKey = ${SERVER_PUBLIC_KEYS["$CODE"]}
 		Endpoint = ${SERVER_ENDPOINTS["$CODE"]}
 		AllowedIPs = 0.0.0.0/0, ::/0
-	_EOF
+	EOF
   mv "$CONFIGURATION_FILE.tmp" "$CONFIGURATION_FILE"
 done
 

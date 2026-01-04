@@ -1,0 +1,8 @@
+- create:
+    - ~/.local/bin
+
+- link:
+    ~/.local/bin:
+      glob: true
+      path: tools/bin/*
+      relink: true

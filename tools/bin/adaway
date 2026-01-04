@@ -2,6 +2,13 @@
 # Filename: install-adblocking-hosts
 # Description: Script to automate building an adblocking hosts file
 
+PROGRAM="${0##*/}"
+ARGS=("$@")
+SELF="${BASH_SOURCE[0]}"
+[[ $SELF == */* ]] || SELF="./$SELF"
+SELF="$(cd "${SELF%/*}" && pwd -P)/${SELF##*/}"
+[[ $UID == 0 ]] || exec sudo -E -p "[?] $PROGRAM must be run as root. Please enter the password for %u to continue: " -- "$BASH" -- "$SELF" "${ARGS[@]}"
+
 # Perform work in temporary files
 temphosts=$(mktemp)
 systemhosts="/etc/hosts"
@@ -9,17 +16,15 @@ lastupdate=$(date)
 
 # Adway lists
 adaway_list=(
-              "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
-              "https://raw.githubusercontent.com/bigdargon/hostsVN/master/hosts"
-            )
+  "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
+  "https://raw.githubusercontent.com/bigdargon/hostsVN/master/hosts"
+)
 
 # Obtain various hosts files and merge into one
 echo "Downloading adaway list ..."
-for i in "${adaway_list[@]}"
-do
-   wget -q -O - "$i" >> "$temphosts"
+for i in "${adaway_list[@]}"; do
+  wget -q -O - "$i" >>"$temphosts"
 done
-
 
 # Processing hosts file:
 # 1. Remove MS-DOS carriage returns
@@ -33,19 +38,19 @@ done
 # 6. Remove extra spaces
 echo "Parsing and merging hosts files..."
 sed -i -e 's/\r//' -e 's/127.0.0.1/0.0.0.0/' -e '/^0.0.0.0/!d' \
-    -e '/localhost/d' -e 's/#.*$//' -e 's/\t/ /g' -e 's/  */ /g' \
-    -e '/sentry.io/d' -e '/ipinfo.io/d' -e '/googleadapis.l.google.com/d' \
-    -e '/gstaticadssl.l.google.com/d' \
-    -e '/thepiratebay.org/d' \
-    "$temphosts"
+  -e '/localhost/d' -e 's/#.*$//' -e 's/\t/ /g' -e 's/  */ /g' \
+  -e '/sentry.io/d' -e '/ipinfo.io/d' -e '/googleadapis.l.google.com/d' \
+  -e '/gstaticadssl.l.google.com/d' \
+  -e '/thepiratebay.org/d' \
+  "$temphosts"
 
 # Combine system hosts with adblocks
 echo "Merging with original system hosts..."
 # Delete all line from mark line (old data)
 sed -i '/There is no place like 127.0.0.1/,$d' $systemhosts
 # Add new line for next update
-echo "# There is no place like 127.0.0.1" >> $systemhosts
-echo "# Last update at $lastupdate" >> $systemhosts
+echo "# There is no place like 127.0.0.1" >>$systemhosts
+echo "# Last update at $lastupdate" >>$systemhosts
 
 # Remove duplicate using sort and add them to system hosts file
-sort -u "$temphosts" >> "$systemhosts"
+sort -u "$temphosts" >>"$systemhosts"
