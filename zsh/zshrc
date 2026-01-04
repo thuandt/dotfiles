@@ -1,44 +1,288 @@
 #!/usr/bin/env zsh
 # ~/.zshrc
 
-if [[ "$OSTYPE" = linux* ]] ; then
-    # Tilix
-    # https://github.com/gnunn1/tilix/wiki/VTE-Configuration-Issue
-    if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-        source /etc/profile.d/vte.sh
-    fi
+### Zplugin Module ###
+module_path+=("$HOME/.zplugin/bin/zmodules/Src")
+zmodload zdharma/zplugin
 
-    # Add customize site-functions
-    fpath=(~/.local/share/zsh/site-functions $fpath)
+### Zplugin ###
+source "$HOME/.zplugin/bin/zplugin.zsh"
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
+
+# Tilix
+# https://github.com/gnunn1/tilix/wiki/VTE-Configuration-Issue
+if [[ "$OSTYPE" == linux* ]]; then
+  if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+    source /etc/profile.d/vte.sh
+  fi
 fi
 
-# Path to your oh-my-zsh configuration.
-export ZSH="${HOME}/.oh-my-zsh"
+# 256color ZSH Plugin
+zplugin ice wait lucid
+zplugin light "chrissicool/zsh-256color"
 
-# Use customize path for plugins/themes
-ZSH_CUSTOM="${HOME}/dotfiles/zsh/omz"
+# zsh-completions
+zplugin ice wait lucid blockf atpull'zplugin creinstall -q .'
+zplugin light zsh-users/zsh-completions
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded
-ZSH_THEME="powerlevel9k/powerlevel9k"
+# Yet another zsh completion sources library
+zplugin ice wait lucid blockf atpull'zplugin creinstall -q .'
+zplugin light zchee/zsh-completions
 
-### POWERLEVEL9K THEME ###
-if [[ "$OSTYPE" = darwin* ]] ; then
-    # Fira Code everywhere
-    POWERLEVEL9K_MODE='nerdfont-complete'
-else
-    # # Operator Mono
-    # POWERLEVEL9K_MODE='awesome-fontconfig'
-    POWERLEVEL9K_MODE='nerdfont-complete'
+# syntax highlighting
+zplugin ice wait'!1' lucid atinit"zpcompinit; zpcdreplay"
+zplugin light zsh-users/zsh-syntax-highlighting
+
+zplugin ice wait'!1' lucid atinit"zpcompinit; zpcdreplay"
+zplugin light zdharma/fast-syntax-highlighting
+
+# autosuggestions
+# Using Ctrl-Space for quick execute suggest command
+zplugin ice wait'!2' lucid atload"_zsh_autosuggest_start; bindkey '^ ' autosuggest-execute"
+zplugin light zsh-users/zsh-autosuggestions
+
+# zsh-autopair
+zplugin ice wait'!2' lucid atinit"zpcompinit; zpcdreplay"
+zplugin light hlissner/zsh-autopair
+
+### OMZ ###
+zplugin ice svn multisrc'{clipboard,completion,directories,functions,git,grep,history,key-bindings,misc,termsupport,theme-and-appearance}.zsh' pick'/dev/null'
+zplugin snippet OMZ::lib
+
+# asdf
+zplugin ice svn lucid
+zplugin snippet OMZ::plugins/asdf
+
+# history-substring-search
+zplugin ice wait lucid
+zplugin light zsh-users/zsh-history-substring-search
+# Bind terminal-specific up and down keys
+# Bind in both emacs and vi modes so it works in both, and is not
+# sensitive to whether this is loaded before or after the vi-mode plugin
+if [[ -n "$terminfo[kcuu1]" ]]; then
+  bindkey -M emacs "$terminfo[kcuu1]" history-substring-search-up
+  bindkey -M viins "$terminfo[kcuu1]" history-substring-search-up
+fi
+if [[ -n "$terminfo[kcud1]" ]]; then
+  bindkey -M emacs "$terminfo[kcud1]" history-substring-search-down
+  bindkey -M viins "$terminfo[kcud1]" history-substring-search-down
 fi
 
+# bind P and N for EMACS mode
+bindkey -M emacs '^P' history-substring-search-up
+bindkey -M emacs '^N' history-substring-search-down
+
+# bind k and j for VI mode
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
+# history-search-multi-word
+zplugin ice wait lucid
+zplugin light zdharma/history-search-multi-word
+
+# gpg-agent
+zplugin ice svn wait lucid
+zplugin snippet OMZ::plugins/gpg-agent
+
+# git
+zplugin ice svn wait atload"unalias grv" lucid
+zplugin snippet OMZ::plugins/git
+
+# Gitignore plugin – commands gii and gi
+zplugin ice wait lucid
+zplugin light voronkovich/gitignore.plugin.zsh
+
+# grv
+zplugin ice wait lucid from"gh-r" as"program" mv"grv* -> grv"
+zplugin light rgburke/grv
+
+# extract
+zplugin ice svn wait lucid
+zplugin snippet OMZ::plugins/extract
+
+# encode64
+zplugin ice svn wait lucid
+zplugin snippet OMZ::plugins/encode64
+
+# alias-tips
+zplugin ice wait lucid pick"alias-tips.plugin.zsh"
+zplugin light djui/alias-tips
+
+# encode64
+zplugin ice svn wait lucid
+zplugin snippet OMZ::plugins/encode64
+
+# vi-mode
+zplugin ice svn wait lucid
+zplugin snippet OMZ::plugins/vi-mode
+# vi mode key timeout
+export KEYTIMEOUT=1
+
+# nmap
+zplugin ice svn wait lucid
+zplugin snippet OMZ::plugins/nmap
+
+# gcloud
+export CLOUDSDK_HOME="${HOME}/Applications/google-cloud-sdk"
+zplugin ice svn lucid
+zplugin snippet OMZ::plugins/gcloud
+
+# kubectl
+zplugin ice svn wait lucid
+zplugin snippet OMZ::plugins/kubectl
+
+# helm
+zplugin ice svn wait lucid
+zplugin snippet OMZ::plugins/helm
+
+# kops
+zplugin ice svn wait lucid
+zplugin snippet OMZ::plugins/kops
+
+# minikube
+zplugin ice svn wait lucid
+zplugin snippet OMZ::plugins/minikube
+
+# ripgrep
+zplugin ice svn wait as"completion" lucid
+zplugin snippet OMZ::plugins/ripgrep
+
+# rsync
+zplugin ice svn wait lucid
+zplugin snippet OMZ::plugins/rsync
+
+# sublime
+zplugin ice svn wait lucid
+zplugin snippet OMZ::plugins/sublime
+
+# sudo
+zplugin ice svn wait lucid
+zplugin snippet OMZ::plugins/sudo
+
+# systemd
+zplugin ice svn wait lucid
+zplugin snippet OMZ::plugins/systemd
+
+# ubuntu
+zplugin ice svn wait lucid
+zplugin snippet OMZ::plugins/ubuntu
+
+# poetry
+zplugin ice wait as"completion" id-as"poetry" lucid \
+  atclone"poetry completions zsh > _poetry" atpull"%atclone" nocompile"!"
+zplugin light zdharma/null
+
+# rclone
+zplugin ice wait as"completion" id-as"rclone" lucid \
+  atclone"rclone genautocomplete zsh _rclone" atpull"%atclone" nocompile"!"
+zplugin light zdharma/null
+
+# Confluent CLI & Confluent Cloud CLI
+zplugin ice wait as"completion" id-as"confluent-platform" lucid \
+  atclone"ccloud completion zsh > _ccloud; confluent completion zsh > _confluent" atpull"%atclone" nocompile"!"
+zplugin light zdharma/null
+
+# kubectx
+zplugin ice wait lucid as"program" pick"kube{ctx,ns}" \
+  atclone"cp completion/kubectx.zsh _kubectx; cp completion/kubens.zsh _kubens" \
+  atpull'!git reset --hard' nocompile"!"
+zplugin light ahmetb/kubectx
+
+# diff-so-fancy
+zplugin ice wait lucid as"program" pick"bin/git-dsf"
+zplugin light zdharma/zsh-diff-so-fancy
+
+# fzf binary
+zplugin ice wait lucid from"gh-r" as"program"
+zplugin light junegunn/fzf-bin
+
+# fz
+zplugin ice load'![[ -x z && -x fzf ]]'
+zplugin ice wait lucid as"program" cp"fz.sh -> fz" pick"fz" \
+  atpull'!git reset --hard'
+zplugin light changyuheng/fz
+
+# z
+zplugin ice wait lucid as"program" cp"z.sh -> z" pick"z" src"z.sh" \
+  atpull'!git reset --hard'
+zplugin light rupa/z
+
+# direnv
+zplugin ice wait from"gh-r" as"program" lucid mv"direnv* -> direnv" \
+  atclone'./direnv hook zsh > zhook.zsh' atpull'%atclone' \
+  pick"direnv" src"zhook.zsh"
+zplugin light direnv/direnv
+
+# miller
+zplugin ice wait lucid from"gh-r" as"program" mv"mlr* -> mlr"
+zplugin light johnkerl/miller
+
+# yank
+zplugin ice wait lucid as"program" pick"yank" make
+zplugin light mptre/yank
+
+# docker
+zplugin ice svn wait lucid id-as"docker-completion" as"completion"
+zplugin snippet https://github.com/docker/cli/trunk/contrib/completion/zsh/
+
+# docker-compose
+zplugin ice svn wait lucid id-as"docker-compose-completion" as"completion"
+zplugin snippet https://github.com/docker/compose/trunk/contrib/completion/zsh/
+zplugin ice svn wait lucid nocompletions
+zplugin snippet OMZ::plugins/docker-compose
+
+# docker-machine
+zplugin ice svn wait lucid id-as"docker-machine-completion" as"completion"
+zplugin snippet https://github.com/docker/machine/trunk/contrib/completion/zsh/
+zplugin ice svn wait lucid nocompletions
+zplugin snippet OMZ::plugins/docker-machine
+
+# manydots-magic
+zplugin ice wait'!1' lucid atinit"zpcompinit; zpcdreplay" pick"manydots-magic"
+zplugin light "knu/zsh-manydots-magic"
+
+# zsh-titles
+zplugin ice wait lucid
+zplugin light jreese/zsh-titles
+
+# zsh-proxy
+zplugin ice wait lucid
+zplugin light SukkaW/zsh-proxy
+
+# terraform
+zplugin ice wait lucid
+zplugin light _local/terraform
+
+# rust
+zplugin ice wait as"completion" id-as"rust-completion" lucid \
+  atclone"rustup completions zsh > _rustup; rustup completions zsh cargo > _cargo" \
+  atpull"%atclone" nocompile"!"
+zplugin light zdharma/null
+
+# color logger
+zplugin ice wait as"program" lucid src"color-logger.bash" pick"/dev/null"
+zplugin light swyckoff/color-logger-bash
+
+# For GNU ls (the binaries can be gls, gdircolors, e.g. on OS X when installing the
+# coreutils package from Homebrew or using https://github.com/ogham/exa)
+zplugin ice atclone"dircolors -b dircolors.256dark > clrs.zsh" \
+  atpull'%atclone' pick"clrs.zsh" nocompile'!' \
+  atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
+zplugin light seebi/dircolors-solarized
+
+# zplugin ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
+#     atpull'%atclone' pick"clrs.zsh" nocompile'!' \
+#     atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
+# zplugin light trapd00r/LS_COLORS
+
+### THEME ###
 DEFAULT_USER=$USER
+POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon root_indicator context time
-                                   load battery status background_jobs
-                                   disk_usage dir dir_writable vcs
-                                   aws kubecontext virtualenv rbenv vi_mode)
+  load battery status background_jobs
+  disk_usage dir dir_writable vcs
+  aws kubecontext virtualenv vi_mode)
 POWERLEVEL9K_TIME_FOREGROUND='011'
 POWERLEVEL9K_TIME_BACKGROUND='$DEFAULT_COLOR'
 POWERLEVEL9K_TIME_FORMAT="%D{%H:%M:%S}"
@@ -59,233 +303,16 @@ POWERLEVEL9K_NODE_VERSION_BACKGROUND='022'
 POWERLEVEL9K_VIRTUALENV_BACKGROUND='blue'
 POWERLEVEL9K_KUBECONTEXT_BACKGROUND='027'
 
-# Uncomment the following line to use case-sensitive completion.
-CASE_SENSITIVE="false"
+zplugin ice depth=1
+zplugin light romkatv/powerlevel10k
 
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-HYPHEN_INSENSITIVE="true"
+# # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Automatically upgrade itself without prompting
-DISABLE_UPDATE_PROMPT="true"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-DISABLE_AUTO_UPDATE="false"
-
-# Uncomment the following line to change how often to auto-update (in days).
-export UPDATE_ZSH_DAYS=7
-
-# Uncomment the following line to disable colors in ls.
-DISABLE_LS_COLORS="false"
-
-# Uncomment the following line to disable auto-setting terminal title.
-DISABLE_AUTO_TITLE="false"
-
-# Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="false"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="false"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-HIST_STAMPS="dd.mm.yyyy"
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-
-plugins=(zsh-completions go-zsh-completions gpg-agent
-         adb alias-tips command-not-found common-aliases emacs
-         encode64 extract fancy-ctrl-z
-         history history-substring-search httpie lol mosh vi-mode fzf
-         nmap perl redis-cli ripgrep rsync screen sublime
-         sudo systemadmin taskwarrior tmux tig transfer urltools)
-
-if [[ "$OSTYPE" = darwin* ]] ; then
-    plugins+=(brew gnu-utils osx xcode)
-else
-    plugins+=(systemd ubuntu ufw)
-fi
-
-# Version Control
-plugins+=(git git-auto-fetch git-extras git-flow-avh git-hubflow git-remote-branch github gitignore mercurial magic-enter)
-
-# Docker
-plugins+=(docker docker-compose docker-machine)
-
-# Cloud
-plugins+=(awscli gcloud heroku)
-
-# Kubernetes
-plugins+=(helm kubectl kops kubernetes minikube)
-
-# Ruby and RoR
-plugins+=(bundler capistrano gem rake rails rbenv ruby)
-
-# Python
-plugins+=(celery django pew pip pipenv poetry pyenv python supervisor virtualenv virtualenvwrapper)
-
-# Golang
-plugins+=(golang)
-
-# Java & Scala
-plugins+=(gradle mvn scala sbt spring)
-
-# Rust
-plugins+=(cargo rust)
-
-# Haskell
-plugins+=(cabal stack)
-
-# Erlang and Elixir
-plugins+=(mix)
-
-# PHP
-plugins+=(composer laravel5 wp-cli yii2)
-
-# Javascript
-plugins+=(ng node npm nvm react-native yarn)
-
-# HashiCorp
-plugins+=(nomad packer terraform vagrant vault)
-
-# plugins should be load at last
-plugins+=(z zsh_reload zsh-autosuggestions zsh-syntax-highlighting)
-
-# User configuration
-
-# tmux
-# Automatically start tmux
-ZSH_TMUX_AUTOSTART=false
-# Only autostart once. If set to false, tmux will attempt to
-# autostart every time your zsh configs are reloaded.
-ZSH_TMUX_AUTOSTART_ONCE=true
-# Automatically connect to a previous session if it exists
-ZSH_TMUX_AUTOCONNECT=true
-# Set term to screen or screen-256color based on current terminal support
-ZSH_TMUX_FIXTERM=true
-# The TERM to use for non-256 color terminals.
-# Tmux states this should be screen, but you may need to change it on
-# systems without the proper terminfo
-ZSH_TMUX_FIXTERM_WITHOUT_256COLOR="screen"
-# The TERM to use for 256 color terminals.
-# Tmux states this should be screen-256color, but you may need to change it on
-# systems without the proper terminfo
-ZSH_TMUX_FIXTERM_WITH_256COLOR="screen-256color"
-
-# source oh-my-zsh
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-# ZSHOPTIONS
-
-# Basic
-# beeps are annoying
-setopt no_beep
-# Allow comments even in interactive shells (especially for Muness)
-setopt interactive_comments
-# don't warm me about incomming mail
-unsetopt mail_warning
-
-# Changing Directories
-# why would you type 'cd dir' if you could just type 'dir'?
-setopt auto_cd
-setopt cdablevars
-# this will ignore multiple directories for the stack
-setopt pushd_ignored_ups
-setopt pushdminus
-
-# Completion
-# When completing from the middle of a word, move the cursor to the end of the word
-setopt always_to_end
-# This will use named dirs when possible
-setopt auto_name_dirs
-unsetopt listambiguous
-# If unset, the cursor is set to the end of the word if completion is started.
-# Otherwise it stays there and completion is done from both ends.
-setopt complete_in_word
-# show completion menu on successive tab press. needs unsetop menu_complete to work
-setopt auto_menu
-# do not autoselect the first completion entry
-unsetopt menu_complete
-
-
-# History
-# Allow multiple terminal sessions to all append to one zsh command history
-setopt append_history
-# save timestamp of command and duration
-setopt extended_history
-# Add comamnds as they are typed, don't wait until shell exit
-setopt inc_append_history
-# when trimming history, lose oldest duplicates first
-setopt hist_expire_dups_first
-# Do not write events to history that are duplicates of previous events
-setopt hist_ignore_dups
-setopt hist_ignore_all_dups
-# remove command line from history list when first character on the line is a space
-setopt hist_ignore_space
-# When searching history don't display results already cycled through twice
-setopt hist_find_no_dups
-# Don't write duplicate entries in the history file.
-setopt hist_save_no_dups
-# Remove extra blanks from each command line being added to history
-setopt hist_reduce_blanks
-# don't execute, just expand history
-setopt hist_verify
-# imports new commands and appends typed commands to history
-setopt share_history
-setopt hist_no_store
-
-# Prompt
-# Enable parameter expansion, command substitution, and arithmetic expansion in the prompt
-setopt prompt_subst
-# only show the rprompt on the current prompt
-#setopt transient_rprompt
-
-
-# Scripts and Functions
-# perform implicit tees or cats when multiple redirections are attempted
-setopt multios
-
-
-# Expansion and Globbing
-# treat #, ~, and ^ as part of patterns for filename generation
-# I don't know why I never set this before.
-setopt extended_glob
-# Case insensitive globbing
-setopt nocaseglob
-# Keep echo "station" > station from clobbering station
-setopt noclobber
-# If I could disable Ctrl-s completely I would!
-setopt noflowcontrol
-setopt nohup
-# Be Reasonable!
-setopt numericglobsort
-# 10 second wait if you do something that will delete everything
-setopt rmstarwait
-# use magic (this is default, but it can't hurt!)
-setopt zle
-
-# Color listing
-if [[ "$OSTYPE" = darwin* ]] ; then
-    eval $(gdircolors ~/.dircolors)
-else
-    eval $(dircolors ~/.dircolors)
-fi
-
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+# bind Alt+. to insert last argument of last command
+bindkey -M viins '\e.' insert-last-word
 
 ### Customize ENV, aliases and functions ###
-[[ -s "${HOME}/.logger" ]] && source "${HOME}/.logger"
-[[ -s "${HOME}/.exports" ]] && source "${HOME}/.exports"
 [[ -s "${HOME}/.aliases" ]] && source "${HOME}/.aliases"
 [[ -s "${HOME}/.functions" ]] && source "${HOME}/.functions"
 [[ -s "${HOME}/.secrets" ]] && source "${HOME}/.secrets"
@@ -294,54 +321,24 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 # only completion hostname in ~/.ssh/config
 zstyle -e ':completion:*:hosts' hosts 'reply=(${=${${${${(@M)${(f)"$(cat ~/.ssh/config 2>/dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}})'
 
-# Automatically run ls after every cd
-# function chpwd() {
-#     emulate -L zsh
-#     ls -a
-# }
-
-# zsh-autosuggestions
-# Using Ctrl-Space for quick execute suggest command
-bindkey '^ ' autosuggest-execute
-
-### VI-MODE ###
-export KEYTIMEOUT=1
-
-# history-substring-search
-# bind P and N for EMACS mode
-bindkey -M emacs '^P' history-substring-search-up
-bindkey -M emacs '^N' history-substring-search-down
-
-# bind k and j for VI mode
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
-
-# bind Alt+. to insert last argument of last command
-bindkey -M viins '\e.' insert-last-word
-
-# Don't store failed command to history
-zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
-
-# direnv
-eval "$(direnv hook zsh)"
-
 # Prettify path
 if [ -n "$($SHELL -c "echo $ZSH_VERSION")" ]; then
-    # remove duplicates in zsh path
-    # https://til.hashrocket.com/posts/7evpdebn7g-remove-duplicates-in-zsh-path
-    # shellcheck disable=SC2034
-    typeset -aU path
+  # remove duplicates in zsh path
+  # https://til.hashrocket.com/posts/7evpdebn7g-remove-duplicates-in-zsh-path
+  # shellcheck disable=SC2034
+  typeset -aU path
 # elif [ -n "$($SHELL -c "echo $BASH_VERSION")" ]; then
 else
-    PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))')"
+  PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))')"
 fi
 
 # spacevim/neovim
 # shellcheck disable=SC2155
-export PYTHON_HOST_PROG="$(pyenv root)/shims/python"
+export PYTHON_HOST_PROG="$(asdf which python)"
 # shellcheck disable=SC2155
-export PYTHON3_HOST_PROG="$(pyenv root)/shims/python3"
+export PYTHON3_HOST_PROG="$(asdf which python3)"
 
 # Clear screen
 # clear
+
 # End of ~/.zshrc
