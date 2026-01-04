@@ -112,7 +112,7 @@ zinit light-mode lucid pick'init.sh' nocompletions for b4b4r07/enhancd
 # direnv
 zinit light-mode lucid as'null' from'gh-r' \
   mv'direnv* -> direnv' \
-  sbin src'zhook.zsh' \
+  sbin'direnv' src'zhook.zsh' \
   atclone'./direnv hook zsh > zhook.zsh' \
   atpull'%atclone' for direnv/direnv
 
@@ -131,11 +131,11 @@ zinit light-mode lucid as'null' from'gh-r' \
 # kubectx
 zinit light-mode lucid pick'/dev/null' \
   sbin'kubectx' sbin'kubens' \
-  atclone'mv -f completion/_kubectx.zsh _kubectx; mv -f completion/_kubens.zsh _kubens' \
+  atclone'ln -sf completion/_kubectx.zsh _kubectx; ln -sf completion/_kubens.zsh _kubens' \
   atpull'%atclone' for ahmetb/kubectx
 
 # ansiweather
-zinit light-mode lucid pick'/dev/null' sbin for fcambus/ansiweather
+zinit light-mode lucid pick'/dev/null' sbin'ansiweather' for fcambus/ansiweather
 
 # color logger
 zinit light-mode lucid src'color-logger.bash' pick'/dev/null' for swyckoff/color-logger-bash
@@ -183,7 +183,7 @@ zinit snippet https://storage.googleapis.com/container-diff/latest/container-dif
 zinit ice wait lucid id-as'GoogleCloudPlatform/cloud_sql_proxy' \
   sbin'cloud_sql_proxy' \
   pick'/dev/null'
-zinit snippet https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.14.2/cloud-sql-proxy.linux.amd64
+zinit snippet https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.15.0/cloud-sql-proxy.linux.amd64
 
 # telepresence
 zinit ice wait lucid id-as'telepresenceio/telepresence' \
@@ -204,7 +204,7 @@ zinit light-mode lucid as'null' from'gh-r' for \
   sbin'ktlint' pinterest/ktlint \
   sbin'pg_flame' mgartner/pg_flame \
   sbin'doctl' digitalocean/doctl \
-  mv'yq* -> yq' sbin mikefarah/yq \
+  mv'yq* -> yq' sbin'yq' mikefarah/yq \
   sbin'postgrest' PostgREST/postgrest \
   sbin'tflint' terraform-linters/tflint \
   sbin'terraform-lsp' juliosueiras/terraform-lsp \
@@ -213,32 +213,31 @@ zinit light-mode lucid as'null' from'gh-r' for \
   sbin'hugo' bpick'*ext*64bit*' gohugoio/hugo \
   sbin'ksops' viaduct-ai/kustomize-sops \
   mv'jq* -> jq' sbin'jq' jqlang/jq \
+  mv'mise* -> mise' sbin'mise' jdx/mise \
   mv'jaq* -> jaq' sbin'jaq' 01mf02/jaq \
   sbin'tfsec' bpick'*amd64.tar.gz' aquasecurity/tfsec \
   mv'*q* -> q' sbin'q' harelba/q \
   sbin'flatc' google/flatbuffers \
-  mv'gdu* -> gdu' sbin dundee/gdu \
-  mv'yq* -> yq' sbin mikefarah/yq \
+  mv'gdu* -> gdu' sbin'gdu' dundee/gdu \
   sbin'zed' sbin'zq' brimdata/zed \
   sbin'steampipe' turbot/steampipe \
   sbin'powerpipe' turbot/powerpipe \
-  mv'grv* -> grv' sbin @rgburke/grv \
-  mv'shfmt* -> shfmt' sbin @mvdan/sh \
+  mv'grv* -> grv' sbin'grv' @rgburke/grv \
+  mv'shfmt* -> shfmt' sbin'shfmt' @mvdan/sh \
   mv'upx* -> upx' sbin'upx/upx' upx/upx \
   mv'exa* -> exa' sbin'bin/exa' ogham/exa \
-  mv'opa* -> opa' sbin open-policy-agent/opa \
-  mv'helm_ls* -> helm-ls' sbin mrjosh/helm-ls \
-  mv'guetzli* -> guetzli' sbin google/guetzli \
-  mv'mkcert* -> mkcert' sbin FiloSottile/mkcert \
+  mv'opa* -> opa' sbin'opa' open-policy-agent/opa \
+  mv'guetzli* -> guetzli' sbin'guetzli' google/guetzli \
+  mv'mkcert* -> mkcert' sbin'mkcert' FiloSottile/mkcert \
   mv'fluxctl* -> fluxctl' sbin'fluxctl' fluxcd/flux \
   sbin'terraform-docs' terraform-docs/terraform-docs \
-  mv'infracost* -> infracost' sbin infracost/infracost \
+  mv'infracost* -> infracost' sbin'infracost' infracost/infracost \
   mv'hlint* -> hlint' sbin'hlint/hlint' ndmitchell/hlint \
   mv'trdsql* -> trdsql' sbin'trdsql/trdsql' noborus/trdsql \
   mv'miller* -> miller' sbin'miller/mlr' bpick'*amd64.tar.gz' johnkerl/miller \
   mv'stack* -> stack' sbin'stack/stack' bpick'*.tar.gz' commercialhaskell/stack \
-  sbin atclone'./flyctl completion zsh > _flyctl' atpull'%atclone' superfly/flyctl \
-  mv'argocd-image-updater* -> argocd-image-updater' sbin argoproj-labs/argocd-image-updater \
+  sbin'flyctl' atclone'./flyctl completion zsh > _flyctl' atpull'%atclone' superfly/flyctl \
+  mv'argocd-image-updater* -> argocd-image-updater' sbin'argocd-image-updater' argoproj-labs/argocd-image-updater \
   mv'stylish-haskell* -> stylish-haskell' sbin'stylish-haskell/stylish-haskell' @haskell/stylish-haskell
 
 
