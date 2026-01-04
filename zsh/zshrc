@@ -99,8 +99,7 @@ zplugin light seebi/dircolors-solarized
 #     atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
 # zplugin light trapd00r/LS_COLORS
 
-zplugin as"null" wait light-mode lucid \
-  blockf atpull"zplugin creinstall -q ." for \
+zplugin wait light-mode lucid blockf atclone"zplugin creinstall -q ." atpull"%atclone" pick"/dev/null" for \
   zsh-users/zsh-completions \
   zchee/zsh-completions
 
@@ -157,7 +156,7 @@ zplugin ice wait lucid depth=1 \
 zplugin light jonas/tig
 
 # z
-zplugin ice wait lucid mv"z.sh -> z" pick"z" src"z.sh"
+zplugin ice wait lucid cp"z.sh -> z" pick"z" src"z.sh"
 zplugin light rupa/z
 
 # fzf completion
@@ -216,13 +215,9 @@ zplugin wait"!1b" light-mode lucid for \
   atinit"zpcompinit; zpcdreplay" hlissner/zsh-autopair
 
 zplugin as"null" wait"2" light-mode lucid from"gh-r" for \
-                              fbin"bin/git-dsf" \
-                              sbin"bin/diff-so-fancy" \
-                              fbin"bin/diff-so-fancy" \
-                                                  zdharma/zsh-diff-so-fancy \
                               sbin""              isacikgoz/tldr \
     mv"exa* -> exa"           sbin""              ogham/exa \
-    mv"mlr* -> mlr"           sbin""              johnkerl/miller \
+    mv"mlr* -> mlr"           sbin"mlr"           johnkerl/miller \
     mv"jq* -> jq"             sbin""              stedolan/jq \
     mv"hadolint* -> hadolint" sbin""              hadolint/hadolint \
     mv"shfmt* -> shfmt"       sbin""              @mvdan/sh \
@@ -234,6 +229,7 @@ zplugin as"null" wait"2" light-mode lucid from"gh-r" for \
 
 # fz and calc
 zplugin wait"2" light-mode lucid for \
+  fbin"bin/git-dsf" sbin"bin/diff-so-fancy" fbin"bin/diff-so-fancy" zdharma/zsh-diff-so-fancy \
   changyuheng/fz \
   arzzen/calc.plugin.zsh
 
