@@ -1,0 +1,3 @@
+- link:
+    ~/.config/awesome: gui/awesome/copycats
+    ~/.config/awesome/rc.lua: gui/awesome/rc.lua
