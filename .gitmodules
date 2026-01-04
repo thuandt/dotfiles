@@ -13,6 +13,3 @@
 [submodule "terminals/tmux/colors"]
 	path = terminals/tmux/colors
 	url = https://github.com/seebi/tmux-colors-solarized.git
-[submodule "gui/awesome/copycats"]
-	path = gui/awesome/copycats
-	url = https://github.com/lcpz/awesome-copycats.git
