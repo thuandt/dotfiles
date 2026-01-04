@@ -5,4 +5,16 @@
 # fix slow gvim start
 function gvim () { (/usr/bin/gvim -f "$@" &) }
 
+# forwarded port ${2} on server to ${1} on the local (client)
+# Usage: ssh_tunnel 5900 5901 mrtux@hdvietnam
+function ssh_tunnel(){
+    ssh -L ${1}:localhost:${2} -N -f ${3}
+}
+
+# create SOCKS 5 proxy on local (client) at port {1}
+# Usage: create_ssh_proxy_at_port 9999 mrtux@hdvietnam
+fuction create_ssh_proxy_at_port() {
+    ssh -f -C2qTnN -D ${1} ${2}
+}
+
 # End of file
