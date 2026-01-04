@@ -73,7 +73,8 @@ colorscheme solarized-dark
 set titlestring="Firefox ❤ Vim"
 
 " Loading custom css
-so ~/.pentadactyl/user.css
+" Moved to use chrome/userContent.css
+"so ~/.pentadactyl/user.css
 
 " Ignore in Google Docs and Drive
 autocmd LocationChange https://docs.google.com  :normal! <C-z>
