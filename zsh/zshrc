@@ -83,7 +83,7 @@ zplugin ice svn wait lucid
 zplugin snippet OMZ::plugins/encode64
 
 # alias-tips
-zplugin ice wait lucid pick"alias-tips.plugin.zsh"
+zplugin ice wait lucid
 zplugin light djui/alias-tips
 
 # encode64
@@ -108,51 +108,6 @@ zplugin snippet OMZ::plugins/gcloud
 # kubectl
 zplugin ice svn wait lucid
 zplugin snippet OMZ::plugins/kubectl
-### Kubernetes aliases ###
-if [ $commands[kubectl] ]; then
-  alias k="kubectl"
-  alias kg="kubectl get"
-  alias ke="kubectl edit"
-
-  # get
-  alias kn="kubectl get nodes"
-  alias ks="kubectl get svc"
-  alias kd="kubectl get deployment"
-  alias kp="kubectl get pods"
-  alias kpl="kubectl get pods -l"
-  alias kpa="kubectl get pods --all-namespaces"
-
-  # describe
-  alias dsn="kubectl describe node"
-  alias dss="kubectl describe svc"
-  alias dsd="kubectl describe deployment"
-  alias dsp="kubectl describe pod"
-
-  # delete
-  alias ddd="kubectl delete deployment"
-  alias dds="kubectl delete svc"
-  alias ddp="kubectl delete pod"
-
-  alias kl="kubectl logs --tail=50 --follow"
-  alias kx="kubectl exec"
-  alias xx="kubectl exec -ti"
-
-  alias kcf="kubectl create -f"
-  alias kaf="kubectl apply -f"
-  alias kdf="kubectl delete -f"
-
-  alias kmini="kubectl config use-context minikube"
-  alias kdevops="kubectl config use-context devops"
-  alias kstg="kubectl config use-context staging"
-  alias kprod="kubectl config use-context production"
-
-  if [ $commands[gcloud] ]; then
-    alias klabs="gcloud config configurations activate default && kubectl config use-context gke-labs"
-    alias gke-stg="gcloud config configurations activate ins-stg && kubectl config use-context gke-stg"
-    alias gke-prd="gcloud config configurations activate ins-prd && kubectl config use-context gke-prd"
-  fi
-
-fi
 
 # helm
 zplugin ice svn wait lucid
@@ -214,7 +169,7 @@ zplugin light rupa/z
 
 # fz
 zplugin ice load'![[ -x z && -x fzf ]]'
-zplugin ice wait lucid
+zplugin ice wait"2" lucid
 zplugin light changyuheng/fz
 
 # enhancd with fzf
@@ -311,6 +266,15 @@ zplugin light github/hub
 zplugin ice wait lucid as"program" pick"$ZPFX/bin/yank" make"PREFIX=$ZPFX install"
 zplugin light mptre/yank
 
+# tig
+zplugin ice wait lucid as"program" \
+  atclone"/bin/cp -f contrib/vim.tigrc ~/.tigrc.vim; /bin/cp -f contrib/git-flow.tigrc ~/.tigrc.git-flow; ./autogen.sh; ./configure --prefix=$ZPFX" \
+  atpull"%atclone" \
+  make"prefix=$ZPFX install" \
+  pick"$ZPFX/bin/tig" \
+  src"contrib/tig-completion.bash"
+zplugin light jonas/tig
+
 # docker
 zplugin ice svn wait lucid id-as"docker-completion" as"completion"
 zplugin snippet https://github.com/docker/cli/trunk/contrib/completion/zsh/
@@ -347,9 +311,13 @@ zplugin light micha/resty
 zplugin ice wait lucid src"color-logger.bash" pick"/dev/null"
 zplugin light swyckoff/color-logger-bash
 
+# calc
+zplugin ice wait"2" lucid
+zplugin light arzzen/calc.plugin.zsh
+
 # For GNU ls (the binaries can be gls, gdircolors, e.g. on OS X when installing the
 # coreutils package from Homebrew or using https://github.com/ogham/exa)
-zplugin ice atclone"dircolors -b dircolors.256dark > clrs.zsh" \
+zplugin ice atclone"dircolors -b dircolors.ansi-dark > clrs.zsh" \
   atpull'%atclone' pick"clrs.zsh" nocompile'!' \
   atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
 zplugin light seebi/dircolors-solarized
@@ -360,31 +328,27 @@ zplugin light seebi/dircolors-solarized
 # zplugin light trapd00r/LS_COLORS
 
 ### THEME ###
-DEFAULT_USER=$USER
 POWERLEVEL9K_MODE="nerdfont-complete"
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon root_indicator context time
-  load battery status background_jobs
-  disk_usage dir dir_writable vcs
-  aws kubecontext virtualenv vi_mode)
-POWERLEVEL9K_TIME_FOREGROUND='011'
-POWERLEVEL9K_TIME_BACKGROUND='$DEFAULT_COLOR'
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon load battery status disk_usage dir vcs aws kubecontext virtualenv vi_mode command_execution_time)
+POWERLEVEL9K_TIME_FOREGROUND="011"
+POWERLEVEL9K_TIME_BACKGROUND="$DEFAULT_COLOR"
 POWERLEVEL9K_TIME_FORMAT="%D{%H:%M:%S}"
 POWERLEVEL9K_RAM_ELEMENTS="ram_free"
 POWERLEVEL9K_STATUS_VERBOSE=false
-
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="╭─"
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="╰─%B➤%b "
 POWERLEVEL9K_DISABLE_RPROMPT=true
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
-
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
-POWERLEVEL9K_SHORTEN_STRATEGY="truncate_right"
-
-POWERLEVEL9K_NODE_VERSION_BACKGROUND='022'
-POWERLEVEL9K_VIRTUALENV_BACKGROUND='blue'
-POWERLEVEL9K_KUBECONTEXT_BACKGROUND='027'
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_to_unique"
+POWERLEVEL9K_NODE_VERSION_BACKGROUND="022"
+POWERLEVEL9K_VIRTUALENV_BACKGROUND="blue"
+POWERLEVEL9K_KUBECONTEXT_BACKGROUND="027"
+POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND="011"
+POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND="$DEFAULT_COLOR"
+POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD="5"
 
 zplugin ice depth=1
 zplugin light romkatv/powerlevel10k
@@ -400,7 +364,6 @@ zplugin light thuandt/zsh-terraform
 # my zsh customize config
 zplugin ice wait lucid
 zplugin light thuandt/zsh-config
-
 
 # Username completion.
 # Delete old definitions
