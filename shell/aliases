@@ -1,0 +1,123 @@
+#!/bin/sh
+# ~/.shell_aliases
+# Last Modified: 12/04/2012 05:43:16 AM
+
+# quick up to parent directory
+alias ..="cd .."
+
+## Colorize the grep command output for ease of use (good for log files)##
+export GREP_OPTIONS='--color=auto' GREP_COLOR='1;31'
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+# The 'ls' family (this assumes you use a recent GNU ls)
+alias ls='ls -CF --color=auto' # colorize ls output
+alias la='ls -Al'   # show hidden files
+alias lx='ls -lXB'  # sort by extension
+alias lk='ls -lSr'  # sort by size, biggest last
+alias lc='ls -ltcr' # sort by and show change time, most recent last
+alias lu='ls -ltur' # sort by and show access time, most recent last
+alias lt='ls -ltr'  # sort by date, most recent last
+alias lr='ls -lR'   # recursive ls
+alias la="ls -a"    # list all files & directory
+alias lla="ls -al"  # list all files long
+alias lal="ls -al"  # list all files long
+alias lai="ls -lai" # list all with info
+alias tree='tree -Csu' # nice alternative to 'recursive ls'
+alias lm='ls -al | less' # pipe through 'more'
+alias lsd='ls -dAFh .[^.]*' # list alll dot files
+alias lf='ls -lhA | grep ^-' # list all files
+alias ldir='ls -lhA |grep ^d' # list directory
+alias ll='ls -lhX --time-style="+%d-%m-%Y %H:%M"' # formats size and time display
+alias lst='ls -hFtl --time-style="+%d-%m-%Y %H:%M" | grep $(date +%d-%m-%Y)'
+
+## SSH Tunnel
+alias tunnel-via-hdvietnam='ssh -f -C2qTnN -D 9999 mrtux@hdvietnam'
+alias start-urbanterror-server='ssh urban-terror "screen -m -d -S Urt-Server bash /opt/ut/urbanterror-server.sh"'
+
+## colorize diff output
+alias diff='colordiff'
+
+# handy short cuts #
+alias f='find | grep'             # quick search
+alias c=' clear'                  # clear screen
+alias h=' history'                # show history
+alias j='jobs -l'                 # list jobs
+alias py='python'                 # quick python commmand
+alias vi="vim"                    # use vim by default
+alias df="df -kTh"                # human-readable sizes
+alias dir='ls -1'                 # windows-style list
+alias wtf='dmesg | less'          # debug
+alias free='free -m'              # show sizes in MB
+alias less='less -r'
+alias more='less -r'              # more is less
+alias path='echo -e ${PATH//:/\\n}'
+alias mkdir='mkdir -p'
+
+# Stop after sending count ECHO_REQUEST packets #
+alias ping='ping -c 5'
+# Do not wait interval 1 second, go fast #
+alias fastping='ping -c 100 -s.2'
+
+# Show open ports #
+alias open-ports='netstat -tulanp'
+
+# do not delete / or prompt if deleting more than 3 files at a time #
+alias rm='rm -vI --preserve-root'
+
+# confirmation #
+alias mv='mv -vi'
+alias cp='cp -vi'
+alias ln='ln -vi'
+
+# Parenting changing perms on / #
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
+
+#25: Get system memory, cpu usage, and gpu memory info quickly
+## pass options to free ##
+alias meminfo='free -m -l -t'
+
+## get top process eating memory
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+
+## get top process eating cpu ##
+alias pscpu='ps auxf | sort -nr -k 3'
+alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+
+## Get server cpu info ##
+alias cpuinfo='lscpu'
+
+## older system use /proc/cpuinfo ##
+##alias cpuinfo='less /proc/cpuinfo' ##
+
+## get GPU ram on desktop / laptop##
+alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
+
+## this one saved by butt so many times ##
+alias wget='wget -c'
+
+alias whois='whois -H'
+
+## start simple server with python SimpleHTTPServer at port 8000
+alias simple-server='python -m SimpleHTTPServer 8000'
+
+## dmesg with colored human-readable dates
+alias dmesg="dmesg -T|sed -e 's|\(^.*'`date +%Y`']\)\(.*\)|\x1b[0;34m\1\x1b[0m - \2|g' | less"
+
+## What's my public ip address?
+alias IP="curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
+
+## Generate a Random MAC address
+alias random_mac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
+
+## Secure delete file
+alias secure-delete='shred'
+
+## grep all HTTP GET or POST requests from network traffic on eth0 interface  ##
+sudo ngrep -l -q -d eth0 "^GET |^POST " tcp and port 80
+
+# End of ~/.shell_aliases
