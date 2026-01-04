@@ -38,7 +38,7 @@ DEFAULT_USER=$USER
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon root_indicator context time
                                    load battery status background_jobs
                                    disk_usage dir dir_writable vcs
-                                   kubecontext pyenv virtualenv rbenv vi_mode)
+                                   kubecontext virtualenv rbenv vi_mode)
 POWERLEVEL9K_TIME_FOREGROUND='011'
 POWERLEVEL9K_TIME_BACKGROUND='$DEFAULT_COLOR'
 POWERLEVEL9K_TIME_FORMAT="%D{%H:%M:%S}"
@@ -106,14 +106,14 @@ if [[ "$OSTYPE" = darwin* ]] ; then
     # docker and docker-compose plugin will use vendor completion
     plugins=(zsh-completions go-zsh-completions
 
-             docker docker-compose docker-machine
+             alias-tips docker docker-compose docker-machine
              encode64 extract
              git git-extras git-remote-branch gitignore
              github git-flow-avh git-hubflow gnu-utils golang
              history history-substring-search
 
              httpie mosh vi-mode nvm
-             pew pyenv pip pipenv python pylint redis-cli rg rsync
+             pew pip pipenv python pylint redis-cli rg rsync
              screen tmux sudo terraform osx vagrant zsh_reload z
 
              kubectl helm kubernetes awscli
@@ -122,14 +122,14 @@ else
     # docker and docker-compose plugin will use vendor completion
     plugins=(zsh-completions go-zsh-completions
 
-             adb bundler cabal command-not-found encode64 extract fancy-ctrl-z
+             adb alias-tips bundler cabal command-not-found encode64 extract fancy-ctrl-z
              docker docker-compose docker-machine
              git git-extras git-remote-branch gitignore
              github git-flow-avh git-hubflow
              golang heroku history history-substring-search
 
              httpie iwhois mercurial mosh mpv node nvm npm vi-mode
-             nmap perl pew pyenv pip pipenv python pylint redis-cli rg rustup rsync ruby gem
+             nmap perl pew pip pipenv python pylint redis-cli rg rustup rsync ruby gem
              rake rbenv sbt scala stack screen sudo supervisor systemadmin
              systemd tmux terraform ubuntu vagrant virtualenv zsh_reload z
 
