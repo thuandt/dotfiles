@@ -304,6 +304,7 @@ zplugin as"null" wait"2" light-mode lucid from"gh-r" for \
                               sbin""              PostgREST/postgrest \
                               sbin""              variadico/noti \
                               sbin""              mgartner/pg_flame \
+                              sbin""              weaveworks/eksctl \
     mv"guetzli* -> guetzli"   sbin""              google/guetzli \
     mv"yq* -> yq"             sbin""              mikefarah/yq \
     mv"cli53* -> cli53"       sbin""              barnybug/cli53 \
@@ -315,17 +316,21 @@ zplugin as"null" wait"2" light-mode lucid from"gh-r" for \
     mv"mkcert* -> mkcert"     sbin""              FiloSottile/mkcert \
     mv"skaffold* -> skaffold" sbin""              GoogleContainerTools/skaffold \
     mv"minikube* -> minikube" sbin""              kubernetes/minikube \
+    mv"helmfile* -> helmfile" sbin""              roboll/helmfile \
     mv"stern* -> stern"       sbin""              wercker/stern \
+    mv"fluxctl* -> fluxctl"   sbin"fluxctl"       fluxcd/flux \
     mv"mlr* -> mlr"           sbin"mlr"           johnkerl/miller \
     mv"fd* -> fd"             sbin"fd/fd"         @sharkdp/fd \
     mv"trdsql* -> trdsql"     sbin"trdsql/trdsql" noborus/trdsql \
     mv"ripgrep* -> rg"        sbin"rg/rg"         BurntSushi/ripgrep \
     mv"bat* -> bat"           sbin"bat/bat"       @sharkdp/bat \
     fbin"fzf"                 sbin"fzf"           junegunn/fzf-bin \
-    mv"jq* -> jq"     bpick"*linux64"  sbin""     stedolan/jq \
-    mv"sops* -> sops" bpick"*linux"    sbin""     mozilla/sops \
-    bpick"*linux_amd64.tar.gz"         sbin""     wagoodman/dive \
-    bpick"*ext*Linux-64bit.tar.gz"     sbin""     gohugoio/hugo \
+    mv"jq* -> jq"     bpick"*linux64"     sbin""  stedolan/jq \
+    mv"sops* -> sops" bpick"*linux"       sbin""  mozilla/sops \
+    bpick"*linux_amd64.tar.gz"            sbin""  wagoodman/dive \
+    bpick"*ext*Linux-64bit.tar.gz"        sbin""  gohugoio/hugo \
+    mv"terraform-docs* -> terraform-docs" sbin""  segmentio/terraform-docs \
+    bpick"istioctl*" mv"istioctl* -> istioctl" sbin"istioctl" istio/istio \
     mv"ripgrep* -> rga"  sbin"rga/rga" sbin"rga/rga-preproc" phiresky/ripgrep-all \
     mv"rakkess* -> rakkess" bpick"rakkess-amd64-linux*" sbin"" corneliusweig/rakkess \
     mv"aws-iam-authenticator* -> aws-iam-authenticator" sbin"" kubernetes-sigs/aws-iam-authenticator \
