@@ -1,6 +1,0 @@
-- create:
-    - ~/.pentadactyl/
-
-- link:
-    ~/.pentadactylrc: apps/pentadactyl/pentadactylrc
-    ~/.pentadactyl/colors: apps/pentadactyl/colors
