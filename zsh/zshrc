@@ -52,7 +52,7 @@ HIST_STAMPS="dd.mm.yyyy"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=( battery bundler colorize command-not-found common-aliases cp debian
           emoji-clock encode64 extract gem git git-extras git-flow
-          git-remote-branch github gitignore gpg-agent go heroku history
+          git-remote-branch github gitignore go heroku history
           history-substring-search mercurial mosh pip python rails rake rsync
           ruby rvm sbt scala screen sudo svn systemadmin
           tmux tmuxinator urltools virtualenv virtualenvwrapper vundle
@@ -139,7 +139,15 @@ source /home/mrtux/app/google-cloud-sdk/arg_rc
 #     ls -a
 # }
 
+### Keychain ###
+# Let re-use ssh-agent and/or gpg-agent between logins
+eval $(keychain --eval -Q --quiet $HOME/.ssh/id_rsa)
+source $HOME/.keychain/$HOSTNAME-sh
+source $HOME/.keychain/$HOSTNAME-sh-gpg
+
 # automatically source zshrc in all open terminals
 trap "source ~/.zshrc && rehash" USR1
 
+# Clear screen
+clear
 # End of ~/.zshrc
