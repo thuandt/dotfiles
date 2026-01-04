@@ -74,6 +74,9 @@
 [[layers]]
     name = "lang#go"
 
+[[layers]]
+    name = "lang#groovy"
+
 [[custom_plugins]]
     name = "zinit-zsh/zinit-vim-syntax"
     merged = false
