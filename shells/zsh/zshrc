@@ -206,6 +206,7 @@ zinit ice wait"2" lucid from"gh-r" pick"/dev/null" sbin"" \
 zinit light weaveworks/eksctl
 
 # rust
+export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 zinit ice has"rustup" wait"2" as"completion" id-as"rust/completion" lucid \
   atclone"rustup completions zsh > _rustup; rustup completions zsh cargo > _cargo" \
   atpull"%atclone"
@@ -289,6 +290,7 @@ zinit as"null" wait"2" light-mode lucid from"gh-r" for \
   sbin"" variadico/noti \
   sbin"" mgartner/pg_flame \
   sbin"" juliosueiras/terraform-lsp \
+  sbin"" pinterest/ktlint \
   mv"guetzli* -> guetzli" sbin"" google/guetzli \
   mv"yq* -> yq" sbin"" mikefarah/yq \
   mv"cli53* -> cli53" sbin"" barnybug/cli53 \
@@ -305,6 +307,7 @@ zinit as"null" wait"2" light-mode lucid from"gh-r" for \
   mv"fluxctl* -> fluxctl" sbin"fluxctl" fluxcd/flux \
   mv"mlr* -> mlr" sbin"mlr" johnkerl/miller \
   mv"fd* -> fd" sbin"fd/fd" @sharkdp/fd \
+  mv"hlint* -> hlint" sbin"hlint/hlint" ndmitchell/hlint \
   mv"trdsql* -> trdsql" sbin"trdsql/trdsql" noborus/trdsql \
   mv"ripgrep* -> rg" sbin"rg/rg" BurntSushi/ripgrep \
   mv"bat* -> bat" sbin"bat/bat" @sharkdp/bat \
@@ -327,6 +330,7 @@ zinit as"null" wait"2" light-mode lucid from"gh-r" for \
 zinit wait"2" light-mode lucid for \
   fbin"bin/git-dsf" sbin"bin/diff-so-fancy" fbin"bin/diff-so-fancy" pick"/dev/null" zdharma/zsh-diff-so-fancy \
   changyuheng/fz \
+  gradle/gradle-completion \
   arzzen/calc.plugin.zsh
 
 # hub
@@ -421,9 +425,9 @@ fi
 
 # spacevim/neovim
 # shellcheck disable=SC2155
-export PYTHON_HOST_PROG="$(asdf which python)"
+#export PYTHON_HOST_PROG="$(asdf which python)"
 # shellcheck disable=SC2155
-export PYTHON3_HOST_PROG="$(asdf which python3)"
+#export PYTHON3_HOST_PROG="$(asdf which python3)"
 
 # Tilix
 # https://github.com/gnunn1/tilix/wiki/VTE-Configuration-Issue
