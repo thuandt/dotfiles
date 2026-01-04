@@ -1,6 +1,3 @@
-[submodule "emacs.d/spacemacs"]
-	path = emacs.d/spacemacs
-	url = https://github.com/syl20bnr/spacemacs
 [submodule "apps/vim/SpaceVim"]
 	path = apps/vim/SpaceVim
 	url = https://github.com/SpaceVim/SpaceVim.git
@@ -22,3 +19,6 @@
 [submodule "gui/awesome/copycats"]
 	path = gui/awesome/copycats
 	url = https://github.com/lcpz/awesome-copycats.git
+[submodule "apps/emacs/spacemacs"]
+	path = apps/emacs/spacemacs
+	url = https://github.com/syl20bnr/spacemacs.git
