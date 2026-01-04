@@ -1,0 +1,151 @@
+[core]
+    editor = nvim
+    pager = diff-so-fancy | less --tabs=1,5 -RFXi
+    precomposeunicode = true
+    excludesfile = ~/.gitignore_global
+    whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+
+[init]
+    templatedir = ~/.git-templates
+
+[user]
+    name = Thuan Duong
+    email = thuandt26@gmail.com
+    signingkey = 0x0A1E3BB48B35A2F3
+
+[commit]
+    gpgsign = true
+
+[push]
+    default = current
+    followTags = true
+
+[blame]
+    date = relative
+
+[tag]
+    sort = version:refname
+
+[status]
+    showUntrackedFiles = all
+
+[diff]
+    tool = icdiff
+
+[difftool]
+    prompt = false
+
+[difftool "icdiff"]
+    cmd = icdiff --line-numbers $LOCAL $REMOTE
+
+[difftool "bcompare"]
+    trustExitCode = true
+
+[merge]
+    ff = only
+    tool = meld
+    conflictstyle = diff3
+
+[mergetool]
+    prompt = true
+
+[mergetool "vimdiff"]
+    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+
+[mergetool "pycharm"]
+    cmd = /usr/local/bin/charm merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
+
+[mergetool "meld"]
+    cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+    # cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+
+[mergetool "bcompare"]
+    trustExitCode = true
+
+[color]
+    ui = true
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow
+    frag = magenta bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
+    commit = yellow bold
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[color "diff-highlight"]
+    oldNormal = red bold
+    oldHighlight = red bold 52
+    newNormal = green bold
+    newHighlight = green bold 22
+
+[credential]
+    helper = cache --timeout=3600
+
+[pager]
+    diff = diff-so-fancy | less --tabs=1,5 -RFXi
+    # diff = diff-so-fancy | less --tabs=1,5 -RFXSi --pattern '^(Date|added|deleted|modified): '
+    show = diff-so-fancy | less --tabs=1,5 -RFXi
+
+[github]
+    user = thuandt
+
+[tig]
+    line-graphics = utf-8
+    tab-size = 2
+
+[alias]
+    prune = fetch --prune
+    undo = reset --soft HEAD^
+    stashes = stash list
+    stash-all = stash save --include-untracked
+    unstash = stash pop
+    unstage = reset -q HEAD --
+    back = checkout "-"
+    discard = checkout --
+    nevermind = !git reset --hard HEAD && git clean -d -f
+    uncommit = reset --mixed HEAD~
+    save = commit -m
+    resave = commit --amend
+    invert = revert
+    last = log -1 HEAD --format=format:"%Cred%H"
+    summary = status -u -s
+    branchout = checkout -b
+    tags = tag
+    branches = branch -a
+    remotes = remote -v
+    prestage = diff -w --word-diff=color
+    precommit = diff --cached -w --word-diff=color --word-diff-regex='[^[:space:]<>]+'
+    move = mv
+    remove = rm
+    unmerged = branch --no-merged
+    what = show -w
+    untrack = rm -r --cached
+    rewrite = rebase -i
+    amend = commit --amend
+    contributors = shortlog -s -n
+    filetrail = log --follow -p -w
+    mergetrail = log --ancestry-path --merges
+    unmerged = diff --name-only --diff-filter=U
+
+[url "git@github.com:"]
+    insteadOf = gh:
+
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+
+[url "git@gitlab.com:"]
+    insteadOf = gl:
+
+[url "git@bitbucket.org:"]
+    insteadOf = bb:

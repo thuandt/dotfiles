@@ -1,0 +1,6 @@
+---
+- link:
+    ~/.tigrc: git/.tigrc
+    ~/.gitconfig: git/.gitconfig
+    ~/.gitignore_global: git/.gitignore_global
+    ~/.git-templates: git/git-templates
