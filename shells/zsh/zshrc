@@ -79,9 +79,6 @@ zinit light-mode lucid for \
   OMZ::plugins/gcloud/gcloud.plugin.zsh \
   atload"unalias grv" OMZ::plugins/git/git.plugin.zsh
 
-# Set JAVA_HOME
-. ~/.asdf/plugins/java/set-java-home.sh
-
 # For GNU ls (the binaries can be gls, gdircolors, e.g. on OS X when installing the
 # coreutils package from Homebrew or using https://github.com/ogham/exa)
 zinit ice wait"0c" lucid reset \
