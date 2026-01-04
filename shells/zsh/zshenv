@@ -97,7 +97,7 @@ else
   export MINICOM="-m -c on"
 
   # mtr options
-  export MTR_OPTIONS="-4 --no-dns --udp"
+  export MTR_OPTIONS="--no-dns"
 
   # Setup Input Method
   export MY_INPUT_METHOD="ibus"
