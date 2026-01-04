@@ -245,8 +245,10 @@ zplugin wait"!1b" light-mode lucid for \
 zplugin as"null" wait"2" light-mode lucid from"gh-r" for \
                               sbin""              isacikgoz/tldr \
                               sbin""              caddyserver/caddy \
+                              sbin""              aliyun/aliyun-cli \
     mv"exa* -> exa"           sbin""              ogham/exa \
     mv"mlr* -> mlr"           sbin"mlr"           johnkerl/miller \
+    mv"q* -> q"               sbin""              harelba/q \
     mv"hadolint* -> hadolint" sbin""              hadolint/hadolint \
     mv"shfmt* -> shfmt"       sbin""              @mvdan/sh \
     mv"grv* -> grv"           sbin""              @rgburke/grv \
