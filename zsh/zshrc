@@ -165,10 +165,6 @@ zplugin ice wait lucid multisrc"shell/*.zsh"
 zplugin light junegunn/fzf
 
 # enhancd with fzf
-export ENHANCD_FILTER=fzf
-export ENHANCD_DISABLE_DOT=1
-export ENHANCD_DISABLE_HYPHEN=1
-export ENHANCD_DISABLE_HOME=1
 zplugin ice wait lucid pick"init.sh"
 zplugin light b4b4r07/enhancd
 
@@ -179,40 +175,39 @@ zplugin ice as"null" wait lucid from"gh-r" \
   atclone"./direnv hook zsh > zhook.zsh" atpull"%atclone"
 zplugin light direnv/direnv
 
-# poetry
-zplugin ice has"poetry" wait as"completion" id-as"poetry" lucid \
-  atclone"git reset --hard; poetry completions zsh > _poetry" \
-  atpull"%atclone"
-zplugin light zdharma/null
-
-# rclone
-zplugin ice has"rclone" wait as"completion" id-as"rclone" lucid \
-  atclone"git reset --hard; rclone genautocomplete zsh _rclone" \
-  atpull"%atclone"
-zplugin light zdharma/null
-
-# Confluent Platform: ccloud / confluent
-zplugin ice has"ccloud" wait as"completion" id-as"confluent-platform" lucid \
-  atclone"git reset --hard; ccloud completion zsh > _ccloud; confluent completion zsh > _confluent" \
-  atpull"%atclone"
-zplugin light zdharma/null
-
 # kubectx
 zplugin ice wait lucid pick"/dev/null" sbin"kubectx" sbin"kubens" \
-  atclone"git reset --hard; ln -sf completion/kubectx.zsh _kubectx; ln -sf completion/kubens.zsh _kubens" \
+  atclone"ln -sf completion/kubectx.zsh _kubectx; ln -sf completion/kubens.zsh _kubens" \
   atpull"%atclone"
 zplugin light ahmetb/kubectx
-
-# rust
-zplugin ice has"rustup" wait as"completion" id-as"rust-completion" lucid \
-  atclone"git reset --hard; rustup completions zsh > _rustup; rustup completions zsh cargo > _cargo" \
-  atpull"%atclone"
-zplugin light zdharma/null
 
 # color logger
 zplugin ice wait lucid src"color-logger.bash" pick"/dev/null"
 zplugin light swyckoff/color-logger-bash
 
+# poetry
+zplugin ice has"poetry" wait as"completion" id-as"poetry/completion" lucid \
+  atclone"poetry completions zsh > _poetry" \
+  atpull"%atclone"
+zplugin light zdharma/null
+
+# rclone
+zplugin ice has"rclone" wait as"completion" id-as"rclone/completion" lucid \
+  atclone"rclone genautocomplete zsh _rclone" \
+  atpull"%atclone"
+zplugin light zdharma/null
+
+# Confluent Platform: ccloud / confluent
+zplugin ice has"ccloud" wait as"completion" id-as"confluent-platform/completion" lucid \
+  atclone"ccloud completion zsh > _ccloud; confluent completion zsh > _confluent" \
+  atpull"%atclone"
+zplugin light zdharma/null
+
+# rust
+zplugin ice has"rustup" wait as"completion" id-as"rust/completion" lucid \
+  atclone"rustup completions zsh > _rustup; rustup completions zsh cargo > _cargo" \
+  atpull"%atclone"
+zplugin light zdharma/null
 
 zplugin wait"!1b" light-mode lucid for \
   atinit"zpcompinit; zpcdreplay" zsh-users/zsh-syntax-highlighting \
