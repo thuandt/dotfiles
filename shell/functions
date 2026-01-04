@@ -34,4 +34,11 @@ function bashlogger () {
     script /tmp/log.txt
 }
 
+# vpnbook_password
+function vpnbook_password () {
+    VPNBOOK_DAILY_PASSWORD=$(curl -s http://www.vpnbook.com | grep -m 1 Password | cut -d ':' -f 2 | cut -d '<' -f 1 | tr -d ' ')
+    echo "VPNBook current password: $VPNBOOK_DAILY_PASSWORD"
+    clipboard $VPNBOOK_DAILY_PASSWORD
+}
+
 # End of file
