@@ -5,6 +5,4 @@
       ]
 
 - link:
-    ~/.vim: ~/.config/SpaceVim
-    ~/.config/nvim: ~/.config/SpaceVim
-    ~/.SpaceVim.d: apps/vim/SpaceVim.d
+    ~/.config/nvim: apps/nvim
