@@ -10,13 +10,13 @@ export HISTFILESIZE=${HISTSIZE}                 # shell will remember N commands
 
 ### Setup PATH ###
 export MYBIN=$HOME/.local/bin                  # user binaries
-export CABAL=$HOME/.cabal/bin                  # Haskell binaries build from cabal
-export HEROKU_TOOLBELT=/usr/local/heroku/bin   # Heroku Toolbelt
+export CABALBIN=$HOME/.cabal/bin               # Haskell cabal
+export CARGOBIN=$HOME/.cargo/bin               # Rust cargo
+export GOPATH=$HOME/.go                        # gocode
 export GOROOT=/usr/local/go                    # golang
-export GOPATH=$HOME/DevProjects/gocode         # gocode
 
 # My custom path
-export MYPATH=${MYBIN}:${GOPATH}/bin:${CABAL}:${HEROKU_TOOLBELT}
+export MYPATH=${MYBIN}:${CABALBIN}:${CARGOBIN}:${GOPATH}/bin
 
 # Add directory to $PATH if it's not already there
 if [[ ":$PATH:" != *":${MYPATH}:"* ]]; then PATH=${MYPATH}:$PATH; fi
@@ -36,6 +36,9 @@ export MINICOM="-m -c on"
 
 # fix broken theme of LibreOffice in GTK+ 3.0
 export SAL_USE_VCLPLUGIN=gtk
+
+# mtr options
+export MTR_OPTIONS="-4 --no-dns --udp"
 
 # Setup Input Method
 export XMODIFIERS="@im=fcitx"
@@ -60,19 +63,19 @@ export LESS='-i -n -w  -z-4 -g -M -X -F -R'
 
 # Less Colors for Man Pages: Solarized Dark
 export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
-export LESS_TERMCAP_md=$'\E[01;31m'       # begin bold
+export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
 export LESS_TERMCAP_me=$'\E[0m'           # end mode
 export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
-export LESS_TERMCAP_so=$'\E[0;37;102m'    # begin standout-mode - info box
+export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
 export LESS_TERMCAP_ue=$'\E[0m'           # end underline
-export LESS_TERMCAP_us=$'\E[04;32m'       # begin underline
+export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 
 # export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
-# export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
+# export LESS_TERMCAP_md=$'\E[01;31m'       # begin bold
 # export LESS_TERMCAP_me=$'\E[0m'           # end mode
 # export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
-# export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
+# export LESS_TERMCAP_so=$'\E[0;37;102m'    # begin standout-mode - info box
 # export LESS_TERMCAP_ue=$'\E[0m'           # end underline
-# export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
+# export LESS_TERMCAP_us=$'\E[04;32m'       # begin underline
 
 # End of ~/.shell_env
