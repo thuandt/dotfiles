@@ -140,6 +140,9 @@
     update-submodules = submodule update --init --recursive
     upgrade-submodules = submodule update --init --remote
 
+#[includeIf "gitdir:~/src/github.com/work_org"]
+#    path = ~/.gitconfig_work
+
 [url "git@github.com:"]
     insteadOf = gh:
 
