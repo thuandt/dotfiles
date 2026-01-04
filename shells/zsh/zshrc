@@ -91,7 +91,8 @@ zinit ice wait='0c' lucid reset \
   atload='zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
 zinit light seebi/dircolors-solarized
 
-zinit wait light-mode lucid blockf atload='zicompinit; zicdreplay' blockf for \
+zinit wait light-mode lucid atload='zicompinit; zicdreplay' blockf for \
+  zsh-users/zsh-history-substring-search \
   zchee/zsh-completions
 
 zinit wait light-mode lucid depth=1 for \
@@ -99,7 +100,7 @@ zinit wait light-mode lucid depth=1 for \
   OMZP::aws \
   OMZP::extract \
   OMZP::encode64 \
-  OMZP::vi-mode \
+  jeffreytse/zsh-vi-mode \
   OMZP::nmap \
   OMZP::kubectl \
   OMZP::helm \
@@ -149,8 +150,7 @@ zinit light rupa/z
 # zinit ice wait lucid
 
 # enhancd with fzf
-zinit ice wait lucid pick='init.sh'
-zinit light b4b4r07/enhancd
+zinit wait light-mode lucid pick='init.sh' nocompletions for b4b4r07/enhancd
 
 # direnv
 zinit ice as='null' wait lucid from='gh-r' \
