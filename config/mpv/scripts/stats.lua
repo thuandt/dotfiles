@@ -1,127 +1,104 @@
 -- Display some stats.
 --
--- You can invoke the script with "i" by default or create a different key
--- binding in input.conf using "<yourkey> script_binding stats".
---
--- Default appearance: http://a.pomf.se/paphjk.png
--- The style is configurable through a config file named "lua-settings/stats.conf"
--- located in your mpv directory.
+-- Please consult the readme for information about usage and configuration:
+-- https://github.com/Argon-/mpv-stats
 --
 -- Please note: not every property is always available and therefore not always
 -- visible.
 
-require 'mp.options'
+local mp = require 'mp'
+local options = require 'mp.options'
 
+-- Options
 local o = {
-    duration = 5,
-    -- text formatting
+    -- Default key bindings
+    key_oneshot = "i",
+    key_toggle = "I",
+
+    duration = 3,
+    redraw_delay = 1,                -- acts as duration in the toggling case
+    ass_formatting = true,
+    timing_warning = true,
+    timing_warning_th = 0.85,         -- *no* warning threshold (warning when > dfps * timing_warning_th)
+    timing_total = false,
+    debug = false,
+
+    -- Graph options and style
+    plot_graphs = true,
+    skip_frames = 5,
+    global_max = true,
+    plot_bg_border_color = "0000FF",
+    plot_bg_color = "262626",
+    plot_color = "FFFFFF",
+
+    -- Text style
     font = "Source Sans Pro",
-    font_size = 11,
+    font_mono = "Source Sans Pro",   -- monospaced digits are sufficient
+    font_size = 9,
     font_color = "FFFFFF",
-    border_size = 1.0,
+    border_size = 0.8,
     border_color = "262626",
     shadow_x_offset = 0.0,
     shadow_y_offset = 0.0,
     shadow_color = "000000",
     alpha = "11",
-    -- indentation
-    nl = "\\N",
-    prop_indent = "\\h\\h\\h\\h\\h",
-    kv_sep = "\\h\\h",  -- key<kv_sep>value
 
-    -- Custom header for ASS tags to format the text output.
-    -- Specifying this will ignore the text formatting values above and just
+    -- Custom header for ASS tags to style the text output.
+    -- Specifying this will ignore the text style values above and just
     -- use this string instead.
-    custom_header = ""
+    custom_header = "",
+
+    -- Text formatting
+    -- With ASS
+    nl = "\\N",
+    indent = "\\h\\h\\h\\h\\h",
+    prefix_sep = "\\h\\h",
+    b1 = "{\\b1}",
+    b0 = "{\\b0}",
+    -- Without ASS
+    no_ass_nl = "\n",
+    no_ass_indent = "\t",
+    no_ass_prefix_sep = " ",
+    no_ass_b1 = "\027[1m",
+    no_ass_b0 = "\027[0m",
 }
-read_options(o)
+options.read_options(o)
+
+local format = string.format
+local plast = {{0}, {0}, {0}}
+local ppos = 1
+local plen = 50
+local recorder = nil
+local timer
 
 
-function main()
-    local stats = {
-        header = "",
-        file = "",
-        video = "",
-        audio = ""
-    }
 
-    add_header(stats)
-    add_file(stats)
-    add_video(stats)
-    add_audio(stats)
-
-    mp.osd_message(join_stats(stats), o.duration)
+local function set_ASS(b)
+    if not o.ass_formatting then
+        return ""
+    end
+    return mp.get_property_osd("osd-ass-cc/" .. (b and "0" or "1"))
 end
 
 
-function add_file(s)
-    s.file = ""
-    local fn = mp.get_property_osd("filename")
-    s.file = s.file .. b("File:") .. o.kv_sep .. no_ASS(fn)
-
-    append_property(s, "file", "metadata/title", "Title:")
-    append_property(s, "file", "chapter", "Chapter:")
-    if append_property(s, "file", "cache-used", "Cache:") then
-        append_property_inline(s, "file", "demuxer-cache-duration", "+", " sec", true, true)
-    end
-
-    s.file = s.file .. o.nl .. o.nl
+local function no_ASS(t)
+    return set_ASS(false) .. t .. set_ASS(true)
 end
 
 
-function add_video(s)
-    s.video = ""
-    local r = mp.get_property_osd("video")
-    if not r or r == "no" or r == "" then
-        return
-    end
-    local fn = mp.get_property_osd("video-codec")
-    s.video = s.video .. b("Video:") .. o.kv_sep .. no_ASS(fn)
-
-    append_property(s, "video", "avsync", "A-V:")
-    if append_property(s, "video", "drop-frame-count", "Dropped:") then
-        append_property_inline(s, "video", "vo-drop-frame-count", "   VO:")
-    end
-    if append_property(s, "video", "fps", "FPS:", " (specified)") then
-        append_property_inline(s, "video", "estimated-vf-fps", "", " (estimated)", true, true)
-    end
-    if append_property(s, "video", "video-params/w", "Native Resolution:") then
-        append_property_inline(s, "video", "video-params/h", " x ", "", true, true, true)
-    end
-    append_property(s, "video", "window-scale", "Window Scale:")
-    append_property(s, "video", "video-params/aspect", "Aspect Ratio:")
-    append_property(s, "video", "video-params/pixelformat", "Pixel format:")
-    append_property(s, "video", "video-params/colormatrix", "Colormatrix:")
-    append_property(s, "video", "video-params/primaries", "Primaries:")
-    append_property(s, "video", "video-params/colorlevels", "Levels:")
-    append_property(s, "video", "packet-video-bitrate", "Bitrate:", " kbps")
-
-    s.video = s.video .. o.nl .. o.nl
+local function b(t)
+    return o.b1 .. t .. o.b0
 end
 
 
-function add_audio(s)
-    s.audio = ""
-    local r = mp.get_property_osd("audio-codec")
-    if not r or r == "no" or r == "" then
-        return
+local function text_style()
+    if not o.ass_formatting then
+        return ""
     end
-    s.audio = s.audio .. b("Audio:") .. o.kv_sep .. no_ASS(r)
-
-    append_property(s, "audio", "audio-samplerate", "Sample Rate:")
-    append_property(s, "audio", "audio-channels", "Channels:")
-    append_property(s, "audio", "packet-audio-bitrate", "Bitrate:", " kbps")
-
-    s.audio = s.audio .. o.nl .. o.nl
-end
-
-
-function add_header(s)
     if o.custom_header and o.custom_header ~= "" then
-        s.header = set_ASS(true) .. o.custom_header
+        return set_ASS(true) .. o.custom_header
     else
-        s.header = string.format([[%s{\\fs%d}{\\fn%s}{\\bord%f}{\\3c&H%s&}{\\1c&H%s&}
-                                 {\\alpha&H%s&}{\\xshad%f}{\\yshad%f}{\\4c&H%s&}]],
+        return format("%s{\\fs%d}{\\fn%s}{\\bord%f}{\\3c&H%s&}{\\1c&H%s&}{\\alpha&H%s&}{\\xshad%f}{\\yshad%f}{\\4c&H%s&}",
                         set_ASS(true), o.font_size, o.font, o.border_size,
                         o.border_color, o.font_color, o.alpha, o.shadow_x_offset,
                         o.shadow_y_offset, o.shadow_color)
@@ -129,61 +106,379 @@ function add_header(s)
 end
 
 
-function append_property(s, sec, prop, prefix, suffix)
-    local ret = mp.get_property_osd(prop)
-    if ret == nil or ret == "" then
-        return false
-    end
+local function has_vo_window()
+    return mp.get_property("vo-configured") == "yes"
+end
 
-    local suf = suffix or ""
-    local desc = prefix or ""
-    desc = no_prefix_markup and desc or b(desc)
-    s[sec] = s[sec] .. o.nl .. o.prop_indent .. b(desc) .. o.kv_sep .. no_ASS(ret) .. suf
+
+local function has_video()
+    local r = mp.get_property("video")
+    return r and r ~= "no" and r ~= ""
+end
+
+
+local function has_audio()
+    local r = mp.get_property("audio")
+    return r and r ~= "no" and r ~= ""
+end
+
+
+local function has_ansi()
+    local is_windows = type(package) == 'table' and type(package.config) == 'string' and package.config:sub(1,1) == '\\'
+    if is_windows then
+        return os.getenv("ANSICON")
+    end
     return true
 end
 
 
--- one could merge this into append_property, it's just a bit more verbose this way imo
-function append_property_inline(s, sec, prop, prefix, suffix, no_prefix_markup, no_prefix_sep, no_indent)
+local function generate_graph(values, v_max, scale)
+    -- check if at least one value was recorded yet
+    if ppos < 1 then
+        return ""
+    end
+
+    local x_tics = 1
+    local x_max = (plen - 1) * x_tics
+    local y_offset = o.border_size
+    local y_max = o.font_size * 0.66
+    local x = 0
+
+
+    local i = ppos
+    local s = {format("m 0 0 n %f %f l ", x, y_max - (y_max * values[i] / v_max * scale))}
+    i = ((i - 2) % plen) + 1
+
+    for p = 1, plen - 1 do
+        if values[i] then
+            x = x - x_tics
+            s[#s+1] = format("%f %f ", x, y_max - (y_max * values[i] / v_max * scale))
+        end
+        i = ((i - 2) % plen) + 1
+    end
+
+    s[#s+1] = format("%f %f %f %f", x, y_max, 0, y_max)
+
+    local bg_box = format("{\\bord0.5}{\\3c&H%s&}{\\1c&H%s&}m 0 %f l %f %f %f 0 0 0",
+                          o.plot_bg_border_color, o.plot_bg_color, y_max, x_max, y_max, x_max)
+    return format("%s{\\r}{\\pbo%f}{\\shad0}{\\alpha&H00}{\\p1}%s{\\p0}{\\bord0}{\\1c&H%s}{\\p1}%s{\\p0}{\\r}%s",
+                  o.prefix_sep, y_offset, bg_box, o.plot_color, table.concat(s), text_style())
+end
+
+
+local function append_perfdata(s)
+    local vo_p = mp.get_property_native("vo-performance")
+    if not vo_p then
+        return
+    end
+
+    local dfps = mp.get_property_number("display-fps", 0)
+    dfps = dfps > 0 and (1 / dfps * 1e6)
+
+    local last_s = vo_p["render-last"] + vo_p["present-last"] + vo_p["upload-last"]
+    local avg_s = vo_p["render-avg"] + vo_p["present-avg"] + vo_p["upload-avg"]
+    local peak_s = vo_p["render-peak"] + vo_p["present-peak"] + vo_p["upload-peak"]
+
+    -- highlight i with a red border when t exceeds the time for one frame
+    -- or yellow when it exceeds a given threshold
+    local function hl(i, t)
+        if o.timing_warning and dfps > 0 then
+            if t > dfps then
+                return format("{\\bord0.5}{\\3c&H0000FF&}%05d{\\bord%s}{\\3c&H%s&}",
+                                i, o.border_size, o.border_color)
+            elseif t > (dfps * o.timing_warning_th) then
+                return format("{\\bord0.5}{\\1c&H00DDDD&}%05d{\\bord%s}{\\1c&H%s&}",
+                                i, o.border_size, o.font_color)
+            end
+        end
+        return format("%05d", i)
+    end
+
+
+    local rsuffix, psuffix, usuffix
+
+    if o.plot_graphs and timer:is_enabled() then
+        local max = {1, 1, 1}
+        for e = 1, plen do
+            if plast[1][e] and plast[1][e] > max[1] then max[1] = plast[1][e] end
+            if plast[2][e] and plast[2][e] > max[2] then max[2] = plast[2][e] end
+            if plast[3][e] and plast[3][e] > max[3] then max[3] = plast[3][e] end
+        end
+        if o.global_max then
+            max[1] = math.max(max[1], max[2], max[3])
+            max[2], max[3] = max[1], max[1]
+        end
+
+        rsuffix = generate_graph(plast[1], max[1], 0.8)
+        psuffix = generate_graph(plast[2], max[2], 0.8)
+        usuffix = generate_graph(plast[3], max[3], 0.8)
+
+        s[#s+1] = format("%s%s%s%s{\\fs%s}%s%s%s{\\fs%s}", o.nl, o.indent,
+                         b("Timings:"), o.prefix_sep, o.font_size * 0.66,
+                         "Render  ⏎  Present  ⏎  Upload", o.prefix_sep,
+                         "(last/average/peak  μs)", o.font_size)
+    else
+        rsuffix = o.prefix_sep .. "Render"
+        psuffix = o.prefix_sep .. "Present"
+        usuffix = o.prefix_sep .. "Upload"
+
+        s[#s+1] = format("%s%s%s%s{\\fs%s}%s{\\fs%s}", o.nl, o.indent,
+                         b("Timings:"), o.prefix_sep, o.font_size * 0.66,
+                         "(last/average/peak  μs)", o.font_size)
+    end
+
+    local f = "%s%s%s{\\fn%s}%s / %s / %s{\\fn%s}%s%s"
+    s[#s+1] = format(f, o.nl, o.indent, o.indent, o.font_mono,
+                    hl(vo_p["render-last"], last_s), hl(vo_p["render-avg"], avg_s),
+                    hl(vo_p["render-peak"], peak_s), o.font, o.prefix_sep, rsuffix)
+    s[#s+1] = format(f, o.nl, o.indent, o.indent, o.font_mono,
+                    hl(vo_p["present-last"], last_s), hl(vo_p["present-avg"], avg_s),
+                    hl(vo_p["present-peak"], peak_s), o.font, o.prefix_sep, psuffix)
+    s[#s+1] = format(f, o.nl, o.indent, o.indent, o.font_mono,
+                    hl(vo_p["upload-last"], last_s), hl(vo_p["upload-avg"], avg_s),
+                    hl(vo_p["upload-peak"], peak_s), o.font, o.prefix_sep, usuffix)
+    if o.timing_total then
+        s[#s+1] = format(f, o.nl, o.indent, o.indent, o.font_mono,
+                        hl(last_s, last_s), hl(avg_s, avg_s),
+                        hl(peak_s, peak_s), o.font, o.prefix_sep, o.prefix_sep .. "Total")
+    end
+end
+
+
+-- Format and append a property.
+-- A property whose value is either `nil` or empty (hereafter called "invalid")
+-- is skipped and not appended.
+-- Returns `false` in case nothing was appended, otherwise `true`.
+--
+-- s       : Table containing strings.
+-- property: The property to query and format (based on its OSD representation).
+-- attr    : Optional table to overwrite certain (formatting) attributes for
+--           this property.
+-- exclude : Optional table containing keys which are considered invalid values
+--           for this property. Specifying this will replace empty string as
+--           default invalid value (nil is always invalid).
+local function append_property(s, prop, attr, excluded)
+    excluded = excluded or {[""] = true}
     local ret = mp.get_property_osd(prop)
-    if ret == nil or ret == "" then
+    if not ret or excluded[ret] then
+        if o.debug then
+            print("No value for property: " .. prop)
+        end
         return false
     end
 
-    local suf = suffix or ""
-    local prefix_sep = no_prefix_sep and "" or o.kv_sep
-    local indent = no_indent and "" or o.kv_sep
-    local desc = prefix or ""
-    desc = no_prefix_markup and desc or b(desc)
-    s[sec] = s[sec] .. indent .. desc .. prefix_sep .. no_ASS(ret) .. suf
+    attr.prefix_sep = attr.prefix_sep or o.prefix_sep
+    attr.indent = attr.indent or o.indent
+    attr.nl = attr.nl or o.nl
+    attr.suffix = attr.suffix or ""
+    attr.prefix = attr.prefix or ""
+    attr.no_prefix_markup = attr.no_prefix_markup or false
+    attr.prefix = attr.no_prefix_markup and attr.prefix or b(attr.prefix)
+    ret = attr.no_value and "" or ret
+
+    s[#s+1] = format("%s%s%s%s%s%s", attr.nl, attr.indent,
+                     attr.prefix, attr.prefix_sep, no_ASS(ret), attr.suffix)
     return true
 end
 
 
-function no_ASS(t)
-    return set_ASS(false) .. t .. set_ASS(true)
+local function add_header(s)
+    s[1] = text_style()
 end
 
 
-function set_ASS(b)
-    return mp.get_property_osd("osd-ass-cc/" .. (b and "0" or "1"))
+local function add_file(s)
+    append_property(s, "filename", {prefix="File:", nl="", indent=""})
+    if not (mp.get_property_osd("filename") == mp.get_property_osd("media-title")) then
+        append_property(s, "media-title", {prefix="Title:"})
+    end
+    append_property(s, "chapter", {prefix="Chapter:"})
+    if append_property(s, "cache-used", {prefix="Cache:"}) then
+        append_property(s, "demuxer-cache-duration",
+                        {prefix="+", suffix=" sec", nl="", indent=o.prefix_sep,
+                         prefix_sep="", no_prefix_markup=true})
+        append_property(s, "cache-speed",
+                        {prefix="", suffix="", nl="", indent=o.prefix_sep,
+                         prefix_sep="", no_prefix_markup=true})
+    end
 end
 
 
-function join_stats(s)
-    return s.header .. s.file .. s.video .. s.audio
+local function add_video(s)
+    if not has_video() then
+        return
+    end
+
+    if append_property(s, "video-codec", {prefix=o.nl .. o.nl .. "Video:", nl="", indent=""}) then
+        if not append_property(s, "hwdec-current",
+                        {prefix="(hwdec:", nl="", indent=" ",
+                         no_prefix_markup=true, suffix=")"},
+                        {no=true, [""]=true}) then
+            append_property(s, "hwdec-active",
+                        {prefix="(hwdec)", nl="", indent=" ",
+                         no_prefix_markup=true, no_value=true},
+                        {no=true})
+        end
+    end
+    append_property(s, "avsync", {prefix="A-V:"})
+    if append_property(s, "drop-frame-count", {prefix="Dropped:"}) then
+        append_property(s, "vo-drop-frame-count", {prefix="VO:", nl=""})
+        append_property(s, "mistimed-frame-count", {prefix="Mistimed:", nl=""})
+        append_property(s, "vo-delayed-frame-count", {prefix="Delayed:", nl=""})
+    end
+    if append_property(s, "display-fps", {prefix="Display FPS:", suffix=" (specified)"}) then
+        append_property(s, "estimated-display-fps",
+                        {suffix=" (estimated)", nl="", indent=""})
+    else
+        append_property(s, "estimated-display-fps",
+                        {prefix="Display FPS:", suffix=" (estimated)"})
+    end
+    if append_property(s, "fps", {prefix="FPS:", suffix=" (specified)"}) then
+        append_property(s, "estimated-vf-fps",
+                        {suffix=" (estimated)", nl="", indent=""})
+    else
+        append_property(s, "estimated-vf-fps",
+                        {prefix="FPS:", suffix=" (estimated)"})
+    end
+    if append_property(s, "video-speed-correction", {prefix="DS:"}, {["+0.00000%"]=true}) then
+        append_property(s, "audio-speed-correction",
+                        {prefix="/", nl="", indent=" ", prefix_sep=" ", no_prefix_markup=true})
+    end
+
+    append_perfdata(s)
+
+    if append_property(s, "video-params/w", {prefix="Native Resolution:"}) then
+        append_property(s, "video-params/h",
+                        {prefix="x", nl="", indent=" ", prefix_sep=" ", no_prefix_markup=true})
+    end
+    append_property(s, "window-scale", {prefix="Window Scale:"})
+    append_property(s, "video-params/aspect", {prefix="Aspect Ratio:"})
+    append_property(s, "video-params/pixelformat", {prefix="Pixel Format:"})
+
+    -- Group these together to save vertical space
+    local prim = append_property(s, "video-params/primaries", {prefix="Primaries:"})
+    local cmat = append_property(s, "video-params/colormatrix",
+                                 {prefix="Colormatrix:", nl=prim and "" or o.nl})
+    append_property(s, "video-params/colorlevels", {prefix="Levels:", nl=cmat and "" or o.nl})
+
+    -- Append HDR metadata conditionally (only when present and interesting)
+    local hdrpeak = mp.get_property_number("video-params/sig-peak", 0)
+    local hdrinfo = ""
+    if hdrpeak > 0 then
+        hdrinfo = " (HDR peak: " .. hdrpeak .. " cd/m²)"
+    end
+
+    append_property(s, "video-params/gamma", {prefix="Gamma:", suffix=hdrinfo})
+    append_property(s, "packet-video-bitrate", {prefix="Bitrate:", suffix=" kbps"})
 end
 
 
-function b(t)
-    return "{\\b1}" .. t .. "{\\b0}"
-end
-function i(t)
-    return "{\\i1}" .. t .. "{\\i0}"
-end
-function u(t)
-    return "{\\u1}" .. t .. "{\\u0}"
+local function add_audio(s)
+    if not has_audio() then
+        return
+    end
+
+    append_property(s, "audio-codec", {prefix=o.nl .. o.nl .. "Audio:", nl="", indent=""})
+    append_property(s, "audio-params/samplerate", {prefix="Sample Rate:", suffix=" Hz"})
+    append_property(s, "audio-params/channel-count", {prefix="Channels:"})
+    append_property(s, "packet-audio-bitrate", {prefix="Bitrate:", suffix=" kbps"})
 end
 
 
-mp.add_key_binding("i", mp.get_script_name(), main, {repeatable=true})
+local function print_stats(duration)
+    local stats = {
+        header = {},
+        file = {},
+        video = {},
+        audio = {},
+    }
+
+    o.ass_formatting = o.ass_formatting and has_vo_window()
+    if not o.ass_formatting then
+        o.nl = o.no_ass_nl
+        o.indent = o.no_ass_indent
+        o.prefix_sep = o.no_ass_prefix_sep
+        if not has_ansi() then
+            o.b1 = ""
+            o.b0 = ""
+        else
+            o.b1 = o.no_ass_b1
+            o.b0 = o.no_ass_b0
+        end
+    end
+
+    add_header(stats.header)
+    add_file(stats.file)
+    add_video(stats.video)
+    add_audio(stats.audio)
+
+    mp.osd_message(table.concat(stats.header) .. table.concat(stats.file) ..
+                   table.concat(stats.video) .. table.concat(stats.audio),
+                   duration or o.duration)
+end
+
+
+local function record_perfdata(skip)
+    skip = math.max(skip, 0)
+    local i = skip
+    return function()
+        if i < skip then
+            i = i + 1
+            return
+        else
+            i = 0
+        end
+
+        local vo_p = mp.get_property_native("vo-performance")
+        if not vo_p then
+            return
+        end
+        ppos = (ppos % plen) + 1
+        plast[1][ppos] = vo_p["render-last"]
+        plast[2][ppos] = vo_p["present-last"]
+        plast[3][ppos] = vo_p["upload-last"]
+    end
+end
+
+
+local function toggle_stats()
+    if timer:is_enabled() then
+        if o.plot_graphs then
+            mp.unregister_event(recorder)
+        end
+        timer:kill()
+        mp.osd_message("", 0)
+    else
+        if o.plot_graphs then
+            recorder = record_perfdata(o.skip_frames)
+            mp.register_event("tick", recorder)
+        end
+        timer:resume()
+        print_stats(o.redraw_delay + 1)
+    end
+end
+
+
+-- Create timer used for toggling, pause it immediately
+timer = mp.add_periodic_timer(o.redraw_delay, function() print_stats(o.redraw_delay + 1) end)
+timer:kill()
+
+-- Check if timer has required method
+if not pcall(function() timer:is_enabled() end) then
+    local txt = "Stats.lua: your version of mpv does not possess required functionality. \nPlease upgrade mpv or use an older version of this script."
+    print(txt)
+    mp.osd_message(txt, 15)
+    return
+end
+
+-- Single invocation key binding
+mp.add_key_binding(o.key_oneshot, "display_stats", print_stats, {repeatable=true})
+
+-- Toggling key binding
+mp.add_key_binding(o.key_toggle, "display_stats_toggle", toggle_stats, {repeatable=false})
+mp.register_event("video-reconfig",
+        function()
+            if timer:is_enabled() then
+                print_stats(o.redraw_delay + 1)
+            end
+        end)

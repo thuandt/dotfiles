@@ -1,5 +1,4 @@
 --sets the startime of a youtube video as specified in the "t=HHhMMmSSs" part of the url
---NOTE: This might become obsolete once youtube-dl adds the functionality
 
 local msg = require 'mp.msg'
 
