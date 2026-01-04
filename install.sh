@@ -26,6 +26,11 @@ cp "$DOTFILES/zsh/zshenv" ~/.zshenv
 mkdir -p ~/.oh-my-zsh/custom/themes
 cp "$DOTFILES/zsh/mrtux.zsh-theme" ~/.oh-my-zsh/custom/themes
 
+# vim
+cp -R $DOTFILES/vim ~/.vim
+ln -s ~/.vim/vimrc ~/.vimrc
+
 # install some config file
 cp "$DOTFILES/screen/screenrc" ~/.screenrc
 cp "$DOTFILES/tmux/tmux.conf" ~/.tmux.conf
+
