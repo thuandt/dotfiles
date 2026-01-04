@@ -83,3 +83,8 @@ uv = "latest"
 vault = "latest"
 yamlfmt = "latest"
 yq = "latest"
+"ubi:haskell/stylish-haskell" = "latest"
+"ubi:remko/age-plugin-se" = "latest"
+"ubi:str4d/rage" = "latest"
+"ubi:exercism/cli" = { version = "latest", exe = "exercism" }
+"ubi:variadico/noti" = "latest"

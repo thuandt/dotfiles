@@ -127,22 +127,9 @@ zinit light-mode lucid has'poetry' as'completion' id-as'poetry/completion' \
   atclone'poetry completions zsh > _poetry' \
   atpull'%atclone' for zdharma-continuum/null
 
-# exercism
-zinit light-mode lucid from'gh-r' \
-  atclone'ln -sf shell/exercism_completion.zsh _exercism' \
-  atpull'%atclone' \
-  sbin'exercism' \
-  pick'/dev/null' for exercism/cli
-
 zinit wait light-mode lucid for \
   pick'manydots-magic' knu/zsh-manydots-magic \
   zchee/zsh-completions
-
-zinit light-mode lucid as'null' from'gh-r' for \
-  sbin'procs' dalance/procs \
-  sbin'noti' variadico/noti \
-  mv'exa* -> exa' sbin'bin/exa' ogham/exa \
-  mv'stylish-haskell* -> stylish-haskell' sbin'stylish-haskell/stylish-haskell' @haskell/stylish-haskell
 
 # zsh-diff-so-fancy
 zplugin light-mode lucid \
@@ -165,7 +152,7 @@ zinit light-mode lucid nocd depth='1' atload'!source ~/.p10k.zsh; _p9k_precmd' f
 # Delete old definitions
 zstyle -d users
 # For SSH and related stuff, use remote users set in SSH configuration, plus root
-zstyle ':completion:*:*:(ssh|scp|rsync|mosh|slogin):*' users root $(awk '$1 == "User" { print $2 }' ~/.ssh/config ~/.ssh/config.d/* | sort -u)
+zstyle ':completion:*:*:(ssh|scp|rsync|mosh|slogin|rclone):*' users root $(awk '$1 == "User" { print $2 }' ~/.ssh/config ~/.ssh/config.d/* | sort -u)
 # For everything else, use non-system users from /etc/passwd, plus root
 zstyle ':completion:*:*:*:*' users root $(awk -F: '$3 >= 1000 && $3 < 65000 { print $1 }' /etc/passwd)
 
@@ -180,7 +167,7 @@ fi
 #   h=($h ${${${(f)"$(cat ~/.ssh/known_hosts{,2} || true)"}%%\ *}%%,*}) 2>/dev/null
 # fi
 if [[ $#h -gt 0 ]]; then
-  zstyle ':completion:*:(ssh|scp|rsync|lftp|ftp|mosh|slogin):*' hosts $h
+  zstyle ':completion:*:(ssh|scp|rsync|lftp|ftp|mosh|slogin|rclone):*' hosts $h
 fi
 
 # Hostname completion
