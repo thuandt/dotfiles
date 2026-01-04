@@ -119,6 +119,9 @@ if [[ "$OSTYPE" = linux* ]] ; then
     # The Sliver Searcher (ag)
     # conflict with ubuntu plugin
     alias ag='command ag'
+
+else [[ "$OSTYPE" = darwin* ]]
+    alias emacs="open -a /Applications/Emacs.app"
 fi
 
 # confirmation #
