@@ -62,6 +62,7 @@ stty start undef
 stty stop undef
 
 zinit light zinit-zsh/z-a-bin-gem-node
+zinit light zinit-zsh/z-a-as-monitor
 
 # OMZ libs and plugins
 zinit light-mode lucid for \
@@ -221,22 +222,6 @@ zinit ice wait"2" lucid from"gh-r" \
   sbin"exercism" \
   pick"/dev/null"
 zinit light exercism/cli
-
-# Confluent CLI
-zinit ice wait"2" lucid id-as"confluent/confluent-cli" \
-  atclone"tar xzf confluent-cli --strip-components=1 confluent/confluent; rm confluent-cli; ./confluent completion zsh > _confluent" \
-  atpull"%atclone" \
-  sbin"confluent" \
-  pick"/dev/null"
-zinit snippet https://s3-us-west-2.amazonaws.com/confluent.cloud/confluent-cli/archives/latest/confluent_latest_linux_amd64.tar.gz
-
-# Confluent Cloud CLI
-zinit ice wait"2" lucid id-as"confluent/ccloud-cli" \
-  atclone"tar xzf ccloud-cli --strip-components=1 ccloud/ccloud; rm ccloud-cli; ./ccloud completion zsh > _ccloud" \
-  atpull"%atclone" \
-  sbin"ccloud" \
-  pick"/dev/null"
-zinit snippet https://s3-us-west-2.amazonaws.com/confluent.cloud/ccloud-cli/archives/latest/ccloud_latest_linux_amd64.tar.gz
 
 # shellcheck
 zinit ice wait"2" lucid id-as"koalaman/shellcheck-stable" \
