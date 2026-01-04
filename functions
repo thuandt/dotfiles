@@ -162,17 +162,16 @@ if [[ "$OSTYPE" = linux* ]] ; then
         curl -sSL https://raw.githubusercontent.com/docker/machine/"${version}"/contrib/completion/zsh/_docker-machine -o "${fcomp}"
     }
 
-    # Install Terraform latest version
-    install-terraform () {
-        repos_api="https://api.github.com/repos/hashicorp/terraform/releases/latest"
-        # remove first character with ${VAR#?}
-        version=${$(curl -sSL $repos_api | jq -r '. | .tag_name')#?}
-        repos_dl="https://releases.hashicorp.com/terraform/${version}/terraform_${version}_linux_amd64.zip"
-        curl -sSL $repos_dl -o /tmp/terraform.zip
-        unzip -qq -o -d "${MYBIN}" /tmp/terraform.zip
-        /bin/rm -f /tmp/terraform.zip
-    }
-
+    # # install terraform
+    # install-terraform () {
+    #     repos_api="https://api.github.com/repos/hashicorp/terraform/releases/latest"
+    #     # remove first character with ${VAR#?}
+    #     version=${$(curl -sSL $repos_api | jq -r '. | .tag_name')#?}
+    #     repos_dl="https://releases.hashicorp.com/terraform/${version}/terraform_${version}_linux_amd64.zip"
+    #     curl -sSL $repos_dl -o /tmp/terraform.zip
+    #     unzip -qq -o -d "${MYBIN}" /tmp/terraform.zip
+    #     /bin/rm -f /tmp/terraform.zip
+    # }
 
     # Install Protobuf complier latest version
     install-protoc () {
