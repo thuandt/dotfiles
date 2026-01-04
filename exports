@@ -15,6 +15,7 @@ else
     export GOPATH=$HOME/.go                     # gocode
     export GOROOT=/usr/local/go                 # golang
     export TFENV=$HOME/.tfenv/bin               # tfenv
+    # shellcheck disable=SC2155
     export YARNBIN=$(yarn global bin)           # yarn
 
     # My custom path
@@ -37,10 +38,12 @@ else
     export MTR_OPTIONS="-4 --no-dns --udp"
 
     # Setup Input Method
-    export XMODIFIERS="@im=ibus"
-    export GTK_IM_MODULE=ibus
-    export QT_IM_MODULE=ibus
-    export QT4_IM_MODULE=ibus
+    export MY_INPUT_METHOD="ibus"
+    export XMODIFIERS=${XMODIFIERS:-@im=${MY_INPUT_METHOD}}
+    export GTK_IM_MODULE=${GTK_IM_MODULE:-${MY_INPUT_METHOD}}
+    export QT_IM_MODULE=${QT_IM_MODULE:-${MY_INPUT_METHOD}}
+    export QT4_IM_MODULE=${QT4_IM_MODULE:-${MY_INPUT_METHOD}}
+    export CLUTTER_IM_MODULE=${CLUTTER_IM_MODULE:-${MY_INPUT_METHOD}}
 
     # Setting locales
     export LC_ALL=en_US.UTF-8
