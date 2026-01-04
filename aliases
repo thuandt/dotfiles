@@ -133,9 +133,10 @@ alias ln='ln -vi'
 alias wget='wget -c'
 
 ## What's my public ip address?
-#alias whatismyip="curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
 #alias whatismyip='wget ipinfo.io/ip -qO -'
-alias whatismyip='curl ipinfo.io/ip'
+#alias whatismyip='curl ipinfo.io/ip'
+#alias whatismyip="curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
+alias whatismyip='dig +short myip.opendns.com @resolver1.opendns.com'
 
 # Using pew instead virtualenvwrapper
 alias workon='pew workon'
