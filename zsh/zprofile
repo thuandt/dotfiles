@@ -6,4 +6,11 @@ if [ -f ~/.zshrc ]; then
        source ~/.zshrc
 fi
 
-TERM=screen-256color _byobu_sourced=1 . /usr/bin/byobu-launch
+### START-Keychain ###
+# Let re-use ssh-agent and/or gpg-agent between logins
+keychain $HOME/.ssh/id_dsa
+source $HOME/.keychain/$HOSTNAME-sh
+source $HOME/.keychain/$HOSTNAME-sh-gpg
+### END-Keychain ###
+
+_byobu_sourced=1 . /usr/bin/byobu-launch
