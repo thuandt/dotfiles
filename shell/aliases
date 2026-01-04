@@ -33,10 +33,6 @@ alias ldir='ls -lhA |grep ^d' # list directory
 alias ll='ls -lhX --time-style="+%d-%m-%Y %H:%M"' # formats size and time display
 alias lst='ls -hFtl --time-style="+%d-%m-%Y %H:%M" | grep $(date +%d-%m-%Y)'
 
-## SSH Tunnel
-alias tunnel-via-hdvietnam='ssh -f -C2qTnN -D 9999 mrtux@hdvietnam'
-alias start-urbanterror-server='ssh urban-terror "screen -m -d -S Urt-Server bash /opt/ut/urbanterror-server.sh"'
-
 ## colorize diff output
 alias diff='colordiff'
 
