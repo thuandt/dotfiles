@@ -153,4 +153,8 @@ export IPINFO_TOKEN
 MACVENDORS_TOKEN="$(secret-tool lookup token macvendors)"
 export MACVENDORS_TOKEN
 
+# Mullvad VPN account number
+MULLVAD_ACCOUNT_NUMBER=$(secret-tool lookup account mullvad)
+export MULLVAD_ACCOUNT_NUMBER
+
 # End of ~/.zshenv
