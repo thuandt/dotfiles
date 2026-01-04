@@ -11,18 +11,6 @@ export ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="mrtux"
 
-##### Google Cloud SDK #####
-# The next line updates PATH for the Google Cloud SDK.
-source '/home/mrtux/apps/google-cloud-sdk/path.zsh.inc'
-
-# The next line enables bash completion for gcloud.
-source '/home/mrtux/apps/google-cloud-sdk/completion.zsh.inc'
-
-# Source shell_alias, shell_env, shell_functions
-[[ -s "$HOME/.shell_env" ]] && source "$HOME/.shell_env"
-[[ -s "$HOME/.shell_aliases" ]] && source "$HOME/.shell_aliases"
-[[ -s "$HOME/.shell_functions" ]] && source "$HOME/.shell_functions"
-
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -38,8 +26,8 @@ source '/home/mrtux/apps/google-cloud-sdk/completion.zsh.inc'
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
 
-# Uncomment the following line to disable command auto-correction.
-# DISABLE_CORRECTION="true"
+# Uncomment the following line to enable command auto-correction.
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
@@ -60,50 +48,18 @@ HIST_STAMPS="dd.mm.yyyy"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
 plugins=( adb battery bundler colorize command-not-found common-aliases cp debian
           emoji-clock encode64 extract gem git git-extras git-flow
-          git-remote-branch github gitignore go history iwhois
-          history-substring-search mercurial mosh pip python rails rake rsync
+          git-remote-branch github gitignore go heroku history iwhois
+          history-substring-search jsontools mercurial mosh nmap pip python rails rake rsync
           ruby rvm sbt scala screen sublime sudo svn systemadmin vagrant
           tmux urltools virtualenv virtualenvwrapper vundle
           wakeonlan web-search zsh_reload)
 
-##### ZSH OPTIONS #####
-# Changing Directories
-setopt AUTO_CD           # why would you type 'cd dir' if you could just type 'dir'?
-setopt AUTO_NAME_DIRS    # This will use named dirs when possible
-setopt CDABLE_VARS
-setopt PUSHD_IGNORE_DUPS # this will ignore multiple directories for the stack
-setopt PUSHD_MINUS
-setopt ALWAYS_TO_END
-unsetopt LIST_AMBIGUOUS
-setopt COMPLETE_IN_WORD  # If unset, the cursor is set to the end of the word if
-                         # completion is started. Otherwise it stays there and
-                         # completion is done from both ends.
-setopt EXTENDED_GLOB     # I don't know why I never set this before.
-setopt NO_BEEP           # beeps are annoying
-setopt NO_CASE_GLOB      # Case insensitive globbing
-setopt NO_CLOBBER        # Keep echo "station" > station from clobbering station
-setopt NO_FLOW_CONTROL   # If I could disable Ctrl-s completely I would!
-setopt NO_HUP
-setopt NUMERIC_GLOB_SORT # Be Reasonable!
-setopt RM_STAR_WAIT      # 10 second wait if you do something that will delete everything
-setopt ZLE               # use magic (this is default, but it can't hurt!)
+# User configuration
 
-# History Tweak
-setopt APPEND_HISTORY           # append rather than overwrite history file.
-setopt EXTENDED_HISTORY         # save timestamp and runtime information
-setopt HIST_EXPIRE_DUPS_FIRST   # allow dups, but expire old ones when I hit HISTSIZE
-setopt HIST_FIND_NO_DUPS        # don't find duplicates in history
-setopt HIST_IGNORE_ALL_DUPS     # ignore duplicate commands regardless of commands in between
-setopt HIST_IGNORE_DUPS         # ignore duplicate commands
-setopt HIST_REDUCE_BLANKS       # leave blanks out
-setopt HIST_SAVE_NO_DUPS        # don't save duplicates
-setopt INC_APPEND_HISTORY       # write after each command
-setopt SHARE_HISTORY            # share history between sessions
-setopt HIST_VERIFY              # When using a hist thing, make a newline show the change before executing it.
-
-##### tmux #####
+# tmux
 # Automatically start tmux
 ZSH_TMUX_AUTOSTART=false
 # Only autostart once. If set to false, tmux will attempt to
@@ -122,14 +78,66 @@ ZSH_TMUX_FIXTERM_WITHOUT_256COLOR="screen"
 # systems without the proper terminfo
 ZSH_TMUX_FIXTERM_WITH_256COLOR="screen-256color"
 
+# Google Cloud SDK
+# The next line updates PATH for the Google Cloud SDK.
+source '/home/mrtux/apps/google-cloud-sdk/path.zsh.inc'
+
+# The next line enables bash completion for gcloud.
+source '/home/mrtux/apps/google-cloud-sdk/completion.zsh.inc'
+
 # source oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+# zshoptions
+setopt nobeep              # beeps are annoying
+setopt interactivecomments # Allow comments even in interactive shells (especially for Muness)
+unsetopt mailwarning       # don't warm me about incomming mail
+
+# Changing Directories
+setopt autocd          # why would you type 'cd dir' if you could just type 'dir'?
+setopt cdablevars
+setopt pushdignoredups # this will ignore multiple directories for the stack
+setopt pushdminus
+
+# Completion
+setopt alwaystoend     # When completing from the middle of a word, move thecursor to the end of the word
+setopt autonamedirs    # This will use named dirs when possible
+unsetopt listambiguous
+setopt completeinword  # If unset, the cursor is set to the end of the word if completion is started.
+                       # Otherwise it stays there and completion is done from both ends.
+
+# History
+setopt appendhistory       # append rather than overwrite history file.
+setopt extendedhistory     # save timestamp and runtime information
+setopt histexpiredupsfirst # allow dups, but expire old ones when I hit HISTSIZE
+setopt histfindnodups      # don't find duplicates in history
+setopt histignorealldups   # ignore duplicate commands regardless of commands in between
+setopt histignoredups      # ignore duplicate commands
+setopt histreduceblanks    # leave blanks out
+setopt histsavenodups      # don't save duplicates
+setopt incappendhistory    # write after each command
+setopt sharehistory        # share history between sessions
+setopt histverify          # When using a hist thing, make a newline show the change before executing it.
+
+# Expansion and Globbing
+setopt extendedglob    # I don't know why I never set this before.
+setopt nocaseglob      # Case insensitive globbing
+setopt noclobber       # Keep echo "station" > station from clobbering station
+setopt noflowcontrol   # If I could disable Ctrl-s completely I would!
+setopt nohup
+setopt numericglobsort # Be Reasonable!
+setopt rmstarwait      # 10 second wait if you do something that will delete everything
+setopt zle             # use magic (this is default, but it can't hurt!)
 
 # Color listing
 eval $(dircolors ~/.dircolors.256dark)
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+# shell setup
+[[ -s "$HOME/.shell_env" ]] && source "$HOME/.shell_env"
+[[ -s "$HOME/.shell_aliases" ]] && source "$HOME/.shell_aliases"
+[[ -s "$HOME/.shell_functions" ]] && source "$HOME/.shell_functions"
 
 ##### Ruby RVM #####
 # Load RVM into a shell session *as a function*
