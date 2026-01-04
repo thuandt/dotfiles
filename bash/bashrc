@@ -38,7 +38,7 @@ HISTTIMEFORMAT='%F %T '
 
 # don't append the following to history: consecutive duplicate
 # commands, ls, bg and fg, and exit
-HISTIGNORE='&:[bf]g:jobs:%1:%2:ls:cd:pwd:c:clear:exit'
+HISTIGNORE='&:[bf]g:jobs:%1:%2:ls:ls *:cd:cd *:pwd:c:history:clear:exit'
 
 # ------------------------------------------------------------------------------
 # Test for an interactive shell.
