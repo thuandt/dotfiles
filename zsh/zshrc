@@ -65,7 +65,7 @@ plugins=( adb battery bundler colorize command-not-found common-aliases cp debia
           git-remote-branch github gitignore go history iwhois
           history-substring-search mercurial mosh pip python rails rake rsync
           ruby rvm sbt scala screen sublime sudo svn systemadmin vagrant
-          tmux tmuxinator urltools virtualenv virtualenvwrapper vundle
+          tmux urltools virtualenv virtualenvwrapper vundle
           wakeonlan web-search zsh_reload)
 
 ##### ZSH OPTIONS #####
