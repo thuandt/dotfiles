@@ -38,7 +38,7 @@ create_ssh_proxy_at_port () {
 
 # Get information about IP address
 ipinfo () {
-    curl -s ipinfo.io/"${1}"
+    curl -s "ipinfo.io/$*?token=${IPINFO_TOKEN}"
 }
 
 # Lookup MAC vendor
