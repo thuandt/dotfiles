@@ -43,6 +43,43 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
+##### ZSH OPTIONS #####
+# Changing Directories
+setopt AUTO_CD           # why would you type 'cd dir' if you could just type 'dir'?
+setopt AUTO_NAME_DIRS    # This will use named dirs when possible
+setopt CDABLE_VARS
+setopt PUSHD_IGNORE_DUPS # this will ignore multiple directories for the stack
+setopt PUSHD_MINUS
+setopt ALWAYS_TO_END
+setopt GLOB_COMPLETE     # If we have a glob this will expand it
+unsetopt LIST_AMBIGUOUS
+setopt COMPLETE_IN_WORD  # If unset, the cursor is set to the end of the word if
+                         # completion is started. Otherwise it stays there and
+                         # completion is done from both ends.
+setopt EXTENDED_GLOB     # I don't know why I never set this before.
+setopt NO_BEEP           # beeps are annoying
+setopt NO_CASE_GLOB      # Case insensitive globbing
+setopt NO_CLOBBER        # Keep echo "station" > station from clobbering station
+setopt NO_FLOW_CONTROL   # If I could disable Ctrl-s completely I would!
+setopt NO_HUP
+setopt NUMERIC_GLOB_SORT # Be Reasonable!
+setopt RM_STAR_WAIT      # 10 second wait if you do something that will delete everything
+setopt ZLE               # use magic (this is default, but it can't hurt!)
+
+# History Tweak
+setopt APPEND_HISTORY         # Don't overwrite, append!
+setopt EXTENDED_HISTORY       # Save the time and how long a command ran
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_ALL_DUPS   # Even if there are commands inbetween commands that are the same, still only save the last one
+setopt HIST_IGNORE_DUPS       # If I type cd and then cd again, only save the last one
+setopt HIST_IGNORE_SPACE      # If a line starts with a space, don't save it.
+setopt HIST_NO_STORE
+setopt HIST_REDUCE_BLANKS     # Pretty    Obvious.  Right?
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_VERIFY            # When using a hist thing, make a newline show the change before executing it.
+setopt SHARE_HISTORY          # Killer: share history between multiple shells
+
 # Color listing
 eval $(dircolors ~/.dir_colors)
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
