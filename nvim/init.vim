@@ -319,6 +319,9 @@ Plug 'w0rp/ale'
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
+" black - The uncompromising Python code formatter
+Plug 'ambv/black'
+
 " Vim configuration for Rust
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 let g:rustfmt_autosave = 1
