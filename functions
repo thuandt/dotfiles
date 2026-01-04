@@ -1,11 +1,26 @@
 #!/usr/bin/env bash
-# ~/.shell_functions
-# Last Modified: 07/05/2015 05:33 AM
+# ~/.functions
 
 # diff with colors
 function diff {
     colordiff -u "$@"
 }
+
+# build golang static binary (useful for dockerize)
+# Usage: go_build_static -o app app.go
+function go_build_static () {
+    version=${version:-dev}
+    timestamp="$(TZ=UTC date -u '+%Y-%m-%dT%H:%M:%SZ')"
+    commit=$(git rev-parse HEAD)
+
+    # GOOS=linux GOARCH=amd64
+    CGO_ENABLED=0 go build -a -ldflags "-s -w \
+                                        -extldflags '-static' \
+                                        -X main.Version=${version} \
+                                        -X main.BuildTime=${timestamp} \
+                                        -X main.GitHash=${commit}" "$@"
+}
+
 
 # forwarded port ${2} on server to ${1} on the local (client)
 # Usage: ssh_tunnel 5900 5901 login@remote-server
