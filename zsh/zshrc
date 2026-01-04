@@ -235,6 +235,20 @@ zplugin ice wait lucid id-as"koalaman/shellcheck-stable" \
   pick"/dev/null"
 zplugin snippet https://storage.googleapis.com/shellcheck/shellcheck-stable.linux.x86_64.tar.xz
 
+# ffmpeg
+zplugin ice wait lucid id-as"FFmpeg/FFmpeg-static" \
+  atclone"tar --strip-components=1 -xJf FFmpeg-static; rm FFmpeg-static" \
+  atpull"%atclone" \
+  sbin"ffmpeg" sbin"ffprobe" sbin"qt-faststart" \
+  pick"/dev/null"
+zplugin snippet https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz
+
+# container-diff
+zplugin ice wait lucid id-as"GoogleContainerTools/container-diff" \
+  sbin"container-diff" \
+  pick"/dev/null"
+zplugin snippet https://storage.googleapis.com/container-diff/latest/container-diff-linux-amd64
+
 ### syntax highlighting and suggestions ###
 zplugin wait"!1b" light-mode lucid for \
   atinit"zpcompinit; zpcdreplay" zsh-users/zsh-syntax-highlighting \
@@ -268,6 +282,7 @@ zplugin as"null" wait"2" light-mode lucid from"gh-r" for \
     bpick"*linux_amd64.tar.gz"         sbin""     wagoodman/dive \
     bpick"*ext*Linux-64bit.tar.gz"     sbin""     gohugoio/hugo \
                               sbin"fzf" fbin"fzf" junegunn/fzf-bin \
+    mv"ripgrep* -> rga"  sbin"rga/rga" sbin"rga/rga-preproc" phiresky/ripgrep-all \
     mv"aws-iam-authenticator* -> aws-iam-authenticator" sbin"" kubernetes-sigs/aws-iam-authenticator \
     bpick"*linux.tar.gz" sbin"dist_linux/docker-slim" sbin"dist_linux/docker-slim-sensor" docker-slim/docker-slim
 
