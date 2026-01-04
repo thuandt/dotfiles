@@ -1,4 +1,4 @@
-
+# Modified from bira and wedisagree theme
 
 local return_code="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
 local user_host='%{$terminfo[bold]$fg[green]%}%n@%m%{$reset_color%}'
