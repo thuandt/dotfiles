@@ -302,7 +302,7 @@ eval "$(direnv hook zsh)"
 
 ### Keychain ###
 # Let re-use ssh-agent and/or gpg-agent between logins
-eval $(keychain --eval -Q --quiet --attempts 5 id_ed25519 id_rsa id_rsa_2048)
+eval $(keychain --eval -Q --quiet --attempts 5 --systemd id_ed25519 id_rsa id_rsa_2048)
 source $HOME/.keychain/$(hostname)-sh
 # source $HOME/.keychain/$(hostname)-sh-gpg
 
