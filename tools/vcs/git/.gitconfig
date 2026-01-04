@@ -11,11 +11,11 @@
 
 [user]
     name = Thuan Duong
-    email = thuandt26@gmail.com
-    signingkey = 0x0A1E3BB48B35A2F3
+    email = 847996+thuandt@users.noreply.github.com
+    # signingkey = TBU
 
 [commit]
-    gpgsign = true
+    gpgsign = false
 
 [pull]
     ff = only
@@ -102,9 +102,6 @@
     newNormal = green bold
     newHighlight = green bold 22
 
-[credential]
-	  helper = /usr/lib/git-core/git-credential-libsecret
-
 [pager]
     diff = diff-so-fancy | less -x2 -RFXSi
     show = diff-so-fancy | less -x2 -RFXSi
@@ -157,6 +154,7 @@
     unmerged = diff --name-only --diff-filter=U
     update-submodules = submodule update --init --recursive
     upgrade-submodules = submodule update --init --remote
+    change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f "
 
 #[includeIf "gitdir:~/src/github.com/work_org"]
 #    path = ~/.gitconfig_work
@@ -169,6 +167,9 @@
 
 [url "git@gitlab.com:"]
     insteadOf = gl:
+
+[url "git@gitlab.com:"]
+    insteadOf = https://gitlab.com/
 
 [url "git@bitbucket.org:"]
     insteadOf = bb:
