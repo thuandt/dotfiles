@@ -1,0 +1,7 @@
+uv
+ruff
+pgcli
+ansible
+gallery-dl
+gnome-extensions-cli
+nginx-language-server

@@ -3,5 +3,6 @@
       force: true
       create: true
       relink: true
+      ignore-missing: true
 
 - clean: ["~", "~/.config"]

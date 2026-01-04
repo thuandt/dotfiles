@@ -1,12 +1,6 @@
 [submodule "meta/dotbot"]
 	path = meta/dotbot
 	url = https://github.com/anishathalye/dotbot
-[submodule "meta/plugins/asdf"]
-	path = meta/plugins/asdf
-	url = https://github.com/sobolevn/dotbot-asdf.git
-[submodule "meta/plugins/pip"]
-	path = meta/plugins/pip
-	url = https://github.com/sobolevn/dotbot-pip.git
 [submodule "terminals/tmux/colors"]
 	path = terminals/tmux/colors
 	url = https://github.com/seebi/tmux-colors-solarized.git

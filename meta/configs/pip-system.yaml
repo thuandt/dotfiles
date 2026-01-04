@@ -1,6 +1,0 @@
-- pip:
-    file: tools/pip/requirements-system.txt
-    binary: /usr/local/bin/pip3
-    user: false
-    stdout: false
-    stderr: true
