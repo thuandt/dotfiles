@@ -112,7 +112,7 @@ if [[ "$OSTYPE" = darwin* ]] ; then
              github git-flow-avh git-hubflow gnu-utils golang
              history history-substring-search
 
-             httpie mosh vi-mode nvm
+             httpie mosh vi-mode fzf nvm
              pew pip pipenv poetry pyenv python pylint redis-cli rg rsync
              screen tmux sudo terraform osx vagrant zsh_reload z
 
@@ -128,7 +128,7 @@ else
              github git-flow-avh git-hubflow
              golang heroku history history-substring-search
 
-             httpie iwhois mercurial mosh mpv node nvm npm vi-mode
+             httpie iwhois mercurial mosh mpv node nvm npm vi-mode fzf
              nmap perl pew pip pipenv poetry pyenv python pylint redis-cli rg rustup rsync ruby gem
              rake rbenv sbt scala stack screen sudo supervisor systemadmin
              systemd tmux terraform ubuntu vagrant virtualenv zsh_reload z
@@ -304,9 +304,6 @@ zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
 # direnv
 eval "$(direnv hook zsh)"
 
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 ### Keychain ###
 # Let re-use ssh-agent and/or gpg-agent between logins
 if [[ "$OSTYPE" = darwin* ]] ; then
@@ -317,6 +314,16 @@ else
     eval $(keychain --eval -Q --quiet --agents ssh --attempts 5 --systemd id_ed25519 aws id_rsa myaws legacy)
     source $HOME/.keychain/$(hostname)-sh
     # source $HOME/.keychain/$(hostname)-sh-gpg
+fi
+
+if [ -n "$($SHELL -c "echo $ZSH_VERSION")" ]; then
+    # remove duplicates in zsh path
+    # https://til.hashrocket.com/posts/7evpdebn7g-remove-duplicates-in-zsh-path
+    # shellcheck disable=SC2034
+    typeset -aU path
+# elif [ -n "$($SHELL -c "echo $BASH_VERSION")" ]; then
+else
+    PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))')"
 fi
 
 # Clear screen
