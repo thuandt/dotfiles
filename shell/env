@@ -1,28 +1,34 @@
-#!/bin/sh
+#!/bin/bash
 # ~/.shell_env
 # Last Modified: 09/03/2015 04:11 AM
 
 # shell history tweaks
-SAVEHIST=10000                           # Remember about a years worth of history (AWESOME)
-HISTSIZE=10000                           # shell history will save N commands
-HISTFILESIZE=${HISTSIZE}                 # shell will remember N commands
+export SAVEHIST=10000                           # Remember about a years worth of history (AWESOME)
+export HISTSIZE=10000                           # shell history will save N commands
+export HISTFILESIZE=${HISTSIZE}                 # shell will remember N commands
+
 
 ### Setup PATH ###
-export RVM_BIN_PATH=$HOME/.rvm/bin             # Add RVM to PATH for scripting
-export USER_BIN=$HOME/apps/bin                 # User's binaries path
+export MYBIN=$HOME/.local/bin                  # user binaries
 export GOROOT=/usr/local/go                    # golang
-export GOPATH=$HOME/dev/gocode                 # gocode
+export GOPATH=$HOME/DevProjects/gocode         # gocode
+export HEROKU_TOOLBELT=/usr/local/heroku/bin   # Heroku Toolbelt
 
 # My custom path
-export MY_PATH=${RVM_BIN_PATH}:${USER_BIN}:${GOPATH}/bin
+export MYPATH=${MYBIN}:${GOPATH}/bin:${HEROKU_TOOLBELT}
 
 # Add directory to $PATH if it's not already there
-if [[ ":$PATH:" != *":${MY_PATH}:"* ]]; then PATH=${MY_PATH}:$PATH; fi
+if [[ ":$PATH:" != *":${MYPATH}:"* ]]; then PATH=${MYPATH}:$PATH; fi
 
 ### virtualenv ###
-export WORKON_HOME=$HOME/.virtualenvs
+export WORKON_HOME=$HOME/.local/share/virtualenvs
 
-export HOSTNAME=`hostname`
+### Trobz internal tools ###
+export REQUESTS_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
+export SSL_CERT_FILE="/etc/ssl/certs/ca-certificates.crt"
+
+# nmap
+export NMAP_PRIVILEGED=""
 
 # minicom
 export MINICOM="-m -c on"
@@ -33,7 +39,6 @@ export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export QT4_IM_MODULE=fcitx
 
-
 # Setting locales
 export LC_ALL=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
@@ -41,7 +46,8 @@ export LANG=en_US.UTF-8
 
 export BROWSER="firefox -new-tab %s"
 export EDITOR="vim"
-export VISUAL="vim"
+export USE_EDITOR=$EDITOR
+export VISUAL=$EDITOR
 
 # Color man pages
 export PAGER='less'
@@ -53,12 +59,8 @@ export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
 export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
 export LESS_TERMCAP_me=$'\E[0m'           # end mode
 export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
-export LESS_TERMCAP_so=$'\E[1;30;44m'     # begin standout-mode - info box
+export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
 export LESS_TERMCAP_ue=$'\E[0m'           # end underline
 export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
-
-if [[ "$COLORTERM" == "gnome-terminal" ]]; then
-    export TERM=xterm-256color
-fi
 
 # End of ~/.shell_env
