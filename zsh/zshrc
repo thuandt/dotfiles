@@ -268,6 +268,12 @@ zplugin ice wait"2" lucid id-as"smartversion/smartvs" \
   pick"/dev/null"
 zplugin snippet http://www.smartversion.com/smartvs37_linux_x64.zip
 
+# hey
+zplugin ice wait"2" lucid id-as"rakyll/hey" \
+  sbin"hey" \
+  pick"/dev/null"
+zplugin snippet https://storage.googleapis.com/hey-release/hey_linux_amd64
+
 ### syntax highlighting and suggestions ###
 zplugin wait"!1b" light-mode lucid for \
   atinit"zpcompinit; zpcdreplay" zsh-users/zsh-syntax-highlighting \
