@@ -1,8 +1,8 @@
 - link:
-  ~/.asdfrc: asdf/asdfrc
-  ~/.default-gems: asdf/default-gems
-  ~/.default-npm-packages: asdf/default-npm-packages
-  ~/.default-python-packages: asdf/default-python-packages
+    ~/.asdfrc: tools/asdf/asdfrc
+    ~/.default-gems: tools/asdf/default-gems
+    ~/.default-npm-packages: tools/asdf/default-npm-packages
+    ~/.default-python-packages: tools/asdf/default-python-packages
 
 - asdf:
     ### programming languages ###
