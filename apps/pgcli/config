@@ -203,13 +203,11 @@ db_size = '''SELECT db_name,pg_database_size(db_name) database_size, pg_size_pre
 WHERE datname <>'rdsadmin') x
 ORDER BY database_size DESC
 '''
-csql_create_dbrole = '''CREATE ROLE $1_readwrite;
-CREATE ROLE $1_readonly;
-CREATE USER $1 WITH ENCRYPTED PASSWORD '$2';
-GRANT $1_readwrite TO postgres;
-GRANT $1_readwrite TO $1;
+create_db = '''CREATE USER $1_owner WITH ENCRYPTED PASSWORD '$2' CREATEDB CREATEROLE LOGIN;
+GRANT rds_superuser TO $1_owner;
+CREATE DATABASE $1_db;
+ALTER DATABASE $1_db OWNER TO $1_owner;
 '''
-csql_create_db = 'CREATE DATABASE $1 OWNER $1_readwrite;'
 
 # DSN to call by -D option
 [alias_dsn]
