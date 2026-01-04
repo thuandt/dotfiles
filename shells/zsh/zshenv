@@ -169,9 +169,15 @@ MULLVAD_ACCOUNT_NUMBER=$(secret-tool lookup account mullvad)
 export MULLVAD_ACCOUNT_NUMBER
 
 # Tailscale
-TAILSCALE_API_KEY=$(secret-tool lookup token tailscale_api_key)
+TAILSCALE_API_KEY=$(secret-tool lookup tailscale admin_api_key)
 export TAILSCALE_API_KEY
-TAILNET=$(secret-tool lookup tailnet tailscale)
+TAILNET=$(secret-tool lookup tailscale tailnet)
 export TAILNET
+TAILSCALE_BASTION_AUTH_KEY=$(secret-tool lookup tailscale bastion_auth_key)
+export TAILSCALE_BASTION_AUTH_KEY
+TAILSCALE_BASTION_AUTH_KEY_SECRET_ID=$(secret-tool lookup tailscale bastion_auth_key_secret_id)
+export TAILSCALE_BASTION_AUTH_KEY_SECRET_ID
+TAILSCALE_AWS_PROFILES=$(secret-tool lookup tailscale aws_profiles)
+export TAILSCALE_AWS_PROFILES
 
 # End of ~/.zshenv
