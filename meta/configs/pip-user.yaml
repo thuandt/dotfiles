@@ -1,0 +1,12 @@
+---
+- pip:
+    file: python/requirements-user.txt
+    binary: /usr/local/bin/pip3
+    user: true
+    stdout: false
+    stderr: true
+
+- pipx:
+    file: python/requirements-pipx.txt
+    stdout: false
+    stderr: true

@@ -1,0 +1,43 @@
+### python utils ###
+pip
+pipenv
+ipython
+ptpython
+pynvim
+pre-commit
+python-dotenv
+hydra-core
+click
+
+sh
+requests[security]
+pygments
+gitpython
+jsbeautifier
+yamllint
+black[d]
+flake8
+pyre-check
+
+### devops ###
+ansible
+ansible-lint
+
+awscli
+mycli
+pgcli
+pg_activity
+
+### system ###
+httpie
+howdoi
+asciinema
+speedtest-cli
+termtosvg
+youtube-dl
+gallery-dl
+bcrypt
+scrypt
+argon2_cffi
+passlib[bcrypt,argon2]
+ps_mem
