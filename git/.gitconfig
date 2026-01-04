@@ -137,6 +137,8 @@
     filetrail = log --follow -p -w
     mergetrail = log --ancestry-path --merges
     unmerged = diff --name-only --diff-filter=U
+    update-submodules = submodule update --init --recursive
+    upgrade-submodules = submodule update --init --remote
 
 [url "git@github.com:"]
     insteadOf = gh:
