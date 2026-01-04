@@ -362,24 +362,39 @@ zplugin snippet https://github.com/ogham/exa/trunk/contrib/
 
 # sharkdp/fd
 zplugin ice wait lucid from"gh-r" as"command" \
-  cp"fd*/fd -> $ZPFX/bin/fd" \
   mv"fd* -> fd" \
+  cp"fd/fd -> $ZPFX/bin/fd" \
   pick"$ZPFX/bin/fd"
 zplugin light sharkdp/fd
 
 # sharkdp/bat
 zplugin ice wait lucid from"gh-r" as"command" \
-  cp"bat*/bat -> $ZPFX/bin/bat" \
   mv"bat* -> bat" \
+  cp"bat/bat -> $ZPFX/bin/bat" \
   pick"$ZPFX/bin/bat"
 zplugin light sharkdp/bat
 
 # ripgrep
 zplugin ice wait lucid from"gh-r" as"command" \
-  cp"ripgrep*/rg -> $ZPFX/bin/rg" \
   mv"ripgrep* -> rg" \
+  cp"ripgrep/rg -> $ZPFX/bin/rg" \
   pick"$ZPFX/bin/rg"
 zplugin light BurntSushi/ripgrep
+
+# jq
+zplugin ice wait lucid from"gh-r" as"command" \
+  mv"jq* -> $ZPFX/bin/jq" \
+  pick"$ZPFX/bin/rg"
+zplugin light stedolan/jq
+
+# hub
+zplugin ice wait lucid from"gh-r" as"command" \
+  mv"hub* -> hub" \
+  cp"hub/bin/hub -> $ZPFX/bin/hub" \
+  pick"$ZPFX/bin/hub" \
+  atclone"cp hub/etc/hub.zsh_completion _hub" \
+  atpull"%atclone"
+zplugin light github/hub
 
 # yank
 zplugin ice wait lucid as"program" pick"$ZPFX/bin/yank" make"PREFIX=$ZPFX install"
@@ -475,9 +490,27 @@ zplugin light thuandt/zsh-terraform
 zplugin ice wait lucid
 zplugin light thuandt/zsh-config
 
+
+# Username completion.
+# Delete old definitions
+zstyle -d users
+# For SSH and related stuff, use remote users set in SSH configuration, plus root
+zstyle ':completion:*:*:(ssh|scp|rsync|mosh|slogin):*' users root $(awk '$1 == "User" { print $2 }' ~/.ssh/config ~/.ssh/conf.d/* | sort -u)
+# For everything else, use non-system users from /etc/passwd, plus root
+zstyle ':completion:*:*:*:*' users root $(awk -F: '$3 >= 1000 && $3 < 65000 { print $1 }' /etc/passwd)
+
 # ssh hostname completion
-# only completion hostname in ~/.ssh/config
-zstyle -e ':completion:*:hosts' hosts 'reply=(${=${${${${(@M)${(f)"$(cat ~/.ssh/config 2>/dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}})'
+# https://serverfault.com/a/170481
+h=()
+if [[ -r ~/.ssh/config ]]; then
+  h=($h ${${${(@M)${(f)"$(cat ~/.ssh/config ~/.ssh/conf.d/*)"}:#Host *}#Host }:#*[*?]*})
+fi
+if [[ $#h -gt 0 ]]; then
+  zstyle ':completion:*:(ssh|scp|rsync|mosh|slogin):*' hosts $h
+fi
+
+# # Hostname completion
+# zstyle ':completion:*' hosts $( grep -h '\.' $HOME/.hosts* )
 
 # Prettify path
 if [ -n "$($SHELL -c "echo $ZSH_VERSION")" ]; then
