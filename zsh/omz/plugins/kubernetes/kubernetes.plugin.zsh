@@ -1,8 +1,3 @@
-# kops completion
-if [ $commands[kops] ]; then
-  source <(kops completion zsh)
-fi
-
 # kubectl aliases
 if [ $commands[kubectl] ]; then
   alias k="kubectl"
@@ -34,14 +29,4 @@ if [ $commands[kubectl] ]; then
   alias kcm="k create configmap"
   alias kdm="k delete configmap"
   alias khpa="k get hpa"
-fi
-
-if [ $commands[helm] ]; then
-  hi () {
-    helm install --name "${SVC}-${ENV}" "charts/saas/${SVC}" -f "values/saas/${SVC}/${ENV}.yaml"
-  }
-
-  hu () {
-    helm upgrade "${SVC}-${ENV}" "charts/saas/${SVC}" -f "values/saas/${SVC}/${ENV}.yaml"
-  }
 fi
