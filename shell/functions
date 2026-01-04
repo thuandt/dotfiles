@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 # ~/.shell_functions
-# Last Modified: Sun 06 Jan 2013 02:46:44 AM ICT
+# Last Modified: 07/05/2015 05:33 AM
 
 # fix slow gvim start
 function gvim () { (/usr/bin/gvim -f "$@" &) }
@@ -32,28 +32,6 @@ function clipboard () {
 # bashlogger
 function bashlogger () {
     script /tmp/log.txt
-}
-
-# vpnbook_password
-function vpnbook_password () {
-    VPNBOOK_DAILY_PASSWORD=$(curl -s http://www.vpnbook.com | grep -m 1 Password | cut -d ':' -f 2 | cut -d '<' -f 1 | tr -d ' ')
-    echo "VPNBook current password: $VPNBOOK_DAILY_PASSWORD"
-    clipboard $VPNBOOK_DAILY_PASSWORD
-}
-
-# Upgrade GitLab using upgrader
-function upgrade_gitlab () {
-    cd /home/git/gitlab
-    sudo -u git -H bundle exec rake gitlab:backup:create RAILS_ENV=production
-    sudo service gitlab stop
-    if [ -f bin/upgrade.rb ]; then
-        sudo -u git -H ruby bin/upgrade.rb -y
-    else
-        sudo -u git -H ruby script/upgrade.rb -y
-    fi
-    sudo service gitlab start
-    sudo service nginx restart
-    sudo -u git -H bundle exec rake gitlab:check RAILS_ENV=production
 }
 
 # End of file
