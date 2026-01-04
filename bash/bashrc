@@ -2,7 +2,7 @@
 # ~/.bashrc
 # Last Modified: 26/12/2013 07:40 PM
 
-# Some settings ----------------------------------------------------------------
+# Some settings
 ulimit -S -c 0                # Don't want any coredumps.
 set -o notify                 # XXX
 set -o noclobber              # XXX
@@ -40,14 +40,13 @@ HISTTIMEFORMAT='%F %T '
 # commands, ls, bg and fg, and exit
 HISTIGNORE='&:[bf]g:jobs:%1:%2:ls:ls *:cd:cd *:pwd:c:history:clear:exit'
 
-# ------------------------------------------------------------------------------
 # Test for an interactive shell.
 if [[ $- != *i* ]] ; then
     # Shell is non-interactive.  Be done now!
     return
 fi
 
-# Colors -----------------------------------------------------------------------
+# Colors
 BLACK='\e[0;30m'
 BLUE='\e[0;34m'
 GREEN='\e[0;32m'
@@ -66,13 +65,13 @@ YELLOW='\e[1;33m'
 WHITE='\e[1;37m'
 NC='\e[0m'
 
-# when connecting to SSH, start or reattach screen session ---------------------
+# when connecting to SSH, start or reattach screen session
 # if [ -n "$SSH_CONNECTION" ] && [ -z "$SCREEN_EXIST" ]; then
 #   export SCREEN_EXIST=1
 #  screen -DR
 # fi
 
-# Change the window title of X terminals ---------------------------------------
+# Change the window title of X terminals
 case ${TERM} in
     xterm*|*rxvt*|Eterm|aterm|kterm|gnome*|interix)
         PROMPT_COMMAND='echo -ne "\033]0;${PWD/$HOME/~}\007"'
@@ -83,7 +82,6 @@ case ${TERM} in
 esac
 
 use_color=false
-# ------------------------------------------------------------------------------
 # Set colorful PS1 only on colorful terminals.
 # dircolors --print-database uses its own built-in database
 # instead of using /etc/DIR_COLORS.  Try to use the external file
@@ -128,7 +126,7 @@ fi
 # Try to keep environment pollution down, EPA loves us.
 unset use_color safe_term match_lhs
 
-# source some bash files -------------------------------------------------------
+# source some bash files
 if [ -f $HOME/.shell_env ]; then source $HOME/.shell_env; fi
 if [ -f $HOME/.shell_functions ]; then source $HOME/.shell_functions; fi
 if [ -f $HOME/.shell_aliases ]; then source $HOME/.shell_aliases; fi
@@ -140,7 +138,6 @@ if [ -f /etc/bash_completion ]; then source /etc/bash_completion; fi
 
 # virtualenvwrapper
 [[ -s /usr/local/bin/virtualenvwrapper.sh ]] && source /usr/local/bin/virtualenvwrapper.sh
-
 
 ##### Google Cloud SDK #####
 # The next line updates PATH for the Google Cloud SDK.
