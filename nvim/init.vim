@@ -14,7 +14,6 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 endif
 
 
-
 " =============================================================================
 " General settings {{{
 " =============================================================================
@@ -151,8 +150,8 @@ set cursorcolumn    " highlight the current column
 
 call plug#begin('~/.config/nvim/plugged')
 
-let g:python_host_prog  = '/usr/bin/python'
-let g:python3_host_prog = '/usr/bin/python3'
+let g:python_host_prog  = 'python2'
+let g:python3_host_prog = 'python3'
 
 
 " =============================================================================
@@ -192,6 +191,8 @@ Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
   let g:airline#extensions#tabline#show_close_button = 0
   let g:airline#extensions#tabline#show_tab_type = 0
   let g:airline#extensions#tabline#buffer_min_count = 2
+
+  let g:airline#extensions#ale#enabled = 1
 
   nmap <leader>- <Plug>AirlineSelectPrevTab
   nmap <leader>= <Plug>AirlineSelectNextTab
@@ -234,19 +235,17 @@ function! BuildYCM(info)
   " - status: 'installed', 'updated', or 'unchanged'
   " - force:  set on PlugInstall! or PlugUpdate!
   if a:info.status == 'installed' || a:info.force
-    !python3 ./install.py --clang-completer --gocode-completer --tern-completer --racer-completer
+    !python3 ./install.py --clang-completer --go-completer --rust-completer --js-completer --tern-completer
   endif
 endfunction
 
 Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM'), 'for': ['cpp', 'python', 'javascript', 'go', 'rust'] }
+let g:ycm_server_python_interpreter = 'python3'
+
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_complete_in_strings = 1
-let g:ycm_server_python_interpreter = '/usr/bin/python3'
-
-" Rust source tree
-let g:ycm_rust_src_path = '/home/mrtux/Projects/opensource/rustsrc'
 
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
@@ -315,28 +314,15 @@ Plug 'junegunn/fzf.vim'
 " Languages
 " =============================================================================
 
-" Syntastic: Code linting errors
-Plug 'scrooloose/syntastic', { 'for': ['php', 'python', 'javascript', 'css'] }
-let g:syntastic_enable_signs          = 1
-let g:syntastic_enable_highlighting   = 1
-let g:syntastic_cpp_check_header      = 1
-let g:syntastic_enable_balloons       = 1
-let g:syntastic_echo_current_error    = 1
-let g:syntastic_check_on_wq           = 0
-let g:syntastic_error_symbol          = '✘'
-let g:syntastic_warning_symbol        = '!'
-let g:syntastic_style_error_symbol    = ':('
-let g:syntastic_style_warning_symbol  = ':('
-let g:syntastic_vim_checkers          = ['vint']
-let g:syntastic_elixir_checkers       = ['elixir']
-let g:syntastic_python_checkers       = ['flake8']
-let g:syntastic_javascript_checkers   = ['eslint']
-let g:syntastic_enable_elixir_checker = 0
-
+" ALE (Asynchronous Lint Engine)
+Plug 'w0rp/ale'
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " Vim configuration for Rust
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 let g:rustfmt_autosave = 1
+let g:rust_clip_command = 'xclip -selection clipboard'
 
 " Go development plugin for Vim
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
