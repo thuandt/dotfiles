@@ -128,7 +128,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 # Color listing
-eval $(dircolors ~/.dir_colors)
+eval $(dircolors ~/.dircolors.256dark)
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 ##### Ruby RVM #####
