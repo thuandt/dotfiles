@@ -202,16 +202,17 @@ if [[ "$OSTYPE" = linux* ]] ; then
     # Usage: install-kubectl v1.8.1
     install-kubectl() {
         #shellcheck disable=SC2155
-        local latest=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
-        version=${latest:-1}
+        readonly current=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+        readonly version=${1:-$current}
+        echo "installing kubectl $version"
         curl -sSL "https://dl.k8s.io/${version}/bin/linux/amd64/kubectl" \
              -o ~/Applications/google-cloud-sdk/bin/kubectl
     }
 
     # Usage: install-helm v2.0.7
     install-helm() {
-        readonly latest=$(curl -sSL https://api.github.com/repos/kubernetes/helm/releases/latest | jq -r '. | .tag_name')
-        readonly version=${1:-latest}
+        readonly current=$(curl -sSL https://api.github.com/repos/kubernetes/helm/releases/latest | jq -r '. | .tag_name')
+        readonly version=${1:-$current}
         curl -sSL "https://kubernetes-helm.storage.googleapis.com/helm-${version}-linux-amd64.tar.gz" | tar -C "${MYBIN}" -xzf - --strip-components=1 linux-amd64/helm
     }
 
@@ -224,8 +225,8 @@ if [[ "$OSTYPE" = linux* ]] ; then
 
     # Usage: install-kops 1.7.1
     install-kops() {
-        readonly latest=$(curl -sSL https://api.github.com/repos/kubernetes/kops/releases/latest | jq -r '. | .tag_name')
-        readonly version=${1:-latest}
+        readonly current=$(curl -sSL https://api.github.com/repos/kubernetes/kops/releases/latest | jq -r '. | .tag_name')
+        readonly version=${1:-$current}
         curl -sSL "https://github.com/kubernetes/kops/releases/download/${version}/kops-linux-amd64" \
              -o "$MYBIN/kops"
     }
