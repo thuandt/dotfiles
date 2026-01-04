@@ -1,15 +1,19 @@
 #!/usr/bin/env zsh
 # ~/.zshrc
 
-### Added by Zinit's installer
-if [[ ! -f ~/.zinit/bin/zinit.zsh ]]; then
-  command mkdir -p ~/.zinit/completions && command chmod g-rwX ~/.zinit
-  command git clone https://github.com/zdharma/zinit ~/.zinit/bin
+export ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+if [[ ! -f "${ZINIT_HOME}/zinit.zsh" ]]; then
+  command mkdir -p "$(dirname $ZINIT_HOME)/completions" && command chmod g-rwX "$(dirname $ZINIT_HOME)"
+  command git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
-source ~/.zinit/bin/zinit.zsh
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+if [[ ! -f "$(dirname $ZINIT_HOME)/completions/_zinit" ]]; then
+  command ln -sf "$ZINIT_HOME/_zinit" "$(dirname $ZINIT_HOME)/completions/_zinit"
+fi
+
+source "${ZINIT_HOME}/zinit.zsh"
+#autoload -Uz _zinit
+#(( ${+_comps} )) && _comps[zinit]=_zinit
 
 #
 # Bindkeys
@@ -59,11 +63,8 @@ stty stop undef
 
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
-zinit light-mode for \
-  zinit-zsh/z-a-rust \
-  zinit-zsh/z-a-as-monitor \
-  zinit-zsh/z-a-patch-dl \
-  zinit-zsh/z-a-bin-gem-node
+zinit light zdharma-continuum/zinit-annex-meta-plugins
+zinit light-mode lucid for annexes zsh-users+fast zdharma console-tools fuzzy prezto
 
 # OMZ libs and plugins
 zinit light-mode lucid for \
@@ -91,7 +92,6 @@ zinit ice wait='0c' lucid reset \
 zinit light seebi/dircolors-solarized
 
 zinit wait light-mode lucid blockf atload='zicompinit; zicdreplay' blockf for \
-  zsh-users/zsh-completions \
   zchee/zsh-completions
 
 zinit wait light-mode lucid depth=1 for \
@@ -114,8 +114,6 @@ zinit wait light-mode lucid depth=1 for \
   OMZP::gitignore \
   OMZP::docker-compose \
   OMZP::docker-machine \
-  zsh-users/zsh-history-substring-search \
-  zdharma/history-search-multi-word \
   chrissicool/zsh-256color \
   djui/alias-tips \
   jreese/zsh-titles \
@@ -138,14 +136,6 @@ zinit wait light-mode lucid atinit='zicompinit; zicdreplay' for \
   id-as='_docker-compose' https://github.com/docker/compose/blob/master/contrib/completion/zsh/_docker-compose \
   id-as='_docker-machine' https://github.com/docker/machine/blob/master/contrib/completion/zsh/_docker-machine
 
-# tig
-zinit ice wait='2' lucid depth='1' \
-  atclone='./autogen.sh; ./configure --prefix=$ZPFX' \
-  atpull='/bin/cp -f contrib/tig-completion.zsh _tig; /bin/cp -f contrib/vim.tigrc ~/.tigrc.vim; /bin/cp -f contrib/git-flow.tigrc ~/.tigrc.git-flow; ./autogen.sh; ./configure --prefix=$ZPFX' \
-  make='prefix=$ZPFX install' \
-  pick='/dev/null'
-zinit light jonas/tig
-
 # the_silver_searcher: ag
 zinit ice wait='2' lucid depth='1' \
   atclone='./build.sh --prefix=$ZPFX' \
@@ -158,15 +148,6 @@ zinit light ggreer/the_silver_searcher
 zinit ice wait lucid cp='z.sh -> z' pick='z' src='z.sh'
 zinit light rupa/z
 # zinit ice wait lucid
-# zinit light eendroroy/zed-zsh
-
-# fzf
-zinit ice wait lucid depth='1' multisrc='shell/*.zsh' \
-  atclone='./install --bin' \
-  atpull='./install --bin' \
-  sbin="bin/fzf" \
-  sbin="bin/fzf-tmux"
-zinit light junegunn/fzf
 
 # enhancd with fzf
 zinit ice wait lucid pick='init.sh'
@@ -212,7 +193,7 @@ zinit light swyckoff/color-logger-bash
 zinit ice has='poetry' wait='2' as='completion' id-as'poetry/completion' lucid \
   atclone='poetry completions zsh > _poetry' \
   atpull='%atclone'
-zinit light zdharma/null
+zinit light zdharma-continuum/null
 
 # eksctl
 zinit ice wait='2' lucid from"gh-r" pick='/dev/null' sbin \
@@ -225,7 +206,7 @@ export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 zinit ice has='rustup' wait='2' as='completion' id-as='rust/completion' lucid \
   atclone'rustup completions zsh > _rustup; rustup completions zsh cargo > _cargo' \
   atpull='%atclone'
-zinit light zdharma/null
+zinit light zdharma-continuum/null
 
 # rclone
 zinit ice wait='2' lucid from='gh-r' pick='/dev/null' \
@@ -246,7 +227,7 @@ zinit light exercism/cli
 
 # shellcheck
 zinit ice wait='2' lucid id-as='koalaman/shellcheck-stable' \
-  atclone='tar xJf shellcheck-stable --strip-components=1 shellcheck-stable/shellcheck; rm shellcheck-stable' \
+  atclone='tar xJf shellcheck-stable --strip-components=1 shellcheck-stable/shellcheck; rm -f shellcheck-stable' \
   atpull='%atclone' \
   sbin='shellcheck' \
   pick='/dev/null'
@@ -254,7 +235,7 @@ zinit snippet https://github.com/koalaman/shellcheck/releases/download/stable/sh
 
 # ffmpeg
 zinit ice wait='2' lucid id-as='FFmpeg/FFmpeg-static' \
-  atclone='tar --strip-components=1 -xJf FFmpeg-static; rm FFmpeg-static' \
+  atclone='tar --strip-components=1 -xJf FFmpeg-static; rm -f FFmpeg-static' \
   atpull='%atclone' \
   sbin='ffmpeg' sbin='ffprobe' sbin='qt-faststart' \
   pick='/dev/null'
@@ -280,38 +261,28 @@ zinit ice wait='2' lucid id-as='smartversion/smartvs' \
   pick='/dev/null'
 zinit snippet http://www.smartversion.com/smartvs382_linux_x64.zip
 
-# hey
-zinit ice wait='2' lucid id-as='rakyll/hey' \
-  sbin='hey' \
-  pick='/dev/null'
-zinit snippet https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
-
 ### syntax highlighting and suggestions ###
 zinit wait='!1b' light-mode lucid for \
-  atinit='zicompinit; zicdreplay' zsh-users/zsh-syntax-highlighting \
-  atinit='zicompinit; zicdreplay' zdharma/fast-syntax-highlighting \
-  atload='_zsh_autosuggest_start' zsh-users/zsh-autosuggestions \
   atinit='zicompinit; zicdreplay' hlissner/zsh-autopair
 
 zinit as='null' wait='2' light-mode lucid from='gh-r' for \
-  sbin isacikgoz/tldr \
-  sbin aliyun/aliyun-cli \
   sbin derailed/k9s \
   sbin terraform-linters/tflint \
   sbin digitalocean/doctl \
-  sbin simeji/jid \
-  sbin gravitational/teleconsole \
   sbin PostgREST/postgrest \
   sbin variadico/noti \
   sbin mgartner/pg_flame \
   sbin juliosueiras/terraform-lsp \
   sbin pinterest/ktlint \
   sbin instrumenta/kubeval \
+  sbin kubernetes-sigs/kustomize \
+  sbin cert-manager/cert-manager \
+  mv='argocd* -> argocd' sbin argoproj/argo-cd \
+  mv='argocd-image-updater* -> argocd-image-updater' sbin argoproj-labs/argocd-image-updater \
   mv='kubeseal* -> kubeseal' sbin bitnami-labs/sealed-secrets \
   mv='opa* -> opa' sbin open-policy-agent/opa \
   mv='guetzli* -> guetzli' sbin google/guetzli \
   mv='yq* -> yq' sbin mikefarah/yq \
-  mv='cli53* -> cli53' sbin barnybug/cli53 \
   mv='exa* -> exa' sbin='bin/exa' ogham/exa \
   mv='q* -> q' sbin harelba/q \
   mv='hadolint* -> hadolint' sbin hadolint/hadolint \
@@ -324,11 +295,8 @@ zinit as='null' wait='2' light-mode lucid from='gh-r' for \
   mv='stern* -> stern' sbin wercker/stern \
   mv='fluxctl* -> fluxctl' sbin='fluxctl' fluxcd/flux \
   mv='mlr* -> mlr' sbin='mlr' johnkerl/miller \
-  mv='fd* -> fd' sbin='fd/fd' @sharkdp/fd \
   mv='hlint* -> hlint' sbin='hlint/hlint' ndmitchell/hlint \
   mv='trdsql* -> trdsql' sbin='trdsql/trdsql' noborus/trdsql \
-  mv='ripgrep* -> rg' sbin='rg/rg' BurntSushi/ripgrep \
-  mv='bat* -> bat' sbin='bat/bat' @sharkdp/bat \
   mv='gdu* -> gdu' sbin dundee/gdu \
   mv='dua* -> dua' sbin='dua/dua' Byron/dua-cli \
   bpick='istioctl-*' sbin='istioctl' istio/istio \
@@ -339,19 +307,15 @@ zinit as='null' wait='2' light-mode lucid from='gh-r' for \
   bpick='*linux_amd64.tar.gz' sbin wagoodman/dive \
   bpick='*ext*Linux-64bit.tar.gz' sbin gohugoio/hugo \
   bpick='*.tar.gz' sbin open-policy-agent/conftest \
-  bpick='tfsec-linux-amd64' mv='tfsec* -> tfsec' sbin tfsec/tfsec \
+  bpick='tfsec-linux-amd64' mv='tfsec* -> tfsec' sbin aquasecurity/tfsec \
   mv='terragrunt* -> terragrunt' sbin gruntwork-io/terragrunt \
   mv='terraform-docs* -> terraform-docs' sbin terraform-docs/terraform-docs \
   mv='ripgrep* -> rga' sbin='rga/rga' sbin='rga/rga-preproc' phiresky/ripgrep-all \
-  mv='rakkess* -> rakkess' bpick='rakkess-amd64-linux*' sbin corneliusweig/rakkess \
-  mv='aws-iam-authenticator* -> aws-iam-authenticator' sbin kubernetes-sigs/aws-iam-authenticator \
   mv='stylish-haskell* -> stylish-haskell' sbin='stylish-haskell/stylish-haskell' @haskell/stylish-haskell \
   bpick='*.tar.gz' mv='golangci-lint* -> golangci-lint' sbin='golangci-lint/golangci-lint' atload='source <(golangci-lint completion zsh)' golangci/golangci-lint
 
 # fz and calc
 zinit wait='2' light-mode lucid for \
-  fbin='bin/git-dsf' sbin='bin/diff-so-fancy' fbin='bin/diff-so-fancy' pick='/dev/null' zdharma/zsh-diff-so-fancy \
-  changyuheng/fz \
   gradle/gradle-completion \
   arzzen/calc.plugin.zsh
 
@@ -414,7 +378,7 @@ zstyle ':completion:*:*:*:*' users root $(awk -F: '$3 >= 1000 && $3 < 65000 { pr
 # https://serverfault.com/a/170481
 h=()
 if [[ -r ~/.ssh/config ]]; then
-  h=($h ${${${(@M)${(f)"$(cat ~/.ssh/config ~/.ssh/conf.d/*)"}:#Host *}#Host }:#*[*?]*})
+  h=($h ${${${(@M)${(f)"$(cat ~/.ssh/config ~/.ssh/conf.d/* 2>/dev/null)"}:#Host *}#Host }:#*[*?]*})
 fi
 # HashKnownHosts must be disabled
 # if [[ -r ~/.ssh/known_hosts ]]; then
@@ -457,6 +421,10 @@ zshaddhistory() {
     && ${cmd} != (apm|base64|bzip2|cal|calc|cat|cd|chmod|cp|curl|cvs|date|df|diff|dig|disklabel|dmesg|doas|du|e|egrep|enc|ent|exiftool|f|fdisk|feh|file|find|gimp|git|gpg|grep|hdiutil|head|hostname|ifconfig|kill|less|ls|mail|make|man|mkdir|mount|mpv|mv|nc|openssl|patch|pdf|pdfinfo|pgrep|ping|pkg_info|pkill|ps|rcctl|rm|rsync|scp|scrot|set|sha256|sort|srm|ssh|stat|strip|sudo|sysctl|tar|tmux|top|umount|uname|unzip|uptime|useradd|vlc|vi|vim|wc|wget|which|whoami|whois|wireshark|xclip|xxd|youtube-dl)
   ]]
 }
+
+# WSL2
+# gpg-agent with YubiKey
+# https://github.com/rupor-github/win-gpg-agent
 
 # Clear screen
 # clear
