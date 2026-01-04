@@ -79,6 +79,9 @@ zinit light-mode lucid for \
   OMZ::plugins/gcloud/gcloud.plugin.zsh \
   atload"unalias grv" OMZ::plugins/git/git.plugin.zsh
 
+# Set JAVA_HOME
+. ~/.asdf/plugins/java/set-java-home.sh
+
 # For GNU ls (the binaries can be gls, gdircolors, e.g. on OS X when installing the
 # coreutils package from Homebrew or using https://github.com/ogham/exa)
 zinit ice wait"0c" lucid reset \
@@ -310,7 +313,7 @@ zinit as"null" wait"2" light-mode lucid from"gh-r" for \
   mv"ripgrep* -> rg" sbin"rg/rg" BurntSushi/ripgrep \
   mv"bat* -> bat" sbin"bat/bat" @sharkdp/bat \
   fbin"fzf" sbin"fzf" junegunn/fzf-bin \
-  bpick"istioctl*" sbin"istioctl" istio/istio \
+  bpick"istioctl-*" sbin"istioctl" istio/istio \
   mv"jq* -> jq" bpick"*linux64" sbin"" stedolan/jq \
   mv"sops* -> sops" bpick"*linux" sbin"" mozilla/sops \
   bpick"*linux_amd64.tar.gz" sbin"" wagoodman/dive \
