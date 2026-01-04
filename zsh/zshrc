@@ -3,8 +3,8 @@
 
 # install zplugin
 [[ ! -f ~/.zplugin/bin/zplugin.zsh ]] && {
-    command mkdir -p ~/.zplugin
-    command git clone https://github.com/zdharma/zplugin ~/.zplugin/bin
+  command mkdir -p ~/.zplugin
+  command git clone https://github.com/zdharma/zplugin ~/.zplugin/bin
 }
 
 ### Zplugin ###
@@ -65,25 +65,24 @@ bindkey -M vicmd 'j' history-substring-search-down
 stty start undef
 stty stop undef
 
-
 zplugin light zplugin/z-a-bin-gem-node
 # zplugin light zplugin/z-a-man
 
 # OMZ libs and plugins
 zplugin light-mode lucid for \
-                      OMZ::lib/clipboard.zsh \
-                      OMZ::lib/completion.zsh \
-                      OMZ::lib/directories.zsh \
-                      OMZ::lib/functions.zsh \
-                      OMZ::lib/git.zsh \
-                      OMZ::lib/grep.zsh \
-                      OMZ::lib/history.zsh \
-                      OMZ::lib/key-bindings.zsh \
-                      OMZ::lib/misc.zsh \
-                      OMZ::lib/termsupport.zsh \
-                      OMZ::lib/theme-and-appearance.zsh \
-                      OMZ::plugins/asdf/asdf.plugin.zsh \
-                      OMZ::plugins/gcloud/gcloud.plugin.zsh \
+  OMZ::lib/clipboard.zsh \
+  OMZ::lib/completion.zsh \
+  OMZ::lib/directories.zsh \
+  OMZ::lib/functions.zsh \
+  OMZ::lib/git.zsh \
+  OMZ::lib/grep.zsh \
+  OMZ::lib/history.zsh \
+  OMZ::lib/key-bindings.zsh \
+  OMZ::lib/misc.zsh \
+  OMZ::lib/termsupport.zsh \
+  OMZ::lib/theme-and-appearance.zsh \
+  OMZ::plugins/asdf/asdf.plugin.zsh \
+  OMZ::plugins/gcloud/gcloud.plugin.zsh \
   atload"unalias grv" OMZ::plugins/git/git.plugin.zsh
 
 # For GNU ls (the binaries can be gls, gdircolors, e.g. on OS X when installing the
@@ -145,9 +144,6 @@ zplugin wait light-mode lucid atinit"zpcompinit; zpcdreplay" for \
   is-snippet id-as"docker/_docker" https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker \
   is-snippet id-as"docker/_docker-compose" https://github.com/docker/compose/blob/master/contrib/completion/zsh/_docker-compose \
   is-snippet id-as"docker/_docker-machine" https://github.com/docker/machine/blob/master/contrib/completion/zsh/_docker-machine
-
-  # _arguments:comparguments:325: can only be called from completion function
-  # is-snippet id-as"ogham/_exa" https://github.com/ogham/exa/blob/master/contrib/completions.zsh
 
 # tig
 zplugin ice wait"2" lucid depth=1 \
@@ -436,7 +432,7 @@ fi
 
 # Don't store failed command to history
 # http://scarff.id.au/blog/2019/zsh-history-conditional-on-command-success/
-function zshaddhistory() {
+zshaddhistory() {
   whence ${${(z)1}[1]} >| /dev/null || return 1
   local line cmd
   line=${1%%$'\n'}
