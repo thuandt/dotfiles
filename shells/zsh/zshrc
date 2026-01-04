@@ -9,8 +9,6 @@
 
 ### zinit ###
 source ~/.zinit/bin/zinit.zsh
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
 
 # compinit speed up loading
 ZINIT[COMPINIT_OPTS]=-C
@@ -305,13 +303,13 @@ zinit as"null" wait"2" light-mode lucid from"gh-r" for \
     mv"ripgrep* -> rg"        sbin"rg/rg"         BurntSushi/ripgrep \
     mv"bat* -> bat"           sbin"bat/bat"       @sharkdp/bat \
     fbin"fzf"                 sbin"fzf"           junegunn/fzf-bin \
+    bpick"istioctl*"  sbin"istioctl"              istio/istio \
     mv"jq* -> jq"     bpick"*linux64"     sbin""  stedolan/jq \
     mv"sops* -> sops" bpick"*linux"       sbin""  mozilla/sops \
     bpick"*linux_amd64.tar.gz"            sbin""  wagoodman/dive \
     bpick"*ext*Linux-64bit.tar.gz"        sbin""  gohugoio/hugo \
     mv"terragrunt* -> terragrunt"         sbin""  gruntwork-io/terragrunt \
     mv"terraform-docs* -> terraform-docs" sbin""  segmentio/terraform-docs \
-    bpick"istioctl*" mv"istioctl* -> istioctl" sbin"istioctl" istio/istio \
     mv"ripgrep* -> rga"  sbin"rga/rga" sbin"rga/rga-preproc" phiresky/ripgrep-all \
     mv"rakkess* -> rakkess" bpick"rakkess-amd64-linux*" sbin"" corneliusweig/rakkess \
     mv"aws-iam-authenticator* -> aws-iam-authenticator" sbin"" kubernetes-sigs/aws-iam-authenticator \
