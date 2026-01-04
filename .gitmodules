@@ -7,9 +7,6 @@
 [submodule "meta/plugins/pip"]
 	path = meta/plugins/pip
 	url = https://github.com/sobolevn/dotbot-pip.git
-[submodule "meta/plugins/apt"]
-	path = meta/plugins/apt
-	url = https://github.com/dein0s/dotbot_plugin_aptget.git
 [submodule "terminals/tmux/colors"]
 	path = terminals/tmux/colors
 	url = https://github.com/seebi/tmux-colors-solarized.git
