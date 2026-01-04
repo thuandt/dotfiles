@@ -1,0 +1,5 @@
+- link:
+    ~/.tmux.conf: terminals/tmux/tmux.conf
+    ~/.tmuxcolors.conf: terminals/tmux/colors/tmuxcolors-dark.conf
+# - shell:
+#     - [tmux source-file ~/.tmux.conf || true, Sourcing new tmux configuration]
