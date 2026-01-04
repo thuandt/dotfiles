@@ -66,7 +66,7 @@ TEMP=C
 
 # You can set this to 1 to report your external/public ip address
 # Default: 0
-IP_EXTERNAL=1
+IP_EXTERNAL=0
 
 # The users notification normally counts ssh sessions; set this configuration to '1'
 # to instead count number of distinct users logged onto the system
