@@ -8,22 +8,25 @@
     ### programming languages ###
     - plugin: python
       versions:
+        - latest:3.6
         - latest:3.8
-        - latest:3.7
     - plugin: ruby
       versions:
-        - latest:2.6
+        - latest:2.7
     - plugin: nodejs
       versions:
-        - latest
         - latest:12
+        - latest:14
     - plugin: golang
       versions:
-        - latest:1.13
+        - latest:1.15
     - plugin: rust
       versions:
         - stable
     - plugin: java
+      versions:
+        - graalvm-20.1.0+java8
+        - graalvm-20.1.0+java11
     - plugin: scala
       versions:
         - latest:2.13
@@ -38,14 +41,12 @@
     - plugin: aks-engine
     - plugin: kops
       versions:
-        - latest:1.15
-    - plugin: kustomize
-      versions:
         - latest
+    - plugin: kustomize
 
     ### k8s development tools ###
-    - plugin: minikube # use zplugin
-    - plugin: skaffold # use zplugin
+    - plugin: minikube # use zinit
+    - plugin: skaffold # use zinit
     - plugin: draft
       versions:
         - latest
@@ -56,11 +57,11 @@
       versions:
         - latest:2
         - latest:3
-    - plugin: helmfile # use zplugin
-    - plugin: stern # use zplugin
-    - plugin: fluxctl # use zplugin
-    - plugin: istioctl # use zplugin
-    - plugin: k9s # use zplugin
+    - plugin: helmfile # use zinit
+    - plugin: stern # use zinit
+    - plugin: fluxctl # use zinit
+    - plugin: istioctl # use zinit
+    - plugin: k9s # use zinit
     - plugin: kubeseal
     - plugin: kubesec
     - plugin: rancher
@@ -75,24 +76,20 @@
     - plugin: terraform
       versions:
         - latest:0.12
-    - plugin: tflint
-      versions:
-        - 0.13.2
-    - plugin: terraform-docs # use zplugin
-    - plugin: terragrunt
-      versions:
-        - 0.21.10
+    - plugin: tflint # use zinit
+    - plugin: terraform-docs # use zinit
+    - plugin: terragrunt # use zinit
     - plugin: vault
       versions:
-        - 1.3.1
+        - 0.15.0
 
     ### development tools ###
-    - plugin: hadolint # use zplugin
-    - plugin: shellcheck # use zplugin
-    - plugin: shfmt # use zplugin
-    - plugin: hub # use zplugin
-    - plugin: sops # use zplugin
-    - plugin: docker-slim # use zplugin
+    - plugin: hadolint # use zinit
+    - plugin: shellcheck # use zinit
+    - plugin: shfmt # use zinit
+    - plugin: hub # use zinit
+    - plugin: sops # use zinit
+    - plugin: docker-slim # use zinit
     - plugin: docker-compose
       url: https://github.com/virtualstaticvoid/asdf-docker-compose.git
       versions:
@@ -104,20 +101,21 @@
     - plugin: protoc
       versions:
         - latest
-    - plugin: direnv # use zplugin
-    - plugin: doctl # use zplugin
-    - plugin: mkcert # use zplugin
+    - plugin: direnv # use zinit
+    - plugin: doctl # use zinit
+    - plugin: mkcert # use zinit
     - plugin: sbt
       versions:
         - latest:1.3
     - plugin: groovy
+      versions:
+        - apache-groovy-binary-2.4.19
     - plugin: gradle
     - plugin: maven
     - plugin: micronaut
     - plugin: sqlite
       versions:
         - latest
-    - plugin: graalvm
     - plugin: yarn
     - plugin: openresty
     - plugin: gohugo
