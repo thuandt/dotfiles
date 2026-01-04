@@ -16,6 +16,9 @@
 [commit]
     gpgsign = true
 
+[pull]
+    ff = only
+
 [push]
     default = current
     followTags = true
@@ -35,6 +38,12 @@
 [difftool]
     prompt = false
 
+[difftool "idea"]
+    cmd = idea diff $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE")
+
+[difftool "charm"]
+    cmd = charm diff $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE")
+
 [merge]
     ff = only
     tool = meld
@@ -47,10 +56,10 @@
     cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
 
 [mergetool "idea"]
-    cmd = idea merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
+    cmd = idea merge $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE") $(cd $(dirname "$BASE") && pwd)/$(basename "$BASE") $(cd $(dirname "$MERGED") && pwd)/$(basename "$MERGED")
 
 [mergetool "charm"]
-    cmd = charm merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
+    cmd = charm merge $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE") $(cd $(dirname "$BASE") && pwd)/$(basename "$BASE") $(cd $(dirname "$MERGED") && pwd)/$(basename "$MERGED")
 
 [mergetool "vimdiff"]
     cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
