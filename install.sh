@@ -30,5 +30,5 @@ ln -sf "${DOTDIR}/nvim" ~/.config/nvim
 # tmux/screen
 ln -sf "${DOTDIR}/screen/screenrc" ~/.screenrc
 ln -sf "${DOTDIR}/tmux/tmux.conf" ~/.tmux.conf
-ln -sf "${DOTDIR}/tmux/colors/tmuxcolors-dark.conf" ~/.tmux.conf
+ln -sf "${DOTDIR}/tmux/colors/tmuxcolors-dark.conf" ~/.tmuxcolors.conf
 
