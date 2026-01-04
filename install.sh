@@ -21,7 +21,7 @@ ln -s "$DOTFILES/bash/bash_profile" ~/.bash_profile
 # zsh
 ln -s "$DOTFILES/zsh/zlogout" ~/.zlogout
 ln -s "$DOTFILES/zsh/zprofile" ~/.zprofile
-ln -s "$DOTFILES/zsh/zshrc" ~/.zshrc
+cp "$DOTFILES/zsh/zshrc" ~/.zshrc
 ln -s "$DOTFILES/zsh/zshenv" ~/.zshenv
 mkdir -p ~/.oh-my-zsh/custom/themes
 ln -s "$DOTFILES/zsh/mrtux.zsh-theme" ~/.oh-my-zsh/custom/themes
