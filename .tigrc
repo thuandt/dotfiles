@@ -1,0 +1,10 @@
+set refresh-mode = auto
+set tab-size = 2
+set line-graphics = utf-8
+
+set main-view-id = yes
+set main-view-id-width = 8
+set main-view-date = relative-compact
+
+source ~/.tigrc.vim
+source ~/.tigrc.git-flow
