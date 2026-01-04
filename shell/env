@@ -10,18 +10,10 @@ HISTFILESIZE=${HISTSIZE}                  # shell will remember N commands
 ### Setup PATH ###
 export RVM_BIN_PATH=$HOME/.rvm/bin             # Add RVM to PATH for scripting
 export USER_BIN=$HOME/app/bin                  # user bin
-export SCALA_HOME=$HOME/app/scala              # scala
-export PLAY_HOME=$HOME/app/play                # play framework
-export SBT_HOME=$HOME/app/sbt                  # sbt
 export GOROOT=$HOME/app/go                     # go-lang
-export HEROKU_TOOLBELT="/usr/local/heroku/bin" # Heroku Toolbelt
-# Google Cloud SDK
-export GOOGLE_CLOUD_SDK=$HOME/app/google-cloud-sdk
 
 # My custom path
-export MY_PATH=${RVM_BIN_PATH}:${USER_BIN}:${GOOGLE_CLOUD_SDK}/bin
-export MY_PATH=${MY_PATH}:${PLAY_HOME}:${SCALA_HOME}/bin:${SBT_HOME}
-export MY_PATH=${MY_PATH}:${GOROOT}/bin:${HEROKU_TOOLBELT}
+export MY_PATH=${RVM_BIN_PATH}:${USER_BIN}:${GOROOT}/bin
 
 # Add directory to $PATH if it's not already there
 if [[ ":$PATH:" != *":${MY_PATH}:"* ]]; then PATH=${MY_PATH}:$PATH; fi
@@ -32,10 +24,10 @@ export WORKON_HOME=$HOME/.virtualenvs
 export HOSTNAME=`hostname`
 
 # Setup Input Method
-export XMODIFIERS=@im=scim
-export GTK_IM_MODULE=scim
-export QT_IM_MODULE=scim
-export QT4_IM_MODULE=scim
+export XMODIFIERS=@im=ibus
+export GTK_IM_MODULE=ibus
+export QT_IM_MODULE=ibus
+export QT4_IM_MODULE=ibus
 
 # Setting locales
 export LC_ALL=en_US.UTF-8
