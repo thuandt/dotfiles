@@ -286,7 +286,6 @@ zinit as='null' wait='2' light-mode lucid from='gh-r' for \
   sbin mgartner/pg_flame \
   sbin juliosueiras/terraform-lsp \
   sbin pinterest/ktlint \
-  sbin open-policy-agent/conftest \
   sbin instrumenta/kubeval \
   mv='kubeseal* -> kubeseal' sbin bitnami-labs/sealed-secrets \
   mv='opa* -> opa' sbin open-policy-agent/opa \
@@ -316,6 +315,7 @@ zinit as='null' wait='2' light-mode lucid from='gh-r' for \
   mv='sops* -> sops' bpick='*linux' sbin mozilla/sops \
   bpick='*linux_amd64.tar.gz' sbin wagoodman/dive \
   bpick='*ext*Linux-64bit.tar.gz' sbin gohugoio/hugo \
+  bpick='*.tar.gz' sbin open-policy-agent/conftest \
   mv='tfsec* -> tfsec' sbin liamg/tfsec \
   mv='terragrunt* -> terragrunt' sbin gruntwork-io/terragrunt \
   bpick='*linux_amd64.tar.gz' mv='gh* -> gh' sbin='gh/bin/gh' cli/cli \
@@ -324,7 +324,8 @@ zinit as='null' wait='2' light-mode lucid from='gh-r' for \
   mv='rakkess* -> rakkess' bpick='rakkess-amd64-linux*' sbin corneliusweig/rakkess \
   mv='aws-iam-authenticator* -> aws-iam-authenticator' sbin kubernetes-sigs/aws-iam-authenticator \
   mv='stylish-haskell* -> stylish-haskell' sbin='stylish-haskell/stylish-haskell' jaspervdj/stylish-haskell \
-  bpick='*linux.tar.gz' sbin='dist_linux/docker-slim' sbin='dist_linux/docker-slim-sensor' docker-slim/docker-slim
+  bpick='*linux.tar.gz' sbin='dist_linux/docker-slim' sbin='dist_linux/docker-slim-sensor' docker-slim/docker-slim \
+  bpick='*.tar.gz' mv='golangci-lint* -> golangci-lint' sbin'golangci-lint/golangci-lint' atload='source <(golangci-lint completion zsh)' golangci/golangci-lint \
 
 # fz and calc
 zinit wait='2' light-mode lucid for \
@@ -341,14 +342,6 @@ zinit ice wait='2' lucid from'gh-r' \
   atclone='ln -sf hub/etc/hub.zsh_completion _hub' \
   atpull='%atclone'
 zinit light github/hub
-
-# golangci-lint
-zinit ice wait='2' lucid from'gh-r' \
-  mv='golangci-lint* -> golangci-lint' \
-  sbin='golangci-lint/golangci-lint' \
-  pick='/dev/null' \
-  atload='source <(golangci-lint completion zsh)'
-zinit light golangci/golangci-lint
 
 # manydots-magic
 zinit ice wait='!2' lucid atinit='zicompinit; zicdreplay' pick='manydots-magic'
@@ -422,12 +415,6 @@ if [ -n "$($SHELL -c "echo $ZSH_VERSION")" ]; then
 else
   PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))')"
 fi
-
-# spacevim/neovim
-# shellcheck disable=SC2155
-#export PYTHON_HOST_PROG="$(asdf which python)"
-# shellcheck disable=SC2155
-#export PYTHON3_HOST_PROG="$(asdf which python3)"
 
 # Tilix
 # https://github.com/gnunn1/tilix/wiki/VTE-Configuration-Issue

@@ -17,6 +17,7 @@ export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 
 # User binaries
 export BIN_DIR=$HOME/.local/bin
+export PATH=$BIN_DIR:$PATH
 
 # Editor
 export EDITOR="nvim"
@@ -58,6 +59,7 @@ export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 export ASDF_RUBY_BUILD_VERSION=master
 
 # gcloud
+export CLOUDSDK_PYTHON=python3
 export CLOUDSDK_HOME="${HOME}/Applications/google-cloud-sdk"
 
 # enhancd
@@ -66,19 +68,18 @@ export ENHANCD_DISABLE_DOT=1
 export ENHANCD_DISABLE_HYPHEN=1
 export ENHANCD_DISABLE_HOME=1
 
-if [[ "$OSTYPE" == darwin* ]]; then
-  export PATH=$BIN_DIR:$PATH
-else
+if [[ "$OSTYPE" == linux* ]]; then
   ### Setup PATH ###
-  export CARGO=$HOME/.cargo/bin     # Rust cargo
-  export CABAL=$HOME/.cabal/bin     # Haskell cabal
-  export POETRY=$HOME/.poetry/bin   # poetry
+  export POETRY=$HOME/.poetry/bin # poetry
+  export PULUMI=$HOME/.pulumi/bin # pulumi
+  export KREW_ROOT=$HOME/.krew    # krew
+  export CARGO=$HOME/.cargo/bin   # Rust cargo
+  export CABAL=$HOME/.cabal/bin   # Haskell cabal
   # shellcheck disable=SC2155
   export YARNBIN=$(yarn global bin) # yarn
-  export KREW_ROOT=$HOME/.krew      # krew
 
   # My custom path
-  MYPATH=("${BIN_DIR}" "${POETRY}" "${KREW_ROOT}/bin" "${CARGO}" "${CABAL}" "${YARNBIN}")
+  MYPATH=("${POETRY}" "${PULUMI}" "${KREW_ROOT}/bin" "${CARGO}" "${CABAL}" "${YARNBIN}")
 
   # Add directory to $PATH if its not already there
   for p in "${MYPATH[@]}"; do
