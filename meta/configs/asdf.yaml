@@ -8,27 +8,29 @@
     ### programming languages ###
     - plugin: python
       versions:
-        - latest:3.6
         - latest:3.8
+        - latest:3.9
     - plugin: ruby
       versions:
-        - latest:2.7
+        - latest:2
+        - latest
     - plugin: nodejs
       versions:
-        - latest:12
         - latest:14
+        - latest
     - plugin: golang
       versions:
-        - latest:1.15
+        - latest
     - plugin: rust
       versions:
         - stable
     - plugin: java
       versions:
-        - graalvm-20.1.0+java8
-        - graalvm-20.1.0+java11
+        - latest:openjdk-15
+        - graalvm-21.0.0.2+java11
     - plugin: scala
       versions:
+        - latest:2.12
         - latest:2.13
     - plugin: haskell
     - plugin: lua
@@ -43,7 +45,8 @@
       versions:
         - latest
     - plugin: kustomize
-
+      versions:
+        - latest
     ### k8s development tools ###
     - plugin: minikube # use zinit
     - plugin: skaffold # use zinit
@@ -55,15 +58,13 @@
         - latest
     - plugin: helm
       versions:
-        - latest:2
-        - latest:3
+        - latest
     - plugin: helmfile # use zinit
     - plugin: stern # use zinit
     - plugin: fluxctl # use zinit
     - plugin: istioctl # use zinit
     - plugin: k9s # use zinit
-    - plugin: kubeseal
-    - plugin: kubesec
+    - plugin: kubeseal # use zinit
     - plugin: rancher
 
     ### Hashicorp ###
@@ -75,13 +76,13 @@
         - latest
     - plugin: terraform
       versions:
-        - latest:0.12
+        - latest
     - plugin: tflint # use zinit
     - plugin: terraform-docs # use zinit
     - plugin: terragrunt # use zinit
     - plugin: vault
       versions:
-        - 0.15.0
+        - latest
 
     ### development tools ###
     - plugin: hadolint # use zinit
@@ -97,7 +98,7 @@
     - plugin: docker-machine
       url: https://github.com/virtualstaticvoid/asdf-docker-machine.git
       versions:
-        - v0.16.2
+        - latest
     - plugin: protoc
       versions:
         - latest
@@ -106,17 +107,15 @@
     - plugin: mkcert # use zinit
     - plugin: sbt
       versions:
-        - latest:1.3
+        - latest
     - plugin: groovy
       versions:
-        - apache-groovy-binary-2.4.19
+        - latest:2
+        - latest:3
     - plugin: gradle
     - plugin: maven
     - plugin: micronaut
     - plugin: sqlite
       versions:
         - latest
-    - plugin: yarn
     - plugin: openresty
-    - plugin: gohugo
-    - plugin: trdsql
