@@ -60,10 +60,6 @@ export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 # export LESS_TERMCAP_ue=$'\E[0m'           # end underline
 # export LESS_TERMCAP_us=$'\E[04;32m'       # begin underline
 
-# asdf
-export ASDF_RUBY_BUILD_VERSION=master
-export ASDF_GOLANG_MOD_VERSION_ENABLED=false
-
 # gcloud
 export CLOUDSDK_PYTHON=python3
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
@@ -153,16 +149,6 @@ fi
 TINYPNG_API_KEY="$(secret-tool lookup api-key tinypng)"
 export TINYPNG_API_KEY
 
-# Twilio SID vs Token for call/SMS
-TWILIO_ACCOUNT_SID="$(secret-tool lookup account-sid twilio)"
-TWILIO_AUTH_TOKEN="$(secret-tool lookup auth-token twilio)"
-export TWILIO_ACCOUNT_SID
-export TWILIO_AUTH_TOKEN
-
-# Gitlab.com API token
-GITLAB_TOKEN="$(secret-tool lookup token gitlab.com)"
-export GITLAB_TOKEN
-
 # ipinfo.io api token
 IPINFO_TOKEN="$(secret-tool lookup token ipinfo.io)"
 export IPINFO_TOKEN
@@ -170,21 +156,5 @@ export IPINFO_TOKEN
 # macvendors.com api token
 MACVENDORS_TOKEN="$(secret-tool lookup token macvendors)"
 export MACVENDORS_TOKEN
-
-# Mullvad VPN account number
-MULLVAD_ACCOUNT_NUMBER=$(secret-tool lookup account mullvad)
-export MULLVAD_ACCOUNT_NUMBER
-
-# Tailscale
-TAILSCALE_API_KEY=$(secret-tool lookup tailscale admin_api_key)
-export TAILSCALE_API_KEY
-TAILNET=$(secret-tool lookup tailscale tailnet)
-export TAILNET
-TAILSCALE_BASTION_AUTH_KEY=$(secret-tool lookup tailscale bastion_auth_key)
-export TAILSCALE_BASTION_AUTH_KEY
-TAILSCALE_BASTION_AUTH_KEY_SECRET_ID=$(secret-tool lookup tailscale bastion_auth_key_secret_id)
-export TAILSCALE_BASTION_AUTH_KEY_SECRET_ID
-TAILSCALE_AWS_PROFILES=$(secret-tool lookup tailscale aws_profiles)
-export TAILSCALE_AWS_PROFILES
 
 # End of ~/.zshenv
