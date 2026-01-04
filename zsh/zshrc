@@ -212,26 +212,26 @@ zplugin ice wait lucid from"gh-r" pick"/dev/null" \
 zplugin light rclone/rclone
 
 # Confluent CLI
-zplugin ice wait lucid id-as"confluent/confluent" \
-  atclone"tar xzf confluent; ./confluent/confluent completion zsh > _confluent" \
+zplugin ice wait lucid id-as"confluent/confluent-cli" \
+  atclone"tar xzf confluent-cli --strip-components=1 confluent/confluent; rm confluent-cli; ./confluent completion zsh > _confluent" \
   atpull"%atclone" \
-  sbin"confluent/confluent" \
+  sbin"confluent" \
   pick"/dev/null"
 zplugin snippet https://s3-us-west-2.amazonaws.com/confluent.cloud/confluent-cli/archives/latest/confluent_latest_linux_amd64.tar.gz
 
 # Confluent Cloud CLI
-zplugin ice wait lucid id-as"confluent/ccloud" \
-  atclone"tar xzf ccloud; ./ccloud/ccloud completion zsh > _ccloud" \
+zplugin ice wait lucid id-as"confluent/ccloud-cli" \
+  atclone"tar xzf ccloud-cli --strip-components=1 ccloud/ccloud; rm ccloud-cli; ./ccloud completion zsh > _ccloud" \
   atpull"%atclone" \
-  sbin"ccloud/ccloud" \
+  sbin"ccloud" \
   pick"/dev/null"
 zplugin snippet https://s3-us-west-2.amazonaws.com/confluent.cloud/ccloud-cli/archives/latest/ccloud_latest_linux_amd64.tar.gz
 
 # shellcheck
-zplugin ice wait lucid id-as"koalaman/shellcheck" \
-  atclone"tar xJf shellcheck; rm shellcheck" \
+zplugin ice wait lucid id-as"koalaman/shellcheck-stable" \
+  atclone"tar xJf shellcheck-stable --strip-components=1 shellcheck-stable/shellcheck; rm shellcheck-stable" \
   atpull"%atclone" \
-  sbin"shellcheck-stable/shellcheck" \
+  sbin"shellcheck" \
   pick"/dev/null"
 zplugin snippet https://storage.googleapis.com/shellcheck/shellcheck-stable.linux.x86_64.tar.xz
 
