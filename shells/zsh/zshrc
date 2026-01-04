@@ -329,11 +329,13 @@ zplugin as"null" wait"2" light-mode lucid from"gh-r" for \
     mv"sops* -> sops" bpick"*linux"       sbin""  mozilla/sops \
     bpick"*linux_amd64.tar.gz"            sbin""  wagoodman/dive \
     bpick"*ext*Linux-64bit.tar.gz"        sbin""  gohugoio/hugo \
+    mv"terragrunt* -> terragrunt"         sbin""  gruntwork-io/terragrunt \
     mv"terraform-docs* -> terraform-docs" sbin""  segmentio/terraform-docs \
     bpick"istioctl*" mv"istioctl* -> istioctl" sbin"istioctl" istio/istio \
     mv"ripgrep* -> rga"  sbin"rga/rga" sbin"rga/rga-preproc" phiresky/ripgrep-all \
     mv"rakkess* -> rakkess" bpick"rakkess-amd64-linux*" sbin"" corneliusweig/rakkess \
     mv"aws-iam-authenticator* -> aws-iam-authenticator" sbin"" kubernetes-sigs/aws-iam-authenticator \
+    mv"stylish-haskell* -> stylish-haskell" sbin"stylish-haskell/stylish-haskell" jaspervdj/stylish-haskell \
     bpick"*linux.tar.gz" sbin"dist_linux/docker-slim" sbin"dist_linux/docker-slim-sensor" docker-slim/docker-slim
 
 # fz and calc
