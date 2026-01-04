@@ -134,10 +134,6 @@ if [ -f $HOME/.shell_functions ]; then source $HOME/.shell_functions; fi
 if [ -f $HOME/.shell_aliases ]; then source $HOME/.shell_aliases; fi
 if [ -f /etc/bash_completion ]; then source /etc/bash_completion; fi
 
-##### Ruby RVM #####
-# Load RVM into a shell session *as a function*
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
 # virtualenvwrapper
 [[ -s /usr/local/bin/virtualenvwrapper.sh ]] && source /usr/local/bin/virtualenvwrapper.sh
 

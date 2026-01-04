@@ -31,7 +31,7 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=( battery bundler colorize command-not-found common-aliases cp debian
           emoji-clock encode64 extract gem git git-extras git-flow
-          git-remote-branch git-ignore gpg-agent heroku history
+          git-remote-branch gitignore gpg-agent heroku history
           history-substring-search mercurial mosh pip python rails rake rsync
           ruby rvm safe-paste screen ssh-agent sublime sudo svn systemadmin
           tmux tmuxinator urltools virtualenv virtualenvwrapper vundle
@@ -105,10 +105,6 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 [[ -s "$HOME/.shell_env" ]] && source "$HOME/.shell_env"
 [[ -s "$HOME/.shell_aliases" ]] && source "$HOME/.shell_aliases"
 [[ -s "$HOME/.shell_functions" ]] && source "$HOME/.shell_functions"
-
-##### Ruby RVM #####
-# Load RVM into a shell session *as a function*
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 ##### virtualenvwrapper #####
 [[ -s /usr/local/bin/virtualenvwrapper.sh ]] && source /usr/local/bin/virtualenvwrapper.sh
