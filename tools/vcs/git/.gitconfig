@@ -1,12 +1,12 @@
 [core]
     editor = nvim
-    pager = diff-so-fancy | less --tabs=1,5 -RFXi
+    pager = diff-so-fancy | less -x2 -RFXSi
     precomposeunicode = true
     excludesfile = ~/.gitignore_global
     whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 
-[init]
-    templatedir = ~/.git-templates
+#[init]
+#    templatedir = ~/.git-templates
 
 [user]
     name = Thuan Duong
@@ -30,16 +30,10 @@
     showUntrackedFiles = all
 
 [diff]
-    tool = icdiff
+    tool = meld
 
 [difftool]
     prompt = false
-
-[difftool "icdiff"]
-    cmd = icdiff --line-numbers $LOCAL $REMOTE
-
-[difftool "bcompare"]
-    trustExitCode = true
 
 [merge]
     ff = only
@@ -47,17 +41,19 @@
     conflictstyle = diff3
 
 [mergetool]
-    prompt = true
+    prompt = false
+
+[mergetool "meld"]
+    cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+
+[mergetool "idea"]
+    cmd = idea merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
+
+[mergetool "charm"]
+    cmd = charm merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
 
 [mergetool "vimdiff"]
     cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-
-[mergetool "pycharm"]
-    cmd = /usr/local/bin/charm merge "$LOCAL" "$REMOTE" "$BASE" "$MERGED"
-
-[mergetool "meld"]
-    cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
-    # cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
 
 [mergetool "bcompare"]
     trustExitCode = true
@@ -93,9 +89,8 @@
     helper = cache --timeout=3600
 
 [pager]
-    diff = diff-so-fancy | less --tabs=1,5 -RFXi
-    # diff = diff-so-fancy | less --tabs=1,5 -RFXSi --pattern '^(Date|added|deleted|modified): '
-    show = diff-so-fancy | less --tabs=1,5 -RFXi
+    diff = diff-so-fancy | less -x2 -RFXSi
+    show = diff-so-fancy | less -x2 -RFXSi
 
 [github]
     user = thuandt
