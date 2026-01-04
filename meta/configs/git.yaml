@@ -1,5 +1,5 @@
 - link:
-  ~/.tigrc: git/.tigrc
-  ~/.gitconfig: git/.gitconfig
-  ~/.gitignore_global: git/.gitignore_global
-  ~/.git-templates: git/git-templates
+    ~/.tigrc: tools/vcs/git/.tigrc
+    ~/.gitconfig: tools/vcs/git/.gitconfig
+    ~/.gitignore_global: tools/vcs/git/.gitignore_global
+    ~/.git-templates: tools/vcs/git/git-templates
