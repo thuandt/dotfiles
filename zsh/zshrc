@@ -180,6 +180,10 @@ zplugin ice wait lucid pick"/dev/null" sbin"kubectx" sbin"kubens" \
   atpull"%atclone"
 zplugin light ahmetb/kubectx
 
+# ansiweather
+zplugin ice wait lucid pick"/dev/null" sbin"ansiweather"
+zplugin light fcambus/ansiweather
+
 # color logger
 zplugin ice wait lucid src"color-logger.bash" pick"/dev/null"
 zplugin light swyckoff/color-logger-bash
@@ -218,13 +222,13 @@ zplugin as"null" wait"2" light-mode lucid from"gh-r" for \
                               sbin""              isacikgoz/tldr \
     mv"exa* -> exa"           sbin""              ogham/exa \
     mv"mlr* -> mlr"           sbin"mlr"           johnkerl/miller \
-    mv"jq* -> jq"             sbin""              stedolan/jq \
     mv"hadolint* -> hadolint" sbin""              hadolint/hadolint \
     mv"shfmt* -> shfmt"       sbin""              @mvdan/sh \
     mv"grv* -> grv"           sbin""              @rgburke/grv \
     mv"fd* -> fd"             sbin"fd/fd"         @sharkdp/fd \
     mv"ripgrep* -> rg"        sbin"rg/rg"         BurntSushi/ripgrep \
     mv"bat* -> bat"           sbin"bat/bat"       @sharkdp/bat \
+    mv"jq* -> jq" bpick"*linux64"  sbin""         stedolan/jq \
                               sbin"fzf" fbin"fzf" junegunn/fzf-bin
 
 # fz and calc
