@@ -29,6 +29,9 @@ export KUBE_EDITOR="code --wait"
 
 export BAT_THEME="TwoDark"
 
+# vi mode key timeout
+export KEYTIMEOUT=1
+
 # Color man pages
 export PAGER='less'
 unset LESSCHARSET # Fix manpages looking funky
@@ -50,6 +53,15 @@ export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 # export LESS_TERMCAP_so=$'\E[0;37;102m'    # begin standout-mode - info box
 # export LESS_TERMCAP_ue=$'\E[0m'           # end underline
 # export LESS_TERMCAP_us=$'\E[04;32m'       # begin underline
+
+# gcloud
+export CLOUDSDK_HOME="${HOME}/Applications/google-cloud-sdk"
+
+# enhancd
+export ENHANCD_FILTER=fzf
+export ENHANCD_DISABLE_DOT=1
+export ENHANCD_DISABLE_HYPHEN=1
+export ENHANCD_DISABLE_HOME=1
 
 if [[ "$OSTYPE" == darwin* ]]; then
   export PATH=$BIN_DIR:$PATH

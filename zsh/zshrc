@@ -1,176 +1,168 @@
 #!/usr/bin/env zsh
 # ~/.zshrc
 
-### Zplugin Module ###
-module_path+=("$HOME/.zplugin/bin/zmodules/Src")
-zmodload zdharma/zplugin
+# install zplugin
+[[ ! -f ~/.zplugin/bin/zplugin.zsh ]] && {
+    command mkdir -p ~/.zplugin
+    command git clone https://github.com/zdharma/zplugin ~/.zplugin/bin
+}
 
 ### Zplugin ###
 source "$HOME/.zplugin/bin/zplugin.zsh"
 autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
 
-# 256color ZSH Plugin
-zplugin ice wait lucid
-zplugin light "chrissicool/zsh-256color"
+### Zplugin Module ###
+module_path+=("$HOME/.zplugin/bin/zmodules/Src")
+zmodload zdharma/zplugin
 
-# zsh-completions
-zplugin ice wait lucid blockf atpull'zplugin creinstall -q .'
-zplugin light zsh-users/zsh-completions
+# compinit speed up loading
+ZPLGM[COMPINIT_OPTS]=-C
 
-# Yet another zsh completion sources library
-zplugin ice wait lucid blockf atpull'zplugin creinstall -q .'
-zplugin light zchee/zsh-completions
+#
+# Bindkeys
+#
 
-# syntax highlighting
-zplugin ice wait'!1' lucid atinit"zpcompinit; zpcdreplay"
-zplugin light zsh-users/zsh-syntax-highlighting
+autoload up-line-or-beginning-search down-line-or-beginning-search
+autoload history-substring-search-up history-substring-search-down
+autoload autosuggest-execute
 
-zplugin ice wait'1b' lucid atinit"ZPLGM[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay"
-zplugin light zdharma/fast-syntax-highlighting
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+zle -N history-substring-search-up
+zle -N history-substring-search-down
+zle -N autosuggest-execute
 
-# autosuggestions
-# Using Ctrl-Space for quick execute suggest command
-zplugin ice wait'!1' lucid atload"!_zsh_autosuggest_start; bindkey '^ ' autosuggest-execute"
-zplugin light zsh-users/zsh-autosuggestions
+bindkey -v
 
-# zsh-autopair
-zplugin ice wait'!1' lucid atinit"zpcompinit; zpcdreplay"
-zplugin light hlissner/zsh-autopair
+# bind Alt+. to insert last argument of last command
+bindkey -M viins '\e.' insert-last-word
 
-### OMZ ###
-zplugin ice svn multisrc'{clipboard,completion,directories,functions,git,grep,history,key-bindings,misc,termsupport,theme-and-appearance}.zsh' pick'/dev/null'
-zplugin snippet OMZ::lib
+# # Using Ctrl-Space for quick execute suggest command
+bindkey '^ ' autosuggest-execute
 
-# asdf
-zplugin ice svn lucid
-zplugin snippet OMZ::plugins/asdf
+# Bind terminal-specific up and down keys
+# Bind in both emacs and vi modes so it works in both, and is not
+# sensitive to whether this is loaded before or after the vi-mode plugin
+if [[ -n "$terminfo[kcuu1]" ]]; then
+  bindkey -M emacs "$terminfo[kcuu1]" history-substring-search-up
+  bindkey -M viins "$terminfo[kcuu1]" history-substring-search-up
+fi
+if [[ -n "$terminfo[kcud1]" ]]; then
+  bindkey -M emacs "$terminfo[kcud1]" history-substring-search-down
+  bindkey -M viins "$terminfo[kcud1]" history-substring-search-down
+fi
 
-# history-substring-search
-zplugin ice wait lucid
-zplugin light zsh-users/zsh-history-substring-search
+# bind P and N for EMACS mode
+bindkey -M emacs '^P' history-substring-search-up
+bindkey -M emacs '^N' history-substring-search-down
 
-# history-search-multi-word
-zplugin ice wait lucid
-zplugin light zdharma/history-search-multi-word
+# bind k and j for VI mode
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
 
-# gpg-agent
-zplugin ice svn wait lucid
-zplugin snippet OMZ::plugins/gpg-agent
+# disable C-s stopping receiving keyboard signals.
+stty start undef
+stty stop undef
 
-# git
-zplugin ice svn wait atload"unalias grv" lucid
-zplugin snippet OMZ::plugins/git
 
-# Gitignore plugin – commands gii and gi
-zplugin ice wait lucid
-zplugin light voronkovich/gitignore.plugin.zsh
+zplugin light zplugin/z-a-bin-gem-node
+# zplugin light zplugin/z-a-man
 
-# grv
-zplugin ice wait lucid from"gh-r" as"program" mv"grv* -> $ZPFX/bin/grv" pick"$ZPFX/bin/grv"
-zplugin light rgburke/grv
+# OMZ libs and plugins
+zplugin light-mode lucid for \
+                      OMZ::lib/clipboard.zsh \
+                      OMZ::lib/completion.zsh \
+                      OMZ::lib/directories.zsh \
+                      OMZ::lib/functions.zsh \
+                      OMZ::lib/git.zsh \
+                      OMZ::lib/grep.zsh \
+                      OMZ::lib/history.zsh \
+                      OMZ::lib/key-bindings.zsh \
+                      OMZ::lib/misc.zsh \
+                      OMZ::lib/termsupport.zsh \
+                      OMZ::lib/theme-and-appearance.zsh \
+                      OMZ::plugins/asdf/asdf.plugin.zsh \
+                      OMZ::plugins/gcloud/gcloud.plugin.zsh \
+  atload"unalias grv" OMZ::plugins/git/git.plugin.zsh
 
-# aws
-zplugin ice svn wait lucid
-zplugin snippet OMZ::plugins/aws
+# For GNU ls (the binaries can be gls, gdircolors, e.g. on OS X when installing the
+# coreutils package from Homebrew or using https://github.com/ogham/exa)
+zplugin ice wait"0c" lucid reset \
+  atclone"dircolors -b dircolors.ansi-dark > clrs.zsh" \
+  atpull"%atclone" pick"clrs.zsh" nocompile'!' \
+  atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
+zplugin light seebi/dircolors-solarized
 
-# extract
-zplugin ice svn wait lucid
-zplugin snippet OMZ::plugins/extract
+# zplugin ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
+#     atpull'%atclone' pick"clrs.zsh" nocompile'!' \
+#     atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
+# zplugin light trapd00r/LS_COLORS
 
-# encode64
-zplugin ice svn wait lucid
-zplugin snippet OMZ::plugins/encode64
+zplugin as"null" wait light-mode lucid \
+  blockf atpull"zplugin creinstall -q ." for \
+  zsh-users/zsh-completions \
+  zchee/zsh-completions
 
-# alias-tips
-zplugin ice wait lucid
-zplugin light djui/alias-tips
+zplugin wait light-mode lucid for \
+  zsh-users/zsh-history-substring-search \
+  zdharma/history-search-multi-word \
+  OMZ::plugins/gpg-agent/gpg-agent.plugin.zsh \
+  OMZ::plugins/aws/aws.plugin.zsh \
+  OMZ::plugins/extract/extract.plugin.zsh \
+  OMZ::plugins/encode64/encode64.plugin.zsh \
+  OMZ::plugins/vi-mode/vi-mode.plugin.zsh \
+  OMZ::plugins/nmap/nmap.plugin.zsh \
+  OMZ::plugins/kubectl/kubectl.plugin.zsh \
+  OMZ::plugins/helm/helm.plugin.zsh \
+  OMZ::plugins/kops/kops.plugin.zsh \
+  OMZ::plugins/minikube/minikube.plugin.zsh \
+  OMZ::plugins/rsync/rsync.plugin.zsh \
+  OMZ::plugins/sudo/sudo.plugin.zsh \
+  OMZ::plugins/systemd/systemd.plugin.zsh \
+  OMZ::plugins/ubuntu/ubuntu.plugin.zsh \
+  OMZ::plugins/npm/npm.plugin.zsh \
+  OMZ::plugins/yarn/yarn.plugin.zsh \
+  OMZ::plugins/docker-compose/docker-compose.plugin.zsh \
+  OMZ::plugins/docker-machine/docker-machine.plugin.zsh \
+  chrissicool/zsh-256color \
+  voronkovich/gitignore.plugin.zsh \
+  djui/alias-tips \
+  jreese/zsh-titles \
+  SukkaW/zsh-proxy \
+  amstrad/oh-my-matrix \
+  iboyperson/pipenv-zsh \
+  darvid/zsh-poetry \
+  micha/resty \
+  changyuheng/fz \
+  make"PREFIX=$ZPFX install" mptre/yank \
+  thuandt/zsh-terraform \
+  thuandt/zsh-config
 
-# encode64
-zplugin ice svn wait lucid
-zplugin snippet OMZ::plugins/encode64
+zplugin wait light-mode lucid atinit"zpcompinit; zpcdreplay" for \
+  is-snippet id-as"docker/_docker" https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker \
+  is-snippet id-as"docker/_docker-compose" https://github.com/docker/compose/blob/master/contrib/completion/zsh/_docker-compose \
+  is-snippet id-as"docker/_docker-machine" https://github.com/docker/machine/blob/master/contrib/completion/zsh/_docker-machine
 
-# vi-mode
-zplugin ice svn wait lucid
-zplugin snippet OMZ::plugins/vi-mode
-# vi mode key timeout
-export KEYTIMEOUT=1
+  # _arguments:comparguments:325: can only be called from completion function
+  # is-snippet id-as"ogham/_exa" https://github.com/ogham/exa/blob/master/contrib/completions.zsh
 
-# nmap
-zplugin ice svn wait lucid
-zplugin snippet OMZ::plugins/nmap
-
-# gcloud
-export CLOUDSDK_HOME="${HOME}/Applications/google-cloud-sdk"
-zplugin ice svn lucid
-zplugin snippet OMZ::plugins/gcloud
-
-# kubectl
-zplugin ice svn wait lucid
-zplugin snippet OMZ::plugins/kubectl
-
-# helm
-zplugin ice svn wait lucid
-zplugin snippet OMZ::plugins/helm
-
-# kops
-zplugin ice svn wait lucid
-zplugin snippet OMZ::plugins/kops
-
-# minikube
-zplugin ice svn wait lucid
-zplugin snippet OMZ::plugins/minikube
-
-# # ripgrep
-# zplugin ice svn wait as"completion" lucid
-# zplugin snippet OMZ::plugins/ripgrep
-
-# rsync
-zplugin ice svn wait lucid
-zplugin snippet OMZ::plugins/rsync
-
-# sublime
-zplugin ice svn wait lucid
-zplugin snippet OMZ::plugins/sublime
-
-# sudo
-zplugin ice svn wait lucid
-zplugin snippet OMZ::plugins/sudo
-
-# systemd
-zplugin ice svn wait lucid
-zplugin snippet OMZ::plugins/systemd
-
-# ubuntu
-zplugin ice svn wait lucid
-zplugin snippet OMZ::plugins/ubuntu
-
-# npm
-zplugin ice svn wait lucid
-zplugin snippet OMZ::plugins/npm
-
-# yarn
-zplugin ice svn wait lucid
-zplugin snippet OMZ::plugins/yarn
-
-# zsh-diff-so-fancy
-zplugin ice wait lucid as"program" pick"bin/git-dsf"
-zplugin light zdharma/zsh-diff-so-fancy
-
-# fzf
-zplugin ice depth=1 wait lucid \
-  atclone"./install --no-update-rc --key-bindings --completion" \
-  atpull"%atclone" src"$HOME/.fzf.zsh" pick"/dev/null"
-zplugin light junegunn/fzf
+# tig
+zplugin ice wait lucid depth=1 \
+  atclone"./autogen.sh; ./configure --prefix=$ZPFX" \
+  atpull"/bin/cp -f contrib/vim.tigrc ~/.tigrc.vim; /bin/cp -f contrib/git-flow.tigrc ~/.tigrc.git-flow; ./autogen.sh; ./configure --prefix=$ZPFX" \
+  make"prefix=$ZPFX install" \
+  src"contrib/tig-completion.bash" \
+  pick"/dev/null"
+zplugin light jonas/tig
 
 # z
-zplugin ice wait lucid cp"z.sh -> $ZPFX/bin/z" pick"$ZPFX/bin/z" src"z.sh"
+zplugin ice wait lucid mv"z.sh -> z" pick"z" src"z.sh"
 zplugin light rupa/z
 
-# fz
-zplugin ice load'![[ -x z && -x fzf ]]'
-zplugin ice wait"2" lucid
-zplugin light changyuheng/fz
+# fzf completion
+zplugin ice wait lucid multisrc"shell/*.zsh"
+zplugin light junegunn/fzf
 
 # enhancd with fzf
 export ENHANCD_FILTER=fzf
@@ -181,9 +173,10 @@ zplugin ice wait lucid pick"init.sh"
 zplugin light b4b4r07/enhancd
 
 # direnv
-zplugin ice wait from"gh-r" as"program" lucid mv"direnv* -> $ZPFX/bin/direnv" \
-  atclone"$ZPFX/bin/direnv hook zsh > zhook.zsh" atpull"%atclone" \
-  pick"$ZPFX/bin/direnv" src"zhook.zsh"
+zplugin ice as"null" wait lucid from"gh-r" \
+  mv"direnv* -> direnv" \
+  sbin"" src"zhook.zsh" \
+  atclone"./direnv hook zsh > zhook.zsh" atpull"%atclone"
 zplugin light direnv/direnv
 
 # poetry
@@ -205,8 +198,8 @@ zplugin ice has"ccloud" wait as"completion" id-as"confluent-platform" lucid \
 zplugin light zdharma/null
 
 # kubectx
-zplugin ice wait lucid pick"$ZPFX/bin/kube{ctx,ns}" \
-  atclone"git reset --hard; /bin/cp -f kube{ctx,ns} $ZPFX/bin/; cp completion/kubectx.zsh _kubectx; cp completion/kubens.zsh _kubens" \
+zplugin ice wait lucid pick"/dev/null" sbin"kubectx" sbin"kubens" \
+  atclone"git reset --hard; ln -sf completion/kubectx.zsh _kubectx; ln -sf completion/kubens.zsh _kubens" \
   atpull"%atclone"
 zplugin light ahmetb/kubectx
 
@@ -216,116 +209,51 @@ zplugin ice has"rustup" wait as"completion" id-as"rust-completion" lucid \
   atpull"%atclone"
 zplugin light zdharma/null
 
-# miller
-zplugin ice wait lucid from"gh-r" as"program" mv"mlr* -> $ZPFX/bin/mlr" pick"$ZPFX/bin/mlr"
-zplugin light johnkerl/miller
-
-# ogham/exa, replacement for ls
-zplugin ice wait lucid from"gh-r" as"program" mv"exa* -> $ZPFX/bin/exa" pick"$ZPFX/bin/exa"
-zplugin light ogham/exa
-zplugin ice svn wait lucid id-as"exa-completion" as"completion" cp"completions.zsh -> _exa"
-zplugin snippet https://github.com/ogham/exa/trunk/contrib/
-
-# sharkdp/fd
-zplugin ice wait lucid from"gh-r" as"command" \
-  mv"fd* -> fd" \
-  cp"fd/fd -> $ZPFX/bin/fd" \
-  pick"$ZPFX/bin/fd"
-zplugin light sharkdp/fd
-
-# sharkdp/bat
-zplugin ice wait lucid from"gh-r" as"command" \
-  mv"bat* -> bat" \
-  cp"bat/bat -> $ZPFX/bin/bat" \
-  pick"$ZPFX/bin/bat"
-zplugin light sharkdp/bat
-
-# ripgrep
-zplugin ice wait lucid from"gh-r" as"command" \
-  mv"ripgrep* -> rg" \
-  cp"ripgrep/rg -> $ZPFX/bin/rg" \
-  pick"$ZPFX/bin/rg"
-zplugin light BurntSushi/ripgrep
-
-# jq
-zplugin ice wait lucid from"gh-r" as"command" \
-  mv"jq* -> $ZPFX/bin/jq" \
-  pick"$ZPFX/bin/rg"
-zplugin light stedolan/jq
-
-# hub
-zplugin ice wait lucid from"gh-r" as"command" \
-  mv"hub* -> hub" \
-  cp"hub/bin/hub -> $ZPFX/bin/hub" \
-  pick"$ZPFX/bin/hub" \
-  atclone"cp hub/etc/hub.zsh_completion _hub" \
-  atpull"%atclone"
-zplugin light github/hub
-
-# yank
-zplugin ice wait lucid as"program" pick"$ZPFX/bin/yank" make"PREFIX=$ZPFX install"
-zplugin light mptre/yank
-
-# tig
-zplugin ice wait lucid as"program" \
-  atclone"/bin/cp -f contrib/vim.tigrc ~/.tigrc.vim; /bin/cp -f contrib/git-flow.tigrc ~/.tigrc.git-flow; ./autogen.sh; ./configure --prefix=$ZPFX" \
-  atpull"%atclone" \
-  make"prefix=$ZPFX install" \
-  pick"$ZPFX/bin/tig" \
-  src"contrib/tig-completion.bash"
-zplugin light jonas/tig
-
-# docker
-zplugin ice svn wait lucid id-as"docker-completion" as"completion"
-zplugin snippet https://github.com/docker/cli/trunk/contrib/completion/zsh/
-
-# docker-compose
-zplugin ice svn wait lucid id-as"docker-compose-completion" as"completion"
-zplugin snippet https://github.com/docker/compose/trunk/contrib/completion/zsh/
-zplugin ice svn wait lucid nocompletions
-zplugin snippet OMZ::plugins/docker-compose
-
-# docker-machine
-zplugin ice svn wait lucid id-as"docker-machine-completion" as"completion"
-zplugin snippet https://github.com/docker/machine/trunk/contrib/completion/zsh/
-zplugin ice svn wait lucid nocompletions
-zplugin snippet OMZ::plugins/docker-machine
-
-# manydots-magic
-zplugin ice wait'!1' lucid atinit"zpcompinit; zpcdreplay" pick"manydots-magic"
-zplugin light "knu/zsh-manydots-magic"
-
-# zsh-titles
-zplugin ice wait lucid
-zplugin light jreese/zsh-titles
-
-# zsh-proxy
-zplugin ice wait lucid
-zplugin light SukkaW/zsh-proxy
-
-# resty
-zplugin ice wait lucid
-zplugin light micha/resty
-
 # color logger
 zplugin ice wait lucid src"color-logger.bash" pick"/dev/null"
 zplugin light swyckoff/color-logger-bash
 
-# calc
-zplugin ice wait"2" lucid
-zplugin light arzzen/calc.plugin.zsh
 
-# For GNU ls (the binaries can be gls, gdircolors, e.g. on OS X when installing the
-# coreutils package from Homebrew or using https://github.com/ogham/exa)
-zplugin ice atclone"dircolors -b dircolors.ansi-dark > clrs.zsh" \
-  atpull'%atclone' pick"clrs.zsh" nocompile'!' \
-  atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
-zplugin light seebi/dircolors-solarized
+zplugin wait"!1b" light-mode lucid for \
+  atinit"zpcompinit; zpcdreplay" zsh-users/zsh-syntax-highlighting \
+  atinit"zpcompinit; zpcdreplay" zdharma/fast-syntax-highlighting \
+  atload"_zsh_autosuggest_start" zsh-users/zsh-autosuggestions \
+  atinit"zpcompinit; zpcdreplay" hlissner/zsh-autopair
 
-# zplugin ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
-#     atpull'%atclone' pick"clrs.zsh" nocompile'!' \
-#     atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
-# zplugin light trapd00r/LS_COLORS
+zplugin as"null" wait"2" light-mode lucid from"gh-r" for \
+                              fbin"bin/git-dsf" \
+                              sbin"bin/diff-so-fancy" \
+                              fbin"bin/diff-so-fancy" \
+                                                  zdharma/zsh-diff-so-fancy \
+                              sbin""              isacikgoz/tldr \
+    mv"exa* -> exa"           sbin""              ogham/exa \
+    mv"mlr* -> mlr"           sbin""              johnkerl/miller \
+    mv"jq* -> jq"             sbin""              stedolan/jq \
+    mv"hadolint* -> hadolint" sbin""              hadolint/hadolint \
+    mv"shfmt* -> shfmt"       sbin""              @mvdan/sh \
+    mv"grv* -> grv"           sbin""              @rgburke/grv \
+    mv"fd* -> fd"             sbin"fd/fd"         @sharkdp/fd \
+    mv"ripgrep* -> rg"        sbin"rg/rg"         BurntSushi/ripgrep \
+    mv"bat* -> bat"           sbin"bat/bat"       @sharkdp/bat \
+                              sbin"fzf" fbin"fzf" junegunn/fzf-bin
+
+# fz and calc
+zplugin wait"2" light-mode lucid for \
+  changyuheng/fz \
+  arzzen/calc.plugin.zsh
+
+# hub
+zplugin ice wait"2" lucid from"gh-r" \
+  mv"hub* -> hub" \
+  sbin"hub/bin/hub" \
+  pick"/dev/null" \
+  atclone"ln -sf hub/etc/hub.zsh_completion _hub" \
+  atpull"%atclone"
+zplugin light github/hub
+
+# manydots-magic
+zplugin ice wait'!2' lucid atinit"zpcompinit; zpcdreplay" pick"manydots-magic"
+zplugin light "knu/zsh-manydots-magic"
 
 ### THEME ###
 POWERLEVEL9K_MODE="nerdfont-complete"
@@ -341,11 +269,12 @@ POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="╭─"
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="╰─%B➤%b "
 POWERLEVEL9K_DISABLE_RPROMPT=true
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-POWERLEVEL9K_SHORTEN_STRATEGY="truncate_to_unique"
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_to_first_and_last"
 POWERLEVEL9K_NODE_VERSION_BACKGROUND="022"
 POWERLEVEL9K_VIRTUALENV_BACKGROUND="blue"
 POWERLEVEL9K_KUBECONTEXT_BACKGROUND="027"
+POWERLEVEL9K_AWS_BACKGROUND="yellow"
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND="011"
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND="$DEFAULT_COLOR"
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD="5"
@@ -356,14 +285,6 @@ zplugin light romkatv/powerlevel10k
 # TODO: switch to powerlevel10k 100%
 # zplugin ice atload'!source ~/.p10k.zsh; _p9k_precmd' lucid
 # zplugin load romkatv/powerlevel10k
-
-# terraform
-zplugin ice wait lucid
-zplugin light thuandt/zsh-terraform
-
-# my zsh customize config
-zplugin ice wait lucid
-zplugin light thuandt/zsh-config
 
 # Username completion.
 # Delete old definitions
@@ -406,34 +327,6 @@ fi
 export PYTHON_HOST_PROG="$(asdf which python)"
 # shellcheck disable=SC2155
 export PYTHON3_HOST_PROG="$(asdf which python3)"
-
-# Key bindings
-# bind Alt+. to insert last argument of last command
-bindkey -M viins '\e.' insert-last-word
-
-# Bind terminal-specific up and down keys
-# Bind in both emacs and vi modes so it works in both, and is not
-# sensitive to whether this is loaded before or after the vi-mode plugin
-if [[ -n "$terminfo[kcuu1]" ]]; then
-  bindkey -M emacs "$terminfo[kcuu1]" history-substring-search-up
-  bindkey -M viins "$terminfo[kcuu1]" history-substring-search-up
-fi
-if [[ -n "$terminfo[kcud1]" ]]; then
-  bindkey -M emacs "$terminfo[kcud1]" history-substring-search-down
-  bindkey -M viins "$terminfo[kcud1]" history-substring-search-down
-fi
-
-# bind P and N for EMACS mode
-bindkey -M emacs '^P' history-substring-search-up
-bindkey -M emacs '^N' history-substring-search-down
-
-# bind k and j for VI mode
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
-
-# disable C-s stopping receiving keyboard signals.
-stty start undef
-stty stop undef
 
 # Tilix
 # https://github.com/gnunn1/tilix/wiki/VTE-Configuration-Issue
