@@ -150,8 +150,8 @@ set cursorcolumn    " highlight the current column
 
 call plug#begin('~/.config/nvim/plugged')
 
-let g:python_host_prog  = 'python2'
-let g:python3_host_prog = 'python3'
+let g:python_host_prog  = '~/.pyenv/shims/python'
+let g:python3_host_prog = '~/.pyenv/shims/python3'
 
 
 " =============================================================================
