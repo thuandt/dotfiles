@@ -27,6 +27,8 @@ export USE_EDITOR="${EDITOR}"
 export SVN_EDITOR="${EDITOR}"
 export GIT_EDITOR="${EDITOR}"
 export KUBE_EDITOR="${EDITOR}"
+export SUDO_EDITOR="${EDITOR}"
+export SYSTEMD_EDITOR=${EDITOR}
 export XDG_CONFIG_HOME="${HOME}/.config"
 
 export BAT_THEME="TwoDark"
@@ -84,9 +86,19 @@ if [[ "$OSTYPE" == linux* ]]; then
   export CABAL=$HOME/.cabal/bin                                 # Haskell cabal
   export YARNBIN=$HOME/.yarn/bin                                # yarn
   export YARNGLOBAL=$HOME/.config/yarn/global/node_modules/.bin # yarn global
+  export FLYCTL_INSTALL="$HOME/.fly"
 
   # My custom path
-  MYPATH=("${POETRY}" "${PULUMI}" "${KREW_ROOT}/bin" "${CARGO}" "${CABAL}" "${YARNBIN}" "${YARNGLOBAL}")
+  MYPATH=(
+    "${POETRY}"
+    "${PULUMI}"
+    "${KREW_ROOT}/bin"
+    "${CARGO}"
+    "${CABAL}"
+    "${YARNBIN}"
+    "${YARNGLOBAL}"
+    "${FLYCTL_INSTALL}/bin"
+  )
 
   # Add directory to $PATH if its not already there
   for p in "${MYPATH[@]}"; do
@@ -125,7 +137,7 @@ if [[ "$OSTYPE" == linux* ]]; then
 
   # systemd import environment
   # https://wiki.archlinux.org/index.php/systemd/User#Environment_variables
-  systemctl --user import-environment PATH EDITOR KUBE_EDITOR
+  systemctl --user import-environment PATH EDITOR KUBE_EDITOR SYSTEMD_EDITOR
 fi
 
 ### API keys ###
@@ -157,5 +169,11 @@ export MACVENDORS_TOKEN
 # Mullvad VPN account number
 MULLVAD_ACCOUNT_NUMBER=$(secret-tool lookup account mullvad)
 export MULLVAD_ACCOUNT_NUMBER
+
+# Tailscale
+TAILSCALE_API_KEY=$(secret-tool lookup token tailscale_api_key)
+export TAILSCALE_API_KEY
+TAILNET=$(secret-tool lookup tailnet tailscale)
+export TAILNET
 
 # End of ~/.zshenv
