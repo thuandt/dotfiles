@@ -1,4 +1,10 @@
-dotfiles
-========
+# dotfiles
 
-Config files for zsh, bash, screen, tmux .v.v.
+- zsh
+- vim (SpaceVim)
+- tmux
+- fontconfig
+- awesome (copycats)
+- emacs (Spacemacs)
+- mpv
+- screen
