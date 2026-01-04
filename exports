@@ -14,9 +14,10 @@ if [[ "$OSTYPE" = linux* ]] ; then
     export GOPATH=$HOME/.go                        # gocode
     export GOROOT=/usr/local/go                    # golang
     export TFENV=$HOME/.tfenv/bin                  # tfenv
+    export YARNBIN=$(yarn global bin)              # yarn
 
     # My custom path
-    export MYPATH=${MYBIN}:${TFENV}:${CARGOBIN}:${GOPATH}/bin
+    export MYPATH=${MYBIN}:${TFENV}:${CARGOBIN}:${GOPATH}/bin:${YARNBIN}
 
     # Add directory to $PATH if it's not already there
     if [[ ":$PATH:" != *":${MYPATH}:"* ]]; then PATH=${MYPATH}:$PATH; fi
