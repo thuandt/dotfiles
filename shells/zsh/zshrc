@@ -333,6 +333,14 @@ zinit ice wait"2" lucid from"gh-r" \
   atpull"%atclone"
 zinit light github/hub
 
+# golangci-lint
+zinit ice wait"2" lucid from"gh-r" \
+  mv"golangci-lint* -> golangci-lint" \
+  sbin"golangci-lint/golangci-lint" \
+  pick"/dev/null" \
+  atload"source <(golangci-lint completion zsh)"
+zinit light golangci/golangci-lint
+
 # manydots-magic
 zinit ice wait'!2' lucid atinit"zicompinit; zicdreplay" pick"manydots-magic"
 zinit light "knu/zsh-manydots-magic"
