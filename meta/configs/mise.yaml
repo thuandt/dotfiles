@@ -1,0 +1,5 @@
+- create:
+    - ~/.config/mise
+
+- link:
+    ~/.config/mise/config.toml: tools/mise/config.toml

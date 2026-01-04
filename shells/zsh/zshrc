@@ -116,24 +116,6 @@ zinit light-mode lucid as'null' from'gh-r' \
   atclone'./direnv hook zsh > zhook.zsh' \
   atpull'%atclone' for direnv/direnv
 
-# dog: replacement for dig
-zinit light-mode lucid as'null' from'gh-r' \
-  sbin'bin/dog' \
-  atclone'ln -sf completions/dog.zsh _dog' \
-  atpull'%atclone' for ogham/dog
-
-# doggo: Command-line DNS client for humans
-zinit light-mode lucid as'null' from'gh-r' \
-  sbin'doggo' \
-  atclone'ln -sf completions/doggo.zsh _doggo' \
-  atpull'%atclone' for mr-karan/doggo
-
-# kubectx
-zinit light-mode lucid pick'/dev/null' \
-  sbin'kubectx' sbin'kubens' \
-  atclone'ln -sf completion/_kubectx.zsh _kubectx; ln -sf completion/_kubens.zsh _kubens' \
-  atpull'%atclone' for ahmetb/kubectx
-
 # ansiweather
 zinit light-mode lucid pick'/dev/null' sbin'ansiweather' for fcambus/ansiweather
 
@@ -145,27 +127,6 @@ zinit light-mode lucid has'poetry' as'completion' id-as'poetry/completion' \
   atclone'poetry completions zsh > _poetry' \
   atpull'%atclone' for zdharma-continuum/null
 
-# # eksctl
-# zinit ice wait lucid id-as'weaveworks/eksctl-bin' \
-#   atclone'tar xzf eksctl-bin; rm -f eksctl-bin; ./eksctl completion zsh > _eksctl' \
-#   atpull'%atclone' \
-#   sbin'eksctl' \
-#   pick'/dev/null'
-# zinit snippet https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz
-
-# rust
-export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
-zinit light-mode lucid has'rustup' as'completion' id-as'rust/completion' \
-  atclone'rustup completions zsh > _rustup; rustup completions zsh cargo > _cargo' \
-  atpull'%atclone' for zdharma-continuum/null
-
-# rclone
-zinit light-mode lucid from'gh-r' pick'/dev/null' \
-  mv'rclone* -> rclone' \
-  sbin'rclone/rclone' \
-  atclone'./rclone/rclone genautocomplete zsh _rclone' \
-  atpull'%atclone' for rclone/rclone
-
 # exercism
 zinit light-mode lucid from'gh-r' \
   atclone'ln -sf shell/exercism_completion.zsh _exercism' \
@@ -173,70 +134,14 @@ zinit light-mode lucid from'gh-r' \
   sbin'exercism' \
   pick'/dev/null' for exercism/cli
 
-# container-diff
-zinit ice wait lucid id-as'GoogleContainerTools/container-diff' \
-  sbin'container-diff' \
-  pick'/dev/null'
-zinit snippet https://storage.googleapis.com/container-diff/latest/container-diff-linux-amd64
-
-# cloud_sql_proxy
-zinit ice wait lucid id-as'GoogleCloudPlatform/cloud_sql_proxy' \
-  sbin'cloud_sql_proxy' \
-  pick'/dev/null'
-zinit snippet https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.15.2/cloud-sql-proxy.linux.amd64
-
-# telepresence
-zinit ice wait lucid id-as'telepresenceio/telepresence' \
-  sbin'telepresence' \
-  pick'/dev/null'
-zinit snippet https://app.getambassador.io/download/tel2/linux/amd64/latest/telepresence
-
 zinit wait light-mode lucid for \
   pick'manydots-magic' knu/zsh-manydots-magic \
   zchee/zsh-completions
 
 zinit light-mode lucid as'null' from'gh-r' for \
-  sbin'stern' stern/stern \
-  sbin'cue' cue-lang/cue \
-  sbin'k9s' derailed/k9s \
   sbin'procs' dalance/procs \
   sbin'noti' variadico/noti \
-  sbin'ktlint' pinterest/ktlint \
-  sbin'pg_flame' mgartner/pg_flame \
-  sbin'doctl' digitalocean/doctl \
-  mv'yq* -> yq' sbin'yq' mikefarah/yq \
-  sbin'postgrest' PostgREST/postgrest \
-  sbin'tflint' terraform-linters/tflint \
-  sbin'terraform-lsp' juliosueiras/terraform-lsp \
-  sbin'conftest' open-policy-agent/conftest \
-  sbin'age' sbin'age-keygen' FiloSottile/age \
-  sbin'hugo' bpick'*ext*64bit*' gohugoio/hugo \
-  sbin'ksops' viaduct-ai/kustomize-sops \
-  mv'jq* -> jq' sbin'jq' jqlang/jq \
-  mv'jaq* -> jaq' sbin'jaq' 01mf02/jaq \
-  sbin'tfsec' bpick'*amd64.tar.gz' aquasecurity/tfsec \
-  mv'*q* -> q' sbin'q' harelba/q \
-  sbin'flatc' google/flatbuffers \
-  mv'gdu* -> gdu' sbin'gdu' dundee/gdu \
-  sbin'zed' sbin'zq' brimdata/zed \
-  sbin'steampipe' turbot/steampipe \
-  sbin'powerpipe' turbot/powerpipe \
-  mv'grv* -> grv' sbin'grv' @rgburke/grv \
-  mv'shfmt* -> shfmt' sbin'shfmt' @mvdan/sh \
-  mv'upx* -> upx' sbin'upx/upx' upx/upx \
   mv'exa* -> exa' sbin'bin/exa' ogham/exa \
-  mv'opa* -> opa' sbin'opa' open-policy-agent/opa \
-  mv'guetzli* -> guetzli' sbin'guetzli' google/guetzli \
-  mv'mkcert* -> mkcert' sbin'mkcert' FiloSottile/mkcert \
-  mv'fluxctl* -> fluxctl' sbin'fluxctl' fluxcd/flux \
-  sbin'terraform-docs' terraform-docs/terraform-docs \
-  mv'infracost* -> infracost' sbin'infracost' infracost/infracost \
-  mv'hlint* -> hlint' sbin'hlint/hlint' ndmitchell/hlint \
-  mv'trdsql* -> trdsql' sbin'trdsql/trdsql' noborus/trdsql \
-  mv'miller* -> miller' sbin'miller/mlr' bpick'*amd64.tar.gz' johnkerl/miller \
-  mv'stack* -> stack' sbin'stack/stack' bpick'*.tar.gz' commercialhaskell/stack \
-  sbin'flyctl' atclone'./flyctl completion zsh > _flyctl' atpull'%atclone' superfly/flyctl \
-  mv'argocd-image-updater* -> argocd-image-updater' sbin'argocd-image-updater' argoproj-labs/argocd-image-updater \
   mv'stylish-haskell* -> stylish-haskell' sbin'stylish-haskell/stylish-haskell' @haskell/stylish-haskell
 
 # zsh-diff-so-fancy
