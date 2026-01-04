@@ -95,14 +95,72 @@ alias cpuinfo='lscpu'
 ## get GPU ram on desktop / laptop##
 alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
 
+## hardware info
+# lshw
+# dmidecode --type <keyword>
+#
+# Keyword     Types
+# ------------------------------
+# bios        0, 13
+# system      1, 12, 15, 23, 32
+# baseboard   2, 10
+# chassis     3
+# processor   4
+# memory      5, 6, 16, 17
+# cache       7
+# connector   8
+# slot        9
+
+
+# Type   Information
+# ----------------------------------------
+#    0   BIOS
+#    1   System
+#    2   Base Board
+#    3   Chassis
+#    4   Processor
+#    5   Memory Controller
+#    6   Memory Module
+#    7   Cache
+#    8   Port Connector
+#    9   System Slots
+#   10   On Board Devices
+#   11   OEM Strings
+#   12   System Configuration Options
+#   13   BIOS Language
+#   14   Group Associations
+#   15   System Event Log
+#   16   Physical Memory Array
+#   17   Memory Device
+#   18   32-bit Memory Error
+#   19   Memory Array Mapped Address
+#   20   Memory Device Mapped Address
+#   21   Built-in Pointing Device
+#   22   Portable Battery
+#   23   System Reset
+#   24   Hardware Security
+#   25   System Power Controls
+#   26   Voltage Probe
+#   27   Cooling Device
+#   28   Temperature Probe
+#   29   Electrical Current Probe
+#   30   Out-of-band Remote Access
+#   31   Boot Integrity Services
+#   32   System Boot
+#   33   64-bit Memory Error
+#   34   Management Device
+#   35   Management Device Component
+#   36   Management Device Threshold Data
+#   37   Memory Channel
+#   38   IPMI Device
+#   39   Power Supply
+
+
 ## this one saved by butt so many times ##
 alias wget='wget -c'
 
 ## start simple server with python SimpleHTTPServer at port 8000
 alias simple-server='python -m SimpleHTTPServer 8000'
-
-## dmesg with colored human-readable dates
-alias dmesg="dmesg -T|sed -e 's|\(^.*'$(date +%Y)']\)\(.*\)|\x1b[0;34m\1\x1b[0m - \2|g'"
 
 ## What's my public ip address?
 #alias whatismyip="curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
@@ -115,8 +173,6 @@ alias random_mac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'"
 ## Secure delete file
 alias secure-delete='shred -n 200 -z -u'
 
-alias mtr='mtr --no-dns'
-
 ## Purging configuration files on Debian-based system
 alias agpc="sudo aptitude purge '~c'"
 
@@ -128,6 +184,9 @@ alias java8-set-default='sudo update-java-alternatives -s java-8-oracle'
 # Using pew instead virtualenvwrapper
 alias workon='pew workon'
 
+# Use ptpython inside virtualenv
+alias ptpython="python -m ptpython"
+
 # dstat alias
 alias dstat-full='dstat -Tclmdrn'
 alias dstat-mem='dstat -Tclm'
@@ -135,7 +194,90 @@ alias dstat-cpu='dstat -Tclr'
 alias dstat-net='dstat -Tclnd'
 alias dstat-disk='dstat -Tcldr'
 
-# The sliver searcher (ag)
-alias Ag='/usr/bin/ag'
+# Golang aliases
+alias alpine-go="CGO_ENABLED=0 go build -a -installsuffix cgo -ldflags '-s -w -X main.Version=dev'"
+
+# The Sliver Searcher (ag)
+# conflict with ubuntu plugin
+alias ag='command ag'
+
+# SSH without HostKeyChecking and KnownHosts
+alias tssh="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+
+### Docker aliases ###
+# Stop all running containers
+alias dsa='docker stop $(docker ps -a -q)'
+# remove all containers, even stopped ones
+alias drm='docker rm $(docker ps -aq)'
+# Delete all existing images
+alias docker-container-cleanup='docker images -q -a | xargs -r docker rmi'
+docker-images-cleanup () {
+    docker images | grep '^<none>' | awk '{ print $3 }' | xargs -r docker rmi
+}
+alias docker-volume-cleanup="docker volume ls -qf dangling=true | xargs -r docker volume rm"
+
+### Git flow aliaes ###
+alias gfl='git flow'
+alias gfli='git flow init'
+alias gcd='git checkout develop'
+alias gch='git checkout hotfix'
+alias gcr='git checkout release'
+alias gflf='git flow feature'
+alias gflh='git flow hotfix'
+alias gflr='git flow release'
+alias gflfs='git flow feature start'
+alias gflhs='git flow hotfix start'
+alias gflrs='git flow release start'
+alias gflff='git flow feature finish'
+alias gflhf='git flow hotfix finish'
+alias gflrf='git flow release finish'
+
+
+### Kubernetes aliases ###
+alias kpfz="kubectl config use-context gke_gke-infrastructure_asia-east1-a_integration"
+alias kss="kubectl config use-context gke_docomodigital-146813_asia-east1-c_keymono-staging"
+
+alias k="kubectl"
+alias kg="kubectl get"
+alias ke="kubectl edit"
+alias ked="kubectl edit deployment"
+alias kecm="kubectl edit configmap"
+alias kes="kubectl edit svc"
+
+alias kn="kubectl get nodes"
+alias ks="kubectl get svc"
+alias kr="kubectl get rs"
+alias krc="kubectl get rc"
+alias kd="kubectl get deployment"
+alias kp="kubectl get pods"
+alias kk="kubectl get svc,deployment,rs,pods"
+
+alias dsn="kubectl describe node"
+alias dss="kubectl describe svc"
+alias dsr="kubectl describe rs"
+alias dsrc="kubectl describe rc"
+alias dsd="kubectl describe deployment"
+alias dsp="kubectl describe pod"
+
+# alias kl="kubectl logs"
+alias kl="kubectl logs --follow"
+alias kx="kubectl exec"
+alias xx="kubectl exec -ti"
+alias kcf="kubectl create -f"
+alias kdf="kubectl delete -f"
+alias ddr="kubectl delete rs"
+alias ddd="kubectl delete deployment"
+alias ddrc="kubectl delete rc"
+alias dds="kubectl delete svc"
+alias ddp="kubectl delete pod"
+alias kcm="kubectl create configmap"
+alias kdm="kubectl delete configmap"
+alias kscl="kubectl get hpa"
+
+# scale
+scl() {
+    kubectl scale deployment "$1" --replicas="$2"
+}
+alias sclr="kubectl scale rc"
 
 # End of ~/.shell_aliases
