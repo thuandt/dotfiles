@@ -138,6 +138,7 @@ zplugin wait light-mode lucid depth=1 for \
   make"install prefix=$ZPFX" axboe/fio \
   thuandt/zsh-terraform \
   thuandt/zsh-pipx \
+  thuandt/zsh-aliyun \
   thuandt/zsh-config
 
 zplugin wait light-mode lucid atinit"zpcompinit; zpcdreplay" for \
@@ -272,7 +273,7 @@ zplugin snippet https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64
 
 # smv
 zplugin ice wait"2" lucid id-as"smartversion/smartvs" \
-  atclone"unzip smartvs; rm -f smartvs" \
+  atclone"unzip -o smartvs; rm -f smartvs" \
   atpull"%atclone" \
   sbin"smv" \
   pick"/dev/null"
