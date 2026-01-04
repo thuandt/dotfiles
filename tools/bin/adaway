@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Filename: install-adblocking-hosts
 # Description: Script to automate building an adblocking hosts file
 
 PROGRAM="${0##*/}"
