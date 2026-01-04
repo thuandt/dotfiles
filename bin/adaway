@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Filename: install-adblocking-hosts
 # Description: Script to automate building an adblocking hosts file
 
@@ -7,13 +7,21 @@ temphosts=$(mktemp)
 systemhosts="/etc/hosts"
 lastupdate=$(date)
 
+# Adway lists
+adaway_list=( "http://adaway.org/hosts.txt"
+              "http://winhelp2002.mvps.org/hosts.txt"
+              "http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext"
+              "http://www.malwaredomainlist.com/hostslist/hosts.txt"
+              "http://someonewhocares.org/hosts/zero/hosts"
+            )
+
 # Obtain various hosts files and merge into one
-echo "Downloading ad-blocking hosts files..."
-wget -q -O - "http://adaway.org/hosts.txt" >> "$temphosts"
-wget -q -O - "http://winhelp2002.mvps.org/hosts.txt" >> "$temphosts"
-wget -q -O - "http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext" >> "$temphosts"
-wget -q -O - "http://www.malwaredomainlist.com/hostslist/hosts.txt" >> "$temphosts"
-wget -q -O - "http://someonewhocares.org/hosts/zero/hosts" >> "$temphosts"
+echo "Downloading adaway list ..."
+for i in "${adaway_list[@]}"
+do
+   wget -q -O - "$i" >> "$temphosts"
+done
+
 
 # Processing hosts file:
 # 1. Remove MS-DOS carriage returns
@@ -26,7 +34,7 @@ wget -q -O - "http://someonewhocares.org/hosts/zero/hosts" >> "$temphosts"
 # 5. Convert tabs to spaces
 # 6. Remove extra spaces
 echo "Parsing and merging hosts files..."
-sed -i -e 's/\r//' -e 's/127.0.0.1/0.0.0.0/' -e '/^0.0.0.0/!d' -e '/localhost/d' -e 's/#.*$//' -e 's/\t/ /g' -e 's/  */ /g' $temphosts
+sed -i -e 's/\r//' -e 's/127.0.0.1/0.0.0.0/' -e '/^0.0.0.0/!d' -e '/localhost/d' -e 's/#.*$//' -e 's/\t/ /g' -e 's/  */ /g' "$temphosts"
 
 # Combine system hosts with adblocks
 echo "Merging with original system hosts..."
@@ -37,4 +45,4 @@ echo "# There is no place like 127.0.0.1" >> $systemhosts
 echo "# Last update at $lastupdate" >> $systemhosts
 
 # Remove duplicate using sort and add them to system hosts file
-sort -u $temphosts >> $systemhosts
+sort -u "$temphosts" >> "$systemhosts"
