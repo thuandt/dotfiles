@@ -1,5 +1,6 @@
 \set PROMPT1 '%~%#%x '
 \x auto
+\set AUTOCOMMIT on
 \set ON_ERROR_STOP on
 \set ON_ERROR_ROLLBACK interactive
 \set HISTFILE ~/.psql_history-:DBNAME
