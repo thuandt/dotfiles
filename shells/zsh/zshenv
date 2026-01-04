@@ -27,6 +27,7 @@ export USE_EDITOR="${EDITOR}"
 export SVN_EDITOR="${EDITOR}"
 export GIT_EDITOR="${EDITOR}"
 export KUBE_EDITOR="code --wait"
+export XDG_CONFIG_HOME="${HOME}/.config"
 
 export BAT_THEME="TwoDark"
 
@@ -67,6 +68,12 @@ export ENHANCD_FILTER=fzf
 export ENHANCD_DISABLE_DOT=1
 export ENHANCD_DISABLE_HYPHEN=1
 export ENHANCD_DISABLE_HOME=1
+
+# poetry
+export POETRY_VENV_IN_PROJECT=1
+export POETRY_VIRTUALENVS_CREATE=1
+export POETRY_VIRTUALENVS_IN_PROJECT=1
+export POETRY_INSTALL_DEPENDENCIES=1
 
 if [[ "$OSTYPE" == linux* ]]; then
   ### Setup PATH ###
