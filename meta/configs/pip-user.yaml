@@ -1,11 +1,11 @@
 - pip:
-    file: python/requirements-user.txt
+    file: tools/pip/requirements-user.txt
     binary: /usr/local/bin/pip3
     user: true
     stdout: false
     stderr: true
 
 - pipx:
-    file: python/requirements-pipx.txt
+    file: tools/pip/requirements-pipx.txt
     stdout: false
     stderr: true
