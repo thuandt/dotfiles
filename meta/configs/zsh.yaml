@@ -1,5 +1,5 @@
 - link:
-  ~/.zshrc: shells/zsh/zshrc
-  ~/.zshenv: shells/zsh/zshenv
-  ~/.zlogout: shells/zsh/zlogout
-  ~/.zprofile: shells/zsh/zprofile
+    ~/.zshrc: shells/zsh/zshrc
+    ~/.zshenv: shells/zsh/zshenv
+    ~/.zlogout: shells/zsh/zlogout
+    ~/.zprofile: shells/zsh/zprofile
