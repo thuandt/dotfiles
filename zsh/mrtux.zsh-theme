@@ -12,7 +12,7 @@ local current_time=$time_enabled
 # rvm_ruby
 local rvm_ruby=''
 if which rvm-prompt &> /dev/null; then
-  rvm_ruby='%{$fg[red]%}‹$(rvm-prompt i v g)›%{$reset_color%}'
+  rvm_ruby='rvm:%{$fg[red]%}‹$(rvm-prompt i v g)›%{$reset_color%}'
 else
   if which rbenv &> /dev/null; then
     rvm_ruby='%{$fg[red]%}‹$(rbenv version | sed -e "s/ (set.*$//")›%{$reset_color%}'
