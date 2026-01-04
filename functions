@@ -181,6 +181,7 @@ if [[ "$OSTYPE" = linux* ]] ; then
         repos_dl="https://github.com/google/protobuf/releases/download/v${version}/protoc-${version}-linux-x86_64.zip"
         curl -sSL $repos_dl -o /tmp/protoc.zip
         sudo unzip -qq -o -d /usr/local/ /tmp/protoc.zip
+        sudo chmod +x /usr/local/bin/protoc
         /bin/rm -f /tmp/protoc.zip
     }
 
