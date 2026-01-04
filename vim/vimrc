@@ -1,10 +1,341 @@
 " File: ~/.vimrc
-" Last Modified: 14/01/2014 12:21 AM
 
-" =========================== Basic configuration ===========================
+filetype plugin indent on
 
-filetype off
-set nocompatible " explicitly get out of vi-compatible mode
+
+"Press Leader with both of my thumbs, and my fingers are always on home row
+let g:mapleader = "\<Space>"
+
+" Automatic installation vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+
+" =============================================================================
+" Appearance
+" =============================================================================
+
+" Solarized
+Plug 'altercation/vim-colors-solarized'
+
+" vim-airline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+" {{{
+  let g:airline_powerline_fonts = 1
+  let g:airline_theme = 'solarized'
+
+  let g:airline_section_z = '%2p%% %2l/%L:%2v'
+  let g:airline#extensions#branch#enabled = 1
+  let g:airline#extensions#syntastic#enabled = 0
+  let g:airline#extensions#whitespace#enabled = 0
+  let g:airline_exclude_preview = 1
+
+  " Tabline
+  let g:airline#extensions#tabline#enabled = 1
+  let g:airline#extensions#tabline#show_buffers = 1
+  let g:airline#extensions#tabline#show_tabs = 0
+  let g:airline#extensions#tabline#buffer_idx_mode = 1
+  let g:airline#extensions#tabline#fnamecollapse = 1
+  let g:airline#extensions#tabline#show_close_button = 0
+  let g:airline#extensions#tabline#show_tab_type = 0
+  let g:airline#extensions#tabline#buffer_min_count = 2
+
+  nmap <leader>1 <Plug>AirlineSelectTab1
+  nmap <leader>2 <Plug>AirlineSelectTab2
+  nmap <leader>3 <Plug>AirlineSelectTab3
+  nmap <leader>4 <Plug>AirlineSelectTab4
+  nmap <leader>5 <Plug>AirlineSelectTab5
+  nmap <leader>6 <Plug>AirlineSelectTab6
+  nmap <leader>7 <Plug>AirlineSelectTab7
+  nmap <leader>8 <Plug>AirlineSelectTab8
+  nmap <leader>9 <Plug>AirlineSelectTab9
+" }}}
+
+" The fancy start screen for Vim.
+Plug 'mhinz/vim-startify'
+" {{{
+  let g:startify_session_dir = '~/.vim/session'
+  let g:startify_list_order = ['sessions']
+  let g:startify_session_persistence = 1
+  let g:startify_session_delete_buffers = 1
+  let g:startify_change_to_dir = 1
+  let g:startify_change_to_vcs_root = 1
+  nnoremap <F12> :Startify<CR>
+  autocmd! User Startified setlocal colorcolumn=0
+" }}}
+
+Plug 't9md/vim-choosewin'
+" {{{
+  nmap - <Plug>(choosewin)
+  let g:choosewin_blink_on_land = 0
+  let g:choosewin_tabline_replace = 0
+  let g:choosewin_overlay_enable = 1
+" }}}
+
+" The NERD Tree:  A tree explorer plugin for vim
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+
+" Open NERDTree with Ctrl+n
+map <C-n> :NERDTreeToggle<CR>
+
+
+
+" =============================================================================
+" Completion
+" =============================================================================
+
+" YouCompleteMe: a code-completion engine for Vim
+function! BuildYCM(info)
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !./install.py --clang-completer --gocode-completer --tern-completer --racer-completer
+  endif
+endfunction
+
+Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM'), 'for': ['cpp', 'python', 'javascript', 'go', 'rust'] }
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_complete_in_strings = 1
+
+" Rust source tree
+let g:ycm_rust_src_path = '/home/mrtux/DevProjects/opensource/rustsrc'
+
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+autocmd! User YouCompleteMe if !has('vim_starting') | call youcompleteme#Enable() | endif
+
+" UltiSnips - The ultimate snippet solution for Vim
+Plug 'SirVer/ultisnips'
+
+" Trigger configuration.
+" Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsListSnippets = '<nop>'
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:ulti_expand_or_jump_res = 0
+let g:UltiSnipsEditSplit = 'horizontal'
+Plug 'honza/vim-snippets'
+
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
+
+
+" =============================================================================
+" File Navigation
+" =============================================================================
+
+" fzf: command-line fuzzy finder written in Go
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+" {{{
+  let g:fzf_nvim_statusline = 0 " disable statusline overwriting
+
+  nnoremap <silent> <leader><space> :Files<CR>
+  nnoremap <silent> <leader>a :Buffers<CR>
+  nnoremap <silent> <leader>; :BLines<CR>
+  nnoremap <silent> <leader>. :Lines<CR>
+  nnoremap <silent> <leader>o :BTags<CR>
+  nnoremap <silent> <leader>O :Tags<CR>
+  nnoremap <silent> <leader>? :History<CR>
+  nnoremap <silent> <leader>/ :execute 'Ag ' . input('Ag/')<CR>
+  nnoremap <silent> K :call SearchWordWithAg()<CR>
+  vnoremap <silent> K :call SearchVisualSelectionWithAg()<CR>
+  nnoremap <silent> <leader>gl :Commits<CR>
+  nnoremap <silent> <leader>ga :BCommits<CR>
+
+  imap <C-x><C-f> <plug>(fzf-complete-file-ag)
+  imap <C-x><C-l> <plug>(fzf-complete-line)
+
+  function! SearchWordWithAg()
+    execute 'Ag' expand('<cword>')
+  endfunction
+
+  function! SearchVisualSelectionWithAg() range
+    let old_reg = getreg('"')
+    let old_regtype = getregtype('"')
+    let old_clipboard = &clipboard
+    set clipboard&
+    normal! ""gvy
+    let selection = getreg('"')
+    call setreg('"', old_reg, old_regtype)
+    let &clipboard = old_clipboard
+    execute 'Ag' selection
+  endfunction
+" }}}
+
+" =============================================================================
+" Languages
+" =============================================================================
+
+" Syntastic: Code linting errors
+Plug 'scrooloose/syntastic', { 'for': ['php', 'python', 'javascript', 'css'] }
+let g:syntastic_enable_signs          = 1
+let g:syntastic_enable_highlighting   = 1
+let g:syntastic_cpp_check_header      = 1
+let g:syntastic_enable_balloons       = 1
+let g:syntastic_echo_current_error    = 1
+let g:syntastic_check_on_wq           = 0
+let g:syntastic_error_symbol          = '✘'
+let g:syntastic_warning_symbol        = '!'
+let g:syntastic_style_error_symbol    = ':('
+let g:syntastic_style_warning_symbol  = ':('
+let g:syntastic_vim_checkers          = ['vint']
+let g:syntastic_elixir_checkers       = ['elixir']
+let g:syntastic_python_checkers       = ['flake8']
+let g:syntastic_javascript_checkers   = ['eslint']
+let g:syntastic_enable_elixir_checker = 0
+
+
+" Vim configuration for Rust
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+let g:rustfmt_autosave = 1
+
+" Go development plugin for Vim
+Plug 'fatih/vim-go', { 'for': 'go' }
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+
+let g:go_fmt_command = "goimports"
+
+let g:go_bin_path = expand("~/.local/bin")
+
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <Leader>gb <Plug>(go-doc-browser)
+au FileType go nmap <Leader>s <Plug>(go-implements)
+au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <Leader>e <Plug>(go-rename)
+
+" vim systemd service syntax
+Plug 'Matt-Deacalion/vim-systemd-syntax'
+
+" Markdown Vim Mode
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+let g:vim_markdown_folding_disabled=1  " Disable Folding
+let g:vim_markdown_math=1  " LaTeX math
+let g:vim_markdown_frontmatter=1 " YAML
+
+
+" =============================================================================
+" Git
+" =============================================================================
+
+" Fugitive: Git from within Vim
+Plug 'tpope/vim-fugitive'
+" {{{
+  nnoremap <silent> <leader>gs :Gstatus<CR>
+  nnoremap <silent> <leader>gd :Gdiff<CR>
+  nnoremap <silent> <leader>gc :Gcommit<CR>
+  nnoremap <silent> <leader>gb :Gblame<CR>
+  nnoremap <silent> <leader>ge :Gedit<CR>
+  nnoremap <silent> <leader>gE :Gedit<space>
+  nnoremap <silent> <leader>gr :Gread<CR>
+  nnoremap <silent> <leader>gR :Gread<space>
+  nnoremap <silent> <leader>gw :Gwrite<CR>
+  nnoremap <silent> <leader>gW :Gwrite!<CR>
+  nnoremap <silent> <leader>gq :Gwq<CR>
+  nnoremap <silent> <leader>gQ :Gwq!<CR>
+
+  function! ReviewLastCommit()
+    if exists('b:git_dir')
+      Gtabedit HEAD^{}
+      nnoremap <buffer> <silent> q :<C-U>bdelete<CR>
+    else
+      echo 'No git a git repository:' expand('%:p')
+    endif
+  endfunction
+  nnoremap <silent> <leader>g` :call ReviewLastCommit()<CR>
+
+  augroup fugitiveSettings
+    autocmd!
+    autocmd FileType gitcommit setlocal nolist
+    autocmd BufReadPost fugitive://* setlocal bufhidden=delete
+  augroup END
+" }}}
+
+" GitGutter
+Plug 'airblade/vim-gitgutter'
+" {{{
+  let g:gitgutter_sign_added = '✚'
+  let g:gitgutter_sign_modified = '⚡'
+  let g:gitgutter_sign_removed = '✖'
+  let g:gitgutter_map_keys = 0
+  let g:gitgutter_max_signs = 200
+  let g:gitgutter_realtime = 0
+  let g:gitgutter_eager = 0
+  let g:gitgutter_diff_args = '--ignore-space-at-eol'
+  nmap <silent> ]h :GitGutterNextHunk<CR>
+  nmap <silent> [h :GitGutterPrevHunk<CR>
+  nnoremap <silent> <Leader>gu :GitGutterRevertHunk<CR>
+  nnoremap <silent> <Leader>gp :GitGutterPreviewHunk<CR><c-w>j
+  nnoremap cog :GitGutterToggle<CR>
+  nnoremap <Leader>gt :GitGutterAll<CR>
+" }}}
+
+" =============================================================================
+" Misc
+" =============================================================================
+
+Plug 'rking/ag.vim'
+let g:ag_working_path_mode="r"
+
+" Make commenting easier
+Plug 'tpope/vim-commentary'
+
+" Split navigation that works with tmux
+Plug 'christoomey/vim-tmux-navigator'
+
+" virtualenv support for vim
+Plug 'jmcantrell/vim-virtualenv'
+
+" SimpylFold
+Plug 'tmhedberg/SimpylFold'
+
+
+" Other plugins require curl
+if executable("curl")
+
+    " Webapi: Dependency of Gist-vim
+    Plug 'mattn/webapi-vim'
+
+    " Gist: Post text to gist.github
+    Plug 'mattn/gist-vim'
+endif
+
+filetype plugin indent on                   " required!
+call plug#end()
+
+
+
+" =============================================================================
+" General settings {{{
+" =============================================================================
+syntax on " syntax highlighting on
+
 set modelines=0
 set background=dark " we plan to use a dark background
 set noexrc " don't use local version of .(g)vimrc, .exrc
@@ -24,19 +355,13 @@ set cpoptions=aABceFsmq
 "             ||+-- A backslash has no special meaning in mappings
 "             |+-- :write updates alternative file name
 "             +-- :read updates alternative file name
-syntax on " syntax highlighting on
-set autoread " auto reload file when file being change
-let mapleader="," " Leader
 
-" ========================== General configuration ==========================
+set autoread " auto reload file when file being change
 
 " Set file encoding
 set encoding=utf-8
 set fileencoding=utf-8
 " Load filetype plugins/indent settings
-filetype on
-filetype plugin on
-filetype plugin indent on
 
 set autochdir " always switch to the current file directory
 set backspace=indent,eol,start " make backspace a more flexible
@@ -50,7 +375,14 @@ set title                " change the terminal's title
 " set directory=~/.vim/tmp " directory to place swap files in
 set nobackup
 set noswapfile
-set clipboard+=unnamed " share windows clipboard
+
+" Make Vim use the system clipboard as the default register
+" If your version of Vim supports both the +clipboard and +xterm_clipboard
+" features, then you might prefer to use this setting instead:
+if has('unnamedplus')
+  set clipboard=unnamed,unnamedplus
+endif
+
 set fileformats=unix,dos,mac " support all three, in this order
 set hidden " you can change buffers without saving
 " (XXX: #VIM/tpope warns the line below could break things)
@@ -150,8 +482,8 @@ endif
 " ========================== Text/Formatting Layout =========================
 "
 " Smart autoindenting when starting a new line
-set autoindent
-set smartindent
+"set autoindent
+"set smartindent
 
 " Search
 " Incremental Search - Searches begin immediately
@@ -169,7 +501,7 @@ nnoremap / /\v
 vnoremap / /\v
 
 " Toggle the highlight search
-map <leader><space> :set hlsearch!<cr>
+"map <leader><space> :set hlsearch!<cr>
 nmap <tab> %
 vmap <tab> %
 
@@ -182,23 +514,13 @@ set formatoptions=croqnl1  " Automatically insert comment leader on return,
 set ignorecase  " case insensitive by default
 set infercase   " case inferred by default
 
-" Set defaults for tabs
-set smarttab
-set expandtab       " Tabs as space
-set tabstop=4       " Tab character amount. Real tabs should be 4, and they will
-                    " show with set list on
-" Number of spaces characters per tab
-set shiftwidth=4
-set softtabstop=4   " when hitting tab or backspace, how many spaces
-                    " should a tab be (see expandtab)
-set shiftwidth=4    " auto-indent amount when using cindent,
-                    " >>, << and stuff like that
-set textwidth=80
-
-" hi LongLineWarning guifg=white guibg=#ffb6b0 gui=underline
-" match LongLineWarning '\%100v.*' " Error format when a line is longer than 100
-hi link ClassMethod Keyword
-hi link CustomDocTags Keyword
+set textwidth=79  " lines longer than 79 columns will be broken
+set shiftwidth=4  " operation >> indents 4 columns; << unindents 4 columns
+set tabstop=4     " a hard TAB displays as 4 columns
+set expandtab     " insert spaces when hitting TABs
+set softtabstop=4 " insert/delete 4 spaces when hitting a TAB/BACKSPACE
+set shiftround    " round indent to multiple of 'shiftwidth'
+set autoindent    " align the new line indent with the previous line
 
 " Wrap whole words - but forces line break
 " set wm=2
@@ -220,81 +542,117 @@ function! SimpleFoldText()
 endfunction
 set foldtext=SimpleFoldText() " Custom fold text function (cleaner than default)
 
+" allows cursor change in tmux mode
+if exists('$TMUX')
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+
 
 " ========================== Auto Command ===================================
 " Automatically reload vimrc when it's saved
 au BufWritePost .vimrc so ~/.vimrc
 
+" PEP8 indentation for Python
+au BufNewFile,BufRead *.py set tabstop=4
+au BufNewFile,BufRead *.py set softtabstop=4
+au BufNewFile,BufRead *.py set shiftwidth=4
+au BufNewFile,BufRead *.py set textwidth=79
+au BufNewFile,BufRead *.py set expandtab
+au BufNewFile,BufRead *.py set autoindent
+au BufNewFile,BufRead *.py set fileformat=unix
+
+" Fullstack development
+au BufNewFile,BufRead *.js, *.html, *.css set tabstop=2
+au BufNewFile,BufRead *.js, *.html, *.css set softtabstop=2
+au BufNewFile,BufRead *.js, *.html, *.css set shiftwidth=2
+
+
 " Show Git diff in window split when commiting
-autocmd FileType gitcommit DiffGitCached | wincmd p
+"autocmd FileType gitcommit DiffGitCached | wincmd p
 
 " Color Column (only on insert)
 if exists("&colorcolumn")
-     autocmd InsertEnter * set colorcolumn=80
+     autocmd InsertEnter * set colorcolumn=79
      autocmd InsertLeave * set colorcolumn=""
 endif
 
-" Ruby
 " ruby standard 2 spaces, always
 au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2
 au BufRead,BufNewFile *.rb,*.rhtml set softtabstop=2
 
-" ============================ Vim Function =================================
+" ======================== Vim Mapping Keystroke ============================
 
-" Paste from X
-" Mapping vim to standard copy and paste keys
-function! Paste(mode)
-    if a:mode == "v"
-        normal gv
-        normal "+P
-        normal l
-        elseif a:mode == "i"
-        set virtualedit=all
-        normal `^"+gP
-        let &virtualedit = ""
-    endif
-endfunction
-vnoremap <C-X> "+d
-vnoremap <C-C> "+y
-nnoremap <C-V> "+gPl
-vnoremap <C-V> :<C-U>call Paste("v")<CR>
-inoremap <C-V> <C-O>:call Paste("i")<CR>
+" Type <Space>w to save file (a lot faster than :w<Enter>)
+nnoremap <Leader>w :w<CR>
+
+" sudo write
+cmap ww w !sudo tee % > /dev/null
+
+" Easy split navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Don't using to arrow to moving
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+
+" Make Y behave like other capitals
+map Y y$
+
+" Disable search highlighting
+nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
+
+" Keep search results at the center of screen
+nmap n nzz
+nmap N Nzz
+nmap * *zz
+nmap # #zz
+nmap g* g*zz
+nmap g# g#zz
+
+" Select all text
+noremap vA ggVG
+
+" Open tig
+nnoremap <Leader>gg :tabnew<CR>:terminal tig<CR>
+
+
+" Copy & paste to system clipboard with <Space>p and <Space>y:
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
+
+nnoremap <Leader>y "*y
+nnoremap <Leader>p "*p
+nnoremap <Leader>P "*P
 
 " Clipboard for Linux
 nnoremap yy yy"+yy
 vnoremap y ygv"+y
 nmap gp "+gP
 
-set pastetoggle=<F2>
-
-" Toggle Mouse
-fun! s:ToggleMouse()
-    if !exists("s:old_mouse")
-        let s:old_mouse = "a"
-    endif
-
-    if &mouse == ""
-        let &mouse = s:old_mouse
-        echo "Mouse is for Vim (" . &mouse . ")"
-    else
-        let s:old_mouse = &mouse
-        let &mouse=""
-        echo "Mouse is for terminal"
-    endif
-endfunction
+" Enter visual line mode with <Space><Space>:
+nmap <Leader><Leader> V
 
 
-" ======================== Vim Mapping Keystroke ============================
-
-" sudo write
-cmap ww w !sudo tee % > /dev/null
 
 " Select all
 map <Leader>a ggVG
 
 " Reselect visual block after indent/outdent
-" vnoremap < <gv
-" vnoremap > >gv
+vnoremap < <gv
+vnoremap > >gv
 
 " Mapping ; to : to quickly type command
 nnoremap ; :
@@ -322,45 +680,16 @@ imap ;; <Esc>
 " On gvim and Linux console Vim, you can use Alt-Space.
 imap <M-Space> <Esc>
 
-" using C-S to save
-" imap <C-s> <esc>:w<cr>a
-" map  <C-s> :w<cr>
-
 " Automatic retab and write
 map <F12> :retab <CR> :w! <CR>
 
-" Keep search pattern at the center of the screen.
-nnoremap <silent> n nzz
-nnoremap <silent> N Nzz
-nnoremap <silent> * *zz
-nnoremap <silent> # #zz
-nnoremap <silent> g* g*zz
-nnoremap <silent> g# g#zz
 
-" Easy split navigation
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
-" Don't using to arrow to moving
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
-
-" Make Y behave like other capitals
-map Y y$
-
-" build tags of your own project with Ctrl-F12
-map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+" paste to ix.io
+noremap <silent> <leader>i :w !ix<CR>
 
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
-" Spelling Toggle
-map <F8> <Esc>:setlocal spell spelllang=en_us<CR>
-map <S-F8> <Esc>:setlocal nospell<CR>
 
 " Inser New Line
 map <s-enter> O<esc>
@@ -369,7 +698,25 @@ map <enter> o<esc>
 " I can type :help on my own, thanks.
 noremap <F1> <Esc>
 
-" Open last/alternate buffer
-noremap <Leave><Leader> <C-^>
+" vimdiff as mergetool
+map <silent> <leader>2 :diffget 2<CR> :diffupdate<CR>
+map <silent> <leader>3 :diffget 3<CR> :diffupdate<CR>
+map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
+
+
+" check file change every 4 seconds ('CursorHold')
+" and reload the buffer upon detecting change
+set autoread
+au CursorHold * checktime
+
+"python with virtualenv support
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
 
 " End of ~/.vimrc
