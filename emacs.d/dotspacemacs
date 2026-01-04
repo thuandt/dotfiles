@@ -140,13 +140,6 @@ values."
                          spacemacs-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
-   ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
-   ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("FuraCode Nerd Font"
-                               :size 18
-                               :weight medium
-                               :width normal
-                               :powerline-scale 1.1)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -300,8 +293,23 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
-   ))
+   dotspacemacs-whitespace-cleanup nil)
+  ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
+  ;; quickly tweak the mode-line size to make separators look not too crappy.
+  (if (eq system-type 'darwin)
+      (setq-default dotspacemacs-default-font '("FuraCode Nerd Font"
+                                                :size 15
+                                                :weight medium
+                                                :width normal
+                                                :powerline-scale 1.1)))
+
+  (if (eq system-type 'gnu)
+      (setq-default dotspacemacs-default-font '("FuraCode Nerd Font"
+                                                :size 18
+                                                :weight medium
+                                                :width normal
+                                                :powerline-scale 1.1)))
+  )
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
@@ -331,6 +339,11 @@ you should place your code here."
   (spacemacs/toggle-truncate-lines-on)
   ;; Visual line navigation for textual modes
   (add-hook 'text-mode-hook 'spacemacs/toggle-visual-line-navigation-on)
+
+  ;; Font ligatures support for macOS
+  ;; https://github.com/syl20bnr/spacemacs/issues/6972#issuecomment-365945351
+  (if (eq system-type 'darwin)
+      (mac-auto-operator-composition-mode))
 
   ;; Solarized Dark
   ;; https://github.com/syl20bnr/spacemacs/issues/1269#issuecomment-297104349
