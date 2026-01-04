@@ -8,7 +8,7 @@ _rg() {
     _arguments -s -S -C \
 "*-e+[A regular expression used for searching.]" \
 "*--regexp+[A regular expression used for searching.]" \
-"--color+[When to use color. default: auto]" \
+"--color+[When to use color. \[default: auto\]]: :(never auto always ansi)" \
 "*--colors+[Configure color settings and styles.]" \
 "*-g+[Include or exclude files/directories.]" \
 "*--glob+[Include or exclude files/directories.]" \
@@ -22,13 +22,14 @@ _rg() {
 "--before-context+[Show NUM lines before each match.]" \
 "-C+[Show NUM lines before and after each match.]" \
 "--context+[Show NUM lines before and after each match.]" \
-"--context-separator+[Set the context separator string. default: --]" \
+"--context-separator+[Set the context separator string. \[default: --\]]" \
 "*-f+[Search for patterns from the given file.]" \
 "*--file+[Search for patterns from the given file.]" \
 "*--ignore-file+[Specify additional ignore files.]" \
 "-m+[Limit the number of matches.]" \
 "--max-count+[Limit the number of matches.]" \
 "--maxdepth+[Descend at most NUM directories.]" \
+"--path-separator+[Path separator to use when printing file paths.]" \
 "-r+[Replace matches with string given.]" \
 "--replace+[Replace matches with string given.]" \
 "-j+[The approximate number of threads to use.]" \
@@ -87,10 +88,11 @@ _rg() {
 "--case-sensitive[Search case sensitively.]" \
 "-S[Smart case search.]" \
 "--smart-case[Smart case search.]" \
+"--sort-files[Sort results by file path. Implies --threads=1.]" \
 "--vimgrep[Show results in vim compatible format.]" \
 "1:: :_rg_commands" \
 && ret=0
-
+    
 }
 
 (( $+functions[_rg_commands] )) ||
