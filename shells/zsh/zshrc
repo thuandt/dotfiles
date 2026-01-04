@@ -158,6 +158,14 @@ zinit light rupa/z
 # zinit ice wait lucid
 # zinit light eendroroy/zed-zsh
 
+# fzf
+zinit ice wait lucid depth='1' multisrc='shell/*.zsh' \
+  atclone='./install --bin' \
+  atpull='./install --bin' \
+  sbin="bin/fzf" \
+  sbin="bin/fzf-tmux"
+zinit light junegunn/fzf
+
 # enhancd with fzf
 zinit ice wait lucid pick='init.sh'
 zinit light b4b4r07/enhancd
@@ -314,7 +322,6 @@ zinit as='null' wait='2' light-mode lucid from='gh-r' for \
   mv='bat* -> bat' sbin='bat/bat' @sharkdp/bat \
   mv='gdu* -> gdu' sbin dundee/gdu \
   mv='dua* -> dua' sbin='dua/dua' Byron/dua-cli \
-  fbin='fzf' sbin='fzf' junegunn/fzf \
   bpick='istioctl-*' sbin='istioctl' istio/istio \
   mv='jq* -> jq' bpick='*linux64' sbin stedolan/jq \
   mv='sops* -> sops' bpick='*linux' sbin mozilla/sops \
