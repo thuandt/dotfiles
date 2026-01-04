@@ -1,0 +1,10 @@
+pytest
+gitpython
+yapf
+flake8
+black[d]; python_version >= '3'
+pyre-check; python_version >= '3'
+pynvim
+ptpython
+pre-commit
+python-dotenv

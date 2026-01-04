@@ -1,0 +1,125 @@
+---
+- link:
+    ~/.asdfrc: asdf/asdfrc
+    ~/.default-gems: asdf/default-gems
+    ~/.default-npm-packages: asdf/default-npm-packages
+    ~/.default-python-packages: asdf/default-python-packages
+
+- asdf:
+    ### programming languages ###
+    - plugin: python
+      versions:
+        - latest:3.8
+        - latest:3.7
+    - plugin: ruby
+      versions:
+        - latest:2.6
+    - plugin: nodejs
+      versions:
+        - latest
+        - latest:12
+    - plugin: golang
+      versions:
+        - latest:1.13
+    - plugin: rust
+      versions:
+        - stable
+    - plugin: java
+    - plugin: scala
+      versions:
+        - latest:2.13
+    - plugin: haskell
+    - plugin: lua
+    - plugin: luaJIT
+
+    ### k8s cloud cluster provisioner ###
+    - plugin: eksctl
+      versions:
+        - latest
+    - plugin: aks-engine
+    - plugin: kops
+      versions:
+        - latest:1.15
+    - plugin: kustomize
+      versions:
+        - latest
+
+    ### k8s development tools ###
+    - plugin: minikube # use zplugin
+    - plugin: skaffold # use zplugin
+    - plugin: draft
+      versions:
+        - latest
+    - plugin: kubectl
+      versions:
+        - latest
+    - plugin: helm
+      versions:
+        - latest:2
+        - latest:3
+    - plugin: helmfile # use zplugin
+    - plugin: stern # use zplugin
+    - plugin: fluxctl # use zplugin
+    - plugin: istioctl # use zplugin
+    - plugin: k9s # use zplugin
+    - plugin: kubeseal
+    - plugin: kubesec
+    - plugin: rancher
+
+    ### Hashicorp ###
+    - plugin: nomad
+      versions:
+        - latest
+    - plugin: packer
+      versions:
+        - latest
+    - plugin: terraform
+      versions:
+        - latest:0.12
+    - plugin: tflint
+      versions:
+        - 0.13.2
+    - plugin: terraform-docs # use zplugin
+    - plugin: terragrunt
+      versions:
+        - 0.21.10
+    - plugin: vault
+      versions:
+        - 1.3.1
+
+    ### development tools ###
+    - plugin: hadolint # use zplugin
+    - plugin: shellcheck # use zplugin
+    - plugin: shfmt # use zplugin
+    - plugin: hub # use zplugin
+    - plugin: sops # use zplugin
+    - plugin: docker-slim # use zplugin
+    - plugin: docker-compose
+      url: https://github.com/virtualstaticvoid/asdf-docker-compose.git
+      versions:
+        - latest
+    - plugin: docker-machine
+      url: https://github.com/virtualstaticvoid/asdf-docker-machine.git
+      versions:
+        - v0.16.2
+    - plugin: protoc
+      versions:
+        - latest
+    - plugin: direnv # use zplugin
+    - plugin: doctl # use zplugin
+    - plugin: mkcert # use zplugin
+    - plugin: sbt
+      versions:
+        - latest:1.3
+    - plugin: groovy
+    - plugin: gradle
+    - plugin: maven
+    - plugin: micronaut
+    - plugin: sqlite
+      versions:
+        - latest
+    - plugin: graalvm
+    - plugin: yarn
+    - plugin: openresty
+    - plugin: gohugo
+    - plugin: trdsql
