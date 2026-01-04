@@ -286,7 +286,7 @@ zinit light-mode lucid as'null' from'gh-r' for \
   sbin bpick'*64' mv'jq* -> jq' stedolan/jq \
   sbin bpick'*amd64.tar.gz' aquasecurity/tfsec \
   sbin bpick'*amd64' mv'sops* -> sops' mozilla/sops \
-  sbin'istioctl' bpick'istioctl-*' ver='1.14.3' istio/istio \
+  sbin'istioctl' bpick'istioctl-*' ver='1.15.0' istio/istio \
   mv'*q* -> q' sbin harelba/q \
   sbin'flatc' google/flatbuffers \
   mv'gdu* -> gdu' sbin dundee/gdu \
@@ -312,13 +312,18 @@ zinit light-mode lucid as'null' from'gh-r' for \
   mv'terraform-docs* -> terraform-docs' sbin terraform-docs/terraform-docs \
   mv'miller* -> miller' sbin'miller/mlr' bpick'*amd64.tar.gz' johnkerl/miller \
   mv'ripgrep* -> rga' sbin'rga/rga' sbin'rga/rga-preproc' phiresky/ripgrep-all \
+  sbin atclone'./flyctl completion zsh > _flyctl' atpull'%atclone' superfly/flyctl \
   mv'argocd-image-updater* -> argocd-image-updater' sbin argoproj-labs/argocd-image-updater \
   mv'stylish-haskell* -> stylish-haskell' sbin'stylish-haskell/stylish-haskell' @haskell/stylish-haskell \
   mv'argocd* -> argocd' ver='v2.4.11' sbin atclone'./argocd completion zsh > _argocd' atpull'%atclone' argoproj/argo-cd \
   mv'golangci-lint* -> golangci-lint' sbin'golangci-lint/golangci-lint' atload'source <(golangci-lint completion zsh)' golangci/golangci-lint
 
 # zsh-diff-so-fancy
-zplugin light-mode lucid as"program" pick"bin/git-dsf" sbin'bin/git-dsf' sbin'bin/diff-so-fancy' for zdharma-continuum/zsh-diff-so-fancy
+zplugin light-mode lucid \
+  pick"bin/git-dsf" \
+  sbin'bin/git-dsf' \
+  sbin'bin/diff-so-fancy' \
+  as"program" for zdharma-continuum/zsh-diff-so-fancy
 
 # gradle and calc
 zinit light-mode lucid for gradle/gradle-completion arzzen/calc.plugin.zsh
