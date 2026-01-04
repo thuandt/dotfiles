@@ -96,8 +96,6 @@ else
   # minicom
   export MINICOM="-m -c on"
 
-  # fix broken theme of LibreOffice in GTK+ 3.0
-  export SAL_USE_VCLPLUGIN=gtk
   # mtr options
   export MTR_OPTIONS="-4 --no-dns --udp"
 
