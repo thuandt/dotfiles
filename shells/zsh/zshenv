@@ -13,7 +13,9 @@ export GSM_SKIP_SSH_AGENT_WORKAROUND=1
 
 # PowerShell snap fix
 # https://github.com/PowerShell/PowerShell-Snap/issues/33
-export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+export DOTNET_NOLOGO=true
+export DOTNET_CLI_TELEMETRY_OPTOUT=true
+export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
 # User binaries
 export BIN_DIR=${HOME}/.local/bin
@@ -28,7 +30,7 @@ export SVN_EDITOR="${EDITOR}"
 export GIT_EDITOR="${EDITOR}"
 export KUBE_EDITOR="${EDITOR}"
 export SUDO_EDITOR="${EDITOR}"
-export SYSTEMD_EDITOR=${EDITOR}
+export SYSTEMD_EDITOR="nvim"
 export XDG_CONFIG_HOME="${HOME}/.config"
 
 export BAT_THEME="TwoDark"
@@ -88,6 +90,7 @@ if [[ "$OSTYPE" == linux* ]]; then
   export YARNBIN=${HOME}/.yarn/bin                                # yarn
   export YARNGLOBAL=${HOME}/.config/yarn/global/node_modules/.bin # yarn global
   export FLYCTL_INSTALL="${HOME}/.fly"                            # fly.io
+  export DOTNET_TOOLS="${HOME}/.dotnet/tools"                     # dotnet tools (powershell)
 
   export ANDROID_PLATFORM_TOOLS="${HOME}/Applications/android-platform-tools"
 
@@ -101,6 +104,7 @@ if [[ "$OSTYPE" == linux* ]]; then
     "${YARNGLOBAL}"
     "${FLYCTL_INSTALL}/bin"
     "${ANDROID_PLATFORM_TOOLS}"
+    "${DOTNET_TOOLS}"
   )
 
   # Add directory to $PATH if its not already there
