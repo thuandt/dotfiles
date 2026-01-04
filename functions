@@ -199,18 +199,27 @@ if [[ "$OSTYPE" = linux* ]] ; then
     }
 
 
-    # Usage: install-kubectl v1.2.4
+    # Usage: install-kubectl v1.8.1
     install-kubectl() {
-        version=${1:-latest}
-        curl -sSL "https://storage.googleapis.com/kubernetes-release/release/${version}/bin/linux/amd64/kubectl" \
+        #shellcheck disable=SC2155
+        local latest=$(curl -s https://dl.k8s.io/release/stable.txt)
+        version=${latest:-1}
+        curl -sSL "https://dl.k8s.io/${version}/bin/linux/amd64/kubectl" \
              -o ~/Applications/google-cloud-sdk/bin/kubectl
     }
 
-    # Usage: install-minikube v0.22.0
+    # Usage: install-minikube
     install-minikube() {
         version=${1:-latest}
         curl -sSL "https://storage.googleapis.com/minikube/releases/${version}/minikube-linux-amd64" \
              -o "$MYBIN/minikube"
+    }
+
+    # Usage: install-kops 1.7.1
+    install-kops() {
+        version=$(curl -sSL https://api.github.com/repos/kubernetes/kops/releases/latest | jq -r '. | .tag_name')
+        curl -sSL "https://github.com/kubernetes/kops/releases/download/${version}/kops-linux-amd64" \
+             -o "$MYBIN/kops"
     }
 
 fi
