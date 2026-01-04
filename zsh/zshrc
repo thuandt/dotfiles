@@ -18,7 +18,8 @@ fi
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
 POWERLEVEL9K_MODE='awesome-fontconfig'
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon time load battery status root_indicator background_jobs dir vcs virtualenv rbenv)
+DEFAULT_USER=$USER
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context time load battery status root_indicator background_jobs disk_usage dir dir_writable vcs virtualenv rbenv)
 POWERLEVEL9K_TIME_FOREGROUND='011'
 POWERLEVEL9K_TIME_BACKGROUND='$DEFAULT_COLOR'
 POWERLEVEL9K_TIME_FORMAT="%D{%H:%M:%S}"
@@ -80,7 +81,7 @@ HIST_STAMPS="dd.mm.yyyy"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
-plugins=(ag anhoi emoi remoteoi adb cabal command-not-found docker-compose
+plugins=(zsh-completions ag anhoi emoi remoteoi adb cabal command-not-found docker-compose
          docker-machine encode64 extract fancy-ctrl-z gcloud
          git git-extras git-flow-avh git-hubflow git-remote-branch gitignore
          golang kubectl heroku history history-substring-search

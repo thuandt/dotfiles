@@ -13,3 +13,6 @@
 [submodule "zsh/omz/themes/powerlevel9k"]
 	path = zsh/omz/themes/powerlevel9k
 	url = git@github.com:bhilburn/powerlevel9k.git
+[submodule "zsh/omz/plugins/zsh-completions"]
+	path = zsh/omz/plugins/zsh-completions
+	url = git@github.com:zsh-users/zsh-completions.git
