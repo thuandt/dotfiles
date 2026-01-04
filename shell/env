@@ -9,13 +9,14 @@ HISTSIZE=100000                           # shell history will save N commands
 HISTFILESIZE=${HISTSIZE}                  # shell will remember N commands
 
 ### Setup PATH ###
-export USER_BIN=$HOME/app/bin       # user bin
-export SCALA_HOME=$HOME/app/scala   # scala
-export PLAY_HOME=$HOME/app/play     # play framework
-export SBT_HOME=$HOME/app/sbt       # sbt
-export GOROOT=$HOME/app/go          # go-lang
+export USER_BIN=$HOME/app/bin                  # user bin
+export SCALA_HOME=$HOME/app/scala              # scala
+export PLAY_HOME=$HOME/app/play                # play framework
+export SBT_HOME=$HOME/app/sbt                  # sbt
+export GOROOT=$HOME/app/go                     # go-lang
+export HEROKU_TOOLBELT="/usr/local/heroku/bin" # Heroku Toolbelt
 
-export MY_PATH=${USER_BIN}:${PLAY_HOME}:${SCALA_HOME}/bin:${SBT_HOME}:${GOROOT}/bin
+export MY_PATH=${USER_BIN}:${PLAY_HOME}:${SCALA_HOME}/bin:${SBT_HOME}:${GOROOT}/bin:${HEROKU_TOOLBELT}
 
 # Add directory to $PATH if it's not already there
 if [[ ":$PATH:" != *":${MY_PATH}:"* ]]; then PATH=${MY_PATH}:$PATH; fi
