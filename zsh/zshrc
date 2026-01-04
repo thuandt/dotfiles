@@ -9,7 +9,7 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="bira"
+ZSH_THEME="mrtux"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -84,18 +84,17 @@ setopt RM_STAR_WAIT      # 10 second wait if you do something that will delete e
 setopt ZLE               # use magic (this is default, but it can't hurt!)
 
 # History Tweak
-setopt APPEND_HISTORY         # Don't overwrite, append!
-unsetopt EXTENDED_HISTORY     # Save the time and how long a command ran
-setopt HIST_EXPIRE_DUPS_FIRST
-setopt HIST_FIND_NO_DUPS
-setopt HIST_IGNORE_ALL_DUPS   # Even if there are commands inbetween commands that are the same, still only save the last one
-setopt HIST_IGNORE_DUPS       # If I type cd and then cd again, only save the last one
-setopt HIST_IGNORE_SPACE      # If a line starts with a space, don't save it.
-setopt HIST_NO_STORE
-setopt HIST_REDUCE_BLANKS     # Pretty    Obvious.  Right?
-setopt HIST_SAVE_NO_DUPS
-setopt HIST_VERIFY            # When using a hist thing, make a newline show the change before executing it.
-unsetopt SHARE_HISTORY        # Killer: share history between multiple shells
+setopt APPEND_HISTORY           # append rather than overwrite history file.
+setopt EXTENDED_HISTORY         # save timestamp and runtime information
+setopt HIST_EXPIRE_DUPS_FIRST   # allow dups, but expire old ones when I hit HISTSIZE
+setopt HIST_FIND_NO_DUPS        # don't find duplicates in history
+setopt HIST_IGNORE_ALL_DUPS     # ignore duplicate commands regardless of commands in between
+setopt HIST_IGNORE_DUPS         # ignore duplicate commands
+setopt HIST_REDUCE_BLANKS       # leave blanks out
+setopt HIST_SAVE_NO_DUPS        # don't save duplicates
+setopt INC_APPEND_HISTORY       # write after each command
+setopt SHARE_HISTORY            # share history between sessions
+setopt HIST_VERIFY              # When using a hist thing, make a newline show the change before executing it.
 
 # Color listing
 eval $(dircolors ~/.dir_colors)
