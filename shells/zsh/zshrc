@@ -303,7 +303,6 @@ zinit light-mode lucid as'null' from'gh-r' for \
   sbin'bin/linux_amd64/kubelogin' Azure/kubelogin \
   mv'hadolint* -> hadolint' sbin hadolint/hadolint \
   mv'fluxctl* -> fluxctl' sbin'fluxctl' fluxcd/flux \
-  mv'minikube* -> minikube' sbin kubernetes/minikube \
   mv'infracost* -> infracost' sbin infracost/infracost \
   mv'hlint* -> hlint' sbin'hlint/hlint' ndmitchell/hlint \
   mv'trdsql* -> trdsql' sbin'trdsql/trdsql' noborus/trdsql \
@@ -315,7 +314,7 @@ zinit light-mode lucid as'null' from'gh-r' for \
   sbin atclone'./flyctl completion zsh > _flyctl' atpull'%atclone' superfly/flyctl \
   mv'argocd-image-updater* -> argocd-image-updater' sbin argoproj-labs/argocd-image-updater \
   mv'stylish-haskell* -> stylish-haskell' sbin'stylish-haskell/stylish-haskell' @haskell/stylish-haskell \
-  mv'argocd* -> argocd' ver='v2.4.11' sbin atclone'./argocd completion zsh > _argocd' atpull'%atclone' argoproj/argo-cd \
+  mv'argocd* -> argocd' ver='v2.4.12' sbin atclone'./argocd completion zsh > _argocd' atpull'%atclone' argoproj/argo-cd \
   mv'golangci-lint* -> golangci-lint' sbin'golangci-lint/golangci-lint' atload'source <(golangci-lint completion zsh)' golangci/golangci-lint
 
 # zsh-diff-so-fancy
