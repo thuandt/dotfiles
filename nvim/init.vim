@@ -589,16 +589,6 @@ function! SimpleFoldText()
 endfunction
 set foldtext=SimpleFoldText() " Custom fold text function (cleaner than default)
 
-" allows cursor change in tmux mode
-if exists('$TMUX')
-    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-else
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-endif
-
-
 " ========================== Auto Command ===================================
 " Automatically reload vimrc when it's saved
 augroup reload_vimrc
@@ -758,5 +748,10 @@ map <silent> <leader>4 :diffget 4<CR> :diffupdate<CR>
 " and reload the buffer upon detecting change
 set autoread
 au CursorHold * checktime
+
+
+
+" https://github.com/neovim/neovim/issues/7002
+set guicursor=
 
 " End of ~/.vimrc
