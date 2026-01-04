@@ -9,7 +9,24 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="mrtux"
+ZSH_THEME="mrtux-powerlevel9k"
+
+POWERLEVEL9K_MODE='awesome-fontconfig'
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="╭─"
+POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="╰─%B➤%b "
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context load dir vcs virtualenv rvm node_version)
+#POWERLEVEL9K_DISABLE_RPROMPT=true
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status time)
+POWERLEVEL9K_STATUS_VERBOSE=false
+# POWERLEVEL9K_SHORTEN_STRATEGY="truncate_middle"
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
+POWERLEVEL9K_SHOW_CHANGESET=true
+POWERLEVEL9K_CHANGESET_HASH_LENGTH=6
+POWERLEVEL9K_LOAD_SHOW_FREE_RAM=true
+POWERLEVEL9K_NODE_VERSION_BACKGROUND='022'
+POWERLEVEL9K_RVM_BACKGROUND='red'
+POWERLEVEL9K_VIRTUALENV_BACKGROUND='blue'
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -27,7 +44,7 @@ ZSH_THEME="mrtux"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+# ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
@@ -57,8 +74,7 @@ plugins=( adb aws autopep8 battery bower bundler capistrano command-not-found
           history history-substring-search httpie iwhois jsontools mercurial
           mosh nmap perl pew pip python pylint rails rake rvm ruby redis-cli
           rsync sbt scala sublime screen sudo supervisor systemadmin systemd
-          terraform tmux ubuntu urltools vagrant virtualenv
-          virtualenvwrapper vundle web-search zsh_reload )
+          terraform tmux ubuntu urltools vagrant virtualenv vundle web-search zsh_reload )
 
 # User configuration
 
@@ -146,9 +162,6 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 # Load RVM into a shell session *as a function*
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
-##### virtualenvwrapper #####
-[[ -s /usr/local/bin/virtualenvwrapper.sh ]] && source /usr/local/bin/virtualenvwrapper.sh
-
 ##### Nix Package Manager #####
 [[ -s ~/.nix-profile/etc/profile.d/nix.sh ]] && source ~/.nix-profile/etc/profile.d/nix.sh
 
@@ -176,8 +189,7 @@ eval $(keychain --eval -Q --quiet --attempts 5 id_rsa id_ed25519 id_rsa_2048)
 source $HOME/.keychain/$HOSTNAME-sh
 source $HOME/.keychain/$HOSTNAME-sh-gpg
 
-# automatically source zshrc in all open terminals
-trap "source ~/.zshrc && rehash" USR1
+export GREP_OPTIONS=''
 
 # Clear screen
 clear
