@@ -6,6 +6,11 @@ export SAVEHIST=10000                           # Remember about a years worth o
 export HISTSIZE=10000                           # shell history will save N commands
 export HISTFILESIZE=${HISTSIZE}                 # shell will remember N commands
 
+# https://bugzilla.gnome.org/show_bug.cgi?id=772919
+# https://eklitzke.org/down-the-ssh-auth-sock-rabbit-hole-a-gnome-adventure
+export GSM_SKIP_SSH_AGENT_WORKAROUND=1
+
+
 export BIN_DIR=$HOME/.local/bin                 # user binaries
 
 if [[ "$OSTYPE" = darwin* ]] ; then
