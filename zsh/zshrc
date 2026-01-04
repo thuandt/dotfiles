@@ -111,7 +111,7 @@ if [[ "$OSTYPE" = darwin* ]] ; then
              pew pyenv pip python pylint redis-cli rg rsync
              screen tmux sudo terraform osx vagrant zsh_reload z
 
-             kubectl helm kops
+             gcloud kubectl helm kops awscli
              zsh-autosuggestions zsh-syntax-highlighting)
 else
     # docker and docker-compose plugin will use vendor completion
@@ -125,7 +125,7 @@ else
              rake rbenv sbt scala stack screen sudo supervisor systemadmin
              systemd tmux terraform ubuntu vagrant virtualenv zsh_reload z
 
-             gcloud kubectl helm kops
+             gcloud kubectl helm kops awscli
              zsh-autosuggestions zsh-syntax-highlighting)
 fi
 
