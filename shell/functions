@@ -90,8 +90,8 @@ dhparam () {
 }
 
 weather () {
-    curl -4 http://wttr.in/sgn #HCM
-    #curl -4 http://wttr.in/han #HN
+    location=${1:-sgn} # sgn: HCM, han: HN
+    curl -4 "http://wttr.in/${location}"
 }
 
 # bashlogger
@@ -99,7 +99,7 @@ bashlogger () {
     script /tmp/log.txt
 }
 
-# install latest docker compose via GitHub API and curl
+# Install docker-compose latest version
 install-dcp () {
     fname="docker-compose-$(uname -s)-$(uname -m)"
     fbin="/home/mrtux/.local/bin/docker-compose"
@@ -114,7 +114,31 @@ install-dcp () {
     curl -sSL https://raw.githubusercontent.com/docker/compose/"$(docker-compose version --short)"/contrib/completion/zsh/_docker-compose -o "${ZSH_CUSTOM}/plugins/docker-compose/_docker-compose"
 }
 
-# install latest cli53 (go version) via GitHub API and curl
+# Install Terraform latest version
+install-terraform () {
+    repos_api="https://api.github.com/repos/hashicorp/terraform/releases/latest"
+    # remove first character with ${VAR#?}
+    version=${$(curl -sSL $repos_api | jq -r '. | .tag_name')#?}
+    repos_dl="https://releases.hashicorp.com/terraform/${version}/terraform_${version}_linux_amd64.zip"
+    curl -sSL $repos_dl -o /tmp/terraform.zip
+    unzip -qq -o -d /home/mrtux/.local/bin /tmp/terraform.zip
+    /bin/rm -f /tmp/terraform.zip
+}
+
+
+# Install Protobuf complier latest version
+install-protoc () {
+    repos_api="https://api.github.com/repos/google/protobuf/releases/latest"
+    # remove first character with ${VAR#?}
+    version=${$(curl -sSL $repos_api | jq -r '. | .tag_name')#?}
+    repos_dl="https://github.com/google/protobuf/releases/download/v${version}/protoc-${version}-linux-x86_64.zip"
+    curl -sSL $repos_dl -o /tmp/protoc.zip
+    sudo unzip -qq -o -d /usr/local/ /tmp/protoc.zip
+    /bin/rm -f /tmp/protoc.zip
+}
+
+
+# Install cli53 (golang) latest version
 install-cli53 () {
     fname="cli53-linux-amd64"
     fbin="/home/mrtux/.local/bin/cli53"
