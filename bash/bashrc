@@ -114,6 +114,10 @@ if [ -f /etc/bash_completion ]; then source /etc/bash_completion; fi
 # virtualenvwrapper
 [[ -s /usr/local/bin/virtualenvwrapper.sh ]] && source /usr/local/bin/virtualenvwrapper.sh
 
+# sdkman
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+
 # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -134,4 +138,3 @@ source ~/.keychain/"$(hostname)"-sh-gpg
 # Clear screen
 clear
 # End of ~/.bashrc
-
