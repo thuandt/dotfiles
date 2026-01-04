@@ -1,0 +1,5 @@
+- link:
+    ~/.SpaceVim: apps/vim/SpaceVim
+    ~/.SpaceVim.d: apps/vim/SpaceVim.d
+    ~/.vim: ~/.SpaceVim
+    ~/.config/nvim: ~/.SpaceVim
