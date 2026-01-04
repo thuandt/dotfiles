@@ -1,8 +1,6 @@
 #!/usr/bin/env zsh
 # ~/.zprofile
 
-if [[ "$OSTYPE" = linux* ]] ; then
-    source ~/.exports
-    systemctl --user import-environment PATH
-    _byobu_sourced=1 . /usr/bin/byobu-launch
+if [[ "$OSTYPE" == linux* ]]; then
+  _byobu_sourced=1 . /usr/bin/byobu-launch
 fi
