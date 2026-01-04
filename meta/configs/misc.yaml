@@ -1,0 +1,9 @@
+- link:
+    ~/.digrc: terminals/misc/digrc
+    ~/.gemrc: terminals/misc/gemrc
+    ~/.mtrrc: terminals/misc/mtrrc
+    ~/.wgetrc: terminals/misc/wgetrc
+    ~/.curlrc: terminals/misc/curlrc
+    ~/.psqlrc: terminals/misc/psqlrc
+    ~/.Xresources: terminals/misc/Xresources
+    ~/.ansiweatherrc: terminals/misc/ansiweatherrc

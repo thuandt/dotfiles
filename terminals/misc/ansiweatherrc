@@ -1,0 +1,6 @@
+location:Thanh pho Ho Chi Minh,VN
+fetch_cmd:wget -qO-
+units:metric
+daylight:true
+symbols:true
+ascii: false
