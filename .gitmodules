@@ -4,30 +4,21 @@
 [submodule "tmux/colors"]
 	path = tmux/colors
 	url = https://github.com/seebi/tmux-colors-solarized.git
-[submodule "zsh/omz/plugins/zsh-autosuggestions"]
-	path = zsh/omz/plugins/zsh-autosuggestions
-	url = https://github.com/zsh-users/zsh-autosuggestions.git
-[submodule "zsh/omz/plugins/zsh-syntax-highlighting"]
-	path = zsh/omz/plugins/zsh-syntax-highlighting
-	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule "zsh/omz/themes/powerlevel9k"]
-	path = zsh/omz/themes/powerlevel9k
-	url = https://github.com/bhilburn/powerlevel9k.git
-[submodule "zsh/omz/plugins/zsh-completions"]
-	path = zsh/omz/plugins/zsh-completions
-	url = https://github.com/zsh-users/zsh-completions.git
-[submodule "zsh/omz/plugins/go-zsh-completions"]
-	path = zsh/omz/plugins/go-zsh-completions
-	url = https://github.com/zchee/go-zsh-completions.git
 [submodule "awesome/copycats"]
 	path = awesome/copycats
 	url = https://github.com/lcpz/awesome-copycats.git
-[submodule "zsh/omz/plugins/resty"]
-	path = zsh/omz/plugins/resty
-	url = https://github.com/micha/resty.git
 [submodule "emacs.d/spacemacs"]
 	path = emacs.d/spacemacs
 	url = https://github.com/syl20bnr/spacemacs
-[submodule "zsh/omz/plugins/alias-tips"]
-	path = zsh/omz/plugins/alias-tips
-	url = https://github.com/djui/alias-tips
+[submodule "dotbot/dotbot"]
+	path = dotbot/dotbot
+	url = https://github.com/anishathalye/dotbot
+[submodule "dotbot/plugins/asdf"]
+	path = dotbot/plugins/asdf
+	url = https://github.com/sobolevn/dotbot-asdf.git
+[submodule "dotbot/plugins/pip"]
+	path = dotbot/plugins/pip
+	url = https://github.com/sobolevn/dotbot-pip.git
+[submodule "dotbot/plugins/apt-get"]
+	path = dotbot/plugins/apt-get
+	url = https://github.com/dein0s/dotbot_plugin_aptget.git
