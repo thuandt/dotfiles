@@ -27,7 +27,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 ### POWERLEVEL9K THEME ###
 if [[ "$OSTYPE" = darwin* ]] ; then
     # Fira Code everywhere
-    POWERLEVEL9K_MODE='nerd-complete'
+    POWERLEVEL9K_MODE='nerdfont-complete'
 else
     # Operator Mono
     POWERLEVEL9K_MODE='awesome-fontconfig'
