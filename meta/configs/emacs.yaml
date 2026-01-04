@@ -1,0 +1,7 @@
+- create:
+    - ~/.local/emacs.d/
+
+- link:
+    ~/.spacemacs: apps/emacs/dotspacemacs
+    ~/.emacs.d/init.el: apps/emacs/init.el
+    ~/.emacs.d/spacemacs: apps/emacs/spacemacs

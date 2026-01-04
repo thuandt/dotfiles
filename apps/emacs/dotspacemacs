@@ -302,13 +302,13 @@ values."
   ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
   ;; quickly tweak the mode-line size to make separators look not too crappy.
   (if (eq system-type 'darwin)
-      (setq-default dotspacemacs-default-font '("FuraCode Nerd Font"
+      (setq-default dotspacemacs-default-font '("Delugia Nerd Font"
                                                 :size 15
                                                 :weight medium
                                                 :width normal
                                                 :powerline-scale 1.1)))
   (if (eq system-type 'gnu/linux)
-      (setq-default dotspacemacs-default-font '("FuraCode Nerd Font"
+      (setq-default dotspacemacs-default-font '("Delugia Nerd Font"
                                                 :size 18
                                                 :weight medium
                                                 :width normal
