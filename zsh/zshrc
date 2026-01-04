@@ -305,7 +305,11 @@ zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
 # direnv
 eval "$(direnv hook zsh)"
 
-### Keychain ###
+# sdkman
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+
+# Keychain
 # Let re-use ssh-agent and/or gpg-agent between logins
 if [[ "$OSTYPE" = darwin* ]] ; then
     eval $(keychain --eval -Q --quiet --agents ssh --inherit any --attempts 5 id_ed25519 aws id_rsa myaws legacy)
@@ -317,6 +321,7 @@ else
     # source $HOME/.keychain/$(hostname)-sh-gpg
 fi
 
+# Prettify path
 if [ -n "$($SHELL -c "echo $ZSH_VERSION")" ]; then
     # remove duplicates in zsh path
     # https://til.hashrocket.com/posts/7evpdebn7g-remove-duplicates-in-zsh-path
