@@ -14,6 +14,7 @@
         - latest
     - plugin: nodejs
       versions:
+        - latest:14
         - latest:16
         - latest
     - plugin: golang
@@ -25,12 +26,10 @@
     - plugin: java
       versions:
         - latest:openjdk-11
-        - latest:openjdk-16
-        - graalvm-21.1.0+java11
+        - latest:openjdk-17
     - plugin: scala
       versions:
-        - latest:2.12
-        - latest:2.13
+        - latest
     - plugin: haskell
     - plugin: lua
     - plugin: luaJIT
@@ -41,11 +40,6 @@
         - latest
     - plugin: aks-engine
     - plugin: kops
-      versions:
-        - v1.20.0
-    - plugin: kustomize
-      versions:
-        - latest
     ### k8s development tools ###
     - plugin: minikube # use zinit
     - plugin: skaffold # use zinit
@@ -53,6 +47,9 @@
       versions:
         - latest
     - plugin: kubectl
+      versions:
+        - latest
+    - plugin: kustomize
       versions:
         - latest
     - plugin: helm
@@ -90,13 +87,7 @@
     - plugin: sops # use zinit
     - plugin: docker-slim # use zinit
     - plugin: docker-compose
-      url: https://github.com/virtualstaticvoid/asdf-docker-compose.git
-      versions:
-        - latest
     - plugin: docker-machine
-      url: https://github.com/virtualstaticvoid/asdf-docker-machine.git
-      versions:
-        - latest
     - plugin: protoc
       versions:
         - latest
@@ -107,9 +98,6 @@
       versions:
         - latest
     - plugin: groovy
-      versions:
-        - latest:2
-        - latest:3
     - plugin: gradle
     - plugin: maven
     - plugin: micronaut
