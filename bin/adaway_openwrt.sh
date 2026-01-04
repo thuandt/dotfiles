@@ -3,7 +3,7 @@
 # Description: Script to automate building an adblocking hosts file
 
 # Perform work in temporary files
-adaway_hosts="/etc/adway/hosts"
+adaway_hosts="hosts"
 last_update=$(date)
 
 # Adway lists
@@ -38,6 +38,7 @@ echo "Parsing and merging hosts files..."
 sed -i -e 's/\r//' -e 's/127.0.0.1/0.0.0.0/' -e '/^0.0.0.0/!d' \
     -e '/localhost/d' -e 's/#.*$//' -e 's/\t/ /g' -e 's/  */ /g' \
     -e '/sentry.io/d' -e '/ipinfo.io/d' -e '/googleadapis.l.google.com/d' \
+    -e '/gstaticadssl.l.google.com/d' \
     "${adaway_hosts}"
 
 # delete duplicate, consecutive lines from a file (emulates "uniq").

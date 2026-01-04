@@ -35,6 +35,7 @@ echo "Parsing and merging hosts files..."
 sed -i -e 's/\r//' -e 's/127.0.0.1/0.0.0.0/' -e '/^0.0.0.0/!d' \
     -e '/localhost/d' -e 's/#.*$//' -e 's/\t/ /g' -e 's/  */ /g' \
     -e '/sentry.io/d' -e '/ipinfo.io/d' -e '/googleadapis.l.google.com/d' \
+    -e '/gstaticadssl.l.google.com/d' \
     "$temphosts"
 
 # Combine system hosts with adblocks
