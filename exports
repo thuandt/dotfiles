@@ -19,9 +19,6 @@ else
     ### Setup PATH ###
     export CARGO=$HOME/.cargo/bin               # Rust cargo
     export CABAL=$HOME/.cabal/bin               # Haskell cabal
-    export GOPATH=$HOME/.go                     # gocode
-    export GOROOT=/usr/local/go                 # golang
-    export TFENV=$HOME/.tfenv/bin               # tfenv
     export POETRY=$HOME/.poetry/bin             # poetry
     # shellcheck disable=SC2155
     export YARNBIN=$(yarn global bin)           # yarn
@@ -30,11 +27,9 @@ else
     # My custom path
     MYPATH=("${BIN_DIR}"
             "${POETRY}"
-            "${TFENV}"
             "${KREW_ROOT}/bin"
             "${CARGO}"
             "${CABAL}"
-            "${GOPATH}/bin"
             "${YARNBIN}")
 
     # Add directory to $PATH if its not already there
@@ -78,7 +73,7 @@ fi
 export EDITOR="nvim"
 export USE_EDITOR=$EDITOR
 export VISUAL=$EDITOR
-export KUBE_EDITOR="subl --wait"
+export KUBE_EDITOR="code --wait"
 
 export BAT_THEME="TwoDark"
 
