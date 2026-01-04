@@ -208,7 +208,7 @@ zinit snippet https://storage.googleapis.com/container-diff/latest/container-dif
 zinit ice wait lucid id-as'GoogleCloudPlatform/cloud_sql_proxy' \
   sbin'cloud_sql_proxy' \
   pick'/dev/null'
-zinit snippet https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.10.0/cloud-sql-proxy.linux.amd64
+zinit snippet https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.10.1/cloud-sql-proxy.linux.amd64
 
 # telepresence
 zinit ice wait lucid id-as'telepresenceio/telepresence' \
@@ -241,7 +241,6 @@ zinit light-mode lucid as'null' from'gh-r' for \
   sbin'tflint' terraform-linters/tflint \
   sbin'terraform-lsp' juliosueiras/terraform-lsp \
   sbin'conftest' open-policy-agent/conftest \
-  sbin'kubeseal' bitnami-labs/sealed-secrets \
   sbin'age' sbin'age-keygen' FiloSottile/age \
   sbin'hugo' bpick'*ext*64bit*' gohugoio/hugo \
   sbin'ksops' viaduct-ai/kustomize-sops \
