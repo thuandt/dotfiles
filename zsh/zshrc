@@ -103,7 +103,7 @@ zplugin wait light-mode lucid blockf atclone"zplugin creinstall -q ." atpull"%at
   zsh-users/zsh-completions \
   zchee/zsh-completions
 
-zplugin wait light-mode lucid for \
+zplugin wait light-mode lucid depth=1 for \
   zsh-users/zsh-history-substring-search \
   zdharma/history-search-multi-word \
   OMZ::plugins/gpg-agent/gpg-agent.plugin.zsh \
@@ -135,6 +135,8 @@ zplugin wait light-mode lucid for \
   micha/resty \
   changyuheng/fz \
   make"PREFIX=$ZPFX install" mptre/yank \
+  make"PREFIX=$ZPFX install" AltraMayor/f3 \
+  make"install prefix=$ZPFX" axboe/fio \
   thuandt/zsh-terraform \
   thuandt/zsh-config
 
@@ -147,13 +149,21 @@ zplugin wait light-mode lucid atinit"zpcompinit; zpcdreplay" for \
   # is-snippet id-as"ogham/_exa" https://github.com/ogham/exa/blob/master/contrib/completions.zsh
 
 # tig
-zplugin ice wait lucid depth=1 \
+zplugin ice wait"2" lucid depth=1 \
   atclone"./autogen.sh; ./configure --prefix=$ZPFX" \
   atpull"/bin/cp -f contrib/vim.tigrc ~/.tigrc.vim; /bin/cp -f contrib/git-flow.tigrc ~/.tigrc.git-flow; ./autogen.sh; ./configure --prefix=$ZPFX" \
   make"prefix=$ZPFX install" \
   src"contrib/tig-completion.bash" \
   pick"/dev/null"
 zplugin light jonas/tig
+
+# the_silver_searcher: ag
+zplugin ice wait"2" lucid depth=1 \
+  atclone"./build.sh --prefix=$ZPFX" \
+  atpull"%atclone" \
+  make"install" \
+  pick"/dev/null"
+zplugin light ggreer/the_silver_searcher
 
 # z
 zplugin ice wait lucid cp"z.sh -> z" pick"z" src"z.sh"
@@ -177,13 +187,13 @@ zplugin ice as"null" wait lucid from"gh-r" \
 zplugin light direnv/direnv
 
 # kubectx
-zplugin ice wait lucid pick"/dev/null" sbin"kubectx" sbin"kubens" \
+zplugin ice wait"2" lucid pick"/dev/null" sbin"kubectx" sbin"kubens" \
   atclone"ln -sf completion/kubectx.zsh _kubectx; ln -sf completion/kubens.zsh _kubens" \
   atpull"%atclone"
 zplugin light ahmetb/kubectx
 
 # ansiweather
-zplugin ice wait lucid pick"/dev/null" sbin"ansiweather"
+zplugin ice wait"2" lucid pick"/dev/null" sbin"ansiweather"
 zplugin light fcambus/ansiweather
 
 # color logger
@@ -191,19 +201,19 @@ zplugin ice wait lucid src"color-logger.bash" pick"/dev/null"
 zplugin light swyckoff/color-logger-bash
 
 # poetry
-zplugin ice has"poetry" wait as"completion" id-as"poetry/completion" lucid \
+zplugin ice has"poetry" wait"2" as"completion" id-as"poetry/completion" lucid \
   atclone"poetry completions zsh > _poetry" \
   atpull"%atclone"
 zplugin light zdharma/null
 
 # rust
-zplugin ice has"rustup" wait as"completion" id-as"rust/completion" lucid \
+zplugin ice has"rustup" wait"2" as"completion" id-as"rust/completion" lucid \
   atclone"rustup completions zsh > _rustup; rustup completions zsh cargo > _cargo" \
   atpull"%atclone"
 zplugin light zdharma/null
 
 # rclone
-zplugin ice wait lucid from"gh-r" pick"/dev/null" \
+zplugin ice wait"2" lucid from"gh-r" pick"/dev/null" \
   bpick"*-linux-amd64.zip" \
   mv"rclone* -> rclone" \
   sbin"rclone/rclone" \
@@ -212,7 +222,7 @@ zplugin ice wait lucid from"gh-r" pick"/dev/null" \
 zplugin light rclone/rclone
 
 # Confluent CLI
-zplugin ice wait lucid id-as"confluent/confluent-cli" \
+zplugin ice wait"2" lucid id-as"confluent/confluent-cli" \
   atclone"tar xzf confluent-cli --strip-components=1 confluent/confluent; rm confluent-cli; ./confluent completion zsh > _confluent" \
   atpull"%atclone" \
   sbin"confluent" \
@@ -220,7 +230,7 @@ zplugin ice wait lucid id-as"confluent/confluent-cli" \
 zplugin snippet https://s3-us-west-2.amazonaws.com/confluent.cloud/confluent-cli/archives/latest/confluent_latest_linux_amd64.tar.gz
 
 # Confluent Cloud CLI
-zplugin ice wait lucid id-as"confluent/ccloud-cli" \
+zplugin ice wait"2" lucid id-as"confluent/ccloud-cli" \
   atclone"tar xzf ccloud-cli --strip-components=1 ccloud/ccloud; rm ccloud-cli; ./ccloud completion zsh > _ccloud" \
   atpull"%atclone" \
   sbin"ccloud" \
@@ -228,7 +238,7 @@ zplugin ice wait lucid id-as"confluent/ccloud-cli" \
 zplugin snippet https://s3-us-west-2.amazonaws.com/confluent.cloud/ccloud-cli/archives/latest/ccloud_latest_linux_amd64.tar.gz
 
 # shellcheck
-zplugin ice wait lucid id-as"koalaman/shellcheck-stable" \
+zplugin ice wait"2" lucid id-as"koalaman/shellcheck-stable" \
   atclone"tar xJf shellcheck-stable --strip-components=1 shellcheck-stable/shellcheck; rm shellcheck-stable" \
   atpull"%atclone" \
   sbin"shellcheck" \
@@ -236,7 +246,7 @@ zplugin ice wait lucid id-as"koalaman/shellcheck-stable" \
 zplugin snippet https://storage.googleapis.com/shellcheck/shellcheck-stable.linux.x86_64.tar.xz
 
 # ffmpeg
-zplugin ice wait lucid id-as"FFmpeg/FFmpeg-static" \
+zplugin ice wait"2" lucid id-as"FFmpeg/FFmpeg-static" \
   atclone"tar --strip-components=1 -xJf FFmpeg-static; rm FFmpeg-static" \
   atpull"%atclone" \
   sbin"ffmpeg" sbin"ffprobe" sbin"qt-faststart" \
@@ -244,10 +254,18 @@ zplugin ice wait lucid id-as"FFmpeg/FFmpeg-static" \
 zplugin snippet https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz
 
 # container-diff
-zplugin ice wait lucid id-as"GoogleContainerTools/container-diff" \
+zplugin ice wait"2" lucid id-as"GoogleContainerTools/container-diff" \
   sbin"container-diff" \
   pick"/dev/null"
 zplugin snippet https://storage.googleapis.com/container-diff/latest/container-diff-linux-amd64
+
+# smv
+zplugin ice wait"2" lucid id-as"smartversion/smartvs" \
+  atclone"unzip smartvs; rm -f smartvs" \
+  atpull"%atclone" \
+  sbin"smv" \
+  pick"/dev/null"
+zplugin snippet http://www.smartversion.com/smartvs37_linux_x64.zip
 
 ### syntax highlighting and suggestions ###
 zplugin wait"!1b" light-mode lucid for \
@@ -263,6 +281,13 @@ zplugin as"null" wait"2" light-mode lucid from"gh-r" for \
                               sbin""              derailed/k9s \
                               sbin""              terraform-linters/tflint \
                               sbin""              digitalocean/doctl \
+                              sbin""              simeji/jid \
+                              sbin""              gravitational/teleconsole \
+                              sbin""              PostgREST/postgrest \
+                              sbin""              variadico/noti \
+                              sbin""              mgartner/pg_flame \
+    mv"yq* -> yq"             sbin""              mikefarah/yq \
+    mv"cli53* -> cli53"       sbin""              barnybug/cli53 \
     mv"exa* -> exa"           sbin""              ogham/exa \
     mv"q* -> q"               sbin""              harelba/q \
     mv"hadolint* -> hadolint" sbin""              hadolint/hadolint \
@@ -277,12 +302,13 @@ zplugin as"null" wait"2" light-mode lucid from"gh-r" for \
     mv"trdsql* -> trdsql"     sbin"trdsql/trdsql" noborus/trdsql \
     mv"ripgrep* -> rg"        sbin"rg/rg"         BurntSushi/ripgrep \
     mv"bat* -> bat"           sbin"bat/bat"       @sharkdp/bat \
+    fbin"fzf"                 sbin"fzf"           junegunn/fzf-bin \
     mv"jq* -> jq"     bpick"*linux64"  sbin""     stedolan/jq \
     mv"sops* -> sops" bpick"*linux"    sbin""     mozilla/sops \
     bpick"*linux_amd64.tar.gz"         sbin""     wagoodman/dive \
     bpick"*ext*Linux-64bit.tar.gz"     sbin""     gohugoio/hugo \
-                              sbin"fzf" fbin"fzf" junegunn/fzf-bin \
     mv"ripgrep* -> rga"  sbin"rga/rga" sbin"rga/rga-preproc" phiresky/ripgrep-all \
+    mv"rakkess* -> rakkess" bpick"rakkess-amd64-linux*" sbin"" corneliusweig/rakkess \
     mv"aws-iam-authenticator* -> aws-iam-authenticator" sbin"" kubernetes-sigs/aws-iam-authenticator \
     bpick"*linux.tar.gz" sbin"dist_linux/docker-slim" sbin"dist_linux/docker-slim-sensor" docker-slim/docker-slim
 
