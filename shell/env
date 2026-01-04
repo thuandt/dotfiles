@@ -1,6 +1,6 @@
 #!/bin/sh
 # ~/.shell_env
-# Last Modified: 05/12/2013 01:42 AM
+# Last Modified: 26/12/2013 07:41 PM
 
 # shell history tweaks
 HISTFILE=$HOME/.shell_history_`hostname`  # shell history filename
@@ -16,8 +16,13 @@ export PLAY_HOME=$HOME/app/play                # play framework
 export SBT_HOME=$HOME/app/sbt                  # sbt
 export GOROOT=$HOME/app/go                     # go-lang
 export HEROKU_TOOLBELT="/usr/local/heroku/bin" # Heroku Toolbelt
+# Google Cloud SDK
+export GOOGLE_CLOUD_SDK=$HOME/app/google-cloud-sdk
 
-export MY_PATH=${RVM_BIN_PATH}:${USER_BIN}:${PLAY_HOME}:${SCALA_HOME}/bin:${SBT_HOME}:${GOROOT}/bin:${HEROKU_TOOLBELT}
+# My custom path
+export MY_PATH=${RVM_BIN_PATH}:${USER_BIN}:${GOOGLE_CLOUD_SDK}/bin
+export MY_PATH=MY_PATH:${PLAY_HOME}:${SCALA_HOME}/bin:${SBT_HOME}
+export MY_PATH=MY_PATH:${GOROOT}/bin:${HEROKU_TOOLBELT}
 
 # Add directory to $PATH if it's not already there
 if [[ ":$PATH:" != *":${MY_PATH}:"* ]]; then PATH=${MY_PATH}:$PATH; fi
@@ -53,41 +58,5 @@ export LESS='-i -n -w  -z-4 -g -M -X -F -R'
     export LESS_TERMCAP_so=$'\E[01;44;33m'   # begin standout-mode - info box
     export LESS_TERMCAP_ue=$'\E[0m'          # end underline
     export LESS_TERMCAP_us=$'\E[01;32m'      # begin underline
-
-##### Java Options #####
-#export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GtkLookAndFeel"
-#export JAVA_FONTS="/usr/share/fonts"
-
-##### Ruby/Rails increase performance #####
-
-## Ruby/Rails GC Tunning ##
-# Application will use more memory, but will run much faster (except you are
-# messing with heavy C extension like RMagick). It is almost always better
-# both in memory and performance concern to run ten workers with tuned GC
-# instead of twenty workers without.
-
-# Putting the following in your shell config (eg. ~/.bash_profile) will make
-# Rails even faster, but will increase its memory footprint. For most
-# applications, this will probably work well for you:
-
-export RUBY_GC_MALLOC_LIMIT=60000000
-export RUBY_FREE_MIN=200000
-
-# If you have a particularly large rails app (say, >100k lines), this seems to
-# improve it even more:
-
-#export RUBY_GC_MALLOC_LIMIT=1000000000
-#export RUBY_FREE_MIN=500000
-#export RUBY_HEAP_MIN_SLOTS=40000
-
-## Use high performance allocators like jemalloc and tcmalloc ##
-
-#export LD_PRELOAD=/usr/lib/libtcmalloc_minimal.so.0.1.0
-
-# It will give you ~8-10% of performance for free. Memory consumption could
-# increase or decrease... it is hard to predict.
-
-##### Source: https://gist.github.com/1688857 #####
-#####         https://gist.github.com/4136373 #####
 
 # End of ~/.shell_env
