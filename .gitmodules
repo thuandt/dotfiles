@@ -31,3 +31,6 @@
 [submodule "zsh/omz/plugins/alias-tips"]
 	path = zsh/omz/plugins/alias-tips
 	url = https://github.com/djui/alias-tips
+[submodule "zsh/omz/plugins/kubectx"]
+	path = zsh/omz/plugins/kubectx
+	url = https://github.com/ahmetb/kubectx.git
