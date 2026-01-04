@@ -97,8 +97,6 @@ zinit wait light-mode lucid blockf atclone"zinit creinstall -q ." atpull"%atclon
   zchee/zsh-completions
 
 zinit wait light-mode lucid depth=1 for \
-  zsh-users/zsh-history-substring-search \
-  zdharma/history-search-multi-word \
   OMZ::plugins/gpg-agent/gpg-agent.plugin.zsh \
   OMZ::plugins/aws/aws.plugin.zsh \
   OMZ::plugins/extract/extract.plugin.zsh \
@@ -117,7 +115,11 @@ zinit wait light-mode lucid depth=1 for \
   OMZ::plugins/yarn/yarn.plugin.zsh \
   OMZ::plugins/gitignore/gitignore.plugin.zsh \
   OMZ::plugins/docker-compose/docker-compose.plugin.zsh \
-  OMZ::plugins/docker-machine/docker-machine.plugin.zsh \
+  OMZ::plugins/docker-machine/docker-machine.plugin.zsh
+
+zinit wait light-mode lucid depth=1 for \
+  zsh-users/zsh-history-substring-search \
+  zdharma/history-search-multi-word \
   chrissicool/zsh-256color \
   djui/alias-tips \
   jreese/zsh-titles \
@@ -145,7 +147,7 @@ zinit ice wait"2" lucid depth=1 \
   atclone"./autogen.sh; ./configure --prefix=$ZPFX" \
   atpull"/bin/cp -f contrib/vim.tigrc ~/.tigrc.vim; /bin/cp -f contrib/git-flow.tigrc ~/.tigrc.git-flow; ./autogen.sh; ./configure --prefix=$ZPFX" \
   make"prefix=$ZPFX install" \
-  src"contrib/tig-completion.bash" \
+  src"contrib/tig-completion.zsh" \
   pick"/dev/null"
 zinit light jonas/tig
 
@@ -278,7 +280,6 @@ zinit wait"!1b" light-mode lucid for \
 
 zinit as"null" wait"2" light-mode lucid from"gh-r" for \
   sbin"" isacikgoz/tldr \
-  sbin"" caddyserver/caddy \
   sbin"" aliyun/aliyun-cli \
   sbin"" derailed/k9s \
   sbin"" terraform-linters/tflint \
