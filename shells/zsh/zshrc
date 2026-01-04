@@ -1,23 +1,19 @@
 #!/usr/bin/env zsh
 # ~/.zshrc
 
-# install zplugin
-[[ ! -f ~/.zplugin/bin/zplugin.zsh ]] && {
-  command mkdir -p ~/.zplugin
-  command git clone https://github.com/zdharma/zplugin ~/.zplugin/bin
+# install zinit
+[[ ! -f ~/.zinit/bin/zinit.zsh ]] && {
+  command mkdir -p ~/.zinit
+  command git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
 }
 
-### Zplugin ###
-source "$HOME/.zplugin/bin/zplugin.zsh"
-autoload -Uz _zplugin
-(( ${+_comps} )) && _comps[zplugin]=_zplugin
-
-### Zplugin Module ###
-module_path+=("$HOME/.zplugin/bin/zmodules/Src")
-zmodload zdharma/zplugin
+### zinit ###
+source ~/.zinit/bin/zinit.zsh
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
 # compinit speed up loading
-ZPLGM[COMPINIT_OPTS]=-C
+ZINIT[COMPINIT_OPTS]=-C
 
 #
 # Bindkeys
@@ -65,11 +61,10 @@ bindkey -M vicmd 'j' history-substring-search-down
 stty start undef
 stty stop undef
 
-zplugin light zplugin/z-a-bin-gem-node
-# zplugin light zplugin/z-a-man
+zinit light zinit-zsh/z-a-bin-gem-node
 
 # OMZ libs and plugins
-zplugin light-mode lucid for \
+zinit light-mode lucid for \
   OMZ::lib/clipboard.zsh \
   OMZ::lib/completion.zsh \
   OMZ::lib/directories.zsh \
@@ -87,22 +82,22 @@ zplugin light-mode lucid for \
 
 # For GNU ls (the binaries can be gls, gdircolors, e.g. on OS X when installing the
 # coreutils package from Homebrew or using https://github.com/ogham/exa)
-zplugin ice wait"0c" lucid reset \
+zinit ice wait"0c" lucid reset \
   atclone"dircolors -b dircolors.ansi-dark > clrs.zsh" \
   atpull"%atclone" pick"clrs.zsh" nocompile'!' \
   atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
-zplugin light seebi/dircolors-solarized
+zinit light seebi/dircolors-solarized
 
-# zplugin ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
+# zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
 #     atpull'%atclone' pick"clrs.zsh" nocompile'!' \
 #     atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
-# zplugin light trapd00r/LS_COLORS
+# zinit light trapd00r/LS_COLORS
 
-zplugin wait light-mode lucid blockf atclone"zplugin creinstall -q ." atpull"%atclone" pick"/dev/null" for \
+zinit wait light-mode lucid blockf atclone"zinit creinstall -q ." atpull"%atclone" pick"/dev/null" for \
   zsh-users/zsh-completions \
   zchee/zsh-completions
 
-zplugin wait light-mode lucid depth=1 for \
+zinit wait light-mode lucid depth=1 for \
   zsh-users/zsh-history-substring-search \
   zdharma/history-search-multi-word \
   OMZ::plugins/gpg-agent/gpg-agent.plugin.zsh \
@@ -141,158 +136,158 @@ zplugin wait light-mode lucid depth=1 for \
   thuandt/zsh-aliyun \
   thuandt/zsh-config
 
-zplugin wait light-mode lucid atinit"zpcompinit; zpcdreplay" for \
+zinit wait light-mode lucid atinit"zicompinit; zicdreplay" for \
   is-snippet id-as"docker/_docker" https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker \
   is-snippet id-as"docker/_docker-compose" https://github.com/docker/compose/blob/master/contrib/completion/zsh/_docker-compose \
   is-snippet id-as"docker/_docker-machine" https://github.com/docker/machine/blob/master/contrib/completion/zsh/_docker-machine
 
 # tig
-zplugin ice wait"2" lucid depth=1 \
+zinit ice wait"2" lucid depth=1 \
   atclone"./autogen.sh; ./configure --prefix=$ZPFX" \
   atpull"/bin/cp -f contrib/vim.tigrc ~/.tigrc.vim; /bin/cp -f contrib/git-flow.tigrc ~/.tigrc.git-flow; ./autogen.sh; ./configure --prefix=$ZPFX" \
   make"prefix=$ZPFX install" \
   src"contrib/tig-completion.bash" \
   pick"/dev/null"
-zplugin light jonas/tig
+zinit light jonas/tig
 
 # the_silver_searcher: ag
-zplugin ice wait"2" lucid depth=1 \
+zinit ice wait"2" lucid depth=1 \
   atclone"./build.sh --prefix=$ZPFX" \
   atpull"%atclone" \
   make"install" \
   pick"/dev/null"
-zplugin light ggreer/the_silver_searcher
+zinit light ggreer/the_silver_searcher
 
 # z
-zplugin ice wait lucid cp"z.sh -> z" pick"z" src"z.sh"
-zplugin light rupa/z
-# zplugin ice wait lucid
-# zplugin light eendroroy/zed-zsh
+zinit ice wait lucid cp"z.sh -> z" pick"z" src"z.sh"
+zinit light rupa/z
+# zinit ice wait lucid
+# zinit light eendroroy/zed-zsh
 
 # fzf completion
-zplugin ice wait lucid depth=1 multisrc"shell/*.zsh"
-zplugin light junegunn/fzf
+zinit ice wait lucid depth=1 multisrc"shell/*.zsh"
+zinit light junegunn/fzf
 
 # enhancd with fzf
-zplugin ice wait lucid pick"init.sh"
-zplugin light b4b4r07/enhancd
+zinit ice wait lucid pick"init.sh"
+zinit light b4b4r07/enhancd
 
 # direnv
-zplugin ice as"null" wait lucid from"gh-r" \
+zinit ice as"null" wait lucid from"gh-r" \
   mv"direnv* -> direnv" \
   sbin"" src"zhook.zsh" \
   atclone"./direnv hook zsh > zhook.zsh" atpull"%atclone"
-zplugin light direnv/direnv
+zinit light direnv/direnv
 
 # kubectx
-zplugin ice wait"2" lucid pick"/dev/null" sbin"kubectx" sbin"kubens" \
+zinit ice wait"2" lucid pick"/dev/null" sbin"kubectx" sbin"kubens" \
   atclone"ln -sf completion/kubectx.zsh _kubectx; ln -sf completion/kubens.zsh _kubens" \
   atpull"%atclone"
-zplugin light ahmetb/kubectx
+zinit light ahmetb/kubectx
 
 # ansiweather
-zplugin ice wait"2" lucid pick"/dev/null" sbin"ansiweather"
-zplugin light fcambus/ansiweather
+zinit ice wait"2" lucid pick"/dev/null" sbin"ansiweather"
+zinit light fcambus/ansiweather
 
 # color logger
-zplugin ice wait lucid src"color-logger.bash" pick"/dev/null"
-zplugin light swyckoff/color-logger-bash
+zinit ice wait lucid src"color-logger.bash" pick"/dev/null"
+zinit light swyckoff/color-logger-bash
 
 # poetry
-zplugin ice has"poetry" wait"2" as"completion" id-as"poetry/completion" lucid \
+zinit ice has"poetry" wait"2" as"completion" id-as"poetry/completion" lucid \
   atclone"poetry completions zsh > _poetry" \
   atpull"%atclone"
-zplugin light zdharma/null
+zinit light zdharma/null
 
 # rust
-zplugin ice has"rustup" wait"2" as"completion" id-as"rust/completion" lucid \
+zinit ice has"rustup" wait"2" as"completion" id-as"rust/completion" lucid \
   atclone"rustup completions zsh > _rustup; rustup completions zsh cargo > _cargo" \
   atpull"%atclone"
-zplugin light zdharma/null
+zinit light zdharma/null
 
 # rclone
-zplugin ice wait"2" lucid from"gh-r" pick"/dev/null" \
+zinit ice wait"2" lucid from"gh-r" pick"/dev/null" \
   bpick"*-linux-amd64.zip" \
   mv"rclone* -> rclone" \
   sbin"rclone/rclone" \
   atclone"./rclone/rclone genautocomplete zsh _rclone" \
   atpull"%atclone"
-zplugin light rclone/rclone
+zinit light rclone/rclone
 
 # exercism
-zplugin ice wait"2" lucid from"gh-r" \
+zinit ice wait"2" lucid from"gh-r" \
   atclone"ln -sf shell/exercism_completion.zsh _exercism" \
   atpull"%atclone" \
   sbin"exercism" \
   pick"/dev/null"
-zplugin light exercism/cli
+zinit light exercism/cli
 
 # Confluent CLI
-zplugin ice wait"2" lucid id-as"confluent/confluent-cli" \
+zinit ice wait"2" lucid id-as"confluent/confluent-cli" \
   atclone"tar xzf confluent-cli --strip-components=1 confluent/confluent; rm confluent-cli; ./confluent completion zsh > _confluent" \
   atpull"%atclone" \
   sbin"confluent" \
   pick"/dev/null"
-zplugin snippet https://s3-us-west-2.amazonaws.com/confluent.cloud/confluent-cli/archives/latest/confluent_latest_linux_amd64.tar.gz
+zinit snippet https://s3-us-west-2.amazonaws.com/confluent.cloud/confluent-cli/archives/latest/confluent_latest_linux_amd64.tar.gz
 
 # Confluent Cloud CLI
-zplugin ice wait"2" lucid id-as"confluent/ccloud-cli" \
+zinit ice wait"2" lucid id-as"confluent/ccloud-cli" \
   atclone"tar xzf ccloud-cli --strip-components=1 ccloud/ccloud; rm ccloud-cli; ./ccloud completion zsh > _ccloud" \
   atpull"%atclone" \
   sbin"ccloud" \
   pick"/dev/null"
-zplugin snippet https://s3-us-west-2.amazonaws.com/confluent.cloud/ccloud-cli/archives/latest/ccloud_latest_linux_amd64.tar.gz
+zinit snippet https://s3-us-west-2.amazonaws.com/confluent.cloud/ccloud-cli/archives/latest/ccloud_latest_linux_amd64.tar.gz
 
 # shellcheck
-zplugin ice wait"2" lucid id-as"koalaman/shellcheck-stable" \
+zinit ice wait"2" lucid id-as"koalaman/shellcheck-stable" \
   atclone"tar xJf shellcheck-stable --strip-components=1 shellcheck-stable/shellcheck; rm shellcheck-stable" \
   atpull"%atclone" \
   sbin"shellcheck" \
   pick"/dev/null"
-zplugin snippet https://storage.googleapis.com/shellcheck/shellcheck-stable.linux.x86_64.tar.xz
+zinit snippet https://storage.googleapis.com/shellcheck/shellcheck-stable.linux.x86_64.tar.xz
 
 # ffmpeg
-zplugin ice wait"2" lucid id-as"FFmpeg/FFmpeg-static" \
+zinit ice wait"2" lucid id-as"FFmpeg/FFmpeg-static" \
   atclone"tar --strip-components=1 -xJf FFmpeg-static; rm FFmpeg-static" \
   atpull"%atclone" \
   sbin"ffmpeg" sbin"ffprobe" sbin"qt-faststart" \
   pick"/dev/null"
-zplugin snippet https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz
+zinit snippet https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz
 
 # container-diff
-zplugin ice wait"2" lucid id-as"GoogleContainerTools/container-diff" \
+zinit ice wait"2" lucid id-as"GoogleContainerTools/container-diff" \
   sbin"container-diff" \
   pick"/dev/null"
-zplugin snippet https://storage.googleapis.com/container-diff/latest/container-diff-linux-amd64
+zinit snippet https://storage.googleapis.com/container-diff/latest/container-diff-linux-amd64
 
 # cloud_sql_proxy
-zplugin ice wait"2" lucid id-as"GoogleCloudPlatform/cloud_sql_proxy" \
+zinit ice wait"2" lucid id-as"GoogleCloudPlatform/cloud_sql_proxy" \
   sbin"cloud_sql_proxy" \
   pick"/dev/null"
-zplugin snippet https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64
+zinit snippet https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64
 
 # smv
-zplugin ice wait"2" lucid id-as"smartversion/smartvs" \
+zinit ice wait"2" lucid id-as"smartversion/smartvs" \
   atclone"unzip -o smartvs; rm -f smartvs" \
   atpull"%atclone" \
   sbin"smv" \
   pick"/dev/null"
-zplugin snippet http://www.smartversion.com/smartvs37_linux_x64.zip
+zinit snippet http://www.smartversion.com/smartvs37_linux_x64.zip
 
 # hey
-zplugin ice wait"2" lucid id-as"rakyll/hey" \
+zinit ice wait"2" lucid id-as"rakyll/hey" \
   sbin"hey" \
   pick"/dev/null"
-zplugin snippet https://storage.googleapis.com/hey-release/hey_linux_amd64
+zinit snippet https://storage.googleapis.com/hey-release/hey_linux_amd64
 
 ### syntax highlighting and suggestions ###
-zplugin wait"!1b" light-mode lucid for \
-  atinit"zpcompinit; zpcdreplay" zsh-users/zsh-syntax-highlighting \
-  atinit"zpcompinit; zpcdreplay" zdharma/fast-syntax-highlighting \
+zinit wait"!1b" light-mode lucid for \
+  atinit"zicompinit; zicdreplay" zsh-users/zsh-syntax-highlighting \
+  atinit"zicompinit; zicdreplay" zdharma/fast-syntax-highlighting \
   atload"_zsh_autosuggest_start" zsh-users/zsh-autosuggestions \
-  atinit"zpcompinit; zpcdreplay" hlissner/zsh-autopair
+  atinit"zicompinit; zicdreplay" hlissner/zsh-autopair
 
-zplugin as"null" wait"2" light-mode lucid from"gh-r" for \
+zinit as"null" wait"2" light-mode lucid from"gh-r" for \
                               sbin""              isacikgoz/tldr \
                               sbin""              caddyserver/caddy \
                               sbin""              aliyun/aliyun-cli \
@@ -339,23 +334,23 @@ zplugin as"null" wait"2" light-mode lucid from"gh-r" for \
     bpick"*linux.tar.gz" sbin"dist_linux/docker-slim" sbin"dist_linux/docker-slim-sensor" docker-slim/docker-slim
 
 # fz and calc
-zplugin wait"2" light-mode lucid for \
+zinit wait"2" light-mode lucid for \
   fbin"bin/git-dsf" sbin"bin/diff-so-fancy" fbin"bin/diff-so-fancy" pick"/dev/null" zdharma/zsh-diff-so-fancy \
   changyuheng/fz \
   arzzen/calc.plugin.zsh
 
 # hub
-zplugin ice wait"2" lucid from"gh-r" \
+zinit ice wait"2" lucid from"gh-r" \
   mv"hub* -> hub" \
   sbin"hub/bin/hub" \
   pick"/dev/null" \
   atclone"ln -sf hub/etc/hub.zsh_completion _hub" \
   atpull"%atclone"
-zplugin light github/hub
+zinit light github/hub
 
 # manydots-magic
-zplugin ice wait'!2' lucid atinit"zpcompinit; zpcdreplay" pick"manydots-magic"
-zplugin light "knu/zsh-manydots-magic"
+zinit ice wait'!2' lucid atinit"zicompinit; zicdreplay" pick"manydots-magic"
+zinit light "knu/zsh-manydots-magic"
 
 ### THEME ###
 POWERLEVEL9K_MODE="nerdfont-complete"
@@ -381,12 +376,12 @@ POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND="011"
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND="$DEFAULT_COLOR"
 POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD="5"
 
-zplugin ice depth=1
-zplugin light romkatv/powerlevel10k
+zinit ice depth=1
+zinit light romkatv/powerlevel10k
 
 # TODO: switch to powerlevel10k 100%
-# zplugin ice atload'!source ~/.p10k.zsh; _p9k_precmd' lucid
-# zplugin load romkatv/powerlevel10k
+# zinit ice atload'!source ~/.p10k.zsh; _p9k_precmd' lucid
+# zinit load romkatv/powerlevel10k
 
 # Username completion.
 # Delete old definitions
