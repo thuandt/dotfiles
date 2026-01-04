@@ -13,6 +13,7 @@ if [[ "$OSTYPE" = darwin* ]] ; then
 else
     ### Setup PATH ###
     export CARGO=$HOME/.cargo/bin               # Rust cargo
+    export CABAL=$HOME/.cabal/bin               # Haskell cabal
     export GOPATH=$HOME/.go                     # gocode
     export GOROOT=/usr/local/go                 # golang
     export TFENV=$HOME/.tfenv/bin               # tfenv
@@ -27,6 +28,7 @@ else
             "${TFENV}"
             "${KREW_ROOT}/bin"
             "${CARGO}"
+            "${CABAL}"
             "${GOPATH}/bin"
             "${YARNBIN}")
 
