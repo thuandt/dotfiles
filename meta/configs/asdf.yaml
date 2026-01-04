@@ -8,15 +8,13 @@
     ### programming languages ###
     - plugin: python
       versions:
-        - latest:3.8
         - latest:3.9
     - plugin: ruby
       versions:
-        - latest:2
         - latest
     - plugin: nodejs
       versions:
-        - latest:14
+        - latest:16
         - latest
     - plugin: golang
       versions:
@@ -26,8 +24,9 @@
         - stable
     - plugin: java
       versions:
-        - latest:openjdk-15
-        - graalvm-21.0.0.2+java11
+        - latest:openjdk-11
+        - latest:openjdk-16
+        - graalvm-21.1.0+java11
     - plugin: scala
       versions:
         - latest:2.12
@@ -43,7 +42,7 @@
     - plugin: aks-engine
     - plugin: kops
       versions:
-        - latest
+        - v1.20.0
     - plugin: kustomize
       versions:
         - latest
@@ -68,27 +67,26 @@
     - plugin: rancher
 
     ### Hashicorp ###
-    - plugin: nomad
+    - plugin: terraform
+      versions:
+        - latest
+    - plugin: vault
       versions:
         - latest
     - plugin: packer
       versions:
         - latest
-    - plugin: terraform
+    - plugin: nomad
       versions:
         - latest
     - plugin: tflint # use zinit
     - plugin: terraform-docs # use zinit
     - plugin: terragrunt # use zinit
-    - plugin: vault
-      versions:
-        - latest
 
     ### development tools ###
     - plugin: hadolint # use zinit
     - plugin: shellcheck # use zinit
     - plugin: shfmt # use zinit
-    - plugin: hub # use zinit
     - plugin: sops # use zinit
     - plugin: docker-slim # use zinit
     - plugin: docker-compose
