@@ -217,6 +217,9 @@ map <C-n> :NERDTreeToggle<CR>
 " Completion
 " =============================================================================
 
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"let g:deoplete#enable_at_startup = 1
+
 " YouCompleteMe: a code-completion engine for Vim
 function! BuildYCM(info)
   " info is a dictionary with 3 fields
@@ -224,7 +227,7 @@ function! BuildYCM(info)
   " - status: 'installed', 'updated', or 'unchanged'
   " - force:  set on PlugInstall! or PlugUpdate!
   if a:info.status == 'installed' || a:info.force
-    !./install.py --clang-completer --gocode-completer --tern-completer --racer-completer
+    !python3 ./install.py --clang-completer --gocode-completer --tern-completer --racer-completer
   endif
 endfunction
 
@@ -233,7 +236,7 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_complete_in_strings = 1
-let g:ycm_server_python_interpreter = '/usr/bin/python'
+let g:ycm_server_python_interpreter = '/usr/bin/python3'
 
 " Rust source tree
 let g:ycm_rust_src_path = '/home/mrtux/DevProjects/opensource/rustsrc'
@@ -243,7 +246,7 @@ map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 autocmd! User YouCompleteMe if !has('vim_starting') | call youcompleteme#Enable() | endif
 
 " UltiSnips - The ultimate snippet solution for Vim
-"Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 
 " Trigger configuration.
 " Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
@@ -437,7 +440,7 @@ Plug 'airblade/vim-gitgutter'
 
 " Faster serching code using ag
 Plug 'mileszs/ack.vim'
-if executable('/usr/bin/ag')
+if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
@@ -492,7 +495,10 @@ endif
 " file. The file content will be encrypted to all recipients before it is
 " written.
 Plug 'jamessan/vim-gnupg'
-
+" {{{
+  " prefer symmetric encryption
+  let g:GPGPreferSymmetric = 1
+" }}}
 
 " Base16 colorscheme
 Plug 'chriskempson/base16-vim'
