@@ -20,13 +20,13 @@ export BIN_DIR=$HOME/.local/bin
 export PATH=$BIN_DIR:$PATH
 
 # Editor
-export EDITOR="nvim"
+export EDITOR="code --wait"
 export VISUAL="${EDITOR}"
 export CVSEDITOR="${EDITOR}"
 export USE_EDITOR="${EDITOR}"
 export SVN_EDITOR="${EDITOR}"
 export GIT_EDITOR="${EDITOR}"
-export KUBE_EDITOR="code --wait"
+export KUBE_EDITOR="${EDITOR}"
 export XDG_CONFIG_HOME="${HOME}/.config"
 
 export BAT_THEME="TwoDark"
