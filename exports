@@ -54,6 +54,7 @@ fi
 export EDITOR="nvim"
 export USE_EDITOR=$EDITOR
 export VISUAL=$EDITOR
+export KUBE_EDITOR="subl --wait"
 
 # Color man pages
 export PAGER='less'
