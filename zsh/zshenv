@@ -79,6 +79,7 @@ export PATH="${USER_BIN}:${PATH}"
 
 if [[ "$OSTYPE" == linux* ]]; then
   ### Setup PATH ###
+  export DOOM_EMACS=${HOME}/.config/emacs/bin # doom-emacs
   export PULUMI=${HOME}/.pulumi/bin           # pulumi
   export KREW_ROOT=${HOME}/.krew              # krew
   export CARGO=${HOME}/.cargo/bin             # Rust cargo
@@ -90,6 +91,7 @@ if [[ "$OSTYPE" == linux* ]]; then
 
   # My custom path
   MYPATH=(
+    "${DOOM_EMACS}"
     "${PULUMI}"
     "${KREW_ROOT}/bin"
     "${CARGO}"

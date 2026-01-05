@@ -5,4 +5,11 @@
       relink: true
       ignore-missing: true
 
-- clean: ["~", "~/.config"]
+- clean:
+    - "~"
+    - "~/.gnupg"
+    - "~/.config"
+    - "~/.local/bin"
+    - "~/.config/htop"
+    - "~/.config/pgcli"
+    - "~/.config/youtube-dl"

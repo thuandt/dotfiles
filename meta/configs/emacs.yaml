@@ -1,5 +1,0 @@
-- shell:
-    - if [ ! -d ~/.emacs.d ]; then git clone https://github.com/hlissner/doom-emacs ~/.emacs.d; fi
-
-- link:
-    ~/.doom.d: apps/emacs/doom.d

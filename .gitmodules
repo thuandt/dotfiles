@@ -1,9 +1,9 @@
 [submodule "meta/dotbot"]
 	path = meta/dotbot
 	url = https://github.com/anishathalye/dotbot
-[submodule "terminals/tmux/colors"]
-	path = terminals/tmux/colors
+[submodule "tmux/colors"]
+	path = tmux/colors
 	url = https://github.com/seebi/tmux-colors-solarized.git
-[submodule "apps/nvim"]
-	path = apps/nvim
+[submodule "nvim"]
+	path = nvim
 	url = git@github.com:thuandt/NvChad-starter.git

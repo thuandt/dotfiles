@@ -1,7 +1,0 @@
-- create:
-    - ~/.gnupg/
-
-- link:
-    ~/.gnupg/gpg.conf: tools/gpg/gpg.conf
-    ~/.gnupg/dirmngr.conf: tools/gpg/dirmngr.conf
-    ~/.gnupg/gpg-agent.conf: tools/gpg/gpg-agent.conf

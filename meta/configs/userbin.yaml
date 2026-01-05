@@ -4,5 +4,5 @@
 - link:
     ~/.local/bin:
       glob: true
-      path: tools/bin/*
+      path: bin/*
       relink: true

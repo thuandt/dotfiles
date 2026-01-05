@@ -6,5 +6,6 @@ set main-view-id = yes
 set main-view-id-width = 8
 set main-view-date = relative-compact
 
-source ~/.tigrc.vim
-source ~/.tigrc.git-flow
+source ~/.config/tig/vim.tigrc
+source ~/.config/tig/git-flow.tigrc
+source ~/.config/tig/large-repo.tigrc

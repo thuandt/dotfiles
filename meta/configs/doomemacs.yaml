@@ -1,0 +1,8 @@
+- link:
+    ~/.config/doom: doomemacs
+
+- shell:
+    - if [ ! -d ~/.config/emacs ]; then git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs; fi
+    - ~/.config/emacs/bin/doom install --force
+    - ~/.config/emacs/bin/doom sync
+    - ~/.config/emacs/bin/doom upgrade

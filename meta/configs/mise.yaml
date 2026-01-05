@@ -1,5 +1,5 @@
-- create:
-    - ~/.config/mise
-
 - link:
-    ~/.config/mise/config.toml: tools/mise/config.toml
+    ~/.config/mise: mise
+
+- shell:
+    - mise self-update -y && mise upgrade -y

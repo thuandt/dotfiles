@@ -272,7 +272,11 @@ end
 -- Return the Tab's current working directory
 local function get_cwd(tab)
   -- Note, returns URL Object: https://wezterm.org/config/lua/pane/get_current_working_dir.html
-  return tab.active_pane.current_working_dir.file_path or ""
+  if tab.active_pane.current_working_dir then
+    return tab.active_pane.current_working_dir.file_path
+  else
+    return ""
+  end
 end
 
 -- Remove all path components and return only the last value

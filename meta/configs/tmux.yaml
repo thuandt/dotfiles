@@ -1,0 +1,4 @@
+- link:
+    ~/.config/tmux: tmux
+    ~/.config/byobu: byobu
+    ~/.screenrc: screen/screenrc
