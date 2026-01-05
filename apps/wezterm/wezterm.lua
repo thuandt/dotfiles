@@ -189,12 +189,12 @@ local process_icons = {
   ["mysql"] = nerdfonts.dev_mysql,
   ["mycli"] = nerdfonts.dev_mysql,
   ["usql"] = nerdfonts.dev_database,
-  ["terraform"] = nerdfonts.dev_terraform,
+  ["terraform"] = nerdfonts.md_terraform,
   ["aws"] = nerdfonts.dev_aws,
   ["az"] = nerdfonts.dev_azure,
   ["gcloud"] = nerdfonts.dev_google_cloud,
-  ["kubectl"] = nerdfonts.dev_kubernetes,
-  ['k9s'] = nerdfonts.dev_kubernetes,
+  ["kubectl"] = nerdfonts.md_kubernetes,
+  ["k9s"] = nerdfonts.md_kubernetes,
   ["helm"] = nerdfonts.dev_helm,
   ["sudo"] = nerdfonts.fa_hashtag,
   ["btm"] = nerdfonts.md_monitor_eye,
@@ -412,7 +412,7 @@ wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, _hover, _ma
     local fg_color = select_contrasting_fg_color(bg_color)
     local format = {}
     local padding = tab.is_active and (nbsp .. nbsp) or nbsp
-    add_segment(format, bg_color, fg_color, padding .. tab.tab_title .. padding, true) -- tab.is_active)
+    add_segment(format, bg_color, fg_color, padding .. tab.tab_title .. padding, true)
     return format
   end
 
