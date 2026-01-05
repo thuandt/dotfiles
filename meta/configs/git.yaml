@@ -1,4 +1,3 @@
 - link:
-    ~/.tigrc: tools/vcs/git/.tigrc
-    ~/.gitconfig: tools/vcs/git/.gitconfig
-    ~/.gitignore_global: tools/vcs/git/.gitignore_global
+    ~/.tigrc: tools/vcs/git/tigrc
+    ~/.config/git: tools/vcs/git

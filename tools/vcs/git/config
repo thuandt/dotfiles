@@ -3,7 +3,7 @@
     pager = diff-so-fancy | less -x2 -RFXSi
     # pager = delta
     precomposeunicode = true
-    excludesfile = ~/.gitignore_global
+    # excludesfile = ~/.config/git/ignore
     whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 
 #[init]
@@ -36,6 +36,9 @@
 
 [diff]
     tool = meld
+
+[diff "image"]
+    textconv = wezterm imgcat
 
 [difftool]
     prompt = false
