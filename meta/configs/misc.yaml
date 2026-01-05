@@ -12,6 +12,7 @@
     ~/.psqlrc: terminals/misc/psqlrc
     ~/.Xresources: terminals/misc/Xresources
     ~/.ansiweatherrc: terminals/misc/ansiweatherrc
+    ~/.myclirc: apps/mycli/myclirc
     ~/.config/pgcli/config: apps/pgcli/config
     ~/.config/htop/htoprc: apps/htop/htoprc
     ~/.config/youtube-dl/config: apps/youtube-dl/config
