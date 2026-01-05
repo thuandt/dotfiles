@@ -83,3 +83,7 @@ tags
 .vim
 
 # End of https://www.gitignore.io/api/vim,emacs,code
+
+# Customized ignores
+# ignore all files starting with 'private_' in any directory
+**/private_*
