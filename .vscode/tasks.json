@@ -10,28 +10,27 @@
       "problemMatcher": []
     },
     {
-      "label": "install-misc",
+      "label": "install-standalone",
       "type": "shell",
-      "command": "./install-standalone misc",
+      "command": "./install-standalone ${input:dotbotConfig}",
       "problemMatcher": []
     },
+  ],
+  "inputs": [
     {
-      "label": "install-zsh",
-      "type": "shell",
-      "command": "./install-standalone zsh",
-      "problemMatcher": []
-    },
-    {
-      "label": "install-git",
-      "type": "shell",
-      "command": "./install-standalone git",
-      "problemMatcher": []
-    },
-    {
-      "label": "install-wezterm",
-      "type": "shell",
-      "command": "./install-standalone wezterm",
-      "problemMatcher": []
+      "type": "pickString",
+      "id": "dotbotConfig",
+      "description": "What config file of dotbot do you want to run?",
+      "options": [
+        "git",
+        "zsh",
+        "misc",
+        "systemd",
+        "wezterm",
+        "doomemacs",
+        "mpv"
+      ],
+      "default": "misc"
     }
   ]
 }
