@@ -33,7 +33,7 @@ config.keys = {
 config.color_scheme = 'Solarized Dark (Gogh)'
 colors = wezterm.get_builtin_color_schemes()[config.color_scheme]
 config.font_size = 14.0
-config.bold_brightens_ansi_colors = true
+config.bold_brightens_ansi_colors = "BrightAndBold"
 config.foreground_text_hsb = {
   brightness = 1.0,
   hue        = 1.0,
@@ -49,16 +49,19 @@ config.window_padding = {
   bottom = 0,
 }
 config.font = wezterm.font_with_fallback({
-  "CaskaydiaCove Nerd Font",
-  "FiraCode Nerd Font",
-  "FiraMono Nerd Font",
-  "Hack Nerd Font",
-  "Fira Code",
+  {
+    family = 'CaskaydiaCove Nerd Font',
+    weight = 'Medium',
+  },
+  {
+    family = 'FiraCode Nerd Font',
+    weight = 'Medium',
+  },
 })
 
 -- Font for ONLY the tab bar and window frame
 config.window_frame = {
-  font = wezterm.font({ family = 'CaskaydiaCove Nerd Font Mono', weight = 'Bold' }),
+  font = wezterm.font({ family = 'CaskaydiaCove Nerd Font Mono' }),
   font_size = 12.0,
 }
 
