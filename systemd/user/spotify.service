@@ -1,0 +1,18 @@
+[Unit]
+Description=Spotify
+PartOf=graphical-session.target
+Requires=graphical-session.target
+After=xdg-desktop-autostart.target
+
+[Install]
+WantedBy=graphical-session.target
+
+[Service]
+Type=exec
+ExitType=cgroup
+ExecStartPre=:/usr/bin/sleep 15
+ExecStart=:/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=spotify --file-forwarding com.spotify.Client --force-device-scale-factor=1.25 @@u @@
+TimeoutStartSec=90s
+Restart=no
+TimeoutStopSec=5s
+Slice=app.slice

@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily mise self-update and tools upgrade
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+Unit=mise-upgrade.service
+
+[Install]
+WantedBy=timers.target

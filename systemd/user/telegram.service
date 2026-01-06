@@ -1,0 +1,18 @@
+[Unit]
+Description=Telegram
+PartOf=graphical-session.target
+Requires=graphical-session.target
+After=xdg-desktop-autostart.target
+
+[Install]
+WantedBy=graphical-session.target
+
+[Service]
+Type=exec
+ExitType=cgroup
+ExecStartPre=:/usr/bin/sleep 5
+ExecStart=:/home/mrtux/.local/share/TelegramDesktop/Telegram --autostart
+TimeoutStartSec=90s
+Restart=no
+TimeoutStopSec=5s
+Slice=app.slice

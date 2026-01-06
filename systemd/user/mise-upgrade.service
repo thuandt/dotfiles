@@ -1,0 +1,16 @@
+[Unit]
+Description=mise self-update and environment upgrade
+Documentation=https://mise.jdx.dev/
+After=network-online.target
+Wants=mise-upgrade.timer
+
+[Service]
+# Set the execution type to oneshot, meaning the service runs the command and then exits.
+Type=oneshot
+WorkingDirectory=%h
+ExecStart=/bin/bash -c "%h/.local/bin/mise self-update -y && %h/.local/bin/mise upgrade -y"
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

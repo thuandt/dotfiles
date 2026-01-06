@@ -1,0 +1,7 @@
+- clean:
+    - ~/.config/systemd/user/
+
+- link:
+    ~/.config/systemd/user/:
+      glob: true
+      path: systemd/user/**

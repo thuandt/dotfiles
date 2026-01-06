@@ -1,0 +1,18 @@
+[Unit]
+Description=qBitorrent
+PartOf=graphical-session.target
+Requires=graphical-session.target
+After=xdg-desktop-autostart.target
+
+[Install]
+WantedBy=graphical-session.target
+
+[Service]
+Type=exec
+ExitType=cgroup
+ExecStartPre=:/usr/bin/sleep 15
+ExecStart=:/usr/bin/env QT_SCALE_FACTOR=1.25 /usr/bin/qbittorrent
+TimeoutStartSec=90s
+Restart=no
+TimeoutStopSec=5s
+Slice=app.slice

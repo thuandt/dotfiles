@@ -1,0 +1,19 @@
+[Unit]
+Description=Crow Translate
+PartOf=graphical-session.target
+Requires=graphical-session.target
+After=xdg-desktop-autostart.target
+
+
+[Install]
+WantedBy=graphical-session.target
+
+[Service]
+Type=exec
+ExitType=cgroup
+ExecStartPre=:/usr/bin/sleep 15
+ExecStart=:/usr/bin/crow
+TimeoutStartSec=90s
+Restart=no
+TimeoutStopSec=5s
+Slice=app.slice

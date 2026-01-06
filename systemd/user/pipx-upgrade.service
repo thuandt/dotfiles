@@ -1,0 +1,16 @@
+[Unit]
+Description=pipx upgrade all installed packages
+Documentation=https://pipx.pypa.io/
+After=network-online.target
+Wants=pipx-upgrade.timer
+
+[Service]
+# Set the execution type to oneshot, meaning the service runs the command and then exits.
+Type=oneshot
+WorkingDirectory=%h
+ExecStart=/bin/bash -c "pipx upgrade-all"
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

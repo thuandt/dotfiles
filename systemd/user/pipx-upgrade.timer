@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily pipx tools upgrade
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+Unit=pipx-upgrade.service
+
+[Install]
+WantedBy=timers.target
