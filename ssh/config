@@ -1,0 +1,76 @@
+# Hardened OpenSSH Client Configuration
+# https://www.ssh-audit.com/hardening_guides.html
+# https://github.com/k4yt3x/ssh_config
+
+Include config.d/*.conf
+
+Host *
+  Protocol 2
+
+  # disable unnecessary forwardings
+  ForwardAgent no
+  ForwardX11 no
+  ForwardX11Trusted no
+  GatewayPorts no
+  Tunnel no
+
+  # disable unnecessary authentication methods
+  ChallengeResponseAuthentication no
+  GSSAPIAuthentication no
+  HostbasedAuthentication no
+
+  # define authentication methods to be used
+  PasswordAuthentication yes
+  PubkeyAuthentication yes
+  PreferredAuthentications publickey,password
+
+  # disable pre-connection compression as it could cause security issues
+  Compression no
+
+  # in addition to checking a host's hostname, also check the host's IP address
+  #   this provides extra safety against DNS spoofing attacks
+  CheckHostIP yes
+
+  # ask the user if the user wants to accept the new host's host key
+  StrictHostKeyChecking ask
+
+  # hash the entries in the known_hosts file to prevent disclosure
+  #   of the file's content
+  HashKnownHosts yes
+
+  IdentitiesOnly yes
+  IdentityFile ~/.ssh/id_rsa.pub
+
+  # explicitly define cryptography algorithms to avoid the use of weak algorithms
+  # AES-CTR and Chacha20-Poly1305 modes have been removed to mitigate the Terrapin attack
+  #   https://terrapin-attack.com/
+  Ciphers aes256-gcm@openssh.com,aes128-gcm@openssh.com
+  HostKeyAlgorithms ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,rsa-sha2-256,rsa-sha2-256-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-512-cert-v01@openssh.com
+  MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com
+
+  # short moduli should be deactivated before enabling the use of diffie-hellman-group-exchange-sha256
+  #   see this link for more details: https://github.com/k4yt3x/sshd_config#deactivating-short-diffie-hellman-moduli
+  # AES-CTR and Chacha20-Poly1305 modes have been removed to mitigate the Terrapin attack
+  #   https://terrapin-attack.com/
+  # ecdh-sha2-nistp* algorithms have been removed due to concerns around NIST P-curves' design
+  #   https://github.com/jtesta/ssh-audit/issues/213#issuecomment-1774204745
+  KexAlgorithms sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group18-sha512,diffie-hellman-group16-sha512
+
+  # do not send any local environment variables
+  #SendEnv
+
+  # send a keepalive message to the server when the session has been idle for 60 seconds
+  # this prevents/detects connection timeouts
+  ConnectTimeout 30
+  TCPKeepAlive yes
+  ServerAliveInterval 60
+  ServerAliveCountMax 6
+  ControlMaster auto
+  ControlPath /tmp/%r@%h:%p
+  ControlPersist yes
+
+  # increase the number of password retries
+  NumberOfPasswordPrompts 5
+
+  # display an ASCII art of the server's host key
+  VisualHostKey yes

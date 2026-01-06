@@ -1,12 +1,15 @@
 - defaults:
     link:
       force: true
+      backup: true
       create: true
       relink: true
       ignore-missing: true
 
 - clean:
     - "~"
+    - "~/.ssh"
+    - "~/.ssh/config.d"
     - "~/.gnupg"
     - "~/.config"
     - "~/.local/bin"
