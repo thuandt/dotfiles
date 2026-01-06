@@ -1,3 +1,5 @@
+- clean: ["~/"]
+
 - link:
     ~/.zshrc: zsh/zshrc
     ~/.zshenv: zsh/zshenv

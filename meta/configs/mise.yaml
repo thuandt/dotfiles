@@ -1,3 +1,5 @@
+- clean: ["~/config/"]
+
 - link:
     ~/.config/mise: mise
 

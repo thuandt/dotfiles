@@ -1,3 +1,6 @@
+- clean:
+    - "~/.config/"
+
 - link:
     ~/.config/git: git
     ~/.config/tig: tig

@@ -1,6 +1,9 @@
 - create:
     - ~/.gnupg/
 
+- clean:
+    - "~/.gnupg/"
+
 - link:
     ~/.gnupg/gpg.conf: gnupg/gpg.conf
     ~/.gnupg/dirmngr.conf: gnupg/dirmngr.conf

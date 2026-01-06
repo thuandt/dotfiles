@@ -4,5 +4,9 @@
   ~/.ssh/config.d:
     mode: 0700
 
+- clean:
+    - "~/.ssh/"
+    - "~/.ssh/config.d/"
+
 - link:
     ~/.ssh/config: ssh/config

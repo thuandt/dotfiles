@@ -1,2 +1,4 @@
+- clean: ["~/config/"]
+
 - link:
     ~/.config/mpv: mpv

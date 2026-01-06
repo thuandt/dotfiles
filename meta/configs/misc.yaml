@@ -1,7 +1,13 @@
 - create:
-    - ~/.config/pgcli/
     - ~/.config/htop/
+    - ~/.config/pgcli/
     - ~/.config/youtube-dl/
+
+- clean:
+    - "~/"
+    - "~/.config/htop/"
+    - "~/.config/pgcli/"
+    - "~/.config/youtube-dl/"
 
 - link:
     ~/.digrc: misc/digrc

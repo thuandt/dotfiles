@@ -1,2 +1,5 @@
+- clean:
+    - "~/.config/"
+
 - link:
     ~/.config/fontconfig: fontconfig

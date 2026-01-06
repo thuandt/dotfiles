@@ -1,3 +1,5 @@
+- clean: ["~/"]
+
 - link:
     ~/.config/tmux: tmux
     ~/.config/byobu: byobu

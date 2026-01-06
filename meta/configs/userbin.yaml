@@ -1,6 +1,8 @@
 - create:
     - ~/.local/bin
 
+- clean: ["~/.local/bin/"]
+
 - link:
     ~/.local/bin:
       glob: true
