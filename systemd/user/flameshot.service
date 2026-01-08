@@ -11,7 +11,7 @@ WantedBy=graphical-session.target
 Type=exec
 ExitType=cgroup
 ExecStartPre=:/usr/bin/sleep 20
-ExecStart=:/usr/bin/env QT_SCALE_FACTOR=1.25 QT_AUTO_SCREEN_SCALE_FACTOR=0 /usr/bin/flameshot
+ExecStart=:/usr/bin/env QT_SCALE_FACTOR=1.1 /usr/bin/flameshot
 TimeoutStartSec=90s
 Restart=no
 TimeoutStopSec=5s
