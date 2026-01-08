@@ -11,7 +11,7 @@ WantedBy=graphical-session.target
 [Service]
 Type=exec
 ExitType=cgroup
-ExecStartPre=:/usr/bin/sleep 15
+ExecStartPre=:/usr/bin/sleep 20
 ExecStart=:/usr/bin/crow
 TimeoutStartSec=90s
 Restart=no

@@ -9,7 +9,7 @@ WantedBy=graphical-session.target
 [Service]
 Type=exec
 ExitType=cgroup
-ExecStartPre=:/usr/bin/sleep 15
+ExecStartPre=:/usr/bin/sleep 12
 ExecStart=:/usr/bin/microsoft-edge-stable
 TimeoutStartSec=90s
 Restart=no
