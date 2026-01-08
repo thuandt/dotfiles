@@ -30,8 +30,14 @@ config.keys = {
 }
 
 -- Appearance
+-- https://github.com/Gogh-Co/Gogh/blob/master/themes/Solarized%20Dark.yml
 config.color_scheme = 'Solarized Dark (Gogh)'
 colors = wezterm.get_builtin_color_schemes()[config.color_scheme]
+config.colors = {
+  tab_bar = {
+    background = colors.background
+  }
+}
 config.font_size = 14.0
 config.bold_brightens_ansi_colors = "BrightAndBold"
 config.foreground_text_hsb = {
@@ -79,15 +85,15 @@ wezterm.on("update-status", function(window, pane)
   -- Workspace name
   local active_key_table = window:active_key_table()
   local stat = window:active_workspace()
-  local workspace_color = colors.ansi[3]
+  local workspace_color = colors.ansi[5]
   local time = wezterm.strftime("%Y-%m-%d %H:%M")
 
   if active_key_table then
     stat = active_key_table
-    workspace_color = colors.ansi[4]
+    workspace_color = colors.ansi[2]
   elseif window:leader_is_active() then
     stat = "leader"
-    workspace_color = colors.ansi[2]
+    workspace_color = colors.ansi[4]
   end
 
   -- Current working directory
@@ -128,9 +134,9 @@ wezterm.on("update-status", function(window, pane)
   window:set_right_status(wezterm.format({
     { Text       = " "                                   },
     { Background = { Color = colors.background }         },
-    { Foreground = { Color = colors.ansi[4] }            },
+    { Foreground = { Color = colors.ansi[5] }            },
     { Text       = nerdfonts.ple_lower_right_triangle    },
-    { Background = { Color = colors.ansi[4] }            },
+    { Background = { Color = colors.ansi[5] }            },
     { Foreground = { Color = colors.background }         },
     { Text       = nerdfonts.md_folder .. " "            },
     { Background = { Color = colors.ansi[1] }            },
@@ -142,9 +148,9 @@ wezterm.on("update-status", function(window, pane)
 
     { Text       = " "                                   },
     { Background = { Color = colors.background }         },
-    { Foreground = { Color = colors.ansi[8]}             },
+    { Foreground = { Color = colors.ansi[5]}             },
     { Text       = nerdfonts.ple_lower_right_triangle    },
-    { Background = { Color = colors.ansi[8]}             },
+    { Background = { Color = colors.ansi[5]}             },
     { Foreground = { Color = colors.background }         },
     { Text       = nerdfonts.md_calendar_clock .. " "    },
     { Background = { Color = colors.ansi[1] }            },
@@ -304,7 +310,11 @@ end
 local function get_process(tab)
   if not tab.active_pane or tab.active_pane.foreground_process_name == "" then return "[?]" end
   local process_name = remove_abs_path(tab.active_pane.foreground_process_name)
-  return process_icons[process_name] or string.format("[%s]", process_name)
+  -- Strip trailing version suffixes (e.g., python3.12) to match icon keys
+  local normalized_name = process_name:gsub("[%d%.]+$", "")
+  if normalized_name == "" then normalized_name = process_name end
+  local icon = process_icons[process_name] or process_icons[normalized_name]
+  return icon or string.format("[%s]", process_name)
 end
 
 -- Format the main content of the tab (everything except edge whitespace)
@@ -415,7 +425,7 @@ wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, _hover, _ma
 
   -- Handle custom titles
   if tab.tab_title and #tab.tab_title > 0 then
-    local bg_color = tab.is_active and colors.ansi[6] or dim_color(base_color, 0.7)
+    local bg_color = tab.is_active and colors.ansi[5] or dim_color(base_color, 0.7)
     local fg_color = select_contrasting_fg_color(bg_color)
     local format = {}
     local padding = tab.is_active and (nbsp .. nbsp) or nbsp
@@ -428,7 +438,7 @@ wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, _hover, _ma
 
   if tab.is_active then
     -- Active tab: left edge with rocket, padded colored content
-    local off_white = colors.ansi[6]
+    local off_white = colors.ansi[5]
     local main_bg = base_color
     local main_fg = select_contrasting_fg_color(main_bg)
 
