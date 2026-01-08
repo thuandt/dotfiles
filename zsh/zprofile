@@ -1,6 +1,5 @@
 #!/usr/bin/env zsh
-# ~/.zprofile
 
 if [[ "$OSTYPE" == linux* ]]; then
-  _byobu_sourced=1 . /usr/bin/byobu-launch
+  _byobu_sourced=1 . /usr/bin/byobu-launch 2>/dev/null || true
 fi
