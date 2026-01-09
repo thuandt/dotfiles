@@ -31,6 +31,29 @@ config.keys = {
 
 -- Appearance
 -- https://github.com/Gogh-Co/Gogh/blob/master/themes/Solarized%20Dark.yml
+-- color_01: '#073642'    # Black (Host)
+-- color_02: '#DC322F'    # Red (Syntax string)
+-- color_03: '#859900'    # Green (Command)
+-- color_04: '#CF9A6B'    # Yellow (Command second)
+-- color_05: '#268BD2'    # Blue (Path)
+-- color_06: '#D33682'    # Magenta (Syntax var)
+-- color_07: '#2AA198'    # Cyan (Prompt)
+-- color_08: '#EEE8D5'    # White
+
+-- color_09: '#657B83'    # Bright Black
+-- color_10: '#CB4B16'    # Bright Red (Command error)
+-- color_11: '#859900'    # Bright Green (Exec)
+-- color_12: '#CF9A6B'    # Bright Yellow
+-- color_13: '#6c71c4'    # Bright Blue (Folder)
+-- color_14: '#D33682'    # Bright Magenta
+-- color_15: '#2AA198'    # Bright Cyan
+-- color_16: '#FDF6E3'    # Bright White
+
+-- background: '#002B36'  # Background
+-- foreground: '#839496'  # Foreground (Text)
+
+-- cursor: '#839496'      # Cursor
+
 config.color_scheme = 'Solarized Dark (Gogh)'
 colors = wezterm.get_builtin_color_schemes()[config.color_scheme]
 config.colors = {
@@ -85,7 +108,7 @@ wezterm.on("update-status", function(window, pane)
   -- Workspace name
   local active_key_table = window:active_key_table()
   local stat = window:active_workspace()
-  local workspace_color = colors.ansi[5]
+  local workspace_color = colors.ansi[7]
   local time = wezterm.strftime("%Y-%m-%d %H:%M")
 
   if active_key_table then
@@ -134,9 +157,9 @@ wezterm.on("update-status", function(window, pane)
   window:set_right_status(wezterm.format({
     { Text       = " "                                   },
     { Background = { Color = colors.background }         },
-    { Foreground = { Color = colors.ansi[5] }            },
+    { Foreground = { Color = colors.ansi[7] }            },
     { Text       = nerdfonts.ple_lower_right_triangle    },
-    { Background = { Color = colors.ansi[5] }            },
+    { Background = { Color = colors.ansi[7] }            },
     { Foreground = { Color = colors.background }         },
     { Text       = nerdfonts.md_folder .. " "            },
     { Background = { Color = colors.ansi[1] }            },
@@ -148,9 +171,9 @@ wezterm.on("update-status", function(window, pane)
 
     { Text       = " "                                   },
     { Background = { Color = colors.background }         },
-    { Foreground = { Color = colors.ansi[5]}             },
+    { Foreground = { Color = colors.ansi[7]}             },
     { Text       = nerdfonts.ple_lower_right_triangle    },
-    { Background = { Color = colors.ansi[5]}             },
+    { Background = { Color = colors.ansi[7]}             },
     { Foreground = { Color = colors.background }         },
     { Text       = nerdfonts.md_calendar_clock .. " "    },
     { Background = { Color = colors.ansi[1] }            },
@@ -425,7 +448,7 @@ wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, _hover, _ma
 
   -- Handle custom titles
   if tab.tab_title and #tab.tab_title > 0 then
-    local bg_color = tab.is_active and colors.ansi[5] or dim_color(base_color, 0.7)
+    local bg_color = tab.is_active and colors.ansi[7] or dim_color(base_color, 0.7)
     local fg_color = select_contrasting_fg_color(bg_color)
     local format = {}
     local padding = tab.is_active and (nbsp .. nbsp) or nbsp
@@ -438,7 +461,7 @@ wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, _hover, _ma
 
   if tab.is_active then
     -- Active tab: left edge with rocket, padded colored content
-    local off_white = colors.ansi[5]
+    local off_white = colors.ansi[7]
     local main_bg = base_color
     local main_fg = select_contrasting_fg_color(main_bg)
 
