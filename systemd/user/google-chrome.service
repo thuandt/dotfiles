@@ -1,5 +1,5 @@
 [Unit]
-Description=Microsoft Edge
+Description=Google Chrome Web Browser
 PartOf=graphical-session.target
 Requires=graphical-session.target
 
@@ -9,8 +9,8 @@ WantedBy=graphical-session.target
 [Service]
 Type=exec
 ExitType=cgroup
-ExecStartPre=:/usr/bin/sleep 12
-ExecStart=:/usr/bin/microsoft-edge-stable
+ExecStartPre=:/usr/bin/sleep 25
+ExecStart=:/usr/bin/google-chrome
 TimeoutStartSec=90s
 Restart=no
 TimeoutStopSec=5s

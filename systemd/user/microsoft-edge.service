@@ -1,8 +1,7 @@
 [Unit]
-Description=MEGAsync
+Description=Microsoft Edge Web Browser
 PartOf=graphical-session.target
 Requires=graphical-session.target
-After=xdg-desktop-autostart.target
 
 [Install]
 WantedBy=graphical-session.target
@@ -10,8 +9,8 @@ WantedBy=graphical-session.target
 [Service]
 Type=exec
 ExitType=cgroup
-ExecStartPre=:/usr/bin/sleep 25
-ExecStart=:/usr/bin/env QT_SCALE_FACTOR=1.25 megasync
+ExecStartPre=:/usr/bin/sleep 20
+ExecStart=:/usr/bin/microsoft-edge-stable
 TimeoutStartSec=90s
 Restart=no
 TimeoutStopSec=5s

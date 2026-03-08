@@ -8,7 +8,7 @@ Wants=pipx-upgrade.timer
 # Set the execution type to oneshot, meaning the service runs the command and then exits.
 Type=oneshot
 WorkingDirectory=%h
-ExecStart=/bin/bash -c "pipx upgrade-all"
+ExecStart=/bin/zsh -c "pipx upgrade-all"
 StandardOutput=journal
 StandardError=journal
 

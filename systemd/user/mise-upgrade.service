@@ -8,7 +8,7 @@ Wants=mise-upgrade.timer
 # Set the execution type to oneshot, meaning the service runs the command and then exits.
 Type=oneshot
 WorkingDirectory=%h
-ExecStart=/bin/bash -c "%h/.local/bin/mise self-update -y && %h/.local/bin/mise upgrade -y"
+ExecStart=/bin/zsh -c "%h/.local/bin/mise self-update -y && %h/.local/bin/mise upgrade -y && %h/.local/bin/mise prune -y"
 StandardOutput=journal
 StandardError=journal
 
