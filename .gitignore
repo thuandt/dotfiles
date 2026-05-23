@@ -87,3 +87,4 @@ tags
 # Customized ignores
 # ignore all files starting with 'private_' in any directory
 **/private_*
+mise/**_tokens.toml
