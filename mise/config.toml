@@ -1,6 +1,6 @@
 [tools]
 age = "latest"
-age-plugin-yubikey = "latest"
+age-plugin-yubikey = "0.5.0"
 amazon-ecr-credential-helper = "latest"
 argocd = "latest"
 "aqua:argoproj-labs/argocd-image-updater" = "latest"
@@ -94,3 +94,11 @@ usql = "latest"
 "github:AlexsJones/llmfit" = "latest"
 ollama = "latest"
 azure-kubelogin = "latest"
+"github:ggml-org/llama.cpp" = { version = "latest", asset_pattern = "llama-*-bin-ubuntu-vulkan-x64.tar.gz" }
+btop = "latest"
+"github:graykode/abtop" = "latest"
+bitwarden = "latest"
+bats = "latest"
+
+[settings.github]
+credential_command = "gh auth token"
