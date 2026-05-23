@@ -96,8 +96,7 @@ zinit light-mode lucid depth=1 for \
   changyuheng/fz \
   thuandt/zsh-config \
   thuandt/zsh-terraform \
-  thuandt/zsh-vault \
-  thuandt/zsh-pipx
+  thuandt/zsh-vault
 
 zinit pack"bgn-binary+keys" for fzf
 
