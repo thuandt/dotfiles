@@ -10,8 +10,8 @@ WantedBy=graphical-session.target
 [Service]
 Type=exec
 ExitType=cgroup
-ExecStartPre=:/usr/bin/sleep 25
-ExecStart=:/usr/bin/env QT_SCALE_FACTOR=1.25 megasync
+ExecStartPre=:/usr/bin/sleep 50
+ExecStart=:/usr/bin/env megasync
 TimeoutStartSec=90s
 Restart=no
 TimeoutStopSec=5s

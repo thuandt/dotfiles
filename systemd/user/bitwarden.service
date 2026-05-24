@@ -10,8 +10,8 @@ WantedBy=graphical-session.target
 [Service]
 Type=exec
 ExitType=cgroup
-ExecStartPre=:/usr/bin/sleep 25
-ExecStart=:/usr/bin/bitwarden-desktop
+ExecStartPre=:/usr/bin/sleep 45
+ExecStart=:/opt/Bitwarden/bitwarden
 TimeoutStartSec=90s
 Restart=no
 TimeoutStopSec=5s

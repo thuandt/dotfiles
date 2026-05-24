@@ -10,7 +10,7 @@ WantedBy=graphical-session.target
 [Service]
 Type=exec
 ExitType=cgroup
-ExecStartPre=:/usr/bin/sleep 10
+ExecStartPre=:/usr/bin/sleep 30
 ExecStart=:/usr/bin/code
 TimeoutStartSec=90s
 Restart=no

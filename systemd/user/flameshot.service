@@ -10,7 +10,7 @@ WantedBy=graphical-session.target
 [Service]
 Type=exec
 ExitType=cgroup
-ExecStartPre=:/usr/bin/sleep 20
+ExecStartPre=:/usr/bin/sleep 30
 ExecStart=:/usr/bin/env QT_SCALE_FACTOR=1.1 /usr/bin/flameshot
 TimeoutStartSec=90s
 Restart=no
