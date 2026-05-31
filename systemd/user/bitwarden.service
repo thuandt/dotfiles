@@ -1,6 +1,6 @@
 [Unit]
 Description=Bitwarden
-WantedBy=bitwarden.timer
+Wants=bitwarden.timer
 
 [Install]
 WantedBy=graphical-session.target
