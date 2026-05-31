@@ -1,5 +1,5 @@
 # Hardened OpenSSH Client Configuration
-# https://www.ssh-audit.com/hardening_guides.html
+# https://infosec.mozilla.org/guidelines/openssh.html
 # https://github.com/k4yt3x/ssh_config
 
 Include config.d/*.conf
@@ -73,4 +73,4 @@ Host *
   NumberOfPasswordPrompts 5
 
   # display an ASCII art of the server's host key
-  VisualHostKey yes
+  VisualHostKey no
