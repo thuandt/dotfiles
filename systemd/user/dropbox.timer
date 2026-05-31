@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for Dropbox autostart
+
+[Timer]
+OnActiveSec=5min
+RandomizedDelaySec=15s
+Unit=dropbox.service
+
+[Install]
+WantedBy=timers.target

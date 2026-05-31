@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for Antigravity autostart
+
+[Timer]
+OnActiveSec=30s
+RandomizedDelaySec=5s
+Unit=antigravity.service
+
+[Install]
+WantedBy=timers.target

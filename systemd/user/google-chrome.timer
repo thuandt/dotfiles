@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for Google Chrome autostart
+
+[Timer]
+OnActiveSec=30s
+RandomizedDelaySec=5s
+Unit=google-chrome.service
+
+[Install]
+WantedBy=timers.target

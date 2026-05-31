@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for Visual Studio Code autostart
+
+[Timer]
+OnActiveSec=20s
+RandomizedDelaySec=5s
+Unit=code.service
+
+[Install]
+WantedBy=timers.target

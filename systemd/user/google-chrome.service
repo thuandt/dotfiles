@@ -1,7 +1,6 @@
 [Unit]
 Description=Google Chrome Web Browser
-PartOf=graphical-session.target
-Requires=graphical-session.target
+Wants=google-chrome.timer
 
 [Install]
 WantedBy=graphical-session.target
@@ -9,9 +8,5 @@ WantedBy=graphical-session.target
 [Service]
 Type=exec
 ExitType=cgroup
-ExecStartPre=:/usr/bin/sleep 30
 ExecStart=:/usr/bin/google-chrome
-TimeoutStartSec=90s
-Restart=no
-TimeoutStopSec=5s
 Slice=app.slice

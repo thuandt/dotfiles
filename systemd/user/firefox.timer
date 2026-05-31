@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for Firefox autostart
+
+[Timer]
+OnActiveSec=10s
+RandomizedDelaySec=5s
+Unit=firefox.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for WezTerm autostart
+
+[Timer]
+OnActiveSec=5s
+AccuracySec=1s
+Unit=wezterm.service
+
+[Install]
+WantedBy=timers.target

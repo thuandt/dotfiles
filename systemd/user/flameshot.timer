@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for Flameshot autostart
+
+[Timer]
+OnActiveSec=5min
+RandomizedDelaySec=15s
+Unit=flameshot.service
+
+[Install]
+WantedBy=timers.target

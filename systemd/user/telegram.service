@@ -1,8 +1,6 @@
 [Unit]
 Description=Telegram
-PartOf=graphical-session.target
-Requires=graphical-session.target
-After=xdg-desktop-autostart.target
+Wants=telegram.timer
 
 [Install]
 WantedBy=graphical-session.target
@@ -10,9 +8,6 @@ WantedBy=graphical-session.target
 [Service]
 Type=exec
 ExitType=cgroup
-ExecStartPre=:/usr/bin/sleep 5
-ExecStart=:/usr/bin/env QT_SCALE_FACTOR=1.35 /home/mrtux/.local/share/TelegramDesktop/Telegram --autostart
-TimeoutStartSec=90s
-Restart=no
-TimeoutStopSec=5s
+Environment="QT_SCREEN_SCALE_FACTORS=DP-1=1.5;DP-2=1.35"
+ExecStart=:/home/mrtux/.local/share/TelegramDesktop/Telegram --autostart
 Slice=app.slice

@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for Spotify autostart
+
+[Timer]
+OnActiveSec=5min
+RandomizedDelaySec=30s
+Unit=spotify.service
+
+[Install]
+WantedBy=timers.target

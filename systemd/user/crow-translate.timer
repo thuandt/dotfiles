@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for Crow Translate autostart
+
+[Timer]
+OnActiveSec=5min
+RandomizedDelaySec=15s
+Unit=crow-translate.service
+
+[Install]
+WantedBy=timers.target

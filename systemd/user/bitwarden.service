@@ -1,8 +1,6 @@
 [Unit]
 Description=Bitwarden
-PartOf=graphical-session.target
-Requires=graphical-session.target
-After=xdg-desktop-autostart.target
+WantedBy=bitwarden.timer
 
 [Install]
 WantedBy=graphical-session.target
@@ -10,9 +8,5 @@ WantedBy=graphical-session.target
 [Service]
 Type=exec
 ExitType=cgroup
-ExecStartPre=:/usr/bin/sleep 45
 ExecStart=:/opt/Bitwarden/bitwarden
-TimeoutStartSec=90s
-Restart=no
-TimeoutStopSec=5s
 Slice=app.slice

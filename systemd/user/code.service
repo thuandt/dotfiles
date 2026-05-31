@@ -1,8 +1,6 @@
 [Unit]
 Description=Visual Studio Code
-PartOf=graphical-session.target
-Requires=graphical-session.target
-After=xdg-desktop-autostart.target
+Wants=code.timer
 
 [Install]
 WantedBy=graphical-session.target
@@ -10,9 +8,5 @@ WantedBy=graphical-session.target
 [Service]
 Type=exec
 ExitType=cgroup
-ExecStartPre=:/usr/bin/sleep 30
 ExecStart=:/usr/bin/code
-TimeoutStartSec=90s
-Restart=no
-TimeoutStopSec=5s
 Slice=app.slice

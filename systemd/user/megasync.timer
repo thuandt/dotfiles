@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for MEGAsync autostart
+
+[Install]
+WantedBy=timers.target
+
+[Timer]
+OnActiveSec=5min
+RandomizedDelaySec=15s
+Unit=megasync.service

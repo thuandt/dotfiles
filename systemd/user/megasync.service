@@ -1,8 +1,6 @@
 [Unit]
 Description=MEGAsync
-PartOf=graphical-session.target
-Requires=graphical-session.target
-After=xdg-desktop-autostart.target
+Wants=megasync.timer
 
 [Install]
 WantedBy=graphical-session.target
@@ -10,9 +8,6 @@ WantedBy=graphical-session.target
 [Service]
 Type=exec
 ExitType=cgroup
-ExecStartPre=:/usr/bin/sleep 50
-ExecStart=:/usr/bin/env megasync
-TimeoutStartSec=90s
-Restart=no
-TimeoutStopSec=5s
+Environment="QT_SCALE_FACTOR=1.25"
+ExecStart=:megasync
 Slice=app.slice

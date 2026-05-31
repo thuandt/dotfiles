@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for Telegram autostart
+
+[Timer]
+OnActiveSec=5s
+AccuracySec=1s
+Unit=telegram.service
+
+[Install]
+WantedBy=timers.target

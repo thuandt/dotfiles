@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for qBittorrent autostart
+
+[Timer]
+OnActiveSec=3min
+RandomizedDelaySec=30s
+Unit=qbittorrent.service
+
+[Install]
+WantedBy=timers.target

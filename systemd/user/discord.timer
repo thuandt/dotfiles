@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for Discord autostart
+
+[Timer]
+OnActiveSec=1min
+RandomizedDelaySec=15s
+Unit=discord.service
+
+[Install]
+WantedBy=timers.target

@@ -1,7 +1,6 @@
 [Unit]
 Description=Microsoft Edge Web Browser
-PartOf=graphical-session.target
-Requires=graphical-session.target
+Wants=microsoft-edge.timer
 
 [Install]
 WantedBy=graphical-session.target
@@ -9,9 +8,5 @@ WantedBy=graphical-session.target
 [Service]
 Type=exec
 ExitType=cgroup
-ExecStartPre=:/usr/bin/sleep 50
 ExecStart=:/usr/bin/microsoft-edge-stable
-TimeoutStartSec=90s
-Restart=no
-TimeoutStopSec=5s
 Slice=app.slice

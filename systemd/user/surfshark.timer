@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for Surfshark autostart
+
+[Timer]
+OnActiveSec=5min
+RandomizedDelaySec=30s
+Unit=surfshark.service
+
+[Install]
+WantedBy=timers.target

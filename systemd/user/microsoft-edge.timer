@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer for Microsoft Edge autostart
+
+[Install]
+WantedBy=timers.target
+
+[Timer]
+OnActiveSec=30s
+RandomizedDelaySec=15s
+Unit=microsoft-edge.service

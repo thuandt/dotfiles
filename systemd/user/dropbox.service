@@ -1,8 +1,6 @@
 [Unit]
 Description=Dropbox
-PartOf=graphical-session.target
-Requires=graphical-session.target
-After=xdg-desktop-autostart.target
+Wants=dropbox.timer
 
 [Install]
 WantedBy=graphical-session.target
@@ -10,9 +8,5 @@ WantedBy=graphical-session.target
 [Service]
 Type=exec
 ExitType=cgroup
-ExecStartPre=:/usr/bin/sleep 45
 ExecStart=:/usr/bin/dropbox start -i
-TimeoutStartSec=90s
-Restart=no
-TimeoutStopSec=5s
 Slice=app.slice
