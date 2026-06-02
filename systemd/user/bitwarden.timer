@@ -3,7 +3,7 @@ Description=Timer for Bitwarden autostart
 
 [Timer]
 OnActiveSec=1min
-RandomizedDelaySec=5s
+RandomizedDelaySec=15s
 Unit=bitwarden.service
 
 [Install]

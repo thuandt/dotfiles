@@ -8,5 +8,6 @@ WantedBy=graphical-session.target
 [Service]
 Type=exec
 ExitType=cgroup
-ExecStart=:/usr/bin/env QT_SCALE_FACTOR=1.25 /usr/bin/qbittorrent
+Environment="QT_SCALE_FACTOR=1.15"
+ExecStart=:/usr/bin/qbittorrent
 Slice=app.slice
