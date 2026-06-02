@@ -99,6 +99,7 @@ btop = "latest"
 "github:graykode/abtop" = "latest"
 bitwarden = "latest"
 bats = "latest"
+fastfetch = "latest"
 
 [settings.github]
 credential_command = "gh auth token"
