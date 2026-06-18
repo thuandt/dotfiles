@@ -2,8 +2,8 @@
 Description=Timer for Telegram autostart
 
 [Timer]
-OnActiveSec=30s
-RandomizedDelaySec=5s
+OnActiveSec=1min
+RandomizedDelaySec=10s
 Unit=telegram.service
 
 [Install]
