@@ -3,28 +3,23 @@
 
 # zinit
 export ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-if [[ ! -f "${ZINIT_HOME}/zinit.zsh" ]]; then
-  command mkdir -p "$(dirname $ZINIT_HOME)/completions" && command chmod g-rwX "$(dirname $ZINIT_HOME)"
-  command git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-fi
-
-if [[ ! -f "$(dirname $ZINIT_HOME)/completions/_zinit" ]]; then
-  command ln -sf "$ZINIT_HOME/_zinit" "$(dirname $ZINIT_HOME)/completions/_zinit"
-fi
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)/completions"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+[ ! -f "$(dirname $ZINIT_HOME)/completions/_zinit" ] && ln -sf "$ZINIT_HOME/_zinit" "$(dirname $ZINIT_HOME)/completions/_zinit"
 
 source "${ZINIT_HOME}/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
 # Create cache and completions dir and add to $fpath
-mkdir -p "$ZSH_CACHE_DIR/completions"
+[ ! -d "$ZSH_CACHE_DIR/completions"] && mkdir -p "$ZSH_CACHE_DIR/completions"
 (( ${fpath[(Ie)"$ZSH_CACHE_DIR/completions"]} )) || fpath=("$ZSH_CACHE_DIR/completions" $fpath)
 
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 zinit light zdharma-continuum/zinit-annex-meta-plugins
-zinit light-mode lucid skip"dircolors-material" for annexes zsh-users+fast console-tools
+zinit lucid light-mode skip"dircolors-material" for annexes zsh-users+fast console-tools
 
 # direnv workaround for instant-prompt
 # https://github.com/romkatv/powerlevel10k/blob/master/README.md#how-do-i-initialize-direnv-when-using-instant-prompt
@@ -45,7 +40,7 @@ fi
 # stty stop undef
 
 # OMZ libs and plugins
-zinit light-mode lucid for \
+zinit wait lucid light-mode for \
   OMZL::clipboard.zsh \
   OMZL::completion.zsh \
   OMZL::directories.zsh \
@@ -63,20 +58,19 @@ zinit light-mode lucid for \
 
 # For GNU ls (the binaries can be gls, gdircolors, e.g. on OS X when installing the
 # coreutils package from Homebrew or using https://github.com/ogham/exa)
-zinit light-mode lucid reset \
+zinit wait lucid light-mode reset \
   atclone'dircolors -b dircolors.ansi-dark > clrs.zsh' \
   atpull'%atclone' pick'clrs.zsh' nocompile'!' \
   atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"' \
   for seebi/dircolors-solarized
 
-zinit light-mode lucid depth=1 for \
+zinit wait lucid light-mode depth=1 for \
   OMZP::gpg-agent \
   OMZP::ansible \
   OMZP::azure \
   OMZP::aws \
   OMZP::extract \
   OMZP::encode64 \
-  jeffreytse/zsh-vi-mode \
   OMZP::nmap \
   OMZP::kubectl \
   OMZP::helm \
@@ -94,56 +88,93 @@ zinit light-mode lucid depth=1 for \
   amstrad/oh-my-matrix \
   micha/resty \
   changyuheng/fz \
-  thuandt/zsh-config \
   thuandt/zsh-terraform \
   thuandt/zsh-vault
 
 zinit pack"bgn-binary+keys" for fzf
-
 # z
-zinit light-mode lucid cp='z.sh -> z' pick'z' src'z.sh' for rupa/z
+zinit wait lucid light-mode cp='z.sh -> z' pick'z' src'z.sh' for rupa/z
 
 # enhancd with fzf
-zinit light-mode lucid pick'init.sh' nocompletions for b4b4r07/enhancd
+zinit wait lucid light-mode pick'init.sh' nocompletions for b4b4r07/enhancd
 
 # direnv
-zinit light-mode lucid as'null' from'gh-r' \
+zinit wait lucid light-mode as'null' from'gh-r' \
   mv'direnv* -> direnv' \
   sbin'direnv' src'zhook.zsh' \
   atclone'./direnv hook zsh > zhook.zsh' \
   atpull'%atclone' for direnv/direnv
 
+# generate auto completion from program
+zinit wait lucid light-mode pick'/dev/null' for \
+  id-as'argocd-completion' atload'[ $commands[argocd] ] && source <(argocd completion zsh)' zdharma-continuum/null \
+  id-as'argocd-image-updater-completion' atload'[ $commands[argocd-image-updater] ] && source <(argocd-image-updater completion zsh)' zdharma-continuum/null \
+  id-as'caddy-completion' atload'[ $commands[caddy] ] && source <(caddy completion zsh)' zdharma-continuum/null \
+  id-as'checkov-completion' atload'[ $commands[checkov] ] && source <(register-python-argcomplete checkov)' zdharma-continuum/null \
+  id-as'cloud-sql-proxy-completion' atload'[ $commands[cloud-sql-proxy] ] && source <(cloud-sql-proxy completion zsh)' zdharma-continuum/null \
+  id-as'cmctl-completion' atload'[ $commands[cmctl] ] && source <(cmctl completion zsh)' zdharma-continuum/null \
+  id-as'cosign-completion' atload'[ $commands[cosign] ] && source <(cosign completion zsh)' zdharma-continuum/null \
+  id-as'cue-completion' atload'[ $commands[cue] ] && source <(cue completion zsh)' zdharma-continuum/null \
+  id-as'docker-completion' atload'[ $commands[docker] ] && source <(docker completion zsh)' zdharma-continuum/null \
+  id-as'exercism-completion' atload'[ $commands[exercism] ] && source <(exercism completion zsh)' zdharma-continuum/null \
+  id-as'flyctl-completion' atload'[ $commands[flyctl] ] && source <(flyctl completion zsh)' zdharma-continuum/null \
+  id-as'gh-completion' atload'[ $commands[gh] ] && source <(gh completion -s zsh)' zdharma-continuum/null \
+  id-as'glab-completion' atload'[ $commands[glab] ] && source <(glab completion -s zsh) && compdef _glab glab' zdharma-continuum/null \
+  id-as'hugo-completion' atload'[ $commands[hugo] ] && source <(hugo completion zsh)' zdharma-continuum/null \
+  id-as'infracost-completion' atload'[ $commands[infracost] ] && infracost completion --shell zsh >! ${ZSH_CACHE_DIR}/completions/_infracost' zdharma-continuum/null \
+  id-as'k6-completion' atload'[ $commands[k6] ] && source <(k6 completion zsh)' zdharma-continuum/null \
+  id-as'k9s-completion' atload'[ $commands[k9s] ] && source <(k9s completion zsh)' zdharma-continuum/null \
+  id-as'stern-completion' atload'[ $commands[stern] ] && source <(stern --completion=zsh)' zdharma-continuum/null \
+  id-as'opa-completion' atload'[ $commands[opa] ] && source <(opa completion zsh)' zdharma-continuum/null \
+  id-as'pipenv-completion' atload'[ $commands[pipenv] ] && eval $(register-python-argcomplete pipenv)' zdharma-continuum/null \
+  id-as'pipx-completion' atload'[ $commands[pipx] ] && eval $(register-python-argcomplete pipx)' zdharma-continuum/null \
+  id-as'poetry-completion' atload'[ $commands[poetry] ] && poetry completions zsh >! ${ZSH_CACHE_DIR}/completions/_poetry' zdharma-continuum/null \
+  id-as'yq-completion' atload'[ $commands[yq] ] && source <(yq completion zsh)' zdharma-continuum/null
+
 # ansiweather
-zinit light-mode lucid pick'/dev/null' sbin'ansiweather' for fcambus/ansiweather
+zinit wait lucid light-mode pick'/dev/null' sbin'ansiweather' for fcambus/ansiweather
 
 # color logger
-zinit light-mode lucid src'color-logger.bash' pick'/dev/null' for swyckoff/color-logger-bash
+zinit wait lucid light-mode src'color-logger.bash' pick'/dev/null' for swyckoff/color-logger-bash
 
-# poetry
-zinit light-mode lucid has'poetry' as'completion' id-as'poetry/completion' \
-  atclone'poetry completions zsh > _poetry' \
-  atpull'%atclone' for zdharma-continuum/null
-
-zinit wait light-mode lucid for \
-  pick'manydots-magic' knu/zsh-manydots-magic \
-  zchee/zsh-completions
+# manydots-magic
+zinit wait lucid light-mode for \
+  pick'manydots-magic' knu/zsh-manydots-magic
 
 # zsh-diff-so-fancy
-zplugin light-mode lucid \
+zplugin wait lucid light-mode \
   pick"bin/git-dsf" \
   sbin'bin/git-dsf' \
   sbin'bin/diff-so-fancy' \
-  as"program" for zdharma-continuum/zsh-diff-so-fancy
+  as"program" for thuandt/zsh-diff-so-fancy
 
-zinit light-mode lucid for \
+zinit wait lucid light-mode for \
+  zchee/zsh-completions \
   gradle/gradle-completion \
   arzzen/calc.plugin.zsh
 
-zinit load zsh-users/zsh-history-substring-search
+# https://github.com/zsh-users/zsh-autosuggestions/issues/642#issuecomment-2136812444
+# autosuggest-accept: Accepts the current suggestion.
+# autosuggest-execute: Accepts and executes the current suggestion.
+# autosuggest-clear: Clears the current suggestion.
+# autosuggest-fetch: Fetches a suggestion (works even when suggestions are disabled).
+# autosuggest-disable: Disables suggestions.
+# autosuggest-enable: Re-enables suggestions.
+# autosuggest-toggle: Toggles between enabled/disabled suggestions.
+zinit lucid light-mode depth=1 for \
+  atload"_zsh_autosuggest_start; \
+        ZSH_AUTOSUGGEST_STRATEGY=(history completion) \
+        ZSH_AUTOSUGGEST_MANUAL_REBIND=0 \
+        bindkey '^ ' autosuggest-execute" \
+    zsh-users/zsh-autosuggestions \
+  jeffreytse/zsh-vi-mode \
+  thuandt/zsh-config
+
+zinit load 'zsh-users/zsh-history-substring-search'
 zinit ice wait atload'_history_substring_search_config'
 
 ### THEME ###
-zinit light-mode lucid nocd depth='1' atload'!source ~/.p10k.zsh; _p9k_precmd' for romkatv/powerlevel10k
+zinit lucid light-mode nocd depth='1' atload'!source ~/.p10k.zsh; _p9k_precmd' for romkatv/powerlevel10k
 
 # Username completion.
 # Delete old definitions
@@ -200,13 +231,6 @@ zshaddhistory() {
     && ${cmd} != (apm|base64|bzip2|cal|calc|cat|cd|chmod|cp|curl|cvs|date|df|diff|dig|disklabel|dmesg|doas|du|e|egrep|enc|ent|exiftool|f|fdisk|feh|file|find|gimp|git|gpg|grep|hdiutil|head|hostname|ifconfig|kill|less|ls|mail|make|man|mkdir|mount|mpv|mv|nc|openssl|patch|pdf|pdfinfo|pgrep|ping|pkg_info|pkill|ps|rcctl|rm|rsync|scp|scrot|set|sha256|sort|srm|ssh|stat|strip|sudo|sysctl|tar|tmux|top|umount|uname|unzip|uptime|useradd|vlc|vi|vim|wc|wget|which|whoami|whois|wireshark|xclip|xxd|youtube-dl)
   ]]
 }
-
-# WSL2
-# gpg-agent with YubiKey
-# https://github.com/rupor-github/win-gpg-agent
-
-autoload -Uz compinit
-compinit
 
 # -q is for quiet; actually run all the `compdef's saved before `compinit` call
 # (`compinit' declares the `compdef' function, so it cannot be used until
