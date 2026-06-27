@@ -12,7 +12,8 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
 # Create cache and completions dir and add to $fpath
-[ ! -d "$ZSH_CACHE_DIR/completions"] && mkdir -p "$ZSH_CACHE_DIR/completions"
+# for support OMZ plugins
+[ ! -d "$ZSH_CACHE_DIR/completions" ] && mkdir -p "$ZSH_CACHE_DIR/completions"
 (( ${fpath[(Ie)"$ZSH_CACHE_DIR/completions"]} )) || fpath=("$ZSH_CACHE_DIR/completions" $fpath)
 
 # Load a few important annexes, without Turbo
@@ -105,31 +106,77 @@ zinit wait lucid light-mode as'null' from'gh-r' \
   atclone'./direnv hook zsh > zhook.zsh' \
   atpull'%atclone' for direnv/direnv
 
-# generate auto completion from program
+# generate auto completion from supported program itself
 zinit wait lucid light-mode pick'/dev/null' for \
-  id-as'argocd-completion' atload'[ $commands[argocd] ] && source <(argocd completion zsh)' zdharma-continuum/null \
-  id-as'argocd-image-updater-completion' atload'[ $commands[argocd-image-updater] ] && source <(argocd-image-updater completion zsh)' zdharma-continuum/null \
-  id-as'caddy-completion' atload'[ $commands[caddy] ] && source <(caddy completion zsh)' zdharma-continuum/null \
-  id-as'checkov-completion' atload'[ $commands[checkov] ] && source <(register-python-argcomplete checkov)' zdharma-continuum/null \
-  id-as'cloud-sql-proxy-completion' atload'[ $commands[cloud-sql-proxy] ] && source <(cloud-sql-proxy completion zsh)' zdharma-continuum/null \
-  id-as'cmctl-completion' atload'[ $commands[cmctl] ] && source <(cmctl completion zsh)' zdharma-continuum/null \
-  id-as'cosign-completion' atload'[ $commands[cosign] ] && source <(cosign completion zsh)' zdharma-continuum/null \
-  id-as'cue-completion' atload'[ $commands[cue] ] && source <(cue completion zsh)' zdharma-continuum/null \
-  id-as'docker-completion' atload'[ $commands[docker] ] && source <(docker completion zsh)' zdharma-continuum/null \
-  id-as'exercism-completion' atload'[ $commands[exercism] ] && source <(exercism completion zsh)' zdharma-continuum/null \
-  id-as'flyctl-completion' atload'[ $commands[flyctl] ] && source <(flyctl completion zsh)' zdharma-continuum/null \
-  id-as'gh-completion' atload'[ $commands[gh] ] && source <(gh completion -s zsh)' zdharma-continuum/null \
-  id-as'glab-completion' atload'[ $commands[glab] ] && source <(glab completion -s zsh) && compdef _glab glab' zdharma-continuum/null \
-  id-as'hugo-completion' atload'[ $commands[hugo] ] && source <(hugo completion zsh)' zdharma-continuum/null \
-  id-as'infracost-completion' atload'[ $commands[infracost] ] && infracost completion --shell zsh >! ${ZSH_CACHE_DIR}/completions/_infracost' zdharma-continuum/null \
-  id-as'k6-completion' atload'[ $commands[k6] ] && source <(k6 completion zsh)' zdharma-continuum/null \
-  id-as'k9s-completion' atload'[ $commands[k9s] ] && source <(k9s completion zsh)' zdharma-continuum/null \
-  id-as'stern-completion' atload'[ $commands[stern] ] && source <(stern --completion=zsh)' zdharma-continuum/null \
-  id-as'opa-completion' atload'[ $commands[opa] ] && source <(opa completion zsh)' zdharma-continuum/null \
-  id-as'pipenv-completion' atload'[ $commands[pipenv] ] && eval $(register-python-argcomplete pipenv)' zdharma-continuum/null \
-  id-as'pipx-completion' atload'[ $commands[pipx] ] && eval $(register-python-argcomplete pipx)' zdharma-continuum/null \
-  id-as'poetry-completion' atload'[ $commands[poetry] ] && poetry completions zsh >! ${ZSH_CACHE_DIR}/completions/_poetry' zdharma-continuum/null \
-  id-as'yq-completion' atload'[ $commands[yq] ] && source <(yq completion zsh)' zdharma-continuum/null
+  id-as'argocd-completion' \
+        atload'[ $commands[argocd] ] && source <(argocd completion zsh)' \
+        zdharma-continuum/null \
+  id-as'argocd-image-updater-completion' \
+        atload'[ $commands[argocd-image-updater] ] && source <(argocd-image-updater completion zsh)' \
+        zdharma-continuum/null \
+  id-as'caddy-completion' \
+        atload'[ $commands[caddy] ] && source <(caddy completion zsh)' \
+        zdharma-continuum/null \
+  id-as'checkov-completion' \
+        atload'[ $commands[checkov] ] && source <(register-python-argcomplete checkov)' \
+        zdharma-continuum/null \
+  id-as'cloud-sql-proxy-completion' \
+        atload'[ $commands[cloud-sql-proxy] ] && source <(cloud-sql-proxy completion zsh)' \
+        zdharma-continuum/null \
+  id-as'cmctl-completion' \
+        atload'[ $commands[cmctl] ] && source <(cmctl completion zsh)' \
+        zdharma-continuum/null \
+  id-as'cosign-completion' \
+        atload'[ $commands[cosign] ] && source <(cosign completion zsh)' \
+        zdharma-continuum/null \
+  id-as'cue-completion' \
+        atload'[ $commands[cue] ] && source <(cue completion zsh)' \
+        zdharma-continuum/null \
+  id-as'docker-completion' \
+        atload'[ $commands[docker] ] && source <(docker completion zsh)' \
+        zdharma-continuum/null \
+  id-as'exercism-completion' \
+        atload'[ $commands[exercism] ] && source <(exercism completion zsh)' \
+        zdharma-continuum/null \
+  id-as'flyctl-completion' \
+        atload'[ $commands[flyctl] ] && source <(flyctl completion zsh)' \
+        zdharma-continuum/null \
+  id-as'gh-completion' \
+        atload'[ $commands[gh] ] && source <(gh completion -s zsh)' \
+        zdharma-continuum/null \
+  id-as'glab-completion' \
+        atload'[ $commands[glab] ] && source <(glab completion -s zsh) && compdef _glab glab' \
+        zdharma-continuum/null \
+  id-as'hugo-completion' \
+        atload'[ $commands[hugo] ] && source <(hugo completion zsh)' \
+        zdharma-continuum/null \
+  id-as'infracost-completion' \
+        atload'[ $commands[infracost] ] && infracost completion --shell zsh >! ${ZSH_CACHE_DIR}/completions/_infracost' \
+        zdharma-continuum/null \
+  id-as'k6-completion' \
+        atload'[ $commands[k6] ] && source <(k6 completion zsh)' \
+        zdharma-continuum/null \
+  id-as'k9s-completion' \
+        atload'[ $commands[k9s] ] && source <(k9s completion zsh)' \
+        zdharma-continuum/null \
+  id-as'stern-completion' \
+        atload'[ $commands[stern] ] && source <(stern --completion=zsh)' \
+        zdharma-continuum/null \
+  id-as'opa-completion' \
+        atload'[ $commands[opa] ] && source <(opa completion zsh)' \
+        zdharma-continuum/null \
+  id-as'pipenv-completion' \
+        atload'[ $commands[pipenv] ] && eval $(register-python-argcomplete pipenv)' \
+        zdharma-continuum/null \
+  id-as'pipx-completion' \
+        atload'[ $commands[pipx] ] && eval $(register-python-argcomplete pipx)' \
+        zdharma-continuum/null \
+  id-as'poetry-completion' \
+        atload'[ $commands[poetry] ] && poetry completions zsh >! ${ZSH_CACHE_DIR}/completions/_poetry' \
+        zdharma-continuum/null \
+  id-as'yq-completion' \
+        atload'[ $commands[yq] ] && source <(yq completion zsh)' \
+        zdharma-continuum/null
 
 # ansiweather
 zinit wait lucid light-mode pick'/dev/null' sbin'ansiweather' for fcambus/ansiweather
