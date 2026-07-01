@@ -29,32 +29,37 @@ config.keys = {
   { key = "f", mods = "CTRL", action = act.ScrollByPage(0.9) },
 }
 
--- Appearance
--- https://github.com/Gogh-Co/Gogh/blob/master/themes/Solarized%20Dark.yml
--- color_01: '#073642'    # Black (Host)
--- color_02: '#DC322F'    # Red (Syntax string)
--- color_03: '#859900'    # Green (Command)
--- color_04: '#CF9A6B'    # Yellow (Command second)
--- color_05: '#268BD2'    # Blue (Path)
--- color_06: '#D33682'    # Magenta (Syntax var)
--- color_07: '#2AA198'    # Cyan (Prompt)
--- color_08: '#EEE8D5'    # White
+-- -- Appearance
+-- -- https://github.com/Gogh-Co/Gogh/blob/master/themes/Selenized%20Dark.yml
+-- -- https://github.com/jan-warchol/selenized
+-- name: 'Selenized Dark'
+-- author: ''             # 'AUTHOR NAME (http://WEBSITE.com)'
+-- variant: 'dark'            # dark or light
 
--- color_09: '#657B83'    # Bright Black
--- color_10: '#CB4B16'    # Bright Red (Command error)
--- color_11: '#859900'    # Bright Green (Exec)
--- color_12: '#CF9A6B'    # Bright Yellow
--- color_13: '#6c71c4'    # Bright Blue (Folder)
--- color_14: '#D33682'    # Bright Magenta
--- color_15: '#2AA198'    # Bright Cyan
--- color_16: '#FDF6E3'    # Bright White
+-- color_01: '#184956'    # Black (Host)
+-- color_02: '#fa5750'    # Red (Syntax string)
+-- color_03: '#75b938'    # Green (Command)
+-- color_04: '#dbb32d'    # Yellow (Command second)
+-- color_05: '#4695f7'    # Blue (Path)
+-- color_06: '#f275be'    # Magenta (Syntax var)
+-- color_07: '#41c7b9'    # Cyan (Prompt)
+-- color_08: '#72898f'    # White
 
--- background: '#002B36'  # Background
--- foreground: '#839496'  # Foreground (Text)
+-- color_09: '#2d5b69'    # Bright Black
+-- color_10: '#ff665c'    # Bright Red (Command error)
+-- color_11: '#84c747'    # Bright Green (Exec)
+-- color_12: '#ebc13d'    # Bright Yellow
+-- color_13: '#58a3ff'    # Bright Blue (Folder)
+-- color_14: '#ff84cd'    # Bright Magenta
+-- color_15: '#53d6c7'    # Bright Cyan
+-- color_16: '#cad8d9'    # Bright White
 
--- cursor: '#839496'      # Cursor
+-- background: '#103c48'  # Background
+-- foreground: '#adbcbc'  # Foreground (Text)
 
-config.color_scheme = 'Solarized Dark (Gogh)'
+-- cursor: '#cad8d9'      # Cursor
+
+config.color_scheme = 'Selenized Dark (Gogh)'
 colors = wezterm.get_builtin_color_schemes()[config.color_scheme]
 config.colors = {
   tab_bar = {
@@ -90,7 +95,7 @@ config.font = wezterm.font_with_fallback({
 
 -- Font for ONLY the tab bar and window frame
 config.window_frame = {
-  font = wezterm.font({ family = 'CaskaydiaCove Nerd Font Mono' }),
+  font = wezterm.font({ family = 'CaskaydiaCove Nerd Font' }),
   font_size = 12.0,
 }
 
@@ -477,5 +482,20 @@ wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, _hover, _ma
 
   return format
 end)
+
+-- Hyperlink rules
+config.hyperlink_rules = wezterm.default_hyperlink_rules()
+
+local issue_trackers = {
+  { prefixes = { 'US', 'DE', 'E', 'F' }, url = 'https://rally1.rallydev.com/#/search?keywords=$1' },
+}
+
+for _, entry in ipairs(issue_trackers) do
+  local pattern = table.concat(entry.prefixes, '|')
+  table.insert(config.hyperlink_rules, {
+    regex = string.format([[\b((?:%s)\d+)\b]], pattern),
+    format = entry.url,
+  })
+end
 
 return config
