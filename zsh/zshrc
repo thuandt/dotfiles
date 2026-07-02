@@ -21,7 +21,7 @@ autoload -Uz _zinit
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 export HIST_STAMPS="yyyy-mm-dd"
 zinit light zdharma-continuum/zinit-annex-meta-plugins
-zinit lucid light-mode skip"dircolors-material" for annexes console-tools
+zinit lucid light-mode skip"dircolors-material" for annexes zsh-users+fast console-tools
 
 # direnv workaround for instant-prompt
 # https://github.com/romkatv/powerlevel10k/blob/master/README.md#how-do-i-initialize-direnv-when-using-instant-prompt
@@ -53,6 +53,8 @@ zinit wait lucid light-mode depth=1 for \
   OMZL::directories.zsh \
   OMZL::functions.zsh \
   OMZL::grep.zsh \
+  OMZL::git.zsh \
+  OMZL::theme-and-appearance.zsh \
   OMZP::mise \
   OMZP::gpg-agent \
   OMZP::ansible \
@@ -105,6 +107,12 @@ zinit wait lucid light-mode depth=1 for \
   zchee/zsh-completions \
   gradle/gradle-completion \
   arzzen/calc.plugin.zsh
+
+zinit wait lucid light-mode \
+   pick"bin/git-dsf" \
+   sbin'bin/git-dsf' \
+   sbin'bin/diff-so-fancy' \
+   as"program" for thuandt/zsh-diff-so-fancy
 
 # generate auto completion from supported program itself
 # OMZ plugins and in-line completions here can be used as replacement for each others
@@ -180,12 +188,8 @@ zinit wait lucid light-mode as'null' from'gh-r' \
 # color logger
 zinit wait lucid light-mode src'color-logger.bash' pick'/dev/null' for swyckoff/color-logger-bash
 
-# zsh-diff-so-fancy
-zinit wait lucid light-mode \
-  pick"bin/git-dsf" \
-  sbin'bin/git-dsf' \
-  sbin'bin/diff-so-fancy' \
-  as"program" for thuandt/zsh-diff-so-fancy
+# selenized man page
+zinit snippet https://github.com/jan-warchol/selenized/blob/master/other-apps/selenized-man/selenized-blue-man.plugin.zsh
 
 function _history_substring_search_config() {
   # bind Alt+. to insert last argument of last command
@@ -226,18 +230,8 @@ zinit lucid light-mode for \
   jeffreytse/zsh-vi-mode \
   OMZL::key-bindings.zsh
 
-# fzf with binary and keys binding
-zinit pack"bgn-binary+keys" for fzf
-
-# enhancd with fzf
-zinit wait lucid light-mode pick'init.sh' nocompletions for b4b4r07/enhancd
-
 # https://github.com/zsh-users/zsh-autosuggestions/issues/642#issuecomment-2136812444
 zinit lucid light-mode depth=1 for \
-  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-    zdharma-continuum/fast-syntax-highlighting \
-  blockf \
-    zsh-users/zsh-completions \
   atload"!_zsh_autosuggest_start; \
         ZSH_AUTOSUGGEST_STRATEGY=(history completion) \
         ZSH_AUTOSUGGEST_MANUAL_REBIND=0 \
@@ -246,6 +240,19 @@ zinit lucid light-mode depth=1 for \
   atload'_history_substring_search_config; _zsh_autosuggest_start' \
     zsh-users/zsh-history-substring-search \
   thuandt/zsh-config
+
+# enhancd with fzf
+# https://github.com/babarot/enhancd/issues/206
+export ENHANCD_FILTER="fzf:sk:fzy"
+zinit wait'1c' lucid light-mode nocompletions for atload'unalias cd 2>/dev/null' babarot/enhancd
+function cd() { __enhancd::cd "$@" }
+compdef _cd cd
+
+# fzy
+zinit pack"bgn" for fzy
+
+# fzf with binary and keys binding
+zinit pack"bgn-binary+keys" for fzf
 
 ### THEME ###
 zinit lucid light-mode nocd depth='1' atload'!source ~/.p10k.zsh; _p9k_precmd' for romkatv/powerlevel10k
@@ -312,6 +319,12 @@ zshaddhistory() {
 # storing them for later use with `zinit cdreplay')
 
 zinit cdreplay -q
+
+# Use vivid to generate LS_COLORS
+# Fix Selenized colorscheme for 777 directories
+export CLICOLOR=1
+export LS_COLORS="$(vivid generate solarized-dark):ow=1;7;34:st=30;44:su=30;41"
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 # p10k instant prompt
 (( ! ${+functions[p10k]} )) || p10k finalize
