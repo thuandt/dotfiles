@@ -323,12 +323,6 @@ zshaddhistory() {
 
 zinit cdreplay -q
 
-# Use vivid to generate LS_COLORS
-# Fix Selenized colorscheme for 777 directories
-export CLICOLOR=1
-export LS_COLORS="$(vivid generate solarized-dark):ow=1;7;34:st=30;44:su=30;41"
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-
 # p10k instant prompt
 (( ! ${+functions[p10k]} )) || p10k finalize
 
