@@ -1,0 +1,31 @@
+# A theme for the lsd utility. Based on the Selenized Dark color theme.
+# DARK VERSION
+# https://github.com/jan-warchol/selenized
+user: "#f275be"
+group: "#dbb32d"
+permission:
+  read: "#ed8649"
+  write: "#75b938"
+  exec: "#fa5750"
+  exec-sticky: "#f275be"
+  no-access: "#adbcbc"
+  octal: "#41c7b9"
+  acl: "#41c7b9"
+  context: "#adbcbc"
+date:
+  hour-old: "#75b938"
+  day-old: "#dbb32d"
+  older: "#72898f"
+size:
+  none: "#fa5750"
+  small: "#af88eb"
+  medium: "#41c7b9"
+  large: "#4695f7"
+inode:
+  valid: "#75b938"
+  invalid: "#fa5750"
+links:
+  valid: "#af88eb"
+  invalid: "#72898f"
+tree-edge: "#adbcbc"
+
