@@ -490,6 +490,14 @@ local issue_trackers = {
   { prefixes = { 'US', 'DE', 'E', 'F' }, url = 'https://rally1.rallydev.com/#/search?keywords=$1' },
 }
 
+-- Load private issue trackers if available
+local has_private, private_trackers = pcall(require, 'private_issue_trackers')
+if has_private and type(private_trackers) == 'table' then
+  for _, entry in ipairs(private_trackers) do
+    table.insert(issue_trackers, entry)
+  end
+end
+
 for _, entry in ipairs(issue_trackers) do
   local pattern = table.concat(entry.prefixes, '|')
   table.insert(config.hyperlink_rules, {
