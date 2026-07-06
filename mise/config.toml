@@ -102,6 +102,8 @@ bats = "latest"
 fastfetch = "latest"
 "github:kdheepak/taskwarrior-tui" = "latest"
 "github:skim-rs/skim" = "latest"
+lsd = "latest"
+eza = "latest"
 
 [settings.github]
 credential_command = "gh auth token"
