@@ -101,12 +101,13 @@ zinit wait lucid light-mode depth=1 for \
   OMZP::vscode \
   OMZP::yarn \
   chrissicool/zsh-256color \
-  pick'manydots-magic' knu/zsh-manydots-magic \
-  MikeDacre/tmux-zsh-vim-titles \
   djui/alias-tips \
+  MikeDacre/tmux-zsh-vim-titles \
+  junegunn/fzf-git.sh \
   zchee/zsh-completions \
+  arzzen/calc.plugin.zsh \
   gradle/gradle-completion \
-  arzzen/calc.plugin.zsh
+  pick'manydots-magic' knu/zsh-manydots-magic
 
 zinit wait lucid light-mode \
    pick"bin/git-dsf" \
@@ -238,13 +239,15 @@ zinit lucid light-mode depth=1 for \
         bindkey '^ ' autosuggest-execute" \
     zsh-users/zsh-autosuggestions \
   atload'_history_substring_search_config; _zsh_autosuggest_start' \
-    zsh-users/zsh-history-substring-search \
-  thuandt/zsh-config
+    zsh-users/zsh-history-substring-search
+
+# load custom zsh-config
+zinit wait'1c' lucid light-mode for thuandt/zsh-config
 
 # enhancd with fzf
 # https://github.com/babarot/enhancd/issues/206
 export ENHANCD_FILTER="fzf:sk:fzy"
-zinit wait'1c' lucid light-mode nocompletions for atload'unalias cd 2>/dev/null' babarot/enhancd
+zinit wait'1a' lucid light-mode nocompletions for atload'unalias cd 2>/dev/null' babarot/enhancd
 function cd() { __enhancd::cd "$@" }
 compdef _cd cd
 
