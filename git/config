@@ -49,6 +49,13 @@
 [difftool "charm"]
     cmd = charm diff "$LOCAL" "$REMOTE"
 
+[diff-so-fancy]
+    semIntegration = true
+
+[delta]
+    navigate = true
+    dark = true
+
 [merge]
     ff = only
     tool = code
@@ -76,7 +83,8 @@
     trustExitCode = true
 
 [interactive]
-    diffFilter = delta --color-only
+    # diffFilter = delta --color-only
+    diffFilter = "diff-so-fancy --patch"
 
 [color]
     ui = true
