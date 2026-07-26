@@ -106,6 +106,7 @@ eza = "latest"
 "github:infracost/cli" = "latest"
 "github:Ataraxy-Labs/sem" = "latest"
 "github:ajeetdsouza/zoxide" = "latest"
+cosign = "latest"
 
 [settings.github]
 credential_command = "gh auth token"
