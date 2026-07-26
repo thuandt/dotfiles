@@ -1,66 +1,99 @@
 #!/usr/bin/env zsh
 # ~/.zshrc
 
-# zinit
+# ------------------------------------------------------------------------------
+# 1. Powerlevel10k Instant Prompt (Must stay near the very top of ~/.zshrc)
+# ------------------------------------------------------------------------------
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Direnv workaround for p10k instant prompt
+(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv export zsh)"
+
+# ------------------------------------------------------------------------------
+# 2. Environment Variables & PATH Optimization
+# ------------------------------------------------------------------------------
+export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+export HIST_STAMPS="yyyy-mm-dd"
+export ENHANCD_FILTER="fzf:sk"
+export ENHANCD_HISTORY_ZOXIDE_BACKEND=true
+
+# Keep PATH and fpath unique natively without subshell overhead
+typeset -gU path PATH fpath FPATH
+path=( "$HOME/.local/share/mise/shims" "$HOME/.local/bin" $path )
+
+# Activate mise early for CLI tools (aws, node, python, go, etc.)
+(( ${+commands[mise]} )) && eval "$(mise activate zsh)"
+
+# Cache and completion paths for OMZ & custom completions
+: "${ZSH_CACHE_DIR:=${XDG_CACHE_HOME:-$HOME/.cache}/zsh}"
+[[ -d "$ZSH_CACHE_DIR/completions" ]] || mkdir -p "$ZSH_CACHE_DIR/completions"
+(( ${fpath[(Ie)"$ZSH_CACHE_DIR/completions"]} )) || fpath=("$ZSH_CACHE_DIR/completions" $fpath)
+
+# Direnv hook (below instant prompt)
+(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
+
+# ------------------------------------------------------------------------------
+# 3. Zinit Framework Bootstrap
+# ------------------------------------------------------------------------------
 export ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)/completions"
-[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-[ ! -f "$(dirname $ZINIT_HOME)/completions/_zinit" ] && ln -sf "$ZINIT_HOME/_zinit" "$(dirname $ZINIT_HOME)/completions/_zinit"
+if [[ ! -d "$ZINIT_HOME" ]]; then
+  mkdir -p "$(dirname "$ZINIT_HOME")/completions"
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+  ln -sf "$ZINIT_HOME/_zinit" "$(dirname "$ZINIT_HOME")/completions/_zinit"
+fi
 
 source "${ZINIT_HOME}/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-# Create cache and completions dir and add to $fpath
-# for support OMZ plugins
-[ ! -d "$ZSH_CACHE_DIR/completions" ] && mkdir -p "$ZSH_CACHE_DIR/completions"
-(( ${fpath[(Ie)"$ZSH_CACHE_DIR/completions"]} )) || fpath=("$ZSH_CACHE_DIR/completions" $fpath)
-
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-export HIST_STAMPS="yyyy-mm-dd"
+# ------------------------------------------------------------------------------
+# 4. Prompt Theme & Annexes
+# ------------------------------------------------------------------------------
 zinit light zdharma-continuum/zinit-annex-meta-plugins
 zinit lucid light-mode skip"dircolors-material" for annexes zsh-users+fast console-tools
 
-# direnv workaround for instant-prompt
-# https://github.com/romkatv/powerlevel10k/blob/master/README.md#how-do-i-initialize-direnv-when-using-instant-prompt
-(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv export zsh)"
+# Powerlevel10k Theme
+zinit lucid light-mode nocd depth='1' atload'!source ~/.p10k.zsh; _p9k_precmd' for romkatv/powerlevel10k
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# direnv workaround for instant-prompt
-(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
-
-# disable C-s stopping receiving keyboard signals.
-# stty start undef
-# stty stop undef
-
-# load OMZ core libraries
+# ------------------------------------------------------------------------------
+# 5. Core Zsh Libraries & Synchronous Plugins
+# ------------------------------------------------------------------------------
 zinit lucid light-mode for \
   OMZL::completion.zsh \
   OMZL::functions.zsh \
-  OMZL::history.zsh
-
-# OMZ libs and plugins
-zinit wait lucid light-mode depth=1 for \
+  OMZL::history.zsh \
   OMZL::clipboard.zsh \
   OMZL::directories.zsh \
-  OMZL::functions.zsh \
   OMZL::grep.zsh \
   OMZL::git.zsh \
   OMZL::theme-and-appearance.zsh \
-  OMZP::mise \
+  OMZP::aws \
+  OMZP::azure \
+  OMZP::terraform
+
+# Bash & Python CLI completion bridges
+for _cmd in az checkov pipenv pipx; do
+  if (( ${+commands[$_cmd]} )); then
+    (( ${+functions[bashcompinit]} )) || { autoload -Uz bashcompinit && bashcompinit; }
+    eval "$(register-python-argcomplete $_cmd)" 2>/dev/null
+  fi
+done
+
+if (( ${+commands[terraform]} )); then
+  (( ${+functions[bashcompinit]} )) || { autoload -Uz bashcompinit && bashcompinit; }
+  complete -C terraform terraform
+fi
+unset _cmd
+
+# ------------------------------------------------------------------------------
+# 6. Deferred Plugins (Loaded asynchronously in Turbo mode)
+# ------------------------------------------------------------------------------
+zinit wait lucid light-mode depth=1 for \
   OMZP::gpg-agent \
   OMZP::ansible \
   OMZP::argocd \
-  OMZP::azure \
-  OMZP::aws \
   OMZP::bun \
   OMZP::dotnet \
   OMZP::extract \
@@ -93,7 +126,6 @@ zinit wait lucid light-mode depth=1 for \
   OMZP::suse \
   OMZP::tailscale \
   OMZP::taskwarrior \
-  OMZP::terraform \
   OMZP::tig \
   OMZP::uv \
   OMZP::urltools \
@@ -109,96 +141,78 @@ zinit wait lucid light-mode depth=1 for \
   gradle/gradle-completion \
   pick'manydots-magic' knu/zsh-manydots-magic
 
+# Programs & Binaries
 zinit wait lucid light-mode \
-   pick"bin/git-dsf" \
+   pick'bin/git-dsf' \
    sbin'bin/git-dsf' \
    sbin'bin/diff-so-fancy' \
    as"program" for thuandt/zsh-diff-so-fancy
 
-# generate auto completion from supported program itself
-# OMZ plugins and in-line completions here can be used as replacement for each others
-zinit wait lucid light-mode pick'/dev/null' for \
-  id-as'argocd-image-updater-completion' \
-        atload'[ $commands[argocd-image-updater] ] && source <(argocd-image-updater completion zsh)' \
-        zdharma-continuum/null \
-  id-as'caddy-completion' \
-        atload'[ $commands[caddy] ] && source <(caddy completion zsh)' \
-        zdharma-continuum/null \
-  id-as'checkov-completion' \
-        atload'[ $commands[checkov] ] && source <(register-python-argcomplete checkov)' \
-        zdharma-continuum/null \
-  id-as'cloud-sql-proxy-completion' \
-        atload'[ $commands[cloud-sql-proxy] ] && source <(cloud-sql-proxy completion zsh)' \
-        zdharma-continuum/null \
-  id-as'cmctl-completion' \
-        atload'[ $commands[cmctl] ] && source <(cmctl completion zsh)' \
-        zdharma-continuum/null \
-  id-as'cosign-completion' \
-        atload'[ $commands[cosign] ] && source <(cosign completion zsh)' \
-        zdharma-continuum/null \
-  id-as'cue-completion' \
-        atload'[ $commands[cue] ] && source <(cue completion zsh)' \
-        zdharma-continuum/null \
-  id-as'docker-completion' \
-        atload'[ $commands[docker] ] && source <(docker completion zsh)' \
-        zdharma-continuum/null \
-  id-as'exercism-completion' \
-        atload'[ $commands[exercism] ] && source <(exercism completion zsh)' \
-        zdharma-continuum/null \
-  id-as'flyctl-completion' \
-        atload'[ $commands[flyctl] ] && source <(flyctl completion zsh)' \
-        zdharma-continuum/null \
-  id-as'gh-completion' \
-        atload'[ $commands[gh] ] && source <(gh completion -s zsh)' \
-        zdharma-continuum/null \
-  id-as'glab-completion' \
-        atload'[ $commands[glab] ] && source <(glab completion -s zsh) && compdef _glab glab' \
-        zdharma-continuum/null \
-  id-as'hugo-completion' \
-        atload'[ $commands[hugo] ] && source <(hugo completion zsh)' \
-        zdharma-continuum/null \
-  id-as'infracost-completion' \
-        atload'[ $commands[infracost] ] && infracost completion --shell zsh >! ${ZSH_CACHE_DIR}/completions/_infracost' \
-        zdharma-continuum/null \
-  id-as'k6-completion' \
-        atload'[ $commands[k6] ] && source <(k6 completion zsh)' \
-        zdharma-continuum/null \
-  id-as'stern-completion' \
-        atload'[ $commands[stern] ] && source <(stern --completion=zsh)' \
-        zdharma-continuum/null \
-  id-as'opa-completion' \
-        atload'[ $commands[opa] ] && source <(opa completion zsh)' \
-        zdharma-continuum/null \
-  id-as'pipenv-completion' \
-        atload'[ $commands[pipenv] ] && eval $(register-python-argcomplete pipenv)' \
-        zdharma-continuum/null \
-  id-as'pipx-completion' \
-        atload'[ $commands[pipx] ] && eval $(register-python-argcomplete pipx)' \
-        zdharma-continuum/null \
-  id-as'yq-completion' \
-        atload'[ $commands[yq] ] && source <(yq completion zsh)' \
-        zdharma-continuum/null
-
-# direnv
+# Direnv (from GitHub releases fallback)
 zinit wait lucid light-mode as'null' from'gh-r' \
   mv'direnv* -> direnv' \
   sbin'direnv' src'zhook.zsh' \
   atclone'./direnv hook zsh > zhook.zsh' \
   atpull'%atclone' for direnv/direnv
 
-# color logger
+# Color logger
 zinit wait lucid light-mode src'color-logger.bash' pick'/dev/null' for swyckoff/color-logger-bash
 
-# selenized man page
-zinit snippet https://github.com/jan-warchol/selenized/blob/master/other-apps/selenized-man/selenized-blue-man.plugin.zsh
+# ------------------------------------------------------------------------------
+# 7. CLI Completion Caching (Eliminates costly subshell spawns per shell)
+# ------------------------------------------------------------------------------
+_lazy_cache_completion() {
+  local cmd="$1"
+  shift
+  local comp_file="$ZSH_CACHE_DIR/completions/_$cmd"
+  if (( ${+commands[$cmd]} )); then
+    if [[ ! -s "$comp_file" || "$commands[$cmd]" -nt "$comp_file" ]]; then
+      "$cmd" "$@" > "$comp_file" 2>/dev/null
+    fi
+    if [[ -r "$comp_file" ]]; then
+      source "$comp_file"
+      _comps[$cmd]="_$cmd" 2>/dev/null
+    fi
+  fi
+}
 
-function _history_substring_search_config() {
-  # bind Alt+. to insert last argument of last command
+zinit wait'0b' lucid light-mode id-as'cli-completions' atload'
+  _lazy_cache_completion argocd completion zsh
+  _lazy_cache_completion argocd-image-updater completion zsh
+  _lazy_cache_completion caddy completion zsh
+  _lazy_cache_completion cloud-sql-proxy completion zsh
+  _lazy_cache_completion cmctl completion zsh
+  _lazy_cache_completion cosign completion zsh
+  _lazy_cache_completion cue completion zsh
+  _lazy_cache_completion docker completion zsh
+  _lazy_cache_completion exercism completion zsh
+  _lazy_cache_completion flyctl completion zsh
+  _lazy_cache_completion gh completion -s zsh
+  _lazy_cache_completion glab completion -s zsh
+  _lazy_cache_completion hugo completion zsh
+  _lazy_cache_completion infracost completion zsh
+  _lazy_cache_completion k9s completion zsh
+  _lazy_cache_completion k6 completion zsh
+  _lazy_cache_completion stern --completion=zsh
+  _lazy_cache_completion opa completion zsh
+  _lazy_cache_completion yq completion zsh
+' for zdharma-continuum/null
+
+# ------------------------------------------------------------------------------
+# 8. Interactive & Vi-Mode Integrations
+# ------------------------------------------------------------------------------
+_fzf_init() {
+  local dir="${XDG_DATA_HOME:-$HOME/.local/share}/zinit/plugins/junegunn---fzf"
+  [[ -r "$dir/key-bindings.zsh" ]] && source "$dir/key-bindings.zsh"
+  [[ -r "$dir/_fzf_completion" ]] && source "$dir/_fzf_completion"
+  (( ${+widgets[fzf-completion]} )) && bindkey -M viins '^I' fzf-completion
+}
+
+_history_substring_search_config() {
+  # Bind Alt+. to insert last argument of last command
   bindkey -M viins '\e.' insert-last-word
 
   # Bind terminal-specific up and down keys
-  # Bind in both emacs and vi modes so it works in both, and is not
-  # sensitive to whether this is loaded before or after the vi-mode plugin
   if [[ -n "$terminfo[kcuu1]" ]]; then
     bindkey -M emacs "$terminfo[kcuu1]" history-substring-search-up
     bindkey -M viins "$terminfo[kcuu1]" history-substring-search-up
@@ -208,125 +222,82 @@ function _history_substring_search_config() {
     bindkey -M viins "$terminfo[kcud1]" history-substring-search-down
   fi
 
-  # bind P and N for EMACS mode
+  # Bind P and N for EMACS mode
   bindkey -M emacs '^P' history-substring-search-up
   bindkey -M emacs '^N' history-substring-search-down
 
-  # bind k and j for VI mode
+  # Bind k and j for VI mode
   bindkey -M vicmd 'k' history-substring-search-up
   bindkey -M vicmd 'j' history-substring-search-down
 
-  # bind Ctrl+Space to Accepts and executes the current suggestion
+  # Bind Ctrl+Space to accept and execute current suggestion
   bindkey '^ ' autosuggest-execute
 }
 
-# Configure zsh-history-substring search to work with zsh-vi-mode
-# See https://github.com/zsh-users/zsh-history-substring-search#usage
-# and https://unix.stackexchange.com/a/248789
-# and https://github.com/jeffreytse/zsh-vi-mode#execute-extra-commands
-zvm_after_init_commands+=(_history_substring_search_config)
+zvm_after_init_commands+=(
+  _history_substring_search_config
+  _zsh_autosuggest_start
+  _fzf_init
+)
 
-# load OMZ keybindings
+# Load keybindings & vi-mode synchronously so prompt 1 matches prompt 2 & onwards
 zinit lucid light-mode for \
   jeffreytse/zsh-vi-mode \
   OMZL::key-bindings.zsh
 
-# https://github.com/zsh-users/zsh-autosuggestions/issues/642#issuecomment-2136812444
-zinit lucid light-mode depth=1 for \
-  atload"!_zsh_autosuggest_start; \
-        ZSH_AUTOSUGGEST_STRATEGY=(history completion) \
-        ZSH_AUTOSUGGEST_MANUAL_REBIND=0 \
-        bindkey '^ ' autosuggest-execute" \
-    zsh-users/zsh-autosuggestions \
-  atload'_history_substring_search_config; _zsh_autosuggest_start' \
-    zsh-users/zsh-history-substring-search
+# Early source fzf keybindings & completion for prompt 1 consistency
+_fzf_init
 
-# load custom zsh-config
-zinit wait'1c' lucid light-mode for thuandt/zsh-config
+zinit wait'0b' lucid light-mode depth=1 for \
+  zsh-users/zsh-autosuggestions \
+  zsh-users/zsh-history-substring-search
 
-# enhancd with fzf
-# https://github.com/babarot/enhancd/issues/206
-export ENHANCD_FILTER="fzf:sk:fzy"
-zinit wait'1a' lucid light-mode nocompletions for atload'unalias cd 2>/dev/null' babarot/enhancd
-function cd() { __enhancd::cd "$@" }
-compdef _cd cd
+zinit wait'0c' lucid light-mode for thuandt/zsh-config
+zinit wait'1a' lucid light-mode nocompletions for thuandt/enhancd
+zinit wait'1b' pack"bgn-binary+keys" for fzf
 
-# fzy
-zinit pack"bgn" for fzy
-
-# fzf with binary and keys binding
-zinit pack"bgn-binary+keys" for fzf
-
-### THEME ###
-zinit lucid light-mode nocd depth='1' atload'!source ~/.p10k.zsh; _p9k_precmd' for romkatv/powerlevel10k
-
-# Username completion.
-# Delete old definitions
-zstyle -d users
-# For SSH and related stuff, use remote users set in SSH configuration, plus root
-zstyle ':completion:*:*:(ssh|scp|rsync|mosh|slogin|rclone):*' users root $(awk '$1 == "User" { print $2 }' ~/.ssh/config ~/.ssh/config.d/* | sort -u)
-# For everything else, use non-system users from /etc/passwd, plus root
-zstyle ':completion:*:*:*:*' users root $(awk -F: '$3 >= 1000 && $3 < 65000 { print $1 }' /etc/passwd)
-
-# ssh hostname completion
-# https://serverfault.com/a/170481
-h=()
-if [[ -r ~/.ssh/config ]]; then
-  h=($h ${${${(@M)${(f)"$(cat ~/.ssh/config ~/.ssh/config.d/* 2>/dev/null)"}:#Host *}#Host }:#*[*?]*})
-fi
-# HashKnownHosts must be disabled
-# if [[ -r ~/.ssh/known_hosts ]]; then
-#   h=($h ${${${(f)"$(cat ~/.ssh/known_hosts{,2} || true)"}%%\ *}%%,*}) 2>/dev/null
-# fi
-if [[ $#h -gt 0 ]]; then
-  zstyle ':completion:*:(ssh|scp|rsync|lftp|ftp|mosh|slogin|rclone):*' hosts $h
+# ------------------------------------------------------------------------------
+# 9. Terminal & History Customizations
+# ------------------------------------------------------------------------------
+# Tilix VTE integration
+if [[ "$OSTYPE" == linux* && ( -n "$TILIX_ID" || -n "$VTE_VERSION" ) ]]; then
+  [[ -r /etc/profile.d/vte.sh ]] && source /etc/profile.d/vte.sh
 fi
 
-# Hostname completion
-zstyle -e ':completion:*:hosts' hosts 'reply=(${=${(f)"$(grep -v 0.0.0.0 /etc/hosts)"}%%\#*})'
-
-# Prettify path
-if [ -n "$($SHELL -c "echo $ZSH_VERSION")" ]; then
-  # remove duplicates in zsh path
-  # https://til.hashrocket.com/posts/7evpdebn7g-remove-duplicates-in-zsh-path
-  # shellcheck disable=SC2034
-  typeset -aU path
-# elif [ -n "$($SHELL -c "echo $BASH_VERSION")" ]; then
-else
-  PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))')"
-fi
-
-# Tilix
-# https://github.com/gnunn1/tilix/wiki/VTE-Configuration-Issue
-if [[ "$OSTYPE" == linux* ]]; then
-  if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-    source /etc/profile.d/vte.sh
-  fi
-fi
-
-# Don't store failed command to history
-# http://scarff.id.au/blog/2019/zsh-history-conditional-on-command-success/
+# Prevent saving failed, trivial bare commands, or interactive exit commands to history
 zshaddhistory() {
-  whence ${${(z)1}[1]} >| /dev/null || return 1
-  local line cmd
-  line=${1%%$'\n'}
-  cmd=${line%% *}
-  [[ ${#line} -ge 5 \
-    && ${cmd} != (apm|base64|bzip2|cal|calc|cat|cd|chmod|cp|curl|cvs|date|df|diff|dig|disklabel|dmesg|doas|du|e|egrep|enc|ent|exiftool|f|fdisk|feh|file|find|gimp|git|gpg|grep|hdiutil|head|hostname|ifconfig|kill|less|ls|mail|make|man|mkdir|mount|mpv|mv|nc|openssl|patch|pdf|pdfinfo|pgrep|ping|pkg_info|pkill|ps|rcctl|rm|rsync|scp|scrot|set|sha256|sort|srm|ssh|stat|strip|sudo|sysctl|tar|tmux|top|umount|uname|unzip|uptime|useradd|vlc|vi|vim|wc|wget|which|whoami|whois|wireshark|xclip|xxd|youtube-dl)
-  ]]
+  local line="${1%%$'\n'}"
+  local -a line_tokens=( ${(z)line} )
+  local cmd="${line_tokens[1]}"
+
+  # 1. Skip terminal exit & clearing commands
+  case "$line" in
+    clear|exit|history|reset) return 1 ;;
+  esac
+
+  # 2. Reject typos & invalid commands
+  whence "$cmd" >/dev/null 2>&1 || return 1
+
+  # 3. Resolve nested alias chain (e.g. kg -> k get -> kubectl)
+  local real_cmd="$cmd"
+  while (( ${+aliases[$real_cmd]} )); do
+    local expanded="${aliases[$real_cmd]}"
+    local -a expanded_tokens=( ${(z)expanded} )
+    real_cmd="${expanded_tokens[1]}"
+  done
+
+  # 4. Discard bare 1-2 char commands without arguments (bare cd, bare ls, bare w)
+  if (( $#line_tokens == 1 && ${#real_cmd} < 3 )); then
+    return 1
+  fi
+
+  return 0
 }
 
-# -q is for quiet; actually run all the `compdef's saved before `compinit` call
-# (`compinit' declares the `compdef' function, so it cannot be used until
-# `compinit' is ran; Zinit solves this via intercepting the `compdef'-calls and
-# storing them for later use with `zinit cdreplay')
-
+# ------------------------------------------------------------------------------
+# 10. Finalization
+# ------------------------------------------------------------------------------
 zinit cdreplay -q
-
-# p10k instant prompt
 (( ! ${+functions[p10k]} )) || p10k finalize
-
-# Clear screen
-# clear
 
 # End of ~/.zshrc

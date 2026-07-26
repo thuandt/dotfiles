@@ -1,23 +1,16 @@
 #!/usr/bin/env zsh
 # ~/.zshenv
 
-# Skip the not really helping Ubuntu global compinit
-export skip_global_compinit=1
+# ------------------------------------------------------------------------------
+# 1. Shell & OS Environment Overrides
+# ------------------------------------------------------------------------------
+export skip_global_compinit=1                # Skip Ubuntu global compinit for faster startup
+export DEBIAN_PREVENT_KEYBOARD_CHANGES=yes   # Prevent debian keyboard layout override
+export GSM_SKIP_SSH_AGENT_WORKAROUND=1       # Skip GNOME session SSH agent workaround
 
-# https://github.com/robbyrussell/oh-my-zsh/issues/1433
-export DEBIAN_PREVENT_KEYBOARD_CHANGES=yes
-
-# https://bugzilla.gnome.org/show_bug.cgi?id=772919
-# https://eklitzke.org/down-the-ssh-auth-sock-rabbit-hole-a-gnome-adventure
-export GSM_SKIP_SSH_AGENT_WORKAROUND=1
-
-# PowerShell snap fix
-# https://github.com/PowerShell/PowerShell-Snap/issues/33
-export DOTNET_NOLOGO=true
-export DOTNET_CLI_TELEMETRY_OPTOUT=true
-export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
-
-# Editor
+# ------------------------------------------------------------------------------
+# 2. Default Editors & Pager Settings
+# ------------------------------------------------------------------------------
 export EDITOR="code --wait"
 export VISUAL="${EDITOR}"
 export CVSEDITOR="${EDITOR}"
@@ -30,67 +23,73 @@ export SYSTEMD_EDITOR="nvim"
 export XDG_CONFIG_HOME="${HOME}/.config"
 
 export BAT_THEME="TwoDark"
+export KEYTIMEOUT=1                          # Fast Vi-mode ESC key response (10ms)
 
-# vi mode key timeout
-export KEYTIMEOUT=1
-
-# Color man pages
+# Pager & Less Colors for Man Pages (Selenized Blue Theme)
 export PAGER='less'
-unset LESSCHARSET # Fix manpages looking funky
+unset LESSCHARSET                            # Prevent corrupted characters in manpages
 export LESS='-i -n -w -z4 -g -M -S -R -X -F'
+export GROFF_NO_SGR=1                        # Preserve ANSI color formatting in manpages
 
-# Less colors for Man Pages: Solarized Dark
-export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
-export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
-export LESS_TERMCAP_me=$'\E[0m'           # end mode
-export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
-export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
-export LESS_TERMCAP_ue=$'\E[0m'           # end underline
-export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
+export LESS_TERMCAP_mb=$'\E[1;34m'           # Begin blinking (blue)
+export LESS_TERMCAP_md=$'\E[1;34m'           # Begin bold (blue)
+export LESS_TERMCAP_me=$'\E[0m'              # End mode
+export LESS_TERMCAP_se=$'\E[0m'              # End standout-mode
+export LESS_TERMCAP_so=$'\E[30;39;100m'      # Begin standout-mode (info box)
+export LESS_TERMCAP_ue=$'\E[0m'              # End underline
+export LESS_TERMCAP_us=$'\E[4;36m'           # Begin underline (cyan)
 
-# export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
-# export LESS_TERMCAP_md=$'\E[01;31m'       # begin bold
-# export LESS_TERMCAP_me=$'\E[0m'           # end mode
-# export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
-# export LESS_TERMCAP_so=$'\E[0;37;102m'    # begin standout-mode - info box
-# export LESS_TERMCAP_ue=$'\E[0m'           # end underline
-# export LESS_TERMCAP_us=$'\E[04;32m'       # begin underline
+# ------------------------------------------------------------------------------
+# 3. Tool Configuration & Telemetry Flags
+# ------------------------------------------------------------------------------
+# .NET & PowerShell
+export DOTNET_NOLOGO=true
+export DOTNET_CLI_TELEMETRY_OPTOUT=true
+export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 
-# gcloud
+# Google Cloud SDK
 export CLOUDSDK_PYTHON=python3
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 export CLOUDSDK_HOME="${HOME}/Applications/google-cloud-sdk"
 
-# enhancd
+# Enhancd
 export ENHANCD_FILTER=fzf
 export ENHANCD_DISABLE_DOT=1
 export ENHANCD_DISABLE_HYPHEN=1
 export ENHANCD_DISABLE_HOME=1
 
-# poetry
+# Poetry & Python
 export POETRY_VENV_IN_PROJECT=1
 export POETRY_VIRTUALENVS_CREATE=1
 export POETRY_VIRTUALENVS_IN_PROJECT=1
 export POETRY_INSTALL_DEPENDENCIES=1
+export WORKON_HOME="${HOME}/.local/share/virtualenvs"
 
-# PATH setup
+# Miscellaneous Tools
+export NMAP_PRIVILEGED=""
+export MINICOM="-m -c on"
+export MTR_OPTIONS="--no-dns"
+
+# ------------------------------------------------------------------------------
+# 4. PATH Environment Construction (Deduplicated natively in Zsh)
+# ------------------------------------------------------------------------------
 export USER_BIN="${HOME}/.local/bin"
-export PATH="${USER_BIN}:${PATH}"
 
 if [[ "$OSTYPE" == linux* ]]; then
-  ### Setup PATH ###
-  export DOOM_EMACS=${HOME}/.config/emacs/bin # doom-emacs
-  export PULUMI=${HOME}/.pulumi/bin           # pulumi
-  export KREW_ROOT=${HOME}/.krew              # krew
-  export CARGO=${HOME}/.cargo/bin             # Rust cargo
-  export CABAL=${HOME}/.cabal/bin             # Haskell cabal
-  export FLYCTL_INSTALL="${HOME}/.fly"        # fly.io
-  export DOTNET_TOOLS="${HOME}/.dotnet/tools" # dotnet tools (powershell)
-  export NPM_PREFIX="${HOME}/.npm-packages"   # npm global packages
+  export DOOM_EMACS="${HOME}/.config/emacs/bin"
+  export PULUMI="${HOME}/.pulumi/bin"
+  export KREW_ROOT="${HOME}/.krew"
+  export CARGO="${HOME}/.cargo/bin"
+  export CABAL="${HOME}/.cabal/bin"
+  export FLYCTL_INSTALL="${HOME}/.fly"
+  export DOTNET_TOOLS="${HOME}/.dotnet/tools"
+  export NPM_PREFIX="${HOME}/.npm-packages"
   export ANDROID_PLATFORM_TOOLS="${HOME}/Applications/android-platform-tools"
 
-  # My custom path
-  MYPATH=(
+  # Native Zsh unique PATH array assignment
+  typeset -gU path PATH
+  path=(
+    "${USER_BIN}"
     "${DOOM_EMACS}"
     "${PULUMI}"
     "${KREW_ROOT}/bin"
@@ -100,64 +99,39 @@ if [[ "$OSTYPE" == linux* ]]; then
     "${ANDROID_PLATFORM_TOOLS}"
     "${DOTNET_TOOLS}"
     "${NPM_PREFIX}/bin"
+    $path
   )
+fi
 
-  # Add directory to $PATH if its not already there
-  for p in "${MYPATH[@]}"; do
-    case ":$PATH:" in
-      *":$p:"*) : ;;
-      *) PATH="$p:$PATH" ;;
-    esac
-  done
-
-  ### virtualenv ###
-  export WORKON_HOME=${HOME}/.local/share/virtualenvs
-  # nmap
-  export NMAP_PRIVILEGED=""
-
-  # minicom
-  export MINICOM="-m -c on"
-
-  # mtr options
-  export MTR_OPTIONS="--no-dns"
-
-  # Setup Input Method
+# ------------------------------------------------------------------------------
+# 5. Locales & Input Method Settings
+# ------------------------------------------------------------------------------
+if [[ "$OSTYPE" == linux* ]]; then
   export MY_INPUT_METHOD="ibus"
-  export XMODIFIERS=${XMODIFIERS:-@im=${MY_INPUT_METHOD}}
-  export GTK_IM_MODULE=${GTK_IM_MODULE:-${MY_INPUT_METHOD}}
-  export QT_IM_MODULE=${QT_IM_MODULE:-${MY_INPUT_METHOD}}
-  export QT4_IM_MODULE=${QT4_IM_MODULE:-${MY_INPUT_METHOD}}
-  export CLUTTER_IM_MODULE=${CLUTTER_IM_MODULE:-${MY_INPUT_METHOD}}
+  export XMODIFIERS="${XMODIFIERS:-@im=${MY_INPUT_METHOD}}"
+  export GTK_IM_MODULE="${GTK_IM_MODULE:-${MY_INPUT_METHOD}}"
+  export QT_IM_MODULE="${QT_IM_MODULE:-${MY_INPUT_METHOD}}"
+  export QT4_IM_MODULE="${QT4_IM_MODULE:-${MY_INPUT_METHOD}}"
+  export CLUTTER_IM_MODULE="${CLUTTER_IM_MODULE:-${MY_INPUT_METHOD}}"
 
-  # Setting locales
   export LANGUAGE="en_US.UTF-8"
   export LANG="${LANGUAGE}"
   export LC_ALL="${LANGUAGE}"
   export LC_CTYPE="${LANGUAGE}"
 
-  # systemd import environment
-  # https://wiki.archlinux.org/index.php/systemd/User#Environment_variables
-  systemctl --user import-environment PATH EDITOR KUBE_EDITOR SYSTEMD_EDITOR
+  # Systemd user environment import (interactive session only)
+  [[ -o interactive ]] && (( ${+commands[systemctl]} )) && systemctl --user import-environment PATH EDITOR KUBE_EDITOR SYSTEMD_EDITOR 2>/dev/null
 fi
 
-### API keys ###
-# Query GNOME Keyring for secrets
-
-# Google AI Studio
-# Gemini API key
-export GEMINI_API_KEY="$(secret-tool lookup api-key gemini)"
-
-# [TinyPNG](tinypng.org) Smart PNG and JPEG compression
-# Optimize your images with a perfect balance in quality and file size.
-TINYPNG_API_KEY="$(secret-tool lookup api-key tinypng)"
-export TINYPNG_API_KEY
-
-# ipinfo.io api token
-IPINFO_TOKEN="$(secret-tool lookup token ipinfo.io)"
-export IPINFO_TOKEN
-
-# macvendors.com api token
-MACVENDORS_TOKEN="$(secret-tool lookup token macvendors)"
-export MACVENDORS_TOKEN
+# ------------------------------------------------------------------------------
+# 6. Desktop Session & API Secret Keys (Lazy / Inherited)
+# ------------------------------------------------------------------------------
+# Query GNOME Keyring only if not already exported in environment
+if (( ${+commands[secret-tool]} )); then
+  [[ -z "$GEMINI_API_KEY" ]]  && export GEMINI_API_KEY="$(secret-tool lookup api-key gemini 2>/dev/null)"
+  [[ -z "$TINYPNG_API_KEY" ]] && export TINYPNG_API_KEY="$(secret-tool lookup api-key tinypng 2>/dev/null)"
+  [[ -z "$IPINFO_TOKEN" ]]     && export IPINFO_TOKEN="$(secret-tool lookup token ipinfo.io 2>/dev/null)"
+  [[ -z "$MACVENDORS_TOKEN" ]] && export MACVENDORS_TOKEN="$(secret-tool lookup token macvendors 2>/dev/null)"
+fi
 
 # End of ~/.zshenv
