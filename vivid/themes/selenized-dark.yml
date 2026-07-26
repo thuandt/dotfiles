@@ -1,0 +1,138 @@
+colors:
+  # Canonical Selenized Dark by Jan Warchol
+  # (https://github.com/jan-warchol/selenized)
+
+  bg_0    :  '103c48'
+  bg_1    :  '184956'
+  bg_2    :  '2d5b69'
+  dim_0   :  '72898f'
+  fg_0    :  'adbcbc'
+  fg_1    :  'cad8d9'
+
+  red     :  'fa5750'
+  green   :  '75b938'
+  yellow  :  'dbb32d'
+  blue    :  '4695f7'
+  magenta :  'f275be'
+  cyan    :  '41c7b9'
+  orange  :  'ed8649'
+  violet  :  'af88eb'
+
+core:
+  normal_text:
+    foreground: fg_0
+
+  regular_file:
+    foreground: fg_0
+
+  reset_to_normal:
+    foreground: fg_0
+
+  directory:
+    foreground: blue
+
+  symlink:
+    foreground: cyan
+
+  multi_hard_link:
+    foreground: cyan
+
+  fifo:
+    foreground: yellow
+
+  socket:
+    foreground: magenta
+
+  door:
+    foreground: magenta
+
+  block_device:
+    foreground: yellow
+
+  character_device:
+    foreground: yellow
+
+  broken_symlink:
+    foreground: red
+    font-style: bold
+
+  missing_file:
+    foreground: red
+    font-style: bold
+
+  missing_symlink_target:
+    foreground: red
+    font-style: bold
+
+  executable:
+    foreground: green
+
+  executable_file:
+    foreground: green
+
+  executable_with_special_permissions:
+    foreground: red
+
+  setgid:
+    foreground: red
+    font-style: bold
+
+  setuid:
+    foreground: red
+    font-style: bold
+
+  file_with_capability:
+    foreground: red
+    font-style: bold
+
+  other_writable:
+    foreground: blue
+    background: bg_1
+
+  sticky:
+    foreground: blue
+    background: bg_1
+
+  sticky_other_writable:
+    foreground: blue
+    background: bg_1
+
+text:
+  foreground: fg_0
+  plain:
+    foreground: fg_0
+  special:
+    foreground: yellow
+  font:
+    foreground: violet
+  configuration:
+    foreground: fg_0
+
+markup:
+  foreground: fg_0
+  bold:
+    font-style: bold
+  italic:
+    font-style: italic
+  heading:
+    foreground: yellow
+    font-style: bold
+
+programming:
+  foreground: fg_0
+
+media:
+  foreground: magenta
+
+office:
+  foreground: orange
+
+archives:
+  foreground: red
+  font-style: bold
+
+executable:
+  foreground: green
+
+unimportant:
+  foreground: dim_0
