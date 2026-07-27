@@ -167,9 +167,6 @@
     upgrade-submodules = submodule update --init --remote
     change-commits = "!f() { VAR=$1; OLD=$2; NEW=$3; shift 3; git filter-branch --env-filter \"if [[ \\\"$`echo $VAR`\\\" = '$OLD' ]]; then export $VAR='$NEW'; fi\" $@; }; f "
 
-#[includeIf "gitdir:~/src/github.com/work_org"]
-#    path = ~/.gitconfig_work
-
 [url "git@github.com:"]
     insteadOf = gh:
 
@@ -184,3 +181,6 @@
 
 [url "git@bitbucket.org:"]
     insteadOf = bb:
+
+[include]
+    path = ~/.config/git/config.local

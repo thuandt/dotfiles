@@ -220,6 +220,7 @@ zsdoc/data
 # End of https://www.toptal.com/developers/gitignore/api/zsh,windows,visualstudiocode,vim,ssh,osx,linux,git,emacs
 
 # Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
+git/config.local
 
 # ignore all files starting with 'private_' in any directory
 **/private_*
