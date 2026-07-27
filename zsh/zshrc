@@ -16,12 +16,6 @@ fi
 # ------------------------------------------------------------------------------
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 export HIST_STAMPS="yyyy-mm-dd"
-export ENHANCD_FILTER="fzf:sk"
-export ENHANCD_HISTORY_ZOXIDE_BACKEND=true
-
-# Keep PATH and fpath unique natively without subshell overhead
-typeset -gU path PATH fpath FPATH
-path=( "$HOME/.local/share/mise/shims" "$HOME/.local/bin" $path )
 
 # Activate mise early for CLI tools (aws, node, python, go, etc.)
 (( ${+commands[mise]} )) && eval "$(mise activate zsh)"
@@ -93,8 +87,6 @@ unset _cmd
 zinit wait lucid light-mode depth=1 for \
   OMZP::gpg-agent \
   OMZP::ansible \
-  OMZP::argocd \
-  OMZP::bun \
   OMZP::dotnet \
   OMZP::extract \
   OMZP::encode64 \
@@ -103,11 +95,8 @@ zinit wait lucid light-mode depth=1 for \
   OMZP::gh \
   OMZP::git \
   OMZP::git-auto-fetch \
-  OMZP::gitignore \
   OMZP::helm \
-  OMZP::istioctl \
   OMZP::jsontools \
-  OMZP::k9s \
   OMZP::kubectl \
   OMZP::npm \
   OMZP::nmap \
@@ -116,7 +105,6 @@ zinit wait lucid light-mode depth=1 for \
   OMZP::pulumi \
   OMZP::python \
   OMZP::qrcode \
-  OMZP::rclone \
   OMZP::rsync \
   OMZP::rust \
   OMZP::ssh \
@@ -129,9 +117,9 @@ zinit wait lucid light-mode depth=1 for \
   OMZP::tig \
   OMZP::uv \
   OMZP::urltools \
-  OMZP::vault \
   OMZP::vscode \
   OMZP::yarn \
+  OMZP::zoxide \
   chrissicool/zsh-256color \
   djui/alias-tips \
   MikeDacre/tmux-zsh-vim-titles \
@@ -152,7 +140,7 @@ zinit wait lucid light-mode \
 zinit wait lucid light-mode as'null' from'gh-r' \
   mv'direnv* -> direnv' \
   sbin'direnv' src'zhook.zsh' \
-  atclone'./direnv hook zsh > zhook.zsh' \
+  atclone'./direnv hook zsh >| zhook.zsh' \
   atpull'%atclone' for direnv/direnv
 
 # Color logger
@@ -167,7 +155,7 @@ _lazy_cache_completion() {
   local comp_file="$ZSH_CACHE_DIR/completions/_$cmd"
   if (( ${+commands[$cmd]} )); then
     if [[ ! -s "$comp_file" || "$commands[$cmd]" -nt "$comp_file" ]]; then
-      "$cmd" "$@" > "$comp_file" 2>/dev/null
+      "$cmd" "$@" >| "$comp_file" 2>/dev/null
     fi
     if [[ -r "$comp_file" ]]; then
       source "$comp_file"
@@ -179,6 +167,7 @@ _lazy_cache_completion() {
 zinit wait'0b' lucid light-mode id-as'cli-completions' atload'
   _lazy_cache_completion argocd completion zsh
   _lazy_cache_completion argocd-image-updater completion zsh
+  _lazy_cache_completion bun completions
   _lazy_cache_completion caddy completion zsh
   _lazy_cache_completion cloud-sql-proxy completion zsh
   _lazy_cache_completion cmctl completion zsh
@@ -191,10 +180,14 @@ zinit wait'0b' lucid light-mode id-as'cli-completions' atload'
   _lazy_cache_completion glab completion -s zsh
   _lazy_cache_completion hugo completion zsh
   _lazy_cache_completion infracost completion zsh
+  _lazy_cache_completion istioctl completion zsh
   _lazy_cache_completion k9s completion zsh
   _lazy_cache_completion k6 completion zsh
-  _lazy_cache_completion stern --completion=zsh
+  _lazy_cache_completion mise completion zsh
   _lazy_cache_completion opa completion zsh
+  _lazy_cache_completion rclone completion zsh
+  _lazy_cache_completion stern --completion=zsh
+  _lazy_cache_completion vault completion zsh
   _lazy_cache_completion yq completion zsh
 ' for zdharma-continuum/null
 
@@ -254,7 +247,21 @@ zinit wait'0b' lucid light-mode depth=1 for \
 
 zinit wait'0c' lucid light-mode for thuandt/zsh-config
 zinit wait'1a' lucid light-mode nocompletions for thuandt/enhancd
-zinit wait'1b' pack"bgn-binary+keys" for fzf
+
+# fzf
+zinit wait'1b' lucid light-mode from'gh-r' \
+    id-as'junegunn/fzf' \
+    atclone'mkdir -p $ZPFX/{bin,man/man1}' \
+    atpull'%atclone' \
+    dl'https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh -> _fzf_completion;
+      https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh -> key-bindings.zsh;
+      https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf-tmux.1 -> $ZPFX/man/man1/fzf-tmux.1;
+      https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf.1 -> $ZPFX/man/man1/fzf.1' \
+    nocompile \
+    pick'/dev/null' \
+    sbin'fzf' \
+    src'key-bindings.zsh' \
+  for @junegunn/fzf
 
 # ------------------------------------------------------------------------------
 # 9. Terminal & History Customizations
@@ -283,7 +290,9 @@ zshaddhistory() {
   while (( ${+aliases[$real_cmd]} )); do
     local expanded="${aliases[$real_cmd]}"
     local -a expanded_tokens=( ${(z)expanded} )
-    real_cmd="${expanded_tokens[1]}"
+    local next_cmd="${expanded_tokens[1]}"
+    [[ "$next_cmd" == "$real_cmd" ]] && break
+    real_cmd="$next_cmd"
   done
 
   # 4. Discard bare 1-2 char commands without arguments (bare cd, bare ls, bare w)

@@ -52,11 +52,13 @@ export CLOUDSDK_PYTHON=python3
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 export CLOUDSDK_HOME="${HOME}/Applications/google-cloud-sdk"
 
-# Enhancd
-export ENHANCD_FILTER=fzf
+# Enhancd & Zoxide
+export ENHANCD_FILTER="fzf:sk"
 export ENHANCD_DISABLE_DOT=1
 export ENHANCD_DISABLE_HYPHEN=1
 export ENHANCD_DISABLE_HOME=1
+export ENHANCD_HISTORY_ZOXIDE_BACKEND=true
+export ZOXIDE_CMD_OVERRIDE="j"
 
 # Poetry & Python
 export POETRY_VENV_IN_PROJECT=1
@@ -76,6 +78,7 @@ export MTR_OPTIONS="--no-dns"
 export USER_BIN="${HOME}/.local/bin"
 
 if [[ "$OSTYPE" == linux* ]]; then
+  export MISE_SHIMS="${HOME}/.local/share/mise/shims"
   export DOOM_EMACS="${HOME}/.config/emacs/bin"
   export PULUMI="${HOME}/.pulumi/bin"
   export KREW_ROOT="${HOME}/.krew"
@@ -89,6 +92,7 @@ if [[ "$OSTYPE" == linux* ]]; then
   # Native Zsh unique PATH array assignment
   typeset -gU path PATH
   path=(
+    "${MISE_SHIMS}"
     "${USER_BIN}"
     "${DOOM_EMACS}"
     "${PULUMI}"
