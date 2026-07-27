@@ -5,8 +5,15 @@
 
 - clean:
     - "~/"
+    - "~/.config/btop"
     - "~/.config/htop/"
+    - "~/.config/k9s"
+    - "~/.config/lsd"
+    - "~/.config/mc"
     - "~/.config/pgcli/"
+    - "~/.config/pip"
+    - "~/.config/vivid"
+    - "~/.config/wireplumber"
     - "~/.config/youtube-dl/"
 
 - link:
@@ -18,7 +25,14 @@
     ~/.psqlrc: misc/psqlrc
     ~/.myclirc: mycli/config
     ~/.Xresources: misc/Xresources
-    ~/.config/htop/htoprc: misc/htoprc
     ~/.ansiweatherrc: misc/ansiweatherrc
+    ~/.config/btop: btop
+    ~/.config/htop/htoprc: misc/htoprc
+    ~/.config/k9s: k9s
+    ~/.config/lsd: lsd
+    ~/.config/mc: mc
     ~/.config/pgcli/config: pgcli/config
+    ~/.config/pip: pip
+    ~/.config/vivid: vivid
+    ~/.config/wireplumber: wireplumber
     ~/.config/youtube-dl/config: youtube-dl/config
