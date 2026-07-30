@@ -110,3 +110,10 @@ cosign = "latest"
 
 [settings.github]
 credential_command = "gh auth token"
+
+[settings]
+minimum_release_age_excludes = [
+    "github:ggml-org/llama.cpp",
+    "aws-cli",
+    "github-cli",
+]
