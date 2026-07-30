@@ -5,6 +5,7 @@
 
 - clean:
     - "~/"
+    - "~/.config/bat"
     - "~/.config/btop"
     - "~/.config/htop/"
     - "~/.config/k9s"
@@ -26,6 +27,7 @@
     ~/.myclirc: mycli/config
     ~/.Xresources: misc/Xresources
     ~/.ansiweatherrc: misc/ansiweatherrc
+    ~/.config/bat: bat
     ~/.config/btop: btop
     ~/.config/htop/htoprc: misc/htoprc
     ~/.config/k9s: k9s
