@@ -139,6 +139,7 @@ wezterm.on("update-status", function(window, pane)
     cwd = ""
   end
 
+  ---@format disable
   -- Left status (left of the tab line)
   window:set_left_status(wezterm.format({
     { Attribute  = { Intensity = "Bold" }                       },
@@ -189,6 +190,7 @@ wezterm.on("update-status", function(window, pane)
     { Text       = nerdfonts.ple_upper_left_triangle     },
 
   }))
+  ---@format enabled
 
 end)
 
@@ -281,7 +283,7 @@ local function get_cached_git_root(cwd)
         local relative_path = cwd:gsub("^" .. git_root:gsub("([^%w])", "%%%1") .. "/?", "")
         local depth = 0
         for _ in relative_path:gmatch("/") do
-            depth = depth + 1
+          depth = depth + 1
         end
         depth = depth + 1
 
@@ -421,7 +423,7 @@ local function select_contrasting_fg_color(hex_color)
   if lightness > 55 then
     return "#000000" -- Black has higher contrast with colors perceived to be "bright"
   end
-  return "#FFFFFF" -- White has higher contrast
+  return "#FFFFFF"   -- White has higher contrast
 end
 
 -- Get full git root path for color hashing (not just the name)
