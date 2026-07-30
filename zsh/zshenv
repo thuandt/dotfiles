@@ -22,7 +22,6 @@ export SUDO_EDITOR="${EDITOR}"
 export SYSTEMD_EDITOR="nvim"
 export XDG_CONFIG_HOME="${HOME}/.config"
 
-export BAT_THEME="TwoDark"
 export KEYTIMEOUT=1                          # Fast Vi-mode ESC key response (10ms)
 
 # Pager & Less Colors for Man Pages (Selenized Blue Theme)
