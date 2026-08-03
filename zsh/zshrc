@@ -260,7 +260,6 @@ zinit wait'1b' lucid light-mode from'gh-r' \
     nocompile \
     pick'/dev/null' \
     sbin'fzf' \
-    src'key-bindings.zsh' \
   for @junegunn/fzf
 
 # ------------------------------------------------------------------------------
