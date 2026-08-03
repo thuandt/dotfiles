@@ -594,11 +594,91 @@ wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, _hover, _ma
 end)
 
 --------------------------------------------------------------------------------
--- 8. Custom Hyperlink Rules
+-- 8. Custom Hyperlink Rules & Editor Open Handler
 --------------------------------------------------------------------------------
+
+-- Helper to resolve relative file paths against pane CWD
+local function resolve_file_path(pane, file_path)
+  -- 1. Direct absolute path check
+  local f = io.open(file_path, "r")
+  if f then
+    f:close()
+    return file_path
+  end
+
+  -- 2. Strip leading slash added by file:/// format
+  local rel_path = file_path:gsub("^/", "")
+  f = io.open(rel_path, "r")
+  if f then
+    f:close()
+    return rel_path
+  end
+
+  -- 3. Resolve relative to pane current working directory
+  if pane and pane.get_current_working_dir then
+    local cwd_url = pane:get_current_working_dir()
+    if cwd_url and cwd_url.file_path then
+      local cwd = cwd_url.file_path
+      local abs_path = cwd .. "/" .. rel_path
+      f = io.open(abs_path, "r")
+      if f then
+        f:close()
+        return abs_path
+      end
+    end
+  end
+
+  return file_path
+end
+
+-- Open file hyperlinks in Neovim / VSCode / $EDITOR at line number
+wezterm.on("open-uri", function(window, pane, uri)
+  if uri:find("^file://") then
+    -- Strip file:// prefix and decode URL spaces (%20)
+    local clean_path = uri:gsub("^file://", ""):gsub("%%20", " ")
+    local raw_path, line = clean_path:match("^([^:#]+)[:#]?L?(%d*)")
+
+    if raw_path and raw_path ~= "" then
+      local file_path = resolve_file_path(pane, raw_path)
+      local editor = os.getenv("VISUAL") or os.getenv("EDITOR") or "nvim"
+      line = (line and line ~= "") and line or "1"
+
+      if editor:find("code") then
+        -- VS Code: code -g file:line
+        local safe_path = file_path:gsub("'", "'\\''")
+        io.popen(string.format("code -g '%s:%s'", safe_path, line))
+        return false
+      else
+        -- Neovim / Vim: Open in new tab in WezTerm
+        window:perform_action(
+          act.SpawnCommandInNewTab({
+            args = { editor, "+" .. line, file_path },
+          }),
+          pane
+        )
+        return false
+      end
+    end
+  end
+end)
+
+-- Explicit mouse binding for CTRL+Click to open links
+config.mouse_bindings = {
+  {
+    event = { Up = { streak = 1, button = "Left" } },
+    mods = "CTRL",
+    action = act.OpenLinkAtMouseCursor,
+  },
+}
 
 -- Hyperlink rules
 config.hyperlink_rules = wezterm.default_hyperlink_rules()
+
+-- Match file paths with line numbers (e.g. main.py:42, src/lib.rs:10:5, or path/to/file.lua:100)
+table.insert(config.hyperlink_rules, {
+  regex = [[\b([a-zA-Z0-9_.~/-]+\.[a-zA-Z0-9]+):(\d+)(?::(\d+))?\b]],
+  format = "file:///$1:$2",
+})
 
 local issue_trackers = {
   { prefixes = { 'US', 'DE', 'E', 'F' }, url = 'https://rally1.rallydev.com/#/search?keywords=$1' },
