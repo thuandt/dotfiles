@@ -9,7 +9,9 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Direnv workaround for p10k instant prompt
-(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv export zsh)"
+if (( ${+commands[direnv]} )); then
+  emulate zsh -c "$(direnv export zsh)"
+fi
 
 # ------------------------------------------------------------------------------
 # 2. Environment Variables & PATH Optimization
@@ -135,13 +137,6 @@ zinit wait lucid light-mode \
    sbin'bin/git-dsf' \
    sbin'bin/diff-so-fancy' \
    as"program" for thuandt/zsh-diff-so-fancy
-
-# Direnv (from GitHub releases fallback)
-zinit wait lucid light-mode as'null' from'gh-r' \
-  mv'direnv* -> direnv' \
-  sbin'direnv' src'zhook.zsh' \
-  atclone'./direnv hook zsh >| zhook.zsh' \
-  atpull'%atclone' for direnv/direnv
 
 # Color logger
 zinit wait lucid light-mode src'color-logger.bash' pick'/dev/null' for swyckoff/color-logger-bash
