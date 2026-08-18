@@ -91,7 +91,6 @@ minisign = "latest"
 node = "lts"
 usql = "latest"
 "github:AlexsJones/llmfit" = "latest"
-ollama = "latest"
 azure-kubelogin = "latest"
 "github:ggml-org/llama.cpp" = { version = "latest", asset_pattern = "llama-*-bin-ubuntu-vulkan-x64.tar.gz" }
 btop = "latest"
@@ -108,6 +107,7 @@ eza = "latest"
 "github:ajeetdsouza/zoxide" = "latest"
 cosign = "latest"
 direnv = "latest"
+fzf = "latest"
 
 [settings.github]
 credential_command = "gh auth token"
@@ -118,3 +118,4 @@ minimum_release_age_excludes = [
     "aws-cli",
     "github-cli",
 ]
+python.github_attestations = false
