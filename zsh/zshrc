@@ -125,7 +125,6 @@ zinit wait lucid light-mode depth=1 for \
   chrissicool/zsh-256color \
   djui/alias-tips \
   MikeDacre/tmux-zsh-vim-titles \
-  junegunn/fzf-git.sh \
   zchee/zsh-completions \
   arzzen/calc.plugin.zsh \
   gradle/gradle-completion \
@@ -190,9 +189,8 @@ zinit wait'0b' lucid light-mode id-as'cli-completions' atload'
 # 8. Interactive & Vi-Mode Integrations
 # ------------------------------------------------------------------------------
 _fzf_init() {
-  local dir="${XDG_DATA_HOME:-$HOME/.local/share}/zinit/plugins/junegunn---fzf"
-  [[ -r "$dir/key-bindings.zsh" ]] && source "$dir/key-bindings.zsh"
-  [[ -r "$dir/_fzf_completion" ]] && source "$dir/_fzf_completion"
+  # Set up fzf key bindings and fuzzy completion
+  source <(fzf --zsh)
   (( ${+widgets[fzf-completion]} )) && bindkey -M viins '^I' fzf-completion
 }
 
@@ -242,20 +240,6 @@ zinit wait'0b' lucid light-mode depth=1 for \
 
 zinit wait'0c' lucid light-mode for thuandt/zsh-config
 zinit wait'1a' lucid light-mode nocompletions for thuandt/enhancd
-
-# fzf
-zinit wait'1b' lucid light-mode from'gh-r' \
-    id-as'junegunn/fzf' \
-    atclone'mkdir -p $ZPFX/{bin,man/man1}' \
-    atpull'%atclone' \
-    dl'https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh -> _fzf_completion;
-      https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh -> key-bindings.zsh;
-      https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf-tmux.1 -> $ZPFX/man/man1/fzf-tmux.1;
-      https://raw.githubusercontent.com/junegunn/fzf/master/man/man1/fzf.1 -> $ZPFX/man/man1/fzf.1' \
-    nocompile \
-    pick'/dev/null' \
-    sbin'fzf' \
-  for @junegunn/fzf
 
 # ------------------------------------------------------------------------------
 # 9. Terminal & History Customizations
