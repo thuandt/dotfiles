@@ -92,7 +92,7 @@ node = "lts"
 usql = "latest"
 "github:AlexsJones/llmfit" = "latest"
 azure-kubelogin = "latest"
-"github:ggml-org/llama.cpp" = { version = "latest", asset_pattern = "llama-*-bin-ubuntu-vulkan-x64.tar.gz" }
+"github:ggml-org/llama.cpp" = { version = "latest", version_prefix = "b", prerelease = true, asset_pattern = "llama-*-ubuntu-vulkan-x64.tar.gz" }
 btop = "latest"
 "github:graykode/abtop" = "latest"
 bitwarden = "latest"
@@ -109,13 +109,14 @@ cosign = "latest"
 direnv = "latest"
 fzf = "latest"
 
-[settings.github]
-credential_command = "gh auth token"
-
 [settings]
+auto_update = true
 minimum_release_age_excludes = [
-    "github:ggml-org/llama.cpp",
-    "aws-cli",
-    "github-cli",
+  "github:ggml-org/llama.cpp",
+  "aws-cli",
+  "github-cli",
 ]
 python.github_attestations = false
+
+[settings.github]
+credential_command = "gh auth token"
