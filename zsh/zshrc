@@ -4,13 +4,12 @@
 # ------------------------------------------------------------------------------
 # 1. Powerlevel10k Instant Prompt (Must stay near the very top of ~/.zshrc)
 # ------------------------------------------------------------------------------
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
 
 # Direnv workaround for p10k instant prompt
-if (( ${+commands[direnv]} )); then
-  emulate zsh -c "$(direnv export zsh)"
+(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv export zsh)"
+
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # ------------------------------------------------------------------------------
@@ -51,7 +50,7 @@ zinit light zdharma-continuum/zinit-annex-meta-plugins
 zinit lucid light-mode skip"dircolors-material" for annexes zsh-users+fast console-tools
 
 # Powerlevel10k Theme
-zinit lucid light-mode nocd depth='1' atload'!source ~/.p10k.zsh; _p9k_precmd' for romkatv/powerlevel10k
+zinit depth='1' atload'source ~/.p10k.zsh' for romkatv/powerlevel10k
 
 # ------------------------------------------------------------------------------
 # 5. Core Zsh Libraries & Synchronous Plugins
@@ -68,20 +67,6 @@ zinit lucid light-mode for \
   OMZP::aws \
   OMZP::azure \
   OMZP::terraform
-
-# Bash & Python CLI completion bridges
-for _cmd in az checkov pipenv pipx; do
-  if (( ${+commands[$_cmd]} )); then
-    (( ${+functions[bashcompinit]} )) || { autoload -Uz bashcompinit && bashcompinit; }
-    eval "$(register-python-argcomplete $_cmd)" 2>/dev/null
-  fi
-done
-
-if (( ${+commands[terraform]} )); then
-  (( ${+functions[bashcompinit]} )) || { autoload -Uz bashcompinit && bashcompinit; }
-  complete -C terraform terraform
-fi
-unset _cmd
 
 # ------------------------------------------------------------------------------
 # 6. Deferred Plugins (Loaded asynchronously in Turbo mode)
@@ -144,21 +129,39 @@ zinit wait lucid light-mode src'color-logger.bash' pick'/dev/null' for swyckoff/
 # 7. CLI Completion Caching (Eliminates costly subshell spawns per shell)
 # ------------------------------------------------------------------------------
 _lazy_cache_completion() {
+  local mode=""
+  if [[ "$1" == "python" ]]; then
+    mode="python"
+    shift
+  fi
+
   local cmd="$1"
   shift
   local comp_file="$ZSH_CACHE_DIR/completions/_$cmd"
+
   if (( ${+commands[$cmd]} )); then
     if [[ ! -s "$comp_file" || "$commands[$cmd]" -nt "$comp_file" ]]; then
-      "$cmd" "$@" >| "$comp_file" 2>/dev/null
+      if [[ "$mode" == "python" ]]; then
+        (( ${+functions[bashcompinit]} )) || { autoload -Uz bashcompinit && bashcompinit; }
+        register-python-argcomplete "$cmd" >| "$comp_file" 2>/dev/null
+      else
+        "$cmd" "$@" >| "$comp_file" 2>/dev/null
+      fi
     fi
+
     if [[ -r "$comp_file" ]]; then
-      source "$comp_file"
-      _comps[$cmd]="_$cmd" 2>/dev/null
+      [[ "$mode" == "python" ]] && { (( ${+functions[bashcompinit]} )) || { autoload -Uz bashcompinit && bashcompinit; }; }
+      source "$comp_file" 2>/dev/null
+      (( ${+functions[compdef]} )) && _comps[$cmd]="_$cmd" 2>/dev/null
     fi
   fi
 }
 
 zinit wait'0b' lucid light-mode id-as'cli-completions' atload'
+  _lazy_cache_completion python az
+  _lazy_cache_completion python checkov
+  _lazy_cache_completion python pipenv
+  _lazy_cache_completion python pipx
   _lazy_cache_completion argocd completion zsh
   _lazy_cache_completion argocd-image-updater completion zsh
   _lazy_cache_completion bun completions

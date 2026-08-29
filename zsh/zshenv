@@ -122,19 +122,30 @@ if [[ "$OSTYPE" == linux* ]]; then
   export LC_ALL="${LANGUAGE}"
   export LC_CTYPE="${LANGUAGE}"
 
-  # Systemd user environment import (interactive session only)
-  [[ -o interactive ]] && (( ${+commands[systemctl]} )) && systemctl --user import-environment PATH EDITOR KUBE_EDITOR SYSTEMD_EDITOR 2>/dev/null
+  # Systemd user environment import (interactive session only, detached background)
+  [[ -o interactive ]] && (( ${+commands[systemctl]} )) && ( systemctl --user import-environment PATH EDITOR KUBE_EDITOR SYSTEMD_EDITOR >/dev/null 2>&1 &! )
 fi
 
 # ------------------------------------------------------------------------------
 # 6. Desktop Session & API Secret Keys (Lazy / Inherited)
 # ------------------------------------------------------------------------------
-# Query GNOME Keyring only if not already exported in environment
+# Flexible GNOME Keyring secret key map: ENV_VAR_NAME=(attribute_name attribute_value)
+typeset -A _SECRET_KEYS=(
+  IPINFO_TOKEN      "token ipinfo.io"
+  TINYPNG_API_KEY   "api-key tinypng"
+  MACVENDORS_TOKEN  "token macvendors"
+)
+
+# Query GNOME Keyring only for secret keys missing in environment
 if (( ${+commands[secret-tool]} )); then
-  [[ -z "$GEMINI_API_KEY" ]]  && export GEMINI_API_KEY="$(secret-tool lookup api-key gemini 2>/dev/null)"
-  [[ -z "$TINYPNG_API_KEY" ]] && export TINYPNG_API_KEY="$(secret-tool lookup api-key tinypng 2>/dev/null)"
-  [[ -z "$IPINFO_TOKEN" ]]     && export IPINFO_TOKEN="$(secret-tool lookup token ipinfo.io 2>/dev/null)"
-  [[ -z "$MACVENDORS_TOKEN" ]] && export MACVENDORS_TOKEN="$(secret-tool lookup token macvendors 2>/dev/null)"
+  local _var _args _val
+  for _var _args in "${(@kv)_SECRET_KEYS}"; do
+    if [[ -z "${(P)_var}" ]]; then
+      _val="$(secret-tool lookup ${(z)_args} 2>/dev/null)"
+      [[ -n "$_val" ]] && export "$_var=$_val"
+    fi
+  done
+  unset _var _args _val
 fi
 
 # End of ~/.zshenv
