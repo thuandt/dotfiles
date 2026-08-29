@@ -8,3 +8,4 @@
     ~/.gnupg/gpg.conf: gnupg/gpg.conf
     ~/.gnupg/dirmngr.conf: gnupg/dirmngr.conf
     ~/.gnupg/gpg-agent.conf: gnupg/gpg-agent.conf
+    ~/.gnupg/scdaemon.conf: gnupg/scdaemon.conf
