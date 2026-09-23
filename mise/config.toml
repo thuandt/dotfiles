@@ -92,7 +92,7 @@ node = "lts"
 usql = "latest"
 "github:AlexsJones/llmfit" = "latest"
 azure-kubelogin = "latest"
-"github:ggml-org/llama.cpp" = { version = "latest", version_prefix = "b", prerelease = true, asset_pattern = "llama-*-ubuntu-vulkan-x64.tar.gz" }
+"github:ggml-org/llama.cpp" = { version = "latest", version_prefix = "b", prerelease = true, asset_pattern = "llama-*-bin-ubuntu-vulkan-x64.tar.gz" }
 btop = "latest"
 "github:graykode/abtop" = "latest"
 bitwarden = "latest"
@@ -108,6 +108,7 @@ eza = "latest"
 cosign = "latest"
 direnv = "latest"
 fzf = "latest"
+"github:nklmilojevic/sofka" = "latest"
 
 [settings]
 auto_update = true
